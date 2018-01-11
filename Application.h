@@ -11,14 +11,9 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
-class ModulePlayer;
 class ModuleFonts;
-class ModuleSceneSega;
 class ModuleCollision;
-class ModuleSceneStage;
-class ModuleSceneMusic;
 class ModuleTimer;
-//class ModuleSegaInit;
 
 class Application
 {
@@ -41,10 +36,6 @@ public:
 	ModuleAudio* audio;
 	ModuleFonts* fonts;
 	ModuleFadeToBlack* fade;
-	ModulePlayer* player;
-	ModuleSceneSega* scene_sega;
-	ModuleSceneStage* scene_stage;
-	ModuleSceneMusic* scene_music;
 	ModuleCollision* colliders;
 	ModuleTimer* Rtimer;
 	bool switchmap = false;

@@ -6,11 +6,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFonts.h"
 #include "ModuleFadeToBlack.h"
-#include "ModuleSceneSega.h"
-#include "ModuleSceneStage.h"
-#include "ModuleSceneMusic.h"
 #include "ModuleTimer.h"
-#include "ModulePlayer.h"
 #include "ModuleCollision.h"
 #include "SDL\include\SDL.h"
 #include <thread>
@@ -30,11 +26,9 @@ Application::Application()
 	
 
 	// Game Modules
-	modules.push_back(player = new ModulePlayer(false));
+
 	modules.push_back(fade = new ModuleFadeToBlack());
-	modules.push_back(scene_sega = new ModuleSceneSega(false));
-	modules.push_back(scene_stage = new ModuleSceneStage(false));
-	modules.push_back(scene_music = new ModuleSceneMusic(false));
+
 
 }
 

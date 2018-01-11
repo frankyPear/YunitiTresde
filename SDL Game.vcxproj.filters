@@ -46,14 +46,8 @@
     <ClInclude Include="Point.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ModulePlayer.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleInput.h">
       <Filter>Core Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneSega.h">
-      <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFonts.h">
       <Filter>Core Modules</Filter>
@@ -66,12 +60,6 @@
     </ClInclude>
     <ClInclude Include="Line.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneStage.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneMusic.h">
-      <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTimer.h">
       <Filter>Core Modules</Filter>
@@ -102,14 +90,8 @@
     <ClCompile Include="Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="ModulePlayer.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleInput.cpp">
       <Filter>Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneSega.cpp">
-      <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFonts.cpp">
       <Filter>Core Modules</Filter>
@@ -119,12 +101,6 @@
     </ClCompile>
     <ClCompile Include="ModuleScore.cpp">
       <Filter>Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneStage.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneMusic.cpp">
-      <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTimer.cpp">
       <Filter>Core Modules</Filter>
