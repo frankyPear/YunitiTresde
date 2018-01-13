@@ -1,2 +1,3 @@
 artifacts:
-  - path: Release\YunitiTresde.exe
+  - path: YunitiTresde-Release.zip
+    name: YunitiTresde
