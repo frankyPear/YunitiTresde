@@ -1,4 +1,9 @@
 #include <stdlib.h>
+#include "..\json.hpp"
+#include <iostream>
+
+using json = nlohmann::json;
+using namespace std;
 
 enum main_states
 {
@@ -14,6 +19,13 @@ enum main_states
 int main(int argc, char ** argv)
 {
 	int main_return = EXIT_FAILURE;
+	json j = 
+	{
+		{"pi", 3.14},
+		{"name", "json j"},
+		{"size", 3}
+	};
+	cout << j << endl;
 	main_states state = MAIN_CREATION;
 	while (state != MAIN_EXIT)
 	{
