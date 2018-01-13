@@ -7,13 +7,9 @@
 
 class ModuleRender;
 class ModuleWindow;
-class ModuleTextures;
 class ModuleInput;
-class ModuleAudio;
-class ModuleFadeToBlack;
-class ModuleFonts;
-class ModuleCollision;
-class ModuleTimer;
+
+
 
 class Application
 {
@@ -26,18 +22,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	void RerunTimer();
 
 public:
 	ModuleRender* renderer;
 	ModuleWindow* window;
-	ModuleTextures* textures;
 	ModuleInput* input;
-	ModuleAudio* audio;
-	ModuleFonts* fonts;
-	ModuleFadeToBlack* fade;
-	ModuleCollision* colliders;
-	ModuleTimer* Rtimer;
+
 	bool switchmap = false;
 private:
 

@@ -4,8 +4,6 @@
 #include "Module.h"
 #include "Point.h"
 
-#include "SDL/include/SDL_scancode.h"
-
 #define NUM_MOUSE_BUTTONS 5
 
 enum EventWindow

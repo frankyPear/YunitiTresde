@@ -1,14 +1,9 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
-#include "ModuleTextures.h"
 #include "ModuleInput.h"
-#include "ModuleAudio.h"
-#include "ModuleFonts.h"
-#include "ModuleFadeToBlack.h"
-#include "ModuleTimer.h"
-#include "ModuleCollision.h"
-#include "SDL\include\SDL.h"
+
+//#include "SDL\include\SDL.h"
 #include <thread>
 
 using namespace std;
@@ -20,14 +15,9 @@ Application::Application()
 	modules.push_back(window = new ModuleWindow());
 
 	modules.push_back(renderer = new ModuleRender());
-	modules.push_back(textures = new ModuleTextures());
-	modules.push_back(audio = new ModuleAudio());
-	modules.push_back(fonts = new ModuleFonts());
-	
 
 	// Game Modules
 
-	modules.push_back(fade = new ModuleFadeToBlack());
 
 
 }
@@ -52,7 +42,6 @@ bool Application::Init()
 	}
 
 	// Start the first scene
-	fade->FadeToBlack(scene_sega, nullptr, 3.0f);
 	return ret;
 }
 

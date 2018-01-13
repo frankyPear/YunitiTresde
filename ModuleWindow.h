@@ -3,8 +3,6 @@
 
 #include "Module.h"
 
-struct SDL_Window;
-struct SDL_Surface;
 
 class ModuleWindow : public Module
 {
@@ -21,14 +19,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void GenerateRoad();
 
 public:
-	//The window we'll be rendering to
-	SDL_Window* window = nullptr;
 
-	//The surface contained by the window
-	SDL_Surface* screen_surface = nullptr;
 };
 
 #endif // __MODULEWINDOW_H__
