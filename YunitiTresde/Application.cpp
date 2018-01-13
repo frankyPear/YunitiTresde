@@ -2,6 +2,9 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
+//Included mathgeolib
+#include "Mathgeolib\MathBuildConfig.h"
+#include "Mathgeolib\MathGeoLib.h"
 #include <thread>
 
 using namespace std;
