@@ -2,10 +2,9 @@
 #define __APPLICATION_CPP__
 
 #include<list>
-#include "Globals.h"
 #include "Module.h"
 //
-class ModuleRender;
+class ModuleRenderer;
 class ModuleWindow;
 class ModuleInput;
 

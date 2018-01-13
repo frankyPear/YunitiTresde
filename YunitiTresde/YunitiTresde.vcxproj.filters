@@ -21,9 +21,6 @@
     <ClInclude Include="Module.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Globals.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleInput.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -34,6 +31,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
       <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
