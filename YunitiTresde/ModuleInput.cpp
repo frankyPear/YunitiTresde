@@ -19,7 +19,7 @@ bool ModuleInput::Start() {
 	return true;
 }
 
-update_status ModuleInput::Update(float deltaTime) {
+update_status ModuleInput::Update() {
 	return UPDATE_CONTINUE;
 }
 

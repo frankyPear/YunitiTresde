@@ -9,7 +9,7 @@ public:
 
 	bool Init();
 	bool Start();
-	update_status Update(float deltaTime);
+	update_status Update();
 	bool CleanUp();
 };
 

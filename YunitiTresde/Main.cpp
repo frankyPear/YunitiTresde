@@ -1,9 +1,5 @@
 #include <stdlib.h>
-#include "..\json.hpp"
-#include <iostream>
-
-using json = nlohmann::json;
-using namespace std;
+#include "Application.h"
 
 enum main_states
 {
@@ -14,18 +10,11 @@ enum main_states
 	MAIN_EXIT
 };
 
-//Application* App = nullptr;
+Application* App = nullptr;
 
 int main(int argc, char ** argv)
 {
 	int main_return = EXIT_FAILURE;
-	json j = 
-	{
-		{"pi", 3.14},
-		{"name", "json j"},
-		{"size", 3}
-	};
-	cout << j << endl;
 	main_states state = MAIN_CREATION;
 	while (state != MAIN_EXIT)
 	{
@@ -34,37 +23,37 @@ int main(int argc, char ** argv)
 		case MAIN_CREATION:
 
 			//LOG("Application Creation --------------");
-			//App = new Application();
+			App = new Application();
 			state = MAIN_START;
 			break;
 
 		case MAIN_START:
 
 			//LOG("Application Init --------------");
-			//if (App->Init() == false)
-			//{
+			if (App->Init() == false)
+			{
 			//	LOG("Application Init exits with error -----");
-			//	state = MAIN_EXIT;
-			//}
-			//else
-			//{
+				state = MAIN_EXIT;
+			}
+			else
+			{
 			state = MAIN_UPDATE;
 			//	LOG("Application Update --------------");
-			//}
+			}
 
 			break;
 
 		case MAIN_UPDATE:
 		{
-			//int update_return = App->Update();
+			int update_return = App->Update();
 			//
-			//if (update_return == UPDATE_ERROR)
-			//{
-			//	LOG("Application Update exits with error -----");
-			//	state = MAIN_EXIT;
-			//}
+			if (update_return == UPDATE_ERROR)
+			{
+				LOG("Application Update exits with error -----");
+				state = MAIN_EXIT;
+			}
 			//
-			//if (update_return == UPDATE_STOP)
+			if (update_return == UPDATE_STOP)
 			state = MAIN_FINISH;
 		}
 		break;
@@ -72,12 +61,12 @@ int main(int argc, char ** argv)
 		case MAIN_FINISH:
 
 			//LOG("Application CleanUp --------------");
-			//if (App->CleanUp() == false)
-			//{
-			//	LOG("Application CleanUp exits with error -----");
-			//}
-			//else
-			//	main_return = EXIT_SUCCESS;
+			if (App->CleanUp() == false)
+			{
+				LOG("Application CleanUp exits with error -----");
+			}
+			else
+				main_return = EXIT_SUCCESS;
 			//
 			state = MAIN_EXIT;
 
@@ -86,7 +75,7 @@ int main(int argc, char ** argv)
 		}
 	}
 
-	//RELEASE(App);
+	RELEASE(App);
 	//LOG("Bye :)\n");
 	return main_return;
 }

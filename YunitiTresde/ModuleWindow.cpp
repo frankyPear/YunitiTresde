@@ -19,7 +19,7 @@ bool ModuleWindow::Start() {
 	return true;
 }
 
-update_status ModuleWindow::Update(float deltaTime) {
+update_status ModuleWindow::Update() {
 	return UPDATE_CONTINUE;
 }
 

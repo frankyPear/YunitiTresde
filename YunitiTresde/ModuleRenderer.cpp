@@ -19,7 +19,7 @@ bool ModuleRenderer::Start() {
 	return true;
 }
 
-update_status ModuleRenderer::Update(float deltaTime){
+update_status ModuleRenderer::Update(){
 	return UPDATE_CONTINUE;
 }
 

@@ -2,6 +2,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
+#include "ModuleTest.h"
 //Included mathgeolib
 #include "Mathgeolib\MathBuildConfig.h"
 #include "Mathgeolib\MathGeoLib.h"
@@ -15,6 +16,7 @@ Application::Application()
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(renderer = new ModuleRenderer());
+	modules.push_back(test = new ModuleTest());
 }
 
 Application::~Application()
