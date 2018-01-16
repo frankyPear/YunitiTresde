@@ -22,6 +22,6 @@ Libraries:
 
 Third party software:
 
-* Appveyor: 
-* Coverity: Used to build releases.
-* Brofiler: C++ code check.
+* Appveyor: Used to build releases.
+* Coverity: C++ code check.
+* Brofiler: C++ profiler for games.
