@@ -15,13 +15,13 @@ Our group memebers are:
 
 This motor includes several libraries and thrid party software in order to work:
 
-* Libraries:
+Libraries:
 
-** MathGeoLib: Math functions, structures and algorithms used througout the project.
-** Json: Simple message format and easy to read and write.
+* MathGeoLib: Math functions, structures and algorithms used througout the project.
+* Json: Simple message format and easy to read and write.
 
-* Third party software:
+Third party software:
 
-** Appveyor: 
-** Coverity: Used to build releases.
-** Brofiler: C++ code check.
+* Appveyor: 
+* Coverity: Used to build releases.
+* Brofiler: C++ code check.
