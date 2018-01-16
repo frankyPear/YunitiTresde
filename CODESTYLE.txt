@@ -1,1 +1,11 @@
 Code Style:
+--------------------------------------
+This is the Code Style that will implement during this project.
+
++Variables:
+
++Constant names:
+
++Class Data Members:
+
++Use of const:
