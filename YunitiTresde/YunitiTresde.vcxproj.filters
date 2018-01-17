@@ -39,6 +39,9 @@
     <ClInclude Include="ModuleTest.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGL.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleInput.cpp">
@@ -62,10 +65,5 @@
     <ClCompile Include="ModuleTest.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DLL\msvcp140.dll" />
-    <None Include="DLL\vccorlib140.dll" />
-    <None Include="DLL\vcruntime140.dll" />
   </ItemGroup>
 </Project>
