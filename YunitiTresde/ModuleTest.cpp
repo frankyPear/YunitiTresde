@@ -33,8 +33,7 @@ bool ModuleTest::Start() {
 }
 
 update_status ModuleTest::Update() {
-	cout << j << endl;
-	cout << f.x << " " << f.y << " " << f.z << endl;
+
 	return UPDATE_CONTINUE;
 }
 bool ModuleTest::CleanUp() {

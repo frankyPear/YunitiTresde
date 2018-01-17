@@ -4,8 +4,8 @@
 #include "ModuleInput.h"
 #include "ModuleTest.h"
 //Included mathgeolib
-#include "Mathgeolib\MathBuildConfig.h"
-#include "Mathgeolib\MathGeoLib.h"
+#include "Mathgeolib\include\MathBuildConfig.h"
+#include "Mathgeolib\include\MathGeoLib.h"
 #include <thread>
 
 using namespace std;

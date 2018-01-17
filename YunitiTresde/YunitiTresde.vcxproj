@@ -134,11 +134,6 @@
     <ClCompile Include="ModuleTest.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="DLL\msvcp140.dll" />
-    <None Include="DLL\vccorlib140.dll" />
-    <None Include="DLL\vcruntime140.dll" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

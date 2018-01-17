@@ -2,7 +2,8 @@
 #include "Module.h"
 #include "..\json.hpp"
 #include <iostream>
-#include "Mathgeolib\Math\float3.h"
+#include "Mathgeolib\include\MathBuildConfig.h"
+#include"Mathgeolib\include\MathGeoLib.h"
 
 using json = nlohmann::json;
 
