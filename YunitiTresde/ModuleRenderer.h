@@ -30,9 +30,11 @@ public:
 
 	bool CleanUp();
 
+
 private:
 
 	SDL_GLContext context_;
+	
 
 };
 

@@ -2,6 +2,7 @@
 #include "ModuleRenderer.h"
 #include "ModuleWindow.h"
 #include "SDL\include\SDL.h"
+#include "Mathgeolib\include\MathGeoLib.h"
 #include "OpenGL.h"
 
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
@@ -12,6 +13,7 @@
 
 ModuleRenderer::ModuleRenderer()
 {
+	
 }
 
 
@@ -21,6 +23,7 @@ ModuleRenderer::~ModuleRenderer()
 
 bool ModuleRenderer::Init() {
 	bool ret = true;
+	
 
 	//Set Attributes (NOTE DOWN WHAT IT MEANS EACH LINE!)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -60,10 +63,12 @@ bool ModuleRenderer::Init() {
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 
+		
 	}
 
 	return ret;
 }
+
 
 bool ModuleRenderer::Start()
 {
@@ -72,11 +77,19 @@ bool ModuleRenderer::Start()
 
 update_status ModuleRenderer::PreUpdate()
 {
-	/*Color c = cam->background;
-	glClearColor(, c.g, c.b, c.a);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	
+	glClearColor(0, 0, 0, 255);
+	
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(cam->GetOpenGLViewMatrix())*/
+	
+	//glLoadMatrixf(frustum.ViewMatrix().ptr());
+
 
 	return UPDATE_CONTINUE;
 }
@@ -89,6 +102,13 @@ update_status ModuleRenderer::Update()
 
 update_status ModuleRenderer::PostUpdate()
 {
+	
+	glBegin(GL_TRIANGLES);
+	glVertex3f(-1.0f, -0.5f, -4.0f); // lower left vertex
+	glVertex3f(1.0f, -0.5f, -4.0f); // lower right vertex
+	glVertex3f(0.0f, 0.5f, -4.0f); // upper vertex
+	glEnd();
+
 	SDL_GL_SwapWindow(App->window->GetWindow());
 	return UPDATE_CONTINUE;
 }
