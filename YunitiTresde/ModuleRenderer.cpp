@@ -77,18 +77,17 @@ bool ModuleRenderer::Start()
 
 update_status ModuleRenderer::PreUpdate()
 {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
 	
-	glClearColor(0, 0, 0, 255);
-	
-
+	glClearColor(1, 0, 0, 255);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	glMatrixMode(GL_MODELVIEW);
-	
-	//glLoadMatrixf(frustum.ViewMatrix().ptr());
+
 
 
 	return UPDATE_CONTINUE;
@@ -104,9 +103,9 @@ update_status ModuleRenderer::PostUpdate()
 {
 	
 	glBegin(GL_TRIANGLES);
-	glVertex3f(-1.0f, -0.5f, -4.0f); // lower left vertex
-	glVertex3f(1.0f, -0.5f, -4.0f); // lower right vertex
-	glVertex3f(0.0f, 0.5f, -4.0f); // upper vertex
+	glVertex3f(-1.0f, -0.5f, -1.0f); // lower left vertex
+	glVertex3f(1.0f, -0.5f, -1.0f); // lower right vertex
+	glVertex3f(0.0f, 0.5f, -1.0f); // upper vertex
 	glEnd();
 
 	SDL_GL_SwapWindow(App->window->GetWindow());
