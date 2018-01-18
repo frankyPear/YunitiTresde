@@ -44,11 +44,12 @@ bool ModuleRenderer::Init() {
 	}
 	else
 	{
+				
 		//Init Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		//Init Modelview Matrix
+                //Init Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
@@ -108,7 +109,8 @@ update_status ModuleRenderer::PostUpdate()
 	glVertex3f(0.0f, 0.5f, -1.0f); // upper vertex
 	glEnd();
 
-	SDL_GL_SwapWindow(App->window->GetWindow());
+	SDL_GL_SwapWindow(App->window->GetWindow());
+
 	return UPDATE_CONTINUE;
 }
 
