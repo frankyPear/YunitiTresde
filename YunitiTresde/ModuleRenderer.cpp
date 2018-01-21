@@ -4,6 +4,7 @@
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 #include "OpenGL.h"
+#include "Quad.h"
 
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
 #pragma comment (lib, "SDL/libx86/SDL2main.lib")
@@ -27,9 +28,11 @@ bool ModuleRenderer::Init() {
 
 	//Set Attributes 
 	//CORE_PROFILE, uses the new opengl profile
+	//There are several context profiles (Ex:_ES for mobile
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	//Used to limit the area of rendering 
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	//Set the version of openGL to 3.1
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -52,7 +55,7 @@ bool ModuleRenderer::Init() {
 		ret = false;
 	}
 
-	//Select the area that will be framed 
+	//Select the area that will be framed; perhaps change to efectively resize
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	//Init Projection Matrix
@@ -74,6 +77,9 @@ bool ModuleRenderer::Init() {
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
 
+	//Set the camera 
+	glOrtho(-5, 5, -5, 5, -5, 5);
+
 		
 
 	return ret;
@@ -87,13 +93,7 @@ bool ModuleRenderer::Start()
 
 update_status ModuleRenderer::PreUpdate()
 {
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
-	//
-
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	
+	glClearColor(0, 0, 0, 255);
 	//Clear the window to draw the next frame
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -111,14 +111,13 @@ update_status ModuleRenderer::Update()
 
 update_status ModuleRenderer::PostUpdate()
 {
-	//draw stuff
-	//glClearColor(0, 0, 0, 255);
-	glBegin(GL_TRIANGLES);
-	glVertex3f(-1.0f, -0.5f, -1.0f); // lower left vertex
-	glVertex3f(1.0f, -0.5f, -1.0f); // lower right vertex
-	glVertex3f(0.0f, 0.5f, -1.0f); // upper vertex
-	glEnd();
+	//Draw Quad Immeadiate form
+	//DrawImmediateQuad();
+	//Draw Quad using DrawArray()
+	//DrawArrayQuad();
 
+	//Draw Using DrawElements()
+	DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;

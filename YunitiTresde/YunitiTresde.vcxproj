@@ -127,6 +127,7 @@
     <ClInclude Include="ModuleRenderer.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="OpenGL.h" />
+    <ClInclude Include="Quad.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />

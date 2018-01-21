@@ -22,9 +22,9 @@ bool ModuleWindow::Init() {
 	}
 	else
 	{
-		//Try to use | SDL_WINDOW_RESIZABLE at the flags part
+		//Window can resize
 		window_ = SDL_CreateWindow("YunitiTresDe", SDL_WINDOWPOS_CENTERED, 
-			SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+			SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL |SDL_WINDOW_SHOWN| SDL_WINDOW_RESIZABLE );
 		if (window_ == nullptr)
 		{
 			LOG("Failed to create window! SDL_Error: %s\n", SDL_GetError());
