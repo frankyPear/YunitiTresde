@@ -108,7 +108,8 @@ update_status ModuleRenderer::PostUpdate()
 	glVertex3f(0.0f, 0.5f, -1.0f); // upper vertex
 	glEnd();
 
-	SDL_GL_SwapWindow(App->window->GetWindow());
+	SDL_GL_SwapWindow(App->window->GetWindow());
+
 	return UPDATE_CONTINUE;
 }
 
