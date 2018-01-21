@@ -28,7 +28,6 @@ public:
 	ModuleRenderer* renderer;
 	ModuleWindow* window;
 	ModuleInput* input;
-	ModuleTest* test;
 
 	bool switchmap = false;
 private:
