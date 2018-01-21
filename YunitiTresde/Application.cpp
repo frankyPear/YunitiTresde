@@ -3,8 +3,8 @@
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
 //Included mathgeolib
-#include "Mathgeolib\MathBuildConfig.h"
-#include "Mathgeolib\MathGeoLib.h"
+#include "Mathgeolib\include\MathBuildConfig.h"
+#include "Mathgeolib\include\MathGeoLib.h"
 #include <thread>
 
 using namespace std;
@@ -15,7 +15,9 @@ Application::Application()
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(renderer = new ModuleRenderer());
+
 }
+
 
 Application::~Application()
 {

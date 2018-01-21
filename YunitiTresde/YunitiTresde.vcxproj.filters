@@ -36,6 +36,9 @@
     <ClInclude Include="Globals.h">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGL.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleInput.cpp">
@@ -56,10 +59,4 @@
     <ClCompile Include="Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DLL\msvcp140.dll" />
-    <None Include="DLL\vccorlib140.dll" />
-    <None Include="DLL\vcruntime140.dll" />
-  </ItemGroup>
 </Project>
