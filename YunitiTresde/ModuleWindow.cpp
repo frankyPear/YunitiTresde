@@ -55,8 +55,9 @@ bool ModuleWindow::CleanUp() {
 
 	//Destroy window
 	if (window_ != nullptr)
+	{
 		SDL_DestroyWindow(window_);
-
+	}
 	//Quit SDL subsystems
 	SDL_Quit();
 	return true;
