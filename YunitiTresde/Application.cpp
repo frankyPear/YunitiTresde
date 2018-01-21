@@ -12,9 +12,14 @@ using namespace std;
 Application::Application()
 {
 	// Order matters: they will init/start/pre/update/post in this order
-	modules.push_back(input = new ModuleInput());
-	modules.push_back(window = new ModuleWindow());
-	modules.push_back(renderer = new ModuleRenderer());
+	
+	input = new ModuleInput();
+	window = new ModuleWindow();
+	renderer = new ModuleRenderer();
+
+	modules.push_back(input);
+	modules.push_back(window);
+	modules.push_back(renderer);
 
 }
 
@@ -30,7 +35,7 @@ bool Application::Init()
 	bool ret = true;
 
 		for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
-			ret = (*it)->Init(); // we init everything, even if not anabled
+			ret = (*it)->Init(); // we init everything, even if not enabled
 	
 		for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		{
