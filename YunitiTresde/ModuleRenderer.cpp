@@ -111,12 +111,7 @@ update_status ModuleRenderer::Update()
 
 update_status ModuleRenderer::PostUpdate()
 {
-	//Draw Quad Immeadiate form
-	//DrawImmediateQuad();
-	//Draw Quad using DrawArray()
-	//DrawArrayQuad();
-
-	//Draw Using DrawElements()
+	
 	DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
