@@ -59,5 +59,4 @@
     <ClCompile Include="Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-  </ItemGroup>
 </Project>

@@ -29,7 +29,6 @@ public:
 	ModuleWindow* window;
 	ModuleInput* input;
 
-
 	bool switchmap = false;
 private:
 
