@@ -77,12 +77,12 @@ bool ModuleRenderer::Start()
 
 update_status ModuleRenderer::PreUpdate()
 {
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+	//
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
 	
 	glClearColor(1, 0, 0, 255);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

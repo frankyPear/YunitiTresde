@@ -36,9 +36,6 @@
     <ClInclude Include="Globals.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTest.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="OpenGL.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -61,9 +58,6 @@
     </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleTest.cpp">
-      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
