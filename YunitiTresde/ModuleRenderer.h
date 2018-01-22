@@ -1,5 +1,5 @@
-#ifndef _RENDER_
-#define _RENDER_
+#ifndef _MODULERENDER_
+#define _MODULERENDER_
 
 
 #include "Module.h"
