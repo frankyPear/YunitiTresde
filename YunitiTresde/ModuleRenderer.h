@@ -1,4 +1,7 @@
-#pragma once
+#ifndef _RENDER_
+#define _RENDER_
+
+
 #include "Module.h"
 #include "SDL\include\SDL.h"
 
@@ -38,3 +41,4 @@ private:
 
 };
 
+#endif // !_RENDER_

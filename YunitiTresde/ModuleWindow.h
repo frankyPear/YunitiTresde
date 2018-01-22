@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULEWINDOW_
+#define _MODULEWINDOW_
+
 #include "Module.h"
 #include "SDL\include\SDL.h"
 
@@ -21,3 +23,4 @@ private:
 
 };
 
+#endif // !_MODULEWINDOW_
