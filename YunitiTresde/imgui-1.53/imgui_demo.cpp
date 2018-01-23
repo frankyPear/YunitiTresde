@@ -636,7 +636,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
                 static bool selected[16] = { 0 };
                 for (int i = 0; i < 16; i++)
                 {
-                    char label[32]; sprintf(label, "Item %d", i);
+                    char label[32]; sprintf_s(label, "Item %d", i);
                     if (ImGui::Selectable(label, &selected[i])) {}
                     ImGui::NextColumn();
                 }
@@ -765,7 +765,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
 
             float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
             char buf[32];
-            sprintf(buf, "%d/%d", (int)(progress_saturated*1753), 1753);
+            sprintf_s(buf, "%d/%d", (int)(progress_saturated*1753), 1753);
             ImGui::ProgressBar(progress, ImVec2(0.f,0.f), buf);
             ImGui::TreePop();
         }
@@ -1050,7 +1050,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
                 if (i == 50)
                     ImGui::NextColumn();
                 char buf[32];
-                sprintf(buf, "%08x", i*5731);
+                sprintf_s(buf, "%08x", i*5731);
                 ImGui::Button(buf, ImVec2(-1.0f, 0.0f));
             }
             ImGui::EndChild();
@@ -1324,7 +1324,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
                     if (n > 0) ImGui::SameLine();
                     ImGui::PushID(n + line * 1000);
                     char num_buf[16];
-                    sprintf(num_buf, "%d", n);
+                    sprintf_s(num_buf, "%d", n);
                     const char* label = (!(n%15)) ? "FizzBuzz" : (!(n%3)) ? "Fizz" : (!(n%5)) ? "Buzz" : num_buf;
                     float hue = n*0.05f;
                     ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(hue, 0.6f, 0.6f));
@@ -1459,7 +1459,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
             }
 
             static char name[32] = "Label1";
-            char buf[64]; sprintf(buf, "Button: %s###Button", name); // ### operator override ID ignoring the preceding label
+            char buf[64]; sprintf_s(buf, "Button: %s###Button", name); // ### operator override ID ignoring the preceding label
             ImGui::Button(buf);
             if (ImGui::BeginPopupContextItem()) // When used after an item that has an ID (here the Button), we can skip providing an ID to BeginPopupContextItem().
             {
@@ -1560,7 +1560,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
             for (int n = 0; n < 14; n++)
             {
                 char label[32];
-                sprintf(label, "Item %d", n);
+                sprintf_s(label, "Item %d", n);
                 if (ImGui::Selectable(label)) {}
                 //if (ImGui::Button(label, ImVec2(-1,0))) {}
                 ImGui::NextColumn();
@@ -1582,7 +1582,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
             for (int i = 0; i < 3; i++)
             {
                 char label[32];
-                sprintf(label, "%04d", i);
+                sprintf_s(label, "%04d", i);
                 if (ImGui::Selectable(label, selected == i, ImGuiSelectableFlags_SpanAllColumns))
                     selected = i;
                 bool hovered = ImGui::IsItemHovered();
@@ -1919,7 +1919,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
             for (int i = 0; i < ImGuiMouseCursor_Count_; i++)
             {
                 char label[32];
-                sprintf(label, "Mouse cursor %d: %s", i, mouse_cursors_names[i]);
+                sprintf_s(label, "Mouse cursor %d: %s", i, mouse_cursors_names[i]);
                 ImGui::Bullet(); ImGui::Selectable(label, false);
                 if (ImGui::IsItemHovered())
                     ImGui::SetMouseCursor(i);
@@ -2395,7 +2395,7 @@ static void ShowExampleAppWindowTitles(bool*)
 
     // Using "###" to display a changing title but keep a static identifier "AnimatedTitle"
     char buf[128];
-    sprintf(buf, "Animated title %c %d###AnimatedTitle", "|/-\\"[(int)(ImGui::GetTime()/0.25f)&3], ImGui::GetFrameCount());
+    sprintf_s(buf, "Animated title %c %d###AnimatedTitle", "|/-\\"[(int)(ImGui::GetTime()/0.25f)&3], ImGui::GetFrameCount());
     ImGui::SetNextWindowPos(ImVec2(100,300), ImGuiCond_FirstUseEver);
     ImGui::Begin(buf);
     ImGui::Text("This window has a changing title.");
@@ -2911,7 +2911,7 @@ static void ShowExampleAppLayout(bool* p_open)
         for (int i = 0; i < 100; i++)
         {
             char label[128];
-            sprintf(label, "MyObject %d", i);
+            sprintf_s(label, "MyObject %d", i);
             if (ImGui::Selectable(label, selected == i))
                 selected = i;
         }
@@ -2976,7 +2976,7 @@ static void ShowExampleAppPropertyEditor(bool* p_open)
                         // Here we use a Selectable (instead of Text) to highlight on hover
                         //ImGui::Text("Field_%d", i);
                         char label[32];
-                        sprintf(label, "Field_%d", i);
+                        sprintf_s(label, "Field_%d", i);
                         ImGui::Bullet();
                         ImGui::Selectable(label);
                         ImGui::NextColumn();

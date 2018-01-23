@@ -34,6 +34,45 @@
     <ClCompile Include="imgui-1.53\imgui_impl_sdl_gl3.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleCamera.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Geometry\Frustum.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\float2.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\float3.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Geometry\Ray.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Geometry\AABB.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\float3x3.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\float3x4.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\float4.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\float4x4.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\MathFunc.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\MathLog.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathgeolib\include\Math\BitOps.cpp">
+      <Filter>MathGeo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -66,6 +105,12 @@
     <ClInclude Include="ModuleImGui.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleCamera.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -79,6 +124,9 @@
     </Filter>
     <Filter Include="ImGui">
       <UniqueIdentifier>{dc834630-31fa-4058-9b35-b5ce874458df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathGeo">
+      <UniqueIdentifier>{24afb259-8c06-48dc-8eaa-ec6856c90430}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
