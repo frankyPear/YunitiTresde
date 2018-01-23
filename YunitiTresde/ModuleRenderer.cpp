@@ -6,11 +6,12 @@
 #include "OpenGL.h"
 #include "Quad.h"
 
+#pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
 #pragma comment (lib, "SDL/libx86/SDL2main.lib")
 #pragma comment (lib, "opengl32.lib")
 #pragma comment (lib, "glu32.lib")
-#pragma comment (lib, "Glew/libx86/glew32.lib")
+
 
 ModuleRenderer::ModuleRenderer()
 {
@@ -41,6 +42,7 @@ bool ModuleRenderer::Init() {
 	
 	//Create context
 	context_ = SDL_GL_CreateContext(App->window->GetWindow());
+
 	if (context_ == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());

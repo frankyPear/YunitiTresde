@@ -16,14 +16,19 @@ public:
 
 	bool Init();
 
-
+	update_status PreUpdate();
 	update_status Update();
 
+	bool CleanUp();
 
+public:
 
+	
 
 private:
 
+	bool show_demo_window = true;
+	
 };
 
 

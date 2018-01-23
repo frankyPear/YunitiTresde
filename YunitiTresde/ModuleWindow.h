@@ -17,10 +17,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-private:
-	SDL_Window* window_ = nullptr;
-	SDL_Surface* screen_surface_ = nullptr;
 
+
+private:
+	
+	SDL_Surface* screen_surface_ = nullptr;
+	SDL_Window* window_ = nullptr;
 };
 
 #endif // !_MODULEWINDOW_

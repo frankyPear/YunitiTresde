@@ -185,7 +185,8 @@ void ImGui::ShowDemoWindow(bool* p_open)
     if (no_collapse)  window_flags |= ImGuiWindowFlags_NoCollapse;
     if (no_close)     p_open = NULL; // Don't pass our bool* to Begin
 
-    ImGui::SetNextWindowSize(ImVec2(550,680), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(0, 38));
+	ImGui::SetNextWindowSize(ImVec2(550,680), ImGuiCond_FirstUseEver);
     if (!ImGui::Begin("ImGui Demo", p_open, window_flags))
     {
         // Early out if the window is collapsed, as an optimization.
@@ -2278,7 +2279,9 @@ static void ShowExampleMenuFile()
         IM_ASSERT(0);
     }
     if (ImGui::MenuItem("Checked", NULL, true)) {}
-    if (ImGui::MenuItem("Quit", "Alt+F4")) {}
+    if (ImGui::MenuItem("Quit", "Alt+F4")) {
+
+	}
 }
 
 // Demonstrate creating a window which gets auto-resized according to its content.
