@@ -11,7 +11,7 @@
 
 ModuleImGui::ModuleImGui()
 {
-	//sting liscense
+	//TODO sting liscense
 }
 
 ModuleImGui::~ModuleImGui()
@@ -45,7 +45,7 @@ update_status ModuleImGui::PreUpdate()
 }
 update_status ModuleImGui::Update()
 {
-	
+	//Rendering before than that of Module Render, shall we changed?
 	ImGui::ShowDemoWindow(&show_demo_window);
 	ImGui::Render();
 
