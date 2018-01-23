@@ -9,7 +9,7 @@
 class ModuleRenderer;
 class ModuleWindow;
 class ModuleInput;
-class ModuleTest;
+class ModuleImGui;
 
 class Application
 {
@@ -28,6 +28,7 @@ public:
 	ModuleRenderer* renderer;
 	ModuleWindow* window;
 	ModuleInput* input;
+	ModuleImGui* imgui;
 
 	bool switchmap = false;
 private:

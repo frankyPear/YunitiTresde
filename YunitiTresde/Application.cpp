@@ -2,6 +2,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
+#include "ModuleImGui.h"
 //Included mathgeolib
 #include "Mathgeolib\include\MathBuildConfig.h"
 #include "Mathgeolib\include\MathGeoLib.h"
@@ -16,10 +17,12 @@ Application::Application()
 	input = new ModuleInput();
 	window = new ModuleWindow();
 	renderer = new ModuleRenderer();
+	imgui = new ModuleImGui();
 
 	modules.push_back(input);
 	modules.push_back(window);
 	modules.push_back(renderer);
+	modules.push_back(imgui);
 
 }
 

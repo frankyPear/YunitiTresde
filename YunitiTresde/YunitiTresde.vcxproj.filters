@@ -19,6 +19,21 @@
     <ClCompile Include="Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleImGui.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.53\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.53\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.53\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.53\imgui_impl_sdl_gl3.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -48,6 +63,9 @@
     <ClInclude Include="Quad.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleImGui.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -58,6 +76,9 @@
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{54d63224-7582-4967-af13-faf6d9fb6896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{dc834630-31fa-4058-9b35-b5ce874458df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
