@@ -5,6 +5,7 @@
 #include "Mathgeolib\include\MathGeoLib.h"
 #include "OpenGL.h"
 #include "Quad.h"
+#include "Sphere.h"
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
@@ -26,7 +27,7 @@ ModuleRenderer::~ModuleRenderer()
 bool ModuleRenderer::Init() {
 	bool ret = true;
 	
-
+	sphere = new SolidSphere(1.0f,20.0f,20.0f);
 	//Set Attributes 
 	//CORE_PROFILE, uses the new opengl profile
 	//There are several context profiles (Ex:_ES for mobile
@@ -114,7 +115,8 @@ update_status ModuleRenderer::Update()
 update_status ModuleRenderer::PostUpdate()
 {
 	
-	DrawElementQuad();
+	//DrawElementQuad();
+	sphere->draw(0.0f,0.0f,0.0f);
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
