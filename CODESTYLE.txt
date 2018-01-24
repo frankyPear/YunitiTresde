@@ -9,3 +9,10 @@ This is the Code Style that will implement during this project.
 +Class Data Members:
 
 +Use of const:
+
++Headers:
+    -Always use:
+              #ifndef _MODULEXXXX_
+              #define _MODULEXXXX_
+              
+              #endif _MODULEXXXX_
