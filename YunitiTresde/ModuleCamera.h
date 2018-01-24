@@ -19,8 +19,8 @@ public:
 	update_status Update();
 	void SetFOV(float degrees);
 	void SetAspectRatio();
-	void SetPlaneDistances();
-	void SetPosition();
+	void SetPlaneDistances(float zNear, float zFar);
+	void SetPosition(float3 newPos);
 	//void LookAt(int x, int y, int z);
 	float *GetProjectionMatrix();
 	float *GetViewMatrix();

@@ -24,7 +24,6 @@ ModuleCamera::ModuleCamera()
 	frustum_.verticalFov = DegToRad(60.0f);
 	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
 	camSpeed = 0.05f;
-	frustum_.ProjectionMatrix();
 }
 
 ModuleCamera::~ModuleCamera()
@@ -99,7 +98,7 @@ float* ModuleCamera::GetViewMatrix()
 void ModuleCamera::SetFOV(float degrees)
 {
 	frustum_.verticalFov = DegToRad(degrees);
-	frustum_.horizontalFov = aspectRatio *  frustum_.verticalFov;
+	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio));
 }
 
 void ModuleCamera::SetAspectRatio()
@@ -107,12 +106,13 @@ void ModuleCamera::SetAspectRatio()
 	aspectRatio = frustum_.horizontalFov / frustum_.verticalFov;
 }
 
-void ModuleCamera::SetPlaneDistances()
+void ModuleCamera::SetPlaneDistances(float zNear, float zFar)
 {
-
+	frustum_.nearPlaneDistance = zNear;
+	frustum_.farPlaneDistance = zFar;
 }
 
-void ModuleCamera::SetPosition()
+void ModuleCamera::SetPosition(float3 newPos)
 {
-
+	frustum_.pos = newPos;
 }
