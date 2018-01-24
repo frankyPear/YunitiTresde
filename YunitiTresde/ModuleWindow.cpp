@@ -53,9 +53,23 @@ bool ModuleWindow::Start() {
 
 
 update_status ModuleWindow::Update() {
-
 	
+	//Check if size has changed
+	int temp_w = width_;
+	width_ = GetWidth();
+	if (temp_w != width_)
+	{
+		LOG("Width has changed");
+	}
 
+	int temp_h = height_;
+	height_ = GetHeight();
+	if (temp_w != width_)
+	{
+		LOG("Height has changed");
+	}
+		
+	
 	return UPDATE_CONTINUE;
 }
 

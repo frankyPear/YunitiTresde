@@ -26,7 +26,7 @@ private:
 
 	SDL_Surface* screen_surface_ = nullptr;
 	SDL_Window* window_ = nullptr;
-	SDL_Event event_;
+	SDL_Event* event_;
 
 	int height_;
 	int width_;
