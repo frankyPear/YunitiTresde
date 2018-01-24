@@ -17,6 +17,13 @@ public:
 
 	update_status PreUpdate();
 	update_status Update();
+	//int SetFOV();
+	//int SetAspectRatio();
+	//int SetPlaneDistances();
+	//int SetPosition();
+	//void LookAt(int x, int y, int z);
+	//void GetProjectionMatrix();
+	//void GetViewMatrix();
 
 	bool CleanUp();
 
