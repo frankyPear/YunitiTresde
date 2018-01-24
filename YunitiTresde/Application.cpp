@@ -3,6 +3,7 @@
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
 #include "ModuleImGui.h"
+#include "ModuleCamera.h"
 //Included mathgeolib
 #include "Mathgeolib\include\MathBuildConfig.h"
 #include "Mathgeolib\include\MathGeoLib.h"
@@ -18,12 +19,13 @@ Application::Application()
 	window = new ModuleWindow();
 	renderer = new ModuleRenderer();
 	imgui = new ModuleImGui();
+	cam = new ModuleCamera();
 
 	modules.push_back(input);
 	modules.push_back(window);
 	modules.push_back(renderer);
 	modules.push_back(imgui);
-
+	modules.push_back(cam);
 }
 
 

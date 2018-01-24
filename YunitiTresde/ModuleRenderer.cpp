@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleRenderer.h"
+#include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
@@ -95,6 +96,15 @@ bool ModuleRenderer::Start()
 
 update_status ModuleRenderer::PreUpdate()
 {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glLoadMatrixf(App->cam->GetProjectionMatrix());
+
+	//Init Modelview Matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glLoadMatrixf(App->cam->GetViewMatrix());
+
 	glClearColor(0, 0, 0, 255);
 	//Clear the window to draw the next frame
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
