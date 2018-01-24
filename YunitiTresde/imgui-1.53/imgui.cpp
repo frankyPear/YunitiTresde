@@ -431,7 +431,7 @@
        Button("Hello###ID";   // Label = "Hello",  ID = hash of "ID"
        Button("World###ID";   // Label = "World",  ID = hash of "ID" (same as above)
 
-       sprintf(buf, "My game (%f FPS)###MyGame");
+       sprintf_s(buf, "My game (%f FPS)###MyGame");
        Begin(buf);            // Variable label,   ID = hash of "MyGame"
 
    - Use PushID() / PopID() to create scopes and avoid ID conflicts within the same Window.
@@ -602,7 +602,7 @@
 #ifdef _MSC_VER
 #pragma warning (disable: 4127) // condition expression is constant
 #pragma warning (disable: 4505) // unreferenced local function has been removed (stb stuff)
-#pragma warning (disable: 4996) // 'This function or variable may be unsafe': strcpy, strdup, sprintf, vsnprintf, sscanf, fopen
+#pragma warning (disable: 4996) // 'This function or variable may be unsafe': strcpy, strdup, sprintf_s, vsnprintf, sscanf, fopen
 #endif
 
 // Clang warnings with -Weverything
