@@ -22,8 +22,9 @@ ModuleCamera::ModuleCamera()
 	frustum_.nearPlaneDistance = 0.5f;
 	frustum_.farPlaneDistance = 1000.0f;
 	frustum_.verticalFov = DegToRad(60.0f);
-	frustum_.horizontalFov = frustum_.verticalFov * (aspectRatio);
+	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
 	camSpeed = 0.05f;
+	frustum_.ProjectionMatrix();
 }
 
 ModuleCamera::~ModuleCamera()
@@ -61,9 +62,9 @@ update_status ModuleCamera::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) frustum_.front = frustum_.front.Add(float3(0.0f, 0.0f ,-camSpeed));
 	
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) frustum_.front = frustum_.WorldRight().Add(float3(-camSpeed, 0.0f, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(-camSpeed, 0.0f, 0.0f));
 	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) frustum_.front = frustum_.WorldRight().Add(float3(camSpeed, 0.0f, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(camSpeed, 0.0f, 0.0f));
 	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) 
 	{

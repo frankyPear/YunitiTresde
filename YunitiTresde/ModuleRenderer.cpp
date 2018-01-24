@@ -97,13 +97,15 @@ bool ModuleRenderer::Start()
 update_status ModuleRenderer::PreUpdate()
 {
 	glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	glLoadMatrixf(App->cam->GetProjectionMatrix());
+	glLoadIdentity();
+	glLoadMatrixf(App->cam->GetViewMatrix());
+
+	//glLoadMatrixf(App->cam->GetProjectionMatrix());
 
 	//Init Modelview Matrix
 	glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
-	glLoadMatrixf(App->cam->GetViewMatrix());
+	//glLoadMatrixf(App->cam->GetViewMatrix());
 
 	glClearColor(0, 0, 0, 255);
 	//Clear the window to draw the next frame
