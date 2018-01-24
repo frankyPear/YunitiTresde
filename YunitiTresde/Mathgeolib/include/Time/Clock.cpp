@@ -1,4 +1,4 @@
-/* Copyright 2010 Jukka Jyl‰nki
+/* Copyright 2010 Jukka Jyl√§nki
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@
 #include "Clock.h"
 #include "../Math/myassert.h"
 #include "../Math/assume.h"
+#include <time.h>
 
 MATH_BEGIN_NAMESPACE
 
@@ -105,6 +106,8 @@ void Clock::Sleep(int milliseconds)
 #elif defined(WIN32)
 	::Sleep(milliseconds);
 #elif !defined(__native_client__) && !defined(EMSCRIPTEN)
+
+
 	//// http://linux.die.net/man/2/nanosleep
 	//timespec ts;
 	//ts.tv_sec = milliseconds / 1000;
@@ -112,6 +115,7 @@ void Clock::Sleep(int milliseconds)
 	//int ret = nanosleep(&ts, NULL);
 	//if (ret == -1)
 	//	LOGI("nanosleep returned -1! Reason: %s(%d).", strerror(errno), (int)errno);
+
 #else
 #warning Clock::Sleep has not been implemented!
 #endif

@@ -34,6 +34,7 @@
     <ClCompile Include="imgui-1.53\imgui_impl_sdl_gl3.cpp">
       <Filter>Tools\ImGui</Filter>
     </ClCompile>
+
     <ClCompile Include="Mathgeolib\include\Algorithm\Random\LCG.cpp">
       <Filter>Tools\MathGeoLib\extras</Filter>
     </ClCompile>
@@ -123,6 +124,7 @@
     </ClCompile>
     <ClCompile Include="Mathgeolib\include\Time\Clock.cpp">
       <Filter>Tools\MathGeoLib\extras</Filter>
+
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +158,7 @@
     <ClInclude Include="ModuleImGui.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
+
     <ClInclude Include="Sphere.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -332,6 +335,7 @@
     </ClInclude>
     <ClInclude Include="Mathgeolib\include\Time\Clock.h">
       <Filter>Tools\MathGeoLib\extras</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +350,7 @@
     </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{5daf8790-d00d-4238-a5a9-5481544ea74e}</UniqueIdentifier>
+
     </Filter>
     <Filter Include="Tools\ImGui">
       <UniqueIdentifier>{dc834630-31fa-4058-9b35-b5ce874458df}</UniqueIdentifier>
@@ -375,6 +380,26 @@
     </None>
     <None Include="Mathgeolib\include\Math\Matrix.inl">
       <Filter>Tools\MathGeoLib\extras</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mathgeolib\include\Geometry\KDTree.inl">
+      <Filter>Tools\MathGeo\extras</Filter>
+    </None>
+    <None Include="Mathgeolib\include\Geometry\QuadTree.inl">
+      <Filter>Tools\MathGeo\extras</Filter>
+    </None>
+    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl">
+      <Filter>Tools\MathGeo\extras</Filter>
+    </None>
+    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl">
+      <Filter>Tools\MathGeo\extras</Filter>
+    </None>
+    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl">
+      <Filter>Tools\MathGeo\extras</Filter>
+    </None>
+    <None Include="Mathgeolib\include\Math\Matrix.inl">
+      <Filter>Tools\MathGeo\extras</Filter>
     </None>
   </ItemGroup>
 </Project>
