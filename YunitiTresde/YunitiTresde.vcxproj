@@ -122,7 +122,6 @@
     <ClInclude Include="..\..\..\Outrun1986-\Point.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Globals.h" />
-
     <ClInclude Include="Mathgeolib\include\Algorithm\Random\LCG.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB2D.h" />
@@ -229,19 +228,16 @@
     <ClCompile Include="Mathgeolib\include\Math\SSEMath.cpp" />
     <ClCompile Include="Mathgeolib\include\Math\TransformOps.cpp" />
     <ClCompile Include="Mathgeolib\include\Time\Clock.cpp" />
-
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Mathgeolib\include\Geometry\KDTree.inl" />
-    <None Include="Mathgeolib\include\Geometry\QuadTree.inl" />
-    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />
-    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl" />
-    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="Mathgeolib\include\Math\Matrix.inl" />
+    <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_AVX.inl" />
+    <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_CPP.inl" />
+    <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
