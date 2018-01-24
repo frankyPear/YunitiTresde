@@ -2,6 +2,7 @@
 #include "ModuleRenderer.h"
 #include "ModuleWindow.h"
 #include "SDL\include\SDL.h"
+//#include "GroundPlane.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 #include "OpenGL.h"
 #include "Quad.h"
@@ -113,7 +114,7 @@ update_status ModuleRenderer::Update()
 
 update_status ModuleRenderer::PostUpdate()
 {
-	
+	//InnerRender();
 	DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 

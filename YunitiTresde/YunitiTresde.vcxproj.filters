@@ -34,6 +34,9 @@
     <ClCompile Include="imgui-1.53\imgui_impl_sdl_gl3.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="GroundPlane.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="ModuleImGui.h">
       <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundPlane.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
