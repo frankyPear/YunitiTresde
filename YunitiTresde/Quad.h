@@ -258,6 +258,7 @@ GLubyte indices[] = {
 16,17,18,  18,19,16,      // bottom
 20,21,22,  22,23,20 };    // back
 
+bool wire = true;
 ///////////////////////////////////////////////////////////////////////////////
 // draw cube at bottom-left corner with glDrawElements
 // The main advantage of glDrawElements() over glDrawArray() is that
@@ -269,6 +270,7 @@ GLubyte indices[] = {
 // the vertext data. For a cube, we need 36 entries in the index array.
 ///////////////////////////////////////////////////////////////////////////////
 
+
 void DrawElementQuad()
 {
 	// enable and specify pointers to vertex arrays
@@ -278,7 +280,7 @@ void DrawElementQuad()
 	glNormalPointer(GL_FLOAT, 0, normals2);
 	glColorPointer(3, GL_FLOAT, 0, colors2);
 	glVertexPointer(3, GL_FLOAT, 0, vertices2);
-	glRotatef(0.75f, 1, 1, 0);
+	//glRotatef(0.75f, 1, 1, 0);
 	glPushMatrix();	
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();
@@ -288,3 +290,130 @@ void DrawElementQuad()
 }
 #endif // !_QUAD_
 
+void DrawElementPlane()
+{
+	float size = 25.0f;
+	float step = 0.5f; // Space between squares
+	
+	glDisable(GL_LIGHTING);
+	
+	glBegin(GL_LINES);
+
+	glColor3f(1.5f, 1.5f, 1.5f);
+	for (float i = step; i <= size; i += step)
+	{
+		//Parallel lines to Z
+		glVertex3f(i, 0, -size);
+		glVertex3f(i, 0, size);
+		glVertex3f(-i, 0, -size);
+		glVertex3f(-i, 0, size);
+		//Parallel lines to X
+		glVertex3f(-size, 0, i);   
+		glVertex3f(size, 0, i);
+		glVertex3f(-size, 0, -i);
+		glVertex3f(size, 0, -i);
+	}
+
+	//// x-axis
+	//glColor3f(1, 0, 0);
+	//glVertex3f(-size, 0, 0);
+	//glVertex3f(size, 0, 0);
+	//
+	//// z-axis
+	//glColor3f(0, 0, 1);
+	//glVertex3f(0, 0, -size);
+	//glVertex3f(0, 0, size);
+
+	glEnd();
+
+	
+	glEnable(GL_LIGHTING);
+
+}
+/* Proves de renderitzar
+//void RenderPlane() {
+//	//glLineWidth(1.0f);
+//	//
+//	//glBegin(GL_LINES);
+//	//
+//	//float d = 200.0f;
+//	//
+//	//for (float i = -d; i <= d; i += 1.0f)
+//	//{
+//	//	glVertex3f(i, 0.0f, -d);
+//	//	glVertex3f(i, 0.0f, d);
+//	//	glVertex3f(-d, 0.0f, i);
+//	//	glVertex3f(d, 0.0f, i);
+//	//}
+//	//
+//	//glEnd();
+//}
+void DrawElementPlane3()
+{
+//	float mat44[16] = { 2,2,2,2, 2,2,2,2, 2,2,2,2, 2,2,2,2 };
+//	glPushMatrix();
+//	glMultMatrixf(mat44);//transform.M);
+//
+//	//if (axis == true)
+//	//{
+//		// Draw Axis Grid
+//		glLineWidth(2.0f);
+//
+//		glBegin(GL_LINES);
+//
+//		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+//
+//		glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
+//		glVertex3f(1.0f, 0.1f, 0.0f); glVertex3f(1.1f, -0.1f, 0.0f);
+//		glVertex3f(1.1f, 0.1f, 0.0f); glVertex3f(1.0f, -0.1f, 0.0f);
+//
+//		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+//
+//		glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 1.0f, 0.0f);
+//		glVertex3f(-0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
+//		glVertex3f(0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
+//		glVertex3f(0.0f, 1.15f, 0.0f); glVertex3f(0.0f, 1.05f, 0.0f);
+//
+//		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+//
+//		glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
+//		glVertex3f(-0.05f, 0.1f, 1.05f); glVertex3f(0.05f, 0.1f, 1.05f);
+//		glVertex3f(0.05f, 0.1f, 1.05f); glVertex3f(-0.05f, -0.1f, 1.05f);
+//		glVertex3f(-0.05f, -0.1f, 1.05f); glVertex3f(0.05f, -0.1f, 1.05f);
+//
+//		glEnd();
+//
+//		glLineWidth(1.0f);
+//	//}
+//
+//	glColor3f(1.0f, 1.0f, 1.0f);
+//
+//	if (wire) {
+//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//		wire = false;
+//	}
+//	else {
+//		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+//		wire = true;
+//	}
+//	InnerRender();
+//
+//	glPopMatrix();
+//
+//	glLineWidth(1.0f);
+//
+//	glBegin(GL_LINES);
+//
+//	float d = 200.0f;
+//
+//	for (float i = -d; i <= d; i += 1.0f)
+//	{
+//		glVertex3f(i, 0.0f, -d);
+//		glVertex3f(i, 0.0f, d);
+//		glVertex3f(-d, 0.0f, i);
+//		glVertex3f(d, 0.0f, i);
+//	}
+//
+//	glEnd();
+//	DrawElementPlane2(10.0f, 1.0f);
+}*/
