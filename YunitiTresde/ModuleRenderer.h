@@ -5,6 +5,8 @@
 #include "Module.h"
 #include "SDL\include\SDL.h"
 
+class SolidSphere;
+
 class Color 
 {
 
@@ -38,7 +40,7 @@ private:
 
 	SDL_GLContext context_;
 	
-
+	SolidSphere *sphere;
 };
 
 #endif // !_RENDER_
