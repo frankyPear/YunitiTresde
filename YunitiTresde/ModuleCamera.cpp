@@ -22,7 +22,6 @@ ModuleCamera::ModuleCamera()
 	frustum_.nearPlaneDistance = 0.5f;
 	frustum_.farPlaneDistance = 1000.0f;
 	frustum_.verticalFov = DegToRad(60.0f);
-	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
 	frustum_.horizontalFov = DegToRad(36.0f);
 		//2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
 	camSpeed = 0.05f;
