@@ -69,19 +69,23 @@ update_status ModuleCamera::Update()
 	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) 
 	{
-		
+		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), camSpeed);
+		frustum_.Transform(q);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) 
 	{
-	
+		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), -camSpeed);
+		frustum_.Transform(q);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-
+		Quat q = Quat::RotateAxisAngle(float3(0.0f, 1.0f, 0.0f), -camSpeed);
+		frustum_.Transform(q);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-	
+		Quat q = Quat::RotateAxisAngle(float3(0.0f, 1.0f, 0.0f), camSpeed);
+		frustum_.Transform(q);
 	}
 
 	return UPDATE_CONTINUE;
