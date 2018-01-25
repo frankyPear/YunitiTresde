@@ -228,6 +228,7 @@
     <ClCompile Include="Mathgeolib\include\Math\SSEMath.cpp" />
     <ClCompile Include="Mathgeolib\include\Math\TransformOps.cpp" />
     <ClCompile Include="Mathgeolib\include\Time\Clock.cpp" />
+    <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer.cpp" />

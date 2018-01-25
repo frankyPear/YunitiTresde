@@ -124,6 +124,9 @@
     <ClCompile Include="Mathgeolib\include\Time\Clock.cpp">
       <Filter>Tools\MathGeoLib\extras</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleCamera.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
