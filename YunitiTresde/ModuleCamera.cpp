@@ -54,17 +54,17 @@ update_status ModuleCamera::PreUpdate()
 
 update_status ModuleCamera::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f,camSpeed,0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, camSpeed, 0.0f));
 
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, -camSpeed, 0.0f));
 	
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) frustum_.front = frustum_.front.Add(float3(0.0f, 0.0f,camSpeed));
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) frustum_.pos += frustum_.front.Add(float3(0.0f, 0.0f, camSpeed));
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) frustum_.front = frustum_.front.Add(float3(0.0f, 0.0f ,-camSpeed));
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) frustum_.pos -= frustum_.front.Add(float3(0.0f, 0.0f, camSpeed));
 	
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(-camSpeed, 0.0f, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) frustum_.pos -= frustum_.WorldRight().Add(float3(camSpeed, 0.0f, 0.0f));
 	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(camSpeed, 0.0f, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) frustum_.pos += frustum_.WorldRight().Add(float3(camSpeed, 0.0f, 0.0f));
 	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) 
 	{
@@ -78,12 +78,12 @@ update_status ModuleCamera::Update()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		Quat q = Quat::RotateAxisAngle(float3(0.0f, 1.0f, 0.0f), -camSpeed);
-		frustum_.Transform(q);
+		Quat q = Quat::RotateAxisAngle(frustum_.up, -camSpeed);
+		frustum_.Transform(q); 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		Quat q = Quat::RotateAxisAngle(float3(0.0f, 1.0f, 0.0f), camSpeed);
+		Quat q = Quat::RotateAxisAngle(frustum_.up, camSpeed);
 		frustum_.Transform(q);
 	}
 
