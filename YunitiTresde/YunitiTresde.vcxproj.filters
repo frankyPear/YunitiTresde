@@ -361,24 +361,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Mathgeolib\include\Geometry\KDTree.inl">
-      <Filter>Tools\MathGeo\extras</Filter>
-    </None>
-    <None Include="Mathgeolib\include\Geometry\QuadTree.inl">
-      <Filter>Tools\MathGeo\extras</Filter>
-    </None>
-    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl">
-      <Filter>Tools\MathGeo\extras</Filter>
-    </None>
-    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl">
-      <Filter>Tools\MathGeo\extras</Filter>
-    </None>
-    <None Include="Mathgeolib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl">
-      <Filter>Tools\MathGeo\extras</Filter>
-    </None>
-    <None Include="Mathgeolib\include\Math\Matrix.inl">
-      <Filter>Tools\MathGeo\extras</Filter>
-    </None>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl">
       <Filter>Tools\MathGeoLib\extras</Filter>
     </None>
@@ -386,6 +368,9 @@
       <Filter>Tools\MathGeoLib\extras</Filter>
     </None>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_AVX.inl">
+      <Filter>Tools\MathGeoLib\extras</Filter>
+    </None>
+    <None Include="Mathgeolib\include\Math\Matrix.inl">
       <Filter>Tools\MathGeoLib\extras</Filter>
     </None>
     <None Include="Mathgeolib\include\Math\Matrix.inl">

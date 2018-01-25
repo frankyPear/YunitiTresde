@@ -81,8 +81,10 @@ bool ModuleRenderer::Init() {
 	glEnable(GL_TEXTURE_2D);
 
 	//Set the camera 
-	glOrtho(-5, 5, -5, 5, -5, 5);
-
+	//glOrtho(-5, 5, -5, 5, -5, 5);
+	gluLookAt(1.0, 0.0, -0.5, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
+	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
+	//glulookAt(1, 0, -1);
 		
 
 	return ret;
@@ -115,7 +117,7 @@ update_status ModuleRenderer::Update()
 update_status ModuleRenderer::PostUpdate()
 {
 	
-	//DrawElementQuad();
+	DrawElementPlane();
 	sphere->draw(0.0f,0.0f,0.0f);
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
