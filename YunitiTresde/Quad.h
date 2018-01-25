@@ -8,7 +8,7 @@ void DrawImmediateQuad()
 	glPushMatrix();
 	//draw stuff
 	
-	glRotatef(0.75f, 1, 1, 0);
+	
 	glBegin(GL_TRIANGLES);
 	// front faces
 	glNormal3f(0, 0, 1);
@@ -278,7 +278,7 @@ void DrawElementQuad()
 	glNormalPointer(GL_FLOAT, 0, normals2);
 	glColorPointer(3, GL_FLOAT, 0, colors2);
 	glVertexPointer(3, GL_FLOAT, 0, vertices2);
-	glRotatef(0.75f, 1, 1, 0);
+	//glRotatef(0.75f, 1, 1, 0);
 	glPushMatrix();	
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();
@@ -315,7 +315,7 @@ void DrawElementPlane()
 	glColor3f(1, 0, 0);
 	glVertex3f(-size, 0, 0);
 	glVertex3f(size, 0, 0);
-	
+
 	// z-axis
 	glColor3f(0, 0, 1);
 	glVertex3f(0, 0, -size);
@@ -327,7 +327,6 @@ void DrawElementPlane()
 	glEnable(GL_LIGHTING);
 
 }
-
 
 #endif // !_QUAD_
 

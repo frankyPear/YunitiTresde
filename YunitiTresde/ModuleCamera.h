@@ -17,13 +17,13 @@ public:
 
 	update_status PreUpdate();
 	update_status Update();
-	//int SetFOV();
-	//int SetAspectRatio();
-	//int SetPlaneDistances();
-	//int SetPosition();
+	void SetFOV(float degrees);
+	void SetAspectRatio();
+	void SetPlaneDistances(float zNear, float zFar);
+	void SetPosition(float3 newPos);
 	//void LookAt(int x, int y, int z);
-	//void GetProjectionMatrix();
-	//void GetViewMatrix();
+	float *GetProjectionMatrix();
+	float *GetViewMatrix();
 
 	bool CleanUp();
 
@@ -34,7 +34,8 @@ public:
 private:
 
 	Frustum frustum_;
-
+	float camSpeed;
+	float aspectRatio;
 };
 
 

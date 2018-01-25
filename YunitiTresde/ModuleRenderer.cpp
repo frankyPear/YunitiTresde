@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleRenderer.h"
+#include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
@@ -82,9 +83,8 @@ bool ModuleRenderer::Init() {
 
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
-	gluLookAt(1.0, 0.0, -0.5, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-	//glulookAt(1, 0, -1);
+
 		
 
 	return ret;
@@ -98,10 +98,20 @@ bool ModuleRenderer::Start()
 
 update_status ModuleRenderer::PreUpdate()
 {
-	glClearColor(0, 0, 0, 255);
 	//Clear the window to draw the next frame
+	glClearColor(0, 0, 0, 255);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->cam->GetProjectionMatrix());
+
+	//Init Modelview Matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(App->cam->GetViewMatrix());
+
+
 	
+
 
 
 
@@ -116,6 +126,7 @@ update_status ModuleRenderer::Update()
 
 update_status ModuleRenderer::PostUpdate()
 {
+
 	
 	DrawElementPlane();
 	sphere->draw(0.0f,0.0f,0.0f);

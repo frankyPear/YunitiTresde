@@ -10,6 +10,7 @@ class ModuleRenderer;
 class ModuleWindow;
 class ModuleInput;
 class ModuleImGui;
+class ModuleCamera;
 
 class Application
 {
@@ -29,6 +30,7 @@ public:
 	ModuleWindow* window;
 	ModuleInput* input;
 	ModuleImGui* imgui;
+	ModuleCamera* cam;
 
 	bool switchmap = false;
 private:
