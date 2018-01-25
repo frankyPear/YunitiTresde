@@ -286,6 +286,7 @@ void DrawElementQuad()
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
+
 void DrawElementPlane()
 {
 	float size = 25.0f;
