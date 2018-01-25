@@ -81,8 +81,8 @@ bool ModuleRenderer::Init() {
 	glEnable(GL_TEXTURE_2D);
 
 	//Set the camera 
-	glOrtho(-5, 5, -5, 5, -5, 5);
-
+	//glOrtho(-5, 5, -5, 5, -5, 5);
+	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
 		
 
 	return ret;
@@ -96,21 +96,20 @@ bool ModuleRenderer::Start()
 
 update_status ModuleRenderer::PreUpdate()
 {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glLoadMatrixf(App->cam->GetViewMatrix());
+	//Clear the window to draw the next frame
+	glClearColor(0, 0, 0, 255);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//glLoadMatrixf(App->cam->GetProjectionMatrix());
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->cam->GetProjectionMatrix());
 
 	//Init Modelview Matrix
 	glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
-	//glLoadMatrixf(App->cam->GetViewMatrix());
+	glLoadMatrixf(App->cam->GetViewMatrix());
 
-	glClearColor(0, 0, 0, 255);
-	//Clear the window to draw the next frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	
+
 
 
 
@@ -125,8 +124,8 @@ update_status ModuleRenderer::Update()
 
 update_status ModuleRenderer::PostUpdate()
 {
-	
-	DrawElementQuad();
+	DrawElementPlane();
+	//DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
