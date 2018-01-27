@@ -40,7 +40,7 @@ bool Application::Init()
 	bool ret = true;
 
 		for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
-			ret = (*it)->Init(); // we init everything, even if not enabled
+			ret = (*it)->Init(); 
 	
 		for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		{
@@ -56,6 +56,7 @@ bool Application::Init()
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
+	StartTimer();
 
 	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if ((*it)->IsEnabled() == true)
@@ -69,6 +70,7 @@ update_status Application::Update()
 		if ((*it)->IsEnabled() == true)
 			ret = (*it)->PostUpdate(dt_);
 
+	CalculateDt();
 	return ret;
 }
 
@@ -83,4 +85,13 @@ bool Application::CleanUp()
 	return ret;
 }
 
+void Application::StartTimer()
+{
+	ms_timer_.Start();
+	startTime_ = (float)ms_timer_.Read() / 1000.0f;
+}
 
+void Application::CalculateDt()
+{
+	dt_ = (float)ms_timer_.Read / 1000.0f - startTime_;
+}

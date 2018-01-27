@@ -23,8 +23,9 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	//void RerunTimer();
-
+	void StartTimer();
+	void CalculateDt();
+	
 public:
 	ModuleRenderer* renderer;
 	ModuleWindow* window;
@@ -36,7 +37,7 @@ public:
 private:
 	Timer ms_timer_;
 	float dt_;
-
+	float startTime_;
 	std::list<Module*> modules;
 
 };
