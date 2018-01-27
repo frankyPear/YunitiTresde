@@ -1,12 +1,11 @@
 #include "Application.h"
 #include "ModuleRenderer.h"
 #include "ModuleCamera.h"
+#include "ModuleTextures.h"
 #include "ModuleWindow.h"
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
-#include "OpenGL.h"
 #include "Quad.h"
-#include "Sphere.h"
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
@@ -17,7 +16,6 @@
 
 ModuleRenderer::ModuleRenderer()
 {
-	
 }
 
 
@@ -27,8 +25,7 @@ ModuleRenderer::~ModuleRenderer()
 
 bool ModuleRenderer::Init() {
 	bool ret = true;
-	
-	sphere = new SolidSphere(1.0f,20.0f,20.0f);
+
 	//Set Attributes 
 	//CORE_PROFILE, uses the new opengl profile
 	//There are several context profiles (Ex:_ES for mobile
@@ -41,7 +38,6 @@ bool ModuleRenderer::Init() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-	
 	//Create context
 	context_ = SDL_GL_CreateContext(App->window->GetWindow());
 
@@ -53,7 +49,7 @@ bool ModuleRenderer::Init() {
 	//used in the tutorial, to use modern way of glew
 	glewExperimental = GL_TRUE;
 	//Init GLEW
-	if (glewInit()!=GLEW_OK)
+	if (glewInit() != GLEW_OK)
 	{
 		LOG("Failed to initalize GLEW! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
@@ -81,11 +77,11 @@ bool ModuleRenderer::Init() {
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
 
+	
+
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-
-		
 
 	return ret;
 }
@@ -110,10 +106,17 @@ update_status ModuleRenderer::PreUpdate()
 	glLoadMatrixf(App->cam->GetViewMatrix());
 
 
-	
+	glBegin(GL_TRIANGLES);
+	App->textures->DrawCheckers();
 
-
-
+	// front faces
+	glVertex3f(-1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
+	glVertex3f(1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
+	glVertex3f(1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
+	glVertex3f(1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
+	glVertex3f(-1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
+	glVertex3f(-1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
+	glEnd();
 
 	return UPDATE_CONTINUE;
 }
@@ -126,10 +129,9 @@ update_status ModuleRenderer::Update()
 
 update_status ModuleRenderer::PostUpdate()
 {
-
-	
 	DrawElementPlane();
-	sphere->draw(0.0f,0.0f,0.0f);
+
+	//DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;

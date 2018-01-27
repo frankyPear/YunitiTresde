@@ -7,8 +7,7 @@ void DrawImmediateQuad()
 {
 	glPushMatrix();
 	//draw stuff
-	
-	
+		
 	glBegin(GL_TRIANGLES);
 	// front faces
 	glNormal3f(0, 0, 1);
@@ -325,7 +324,7 @@ void DrawElementPlane()
 
 
 	glEnable(GL_LIGHTING);
-
+	glColor3f(1, 1, 1);
 }
 
 #endif // !_QUAD_

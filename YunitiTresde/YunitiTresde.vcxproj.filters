@@ -124,6 +124,12 @@
     <ClCompile Include="Mathgeolib\include\Time\Clock.cpp">
       <Filter>Tools\MathGeoLib\extras</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleCamera.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -336,6 +342,35 @@
     <ClInclude Include="ModuleCamera.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Math.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="ModuleTextures.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp">
+      <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\devil_internal_exports.h">
+      <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\il.h">
+      <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\il_wrap.h">
+      <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\ilu.h">
+      <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\ilu_region.h">
+      <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\ilut.h">
+      <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\ilut_config.h">
+      <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -358,6 +393,12 @@
     </Filter>
     <Filter Include="Tools\MathGeoLib\extras">
       <UniqueIdentifier>{736a41ac-0427-4592-b5ed-e9abc80ac705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\DevIL">
+      <UniqueIdentifier>{b9ff9ea2-0a5e-4c13-81c8-eac6e4503c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\DevIL\IL">
+      <UniqueIdentifier>{d3665e39-5647-4e2a-b70e-5104c3d73b2b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -26,7 +26,7 @@ ModuleCamera::ModuleCamera()
 	frustum_.verticalFov = DegToRad(60.0f);
 	frustum_.horizontalFov = DegToRad(36.0f);
 		//2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
-	camSpeed = 0.05f;
+	camSpeed = 0.016f;
 }
 
 ModuleCamera::~ModuleCamera()
