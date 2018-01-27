@@ -17,7 +17,7 @@ ModuleCamera::ModuleCamera()
 	and verticalFov/orthographicHeight are all NaN.
 	*/
 	frustum_.type = PerspectiveFrustum;
-	aspectRatio = 16.0f / 9.0f;
+	aspectRatio_ = 16.0f / 9.0f;
 	frustum_.pos = float3(0.0f,1.0f,0.0f);
 	frustum_.front = (float3(0.0f, 0.0f, -1.0f));
 	frustum_.up = float3(0.0f, 1.0f, 0.0f);
@@ -26,7 +26,7 @@ ModuleCamera::ModuleCamera()
 	frustum_.verticalFov = DegToRad(60.0f);
 	frustum_.horizontalFov = DegToRad(36.0f);
 		//2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
-	camSpeed = 0.05f;
+
 }
 
 ModuleCamera::~ModuleCamera()
@@ -50,42 +50,43 @@ bool ModuleCamera::CleanUp()
 }
 update_status ModuleCamera::PreUpdate(float dt)
 {
-
+	
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleCamera::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, camSpeed, 0.0f));
+	camSpeed_ = 3.0f*dt;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, camSpeed_, 0.0f));
 
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, -camSpeed, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, -camSpeed_, 0.0f));
 	
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) frustum_.pos += frustum_.front.Add(float3(0.0f, 0.0f, camSpeed));
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) frustum_.pos += frustum_.front.Add(float3(0.0f, 0.0f, camSpeed_));
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) frustum_.pos -= frustum_.front.Add(float3(0.0f, 0.0f, camSpeed));
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) frustum_.pos -= frustum_.front.Add(float3(0.0f, 0.0f, camSpeed_));
 	
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) frustum_.pos -= frustum_.WorldRight().Add(float3(camSpeed, 0.0f, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) frustum_.pos -= frustum_.WorldRight().Add(float3(camSpeed_, 0.0f, 0.0f));
 	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) frustum_.pos += frustum_.WorldRight().Add(float3(camSpeed, 0.0f, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) frustum_.pos += frustum_.WorldRight().Add(float3(camSpeed_, 0.0f, 0.0f));
 	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) 
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), camSpeed);
+		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), camSpeed_);
 		frustum_.Transform(q);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) 
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), -camSpeed);
+		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), -camSpeed_);
 		frustum_.Transform(q);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.up, -camSpeed);
+		Quat q = Quat::RotateAxisAngle(frustum_.up, -camSpeed_);
 		frustum_.Transform(q); 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.up, camSpeed);
+		Quat q = Quat::RotateAxisAngle(frustum_.up, camSpeed_);
 		frustum_.Transform(q);
 	}
 
@@ -105,12 +106,12 @@ float* ModuleCamera::GetViewMatrix()
 void ModuleCamera::SetFOV(float degrees)
 {
 	frustum_.verticalFov = DegToRad(degrees);
-	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio));
+	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio_));
 }
 
 void ModuleCamera::SetAspectRatio()
 {
-	aspectRatio = frustum_.horizontalFov / frustum_.verticalFov;
+	aspectRatio_ = frustum_.horizontalFov / frustum_.verticalFov;
 }
 
 void ModuleCamera::SetPlaneDistances(float zNear, float zFar)

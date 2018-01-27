@@ -34,8 +34,8 @@ public:
 private:
 
 	Frustum frustum_;
-	float camSpeed;
-	float aspectRatio;
+	float camSpeed_;
+	float aspectRatio_;
 };
 
 

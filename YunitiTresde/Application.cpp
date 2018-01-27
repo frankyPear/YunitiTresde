@@ -93,5 +93,5 @@ void Application::StartTimer()
 
 void Application::CalculateDt()
 {
-	dt_ = (float)ms_timer_.Read / 1000.0f - startTime_;
+	dt_ =(float) ms_timer_.Read() / 1000.0f - startTime_;
 }
