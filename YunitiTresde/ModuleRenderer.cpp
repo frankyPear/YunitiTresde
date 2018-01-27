@@ -96,7 +96,7 @@ bool ModuleRenderer::Start()
 	return true;
 }
 
-update_status ModuleRenderer::PreUpdate()
+update_status ModuleRenderer::PreUpdate(float dt)
 {
 	//Clear the window to draw the next frame
 	glClearColor(0, 0, 0, 255);
@@ -118,13 +118,13 @@ update_status ModuleRenderer::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRenderer::Update()
+update_status ModuleRenderer::Update(float dt)
 {
 	return UPDATE_CONTINUE;
 }
 
 
-update_status ModuleRenderer::PostUpdate()
+update_status ModuleRenderer::PostUpdate(float dt)
 {
 
 	

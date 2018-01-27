@@ -130,6 +130,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTimeManager.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -344,6 +347,9 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTimerManager.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

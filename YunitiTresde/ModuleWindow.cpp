@@ -52,7 +52,7 @@ bool ModuleWindow::Start() {
 
 
 
-update_status ModuleWindow::Update() {
+update_status ModuleWindow::Update(float dt) {
 	
 	//Check if size has changed
 	int temp_w = width_;

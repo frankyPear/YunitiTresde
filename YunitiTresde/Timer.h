@@ -17,12 +17,12 @@ public:
 	Uint32 Read();
 
 private:
-	bool running;
-	Uint32	started_at;
-	Uint32	stopped_at;
-	Uint32  pausedTimeStart;
-	Uint32  pausedTimeStop;
-	Uint32  totalPausedTime;
+	bool running_;
+	Uint32	started_at_;
+	Uint32	stopped_at_;
+	Uint32  pausedTimeStart_;
+	Uint32  pausedTimeStop_;
+	Uint32  totalPausedTime_;
 };
 
 #endif // !_TIMER_

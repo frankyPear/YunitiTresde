@@ -48,7 +48,6 @@ bool Application::Init()
 				ret = (*it)->Start();
 		}
 	
-		// Start the first scene
 
 	return ret;
 }
@@ -60,15 +59,15 @@ update_status Application::Update()
 
 	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if ((*it)->IsEnabled() == true)
-			ret = (*it)->PreUpdate();
+			ret = (*it)->PreUpdate(dt_);
 
 	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if ((*it)->IsEnabled() == true)
-			ret = (*it)->Update();
+			ret = (*it)->Update(dt_);
 
 	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if ((*it)->IsEnabled() == true)
-			ret = (*it)->PostUpdate();
+			ret = (*it)->PostUpdate(dt_);
 
 	return ret;
 }

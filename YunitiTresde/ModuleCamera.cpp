@@ -48,13 +48,13 @@ bool ModuleCamera::CleanUp()
 
 	return ret;
 }
-update_status ModuleCamera::PreUpdate()
+update_status ModuleCamera::PreUpdate(float dt)
 {
 
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleCamera::Update()
+update_status ModuleCamera::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, camSpeed, 0.0f));
 

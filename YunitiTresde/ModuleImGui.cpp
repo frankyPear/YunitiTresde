@@ -43,13 +43,13 @@ bool ModuleImGui::CleanUp()
 
 	return ret;
 }
-update_status ModuleImGui::PreUpdate()
+update_status ModuleImGui::PreUpdate(float dt)
 {
 	ImGui_ImplSdlGL3_NewFrame(App->window->GetWindow());
 	return UPDATE_CONTINUE;
 }
 		
-	update_status ModuleImGui::Update()
+	update_status ModuleImGui::Update(float dt)
 	{
 		//Rendering before than that of Module Render, shall we changed?
 		if (show_demo_window)
