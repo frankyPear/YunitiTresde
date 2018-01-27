@@ -82,6 +82,7 @@ bool ModuleRenderer::Init() {
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
+	loadedTexId = App->textures->loadImage("lena.png");
 
 	return ret;
 }
@@ -105,19 +106,6 @@ update_status ModuleRenderer::PreUpdate()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->cam->GetViewMatrix());
 
-
-	glBegin(GL_TRIANGLES);
-	App->textures->DrawCheckers();
-
-	// front faces
-	glVertex3f(-1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-	glVertex3f(1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-	glVertex3f(1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-	glVertex3f(1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-	glVertex3f(-1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-	glVertex3f(-1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-	glEnd();
-
 	return UPDATE_CONTINUE;
 }
 
@@ -130,7 +118,7 @@ update_status ModuleRenderer::Update()
 update_status ModuleRenderer::PostUpdate()
 {
 	DrawElementPlane();
-
+	DrawElementQuadTexturized(loadedTexId);
 	//DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 

@@ -2,7 +2,7 @@
 #define DEVIL_CPP_WRAPPER_HPP
 
 #include "ilut.h"  // Probably only have to #include this one
-
+ 
 class ilImage
 {
 public:

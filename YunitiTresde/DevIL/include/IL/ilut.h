@@ -9,7 +9,7 @@
 // Description: The main include file for ILUT
 //
 //-----------------------------------------------------------------------------
-
+ 
 // Doxygen comment
 /*! \file ilut.h
     The main include file for ILUT

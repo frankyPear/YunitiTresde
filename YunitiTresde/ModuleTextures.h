@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "OpenGL.h"
 
+
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
 #pragma comment (lib, "SDL/libx86/SDL2main.lib")
@@ -20,8 +21,8 @@ public:
 	update_status Update();	
 	bool CleanUp();
 	void DrawCheckers();
-	void loadImage();
-
+	GLuint loadImage(const char* fileName);
+	void DeleteImage(uint imageID);
 
 public:
 

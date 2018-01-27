@@ -40,7 +40,7 @@ public:
 private:
 
 	SDL_GLContext context_;
-	
+	GLuint loadedTexId;
 	SolidSphere *sphere;
 };
 

@@ -14,7 +14,7 @@
 /*! \file il.h
     The main include file for DevIL
 */
-
+ 
 #ifndef __il_h_
 #ifndef __IL_H__
 

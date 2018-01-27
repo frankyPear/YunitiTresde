@@ -2,6 +2,8 @@
 #include "DevIL\include\IL\il.h"
 #include "DevIL\include\IL\ilu.h"
 #include "DevIL\include\IL\ilut.h"
+#include <iostream>
+using namespace std;
 
 #pragma comment (lib, "DevIL/lib/x86/Release/DevIL.lib")
 #pragma comment (lib, "DevIL/lib/x86/Release/ILU.lib")
@@ -74,9 +76,57 @@ void ModuleTextures::DrawCheckers()
 }
 
 
-void ModuleTextures::loadImage()
+GLuint ModuleTextures::loadImage(const char* fileName)
 {
-	GLuint success = ilLoadImage("");
+	GLuint textureID;
 	ILuint ImageName; // The image name to return.
 	ilGenImages(1, &ImageName); // Grab a new image name.
+	ilBindImage(ImageName);
+	ILboolean operationSuccess = ilLoadImage(fileName);
+	if (operationSuccess) {
+		ILinfo ImageInfo;
+		iluGetImageInfo(&ImageInfo);
+		if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+		{
+			iluFlipImage();
+		}
+		operationSuccess = ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
+		if (!operationSuccess)
+		{
+			ILenum error = ilGetError();
+			cout << "error converting: " << error << endl;
+			return -1;
+		}
+
+		// Generate texture ID
+		glGenTextures(1, &textureID);
+		// Bind id to texture.
+		glBindTexture(GL_TEXTURE_2D, textureID);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+		glTexImage2D(GL_TEXTURE_2D, 0,
+			ilGetInteger(IL_IMAGE_FORMAT),
+			ilGetInteger(IL_IMAGE_WIDTH),
+			ilGetInteger(IL_IMAGE_HEIGHT),
+			0,
+			ilGetInteger(IL_IMAGE_FORMAT),
+			GL_UNSIGNED_BYTE, ilGetData()
+		);
+	}
+	else {
+		ILenum error = ilGetError();
+		cout << "error loading: " << error << endl;
+		return -1;
+	}
+	ilDeleteImages(1, &ImageName);
+	return textureID;
+}
+
+void  ModuleTextures::DeleteImage(uint imageID) {
+	ilDeleteImages(1, &imageID);
 }

@@ -9,7 +9,7 @@
 // Description: Creates an image region.
 //
 //-----------------------------------------------------------------------------
-
+ 
 #ifndef ILU_REGION_H
 #define ILU_REGION_H
 
