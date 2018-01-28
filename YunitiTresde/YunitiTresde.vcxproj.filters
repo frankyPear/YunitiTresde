@@ -127,6 +127,12 @@
     <ClCompile Include="ModuleCamera.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTimeManager.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -337,6 +343,12 @@
       <Filter>Tools\MathGeoLib\extras</Filter>
     </ClInclude>
     <ClInclude Include="ModuleCamera.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTimerManager.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>

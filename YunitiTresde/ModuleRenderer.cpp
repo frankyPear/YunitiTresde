@@ -96,7 +96,7 @@ bool ModuleRenderer::Start()
 	return true;
 }
 
-update_status ModuleRenderer::PreUpdate()
+update_status ModuleRenderer::PreUpdate(float dt)
 {
 	//Readapt the render size, once window is resized
 	glViewport(0, 0, App->window->GetWidth(), App->window->GetHeight());
@@ -121,13 +121,13 @@ update_status ModuleRenderer::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRenderer::Update()
+update_status ModuleRenderer::Update(float dt)
 {
 	return UPDATE_CONTINUE;
 }
 
 
-update_status ModuleRenderer::PostUpdate()
+update_status ModuleRenderer::PostUpdate(float dt)
 {
 
 	

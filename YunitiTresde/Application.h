@@ -3,7 +3,7 @@
 
 #include<list>
 #include "Module.h"
-
+#include "Timer.h"
 
 
 class ModuleRenderer;
@@ -23,8 +23,9 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	//void RerunTimer();
-
+	void StartTimer();
+	void CalculateDt();
+	
 public:
 	ModuleRenderer* renderer;
 	ModuleWindow* window;
@@ -34,7 +35,9 @@ public:
 
 	bool switchmap = false;
 private:
-
+	Timer ms_timer_;
+	float dt_;
+	float startTime_;
 	std::list<Module*> modules;
 
 };
