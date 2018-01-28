@@ -98,6 +98,9 @@ bool ModuleRenderer::Start()
 
 update_status ModuleRenderer::PreUpdate()
 {
+	//Readapt the render size, once window is resized
+	glViewport(0, 0, App->window->GetWidth(), App->window->GetHeight());
+
 	//Clear the window to draw the next frame
 	glClearColor(0, 0, 0, 255);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
