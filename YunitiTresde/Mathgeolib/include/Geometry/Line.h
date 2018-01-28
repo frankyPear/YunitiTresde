@@ -19,7 +19,6 @@
 
 #include "../MathGeoLibFwd.h"
 #include "../Math/float3.h"
-#include "..\..\..\GroundPlane.h"
 
 MATH_BEGIN_NAMESPACE
 
@@ -40,14 +39,6 @@ public:
 		default constructor. Remember to assign to them before use.
 		@see pos, dir. */
 	Line() {}
-
-	inline Line::Line(float x, float y, float z)
-	{
-	}
-
-	inline void Line::InnerRender() const
-	{
-	}
 
 	/// Constructs a new line by explicitly specifying the member variables.
 	/** @param pos The origin position of the line.

@@ -22,7 +22,6 @@
 
 #ifdef MATH_OGRE_INTEROP
 #include <OgrePlane.h>
-#include "..\..\..\GroundPlane.h"
 #endif
 
 MATH_BEGIN_NAMESPACE
@@ -51,12 +50,6 @@ public:
 		default constructor. Remember to assign to them before use.
 		@see normal, d. */
 	Plane() {}
-	inline Plane::Plane(float x, float y, float z, float d)
-	{
-	}
-	inline void Plane::InnerRender() const
-	{
-	}
 	/// Constructs a plane by directly specifying the normal and distance parameters.
 	/** @param normal The direction the plane is facing. This vector must have been normalized in advance.
 		@param d The offset of this plane from the origin. The value -d gives the signed distance of this plane from the origin.
