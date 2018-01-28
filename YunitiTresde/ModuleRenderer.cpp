@@ -76,6 +76,14 @@ bool ModuleRenderer::Init() {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
+	depthTestEnabled = true;
+	cullFaceEnabled = true;
+	lightningEnabled = true;
+	colorMaterialEnabled = true;
+	textureEnabled = true;
+	fogEnabled = false;
+	wireframeEnabled = false;
+	wireframeEnabled ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	//InitCube();
 	//Set the camera 
@@ -156,3 +164,55 @@ bool ModuleRenderer::CleanUp() {
 
 	return ret;
 }
+
+// depthTestEnabled, cullFaceEnabled,
+// lightningEnabled, colorMaterialEnabled, textureEnabled;
+/*
+glEnable(GL_DEPTH_TEST);
+glEnable(GL_CULL_FACE);
+glEnable(GL_LIGHTING);
+glEnable(GL_COLOR_MATERIAL);
+glEnable(GL_TEXTURE_2D);
+*/
+void  ModuleRenderer::toggleDepthTest()
+{
+	depthTestEnabled = !depthTestEnabled;
+	depthTestEnabled ? glEnable(GL_DEPTH_TEST): glDisable(GL_DEPTH_TEST);
+}
+
+void  ModuleRenderer::toggleCullface()
+{
+	cullFaceEnabled = !cullFaceEnabled;
+	cullFaceEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+}
+void  ModuleRenderer::toggleLightning()
+{
+	lightningEnabled = !lightningEnabled;
+	lightningEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+}
+
+void  ModuleRenderer::toggleColorMaterial()
+{
+	colorMaterialEnabled = !colorMaterialEnabled;
+	colorMaterialEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+}
+
+void ModuleRenderer::toggleTexture()
+{
+	textureEnabled = !textureEnabled;
+	textureEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+}
+
+void ModuleRenderer::toggleFog()
+{
+	fogEnabled = !fogEnabled;
+	fogEnabled ? glEnable(GL_FOG) : glDisable(GL_FOG);
+}
+
+void ModuleRenderer::togglelWireframe()
+{
+	wireframeEnabled = !wireframeEnabled;
+	wireframeEnabled ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+

@@ -24,6 +24,9 @@ public:
 	GLuint loadImage(const char* fileName);
 	void DeleteImage(uint imageID);
 
+	void setWrapMode(int mode);
+	void setFilterMode(int filter);
+
 public:
 
 	GLfloat texVect[8] =
@@ -42,5 +45,7 @@ public:
 	GLuint texId;
 	GLubyte checkImage[128][128][4];
 
+	int wrapModeID, filterID;
+	GLint actualWrapMode, actualFilterMode;
 };
 

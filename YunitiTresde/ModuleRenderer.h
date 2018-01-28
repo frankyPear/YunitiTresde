@@ -36,12 +36,31 @@ public:
 
 	bool CleanUp();
 
+	void toggleDepthTest();
+	void toggleCullface();
+	void toggleLightning();
+	void toggleColorMaterial();
+	void toggleTexture();
+	void toggleFog();
+	void togglelWireframe();
+
+	/*
+		glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	*/
 
 private:
 
 	SDL_GLContext context_;
 	GLuint loadedTexId;
 	SolidSphere *sphere;
+
+	bool depthTestEnabled, cullFaceEnabled,
+		lightningEnabled, colorMaterialEnabled,
+		textureEnabled, fogEnabled;
+	bool wireframeEnabled;
 };
 
 #endif // !_RENDER_
