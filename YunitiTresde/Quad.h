@@ -322,15 +322,15 @@ void DrawElementQuadTexturized(GLuint textureID)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_2D_ARRAY);
 
-
 	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
 	glVertexPointer(3, GL_FLOAT, 0, vertices2);
 
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glEnable(GL_TEXTURE_2D);
 	glBindBuffer(GL_ARRAY_BUFFER, texID);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
-	
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
 	glPushMatrix();
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();

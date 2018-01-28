@@ -110,6 +110,8 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
+		glGenerateMipmap(GL_TEXTURE_2D);
+
 		glTexImage2D(GL_TEXTURE_2D, 0,
 			ilGetInteger(IL_IMAGE_FORMAT),
 			ilGetInteger(IL_IMAGE_WIDTH),
