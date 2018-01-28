@@ -119,7 +119,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Outrun1986-\Point.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp" />
     <ClInclude Include="DevIL\include\IL\devil_internal_exports.h" />
@@ -251,6 +250,11 @@
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_AVX.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_CPP.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="DevIL\lib\x86\Release\DevIL.lib" />
+    <Library Include="DevIL\lib\x86\Release\ILU.lib" />
+    <Library Include="DevIL\lib\x86\Release\ILUT.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -153,9 +153,6 @@
     <ClInclude Include="OpenGL.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Outrun1986-\Point.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Quad.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -342,8 +339,6 @@
     <ClInclude Include="ModuleCamera.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Math.h" />
-    <ClInclude Include="Point.h" />
     <ClInclude Include="ModuleTextures.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -370,6 +365,12 @@
     </ClInclude>
     <ClInclude Include="DevIL\include\IL\ilut_config.h">
       <Filter>Tools\DevIL\IL</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -417,5 +418,16 @@
     <None Include="Mathgeolib\include\Math\Matrix.inl">
       <Filter>Tools\MathGeoLib\extras</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="DevIL\lib\x86\Release\DevIL.lib">
+      <Filter>Tools\DevIL\IL</Filter>
+    </Library>
+    <Library Include="DevIL\lib\x86\Release\ILU.lib">
+      <Filter>Tools\DevIL\IL</Filter>
+    </Library>
+    <Library Include="DevIL\lib\x86\Release\ILUT.lib">
+      <Filter>Tools\DevIL\IL</Filter>
+    </Library>
   </ItemGroup>
 </Project>
