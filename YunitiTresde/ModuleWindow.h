@@ -15,6 +15,8 @@ public:
 	SDL_Window* GetWindow() const;
 	int GetHeight();
 	int GetWidth();
+	void SetWindowHeight(int height);
+	void SetWindowWidth(int width);
 	bool Init();
 	bool Start();
 	update_status Update(float dt);

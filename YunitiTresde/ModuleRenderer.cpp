@@ -99,6 +99,7 @@ bool ModuleRenderer::Start()
 update_status ModuleRenderer::PreUpdate(float dt)
 {
 	//Readapt the render size, once window is resized
+	//CAREFUL!! NOW EVERYTHING DEFORMS!
 	glViewport(0, 0, App->window->GetWidth(), App->window->GetHeight());
 
 	//Clear the window to draw the next frame

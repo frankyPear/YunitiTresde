@@ -84,6 +84,15 @@ int ModuleWindow::GetHeight()
 	return SDL_GetWindowSurface(window_)->h;
 }
 
+void ModuleWindow::SetWindowHeight(int height)
+{
+	height_ = height;
+}
+void ModuleWindow::SetWindowWidth(int width)
+{
+	width_ = width;
+}
+
 bool ModuleWindow::CleanUp() {
 	LOG("Destroying SDL window and quitting all SDL systems");
 
