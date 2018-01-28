@@ -77,8 +77,7 @@ bool ModuleRenderer::Init() {
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
 
-	
-
+	//InitCube();
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
@@ -111,7 +110,7 @@ update_status ModuleRenderer::PreUpdate()
 
 update_status ModuleRenderer::Update()
 {
-	glBindTexture(GL_TEXTURE_2D, loadedTexId);
+	/*glBindTexture(GL_TEXTURE_2D, loadedTexId);
 	glBegin(GL_TRIANGLES);
 	// front faces
 	glTexCoord2f(0.0f, 0.0f);
@@ -132,7 +131,7 @@ update_status ModuleRenderer::Update()
 
 
 	glEnd();
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);*/
 
 	return UPDATE_CONTINUE;
 }
@@ -141,7 +140,7 @@ update_status ModuleRenderer::Update()
 update_status ModuleRenderer::PostUpdate()
 {
 	DrawElementPlane();
-	//DrawElementQuadTexturized(loadedTexId);
+	DrawElementQuadTexturized(loadedTexId);
 	//DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 

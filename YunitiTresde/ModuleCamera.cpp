@@ -18,7 +18,7 @@ ModuleCamera::ModuleCamera()
 	*/
 	frustum_.type = PerspectiveFrustum;
 	aspectRatio = 16.0f / 9.0f;
-	frustum_.pos = float3(0.0f,1.0f,0.0f);
+	frustum_.pos = float3(0.0f,1.0f,5.0f);
 	frustum_.front = (float3(0.0f, 0.0f, -1.0f));
 	frustum_.up = float3(0.0f, 1.0f, 0.0f);
 	frustum_.nearPlaneDistance = 0.5f;

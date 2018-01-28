@@ -245,15 +245,35 @@ GLubyte indices[] = {
 16,17,18,  18,19,16,      // bottom
 20,21,22,  22,23,20 };    // back
 
-GLubyte texCoords[] = {
-	1,1,	0,1,	0,0,	1,0,	// front
-	0,1,	0,0,	1,0,	1,1,	// right
-	1,0,	1,1,	0,1,	0,0,	// top
-	1,1,	0,1,	0,0,	1,0,	// left
-	0,1,	1,1,	1,0,	0,0,	// bottom
-	1,0,	0,0,	0,1,	1,1		// back
+GLfloat texCoords[] = {
+	1,1, 0,1, 0,0,
+	0,0, 1,0, 1,1,	// front
+	
+	0,1, 0,0, 1,0,
+	1,0, 1,1, 0,0,	// right
+	
+	1,0, 1,1, 0,1,
+	0,1, 0,0, 1,0,	// top
+	
+	1,1, 0,1, 0,0,
+	0,0, 1,0, 1,1,	// left
+	
+	0,1, 1,1, 1,0,
+	1,0, 0,0, 0,1,	// bottom
+	
+	0,0, 1,0, 1,1,
+	1,1, 0,1, 0,0	// back
+
 };
 
+GLubyte texIndex[] = {
+	3,1,0,   0,2,3,
+	1,0,2,	 2,3,0,
+	2,3,1,   1,0,2,
+	3,1,0,   0,2,3,
+	1,3,2,   2,0,1,
+	0,2,3,   3,1,0
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 // draw cube at bottom-left corner with glDrawElements
@@ -315,20 +335,34 @@ glDisableClientState(GL_VERTEX_ARRAY);
 glBindTexture(GL_TEXTURE_2D, 0);
 */
 
+void InitCube() {
+
+	glGenBuffers(1, &vertexID);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &texID);
+	glBindBuffer(GL_ARRAY_BUFFER, texID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+}
 
 void DrawElementQuadTexturized(GLuint textureID)
 {
 	// enable and specify pointers to vertex arrays
+
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_2D_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
 	glVertexPointer(3, GL_FLOAT, 0, vertices2);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, texID);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
 
 	glEnable(GL_TEXTURE_2D);
+	glBindBuffer(GL_ARRAY_BUFFER, texID);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	glPushMatrix();
