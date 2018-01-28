@@ -37,6 +37,7 @@ private:
     int* w = nullptr;
 	Uint32 flags_;
 	SDL_DisplayMode display_;
+	float brightness_;
 	
 };
 

@@ -41,6 +41,7 @@ bool ModuleWindow::Init() {
 
 		//screen_surface not needed yet
 		screen_surface_ = SDL_GetWindowSurface(window_);
+		brightness_ = SDL_GetWindowBrightness(window_);
 	}
 
 	//Get the screen size
@@ -61,23 +62,13 @@ bool ModuleWindow::Start() {
 
 update_status ModuleWindow::Update(float dt) {
 	
-	//Check if size has changed
-	//int temp_w = width_;
-	
-	//if (temp_w != width_)
-	//{
-	//	LOG("Width has changed");
-	//}
-
-	//int temp_h = height_;
-
-	//if (temp_w != width_)
-	//{
-	//	LOG("Height has changed");
-	//}
-	
+		
 	WindowImGui();
-	
+	//In case people wants to modify them directly from the window borders
+	//TODO: FORCE to respect aspect ratio
+	height_ = GetHeight();
+	width_ = GetWidth();
+	//--------
 	return UPDATE_CONTINUE;
 }
 
@@ -108,6 +99,7 @@ void ModuleWindow::SetWindowWidth(int width)
 
 void ModuleWindow::WindowImGui()
 {
+	//TODO: Force ImGui to respect aspect ratio, shall we modify the camera or the render?
 	ImGui::Begin("Window");
 	static bool check1 = true;
 	if (ImGui::Checkbox("Shown", &check1))
@@ -138,13 +130,15 @@ void ModuleWindow::WindowImGui()
 		if(!check3) SDL_SetWindowBordered(window_, SDL_TRUE);
 		if(check3) SDL_SetWindowBordered(window_, SDL_FALSE);
 	}
-	int tempHeight = 0;
+	if (ImGui::SliderFloat("Brightness", &brightness_, 0, 1))
+	{
+		//TODO: Brightness is set by the entire display, dispite of the name of the method,
+		//check SDL documentationa and finde a solution https://wiki.libsdl.org/SDL_SetWindowBrightness
+		SDL_SetWindowBrightness(window_, brightness_);
+	}
 	if (ImGui::SliderInt("Width", &width_, 100, display_.w))
 	{
-		
-		tempHeight = (width_ - SCREEN_WIDTH) * (9 / 16);
 		SetWindowWidth(width_);
-		SetWindowHeight(tempHeight);
 	}
 	if (ImGui::SliderInt("Height", &height_, 100, display_.h))
 	{
