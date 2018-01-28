@@ -83,6 +83,7 @@ bool ModuleRenderer::Init() {
 
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
+	//Implement gluLookAt in a ImGUI
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
 
 		
@@ -99,6 +100,7 @@ bool ModuleRenderer::Start()
 update_status ModuleRenderer::PreUpdate(float dt)
 {
 	//Readapt the render size, once window is resized
+	//CAREFUL!! NOW EVERYTHING DEFORMS!
 	glViewport(0, 0, App->window->GetWidth(), App->window->GetHeight());
 
 	//Clear the window to draw the next frame
