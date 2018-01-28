@@ -83,6 +83,7 @@ bool ModuleRenderer::Init() {
 
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
+	//Implement gluLookAt in a ImGUI
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
 
 		
