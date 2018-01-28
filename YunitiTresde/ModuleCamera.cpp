@@ -24,8 +24,8 @@ ModuleCamera::ModuleCamera()
 	frustum_.nearPlaneDistance = 0.5f;
 	frustum_.farPlaneDistance = 1000.0f;
 	frustum_.verticalFov = DegToRad(60.0f);
-	frustum_.horizontalFov = DegToRad(36.0f);
-		//2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
+	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);//DegToRad(36.0f);
+	//2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
 	camSpeed = 0.016f;
 }
 
@@ -77,18 +77,19 @@ update_status ModuleCamera::Update()
 	{
 		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), -camSpeed);
 		frustum_.Transform(q);
+		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.up, -camSpeed);
+		Quat q = Quat::RotateAxisAngle(frustum_.up, camSpeed);
 		frustum_.Transform(q); 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.up, camSpeed);
+		Quat q = Quat::RotateAxisAngle(frustum_.up, -camSpeed);
 		frustum_.Transform(q);
 	}
-
+	
 	return UPDATE_CONTINUE;
 }
 

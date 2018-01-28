@@ -82,7 +82,7 @@ bool ModuleRenderer::Init() {
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-	loadedTexId = App->textures->loadImage("lena.png");
+	loadedTexId = App->textures->loadImage("../Resources/lena.png");
 
 	return ret;
 }
