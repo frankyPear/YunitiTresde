@@ -35,12 +35,15 @@ public:
 	update_status PostUpdate();
 
 	bool CleanUp();
+	GLuint* GetImage() const;
 
-
+	void SetIdImage(int texID_);
+	GLuint loadedTexId_;
 private:
 
 	SDL_GLContext context_;
-	GLuint loadedTexId;
+	
+	int intTex = -1;
 	SolidSphere *sphere;
 };
 

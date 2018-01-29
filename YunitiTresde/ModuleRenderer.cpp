@@ -82,7 +82,30 @@ bool ModuleRenderer::Init() {
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-	loadedTexId = App->textures->loadImage("../Resources/lena.png");
+	//loadedTexId = App->textures->loadImage	("../Resources/lena.png");
+	//loadedTexId = App->textures->loadImage("../Resources/sonic.jpg");
+	//loadedTexId = App->textures->loadImage("../Resources/residentevil.gif");
+	//loadedTexId = App->textures->loadImage	("../Resources/mario.bmp");
+	//switch (0)
+	//{
+	//case 1:
+	//	loadedTexId = App->textures->loadImage(IMAGE1);
+	//	break;
+	//case 2:
+	//	loadedTexId = App->textures->loadImage(IMAGE2);
+	//	break;
+	//case 3:
+	//	loadedTexId = App->textures->loadImage(IMAGE3);
+	//	break;
+	//case 4:
+	//	loadedTexId = App->textures->loadImage(IMAGE4);
+	//	break;
+	//
+	//default:
+	//	loadedTexId = App->textures->loadImage(IMAGE1);
+	//	break;
+	//}
+
 
 	return ret;
 }
@@ -105,7 +128,30 @@ update_status ModuleRenderer::PreUpdate()
 	//Init Modelview Matrix
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->cam->GetViewMatrix());
-
+	switch (intTex)
+	{
+	case 0:
+		loadedTexId_ = App->textures->loadImage(IMAGE1);
+		intTex = -1;
+		break;
+	case 1:
+		loadedTexId_ = App->textures->loadImage(IMAGE2);
+		intTex = -1;
+		break;
+	case 2:
+		loadedTexId_ = App->textures->loadImage(IMAGE3);
+		intTex = -1;
+		break;
+	case 3:
+		loadedTexId_ = App->textures->loadImage(IMAGE4);
+		intTex = -1;
+		break;
+	default:
+		App->textures->DeleteImage(loadedTexId_);
+		App->renderer->SetIdImage(-1);
+		break;
+	}
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -119,7 +165,7 @@ update_status ModuleRenderer::PostUpdate()
 {
 //	Quad
 	DrawElementPlane();
-	DrawElementQuadTexturized(loadedTexId);
+	DrawElementQuadTexturized(loadedTexId_);
 	//DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
@@ -134,4 +180,12 @@ bool ModuleRenderer::CleanUp() {
 	SDL_GL_DeleteContext(context_);
 
 	return ret;
+}
+//GLuint ModuleRenderer::GetImage()
+//{
+//	return loadedTexId_;
+//}
+void ModuleRenderer::SetIdImage(int texID_)
+{
+	intTex = texID_;
 }

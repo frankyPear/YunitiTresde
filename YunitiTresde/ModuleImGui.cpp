@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "ModuleImGui.h"
 #include "ModuleWindow.h"
+#include "ModuleRenderer.h"
 #include <string>
 
 
@@ -17,7 +18,10 @@ ModuleImGui::ModuleImGui()
 		"Copyright(C) 2007 Free Software Foundation, Inc. <http://fsf.org/>\n"
 		"Everyone is permitted to copy and distribute verbatim copies\n"
 		"of this license document, but changing it is not allowed.";
-
+	image_[0] = IMAGE1;
+	image_[1] = IMAGE2;
+	image_[2] = IMAGE3;
+	image_[3] = IMAGE4;
 }
 
 ModuleImGui::~ModuleImGui()
@@ -56,19 +60,63 @@ update_status ModuleImGui::Update()
 
 	if (show_about_window)
 	{
-	
+		if (ImGui::CollapsingHeader("Camera"))
+		{
+			ImGui::Text("Active\n");
+			ImGui::Text("Front\n");
+			ImGui::Text("Position\n");
+			ImGui::Text("Mov Speed:%f\n");
+			ImGui::Text("Rot Speed\n");
+			ImGui::Text("Zoom Speed\n");
+			ImGui::Text("Frustum Culling\n");
+			ImGui::Text("Near Plane\n");
+			ImGui::Text("Far Plane\n");
+			ImGui::Text("Field of View\n");
+			ImGui::Text("Aspect Ratio\n");
+			ImGui::Text("Background\n");
+			ImGui::Text("Current\n");
+			ImGui::Text("Pick Another\n");
+			//ImGui::CheckboxFlags("Is Active camera\n",1,1);
+			//ImGui::ShowDemoWindow(&show_about_window);
+		}
 		ImGui::Begin("Configuration", &show_about_window);
 		if (ImGui::CollapsingHeader("View Matrix")) {
-			ImGui::Text("[%f][%f][%f]\n",posx,posy,posz);
-			ImGui::Text("[%f][%f][%f]\n",frontx,fronty,frontz);
-			ImGui::Text("[%f][%f][%f]\n",upx,upy,upz);
+			ImGui::Text("POSITION:  [%f][%f][%f]\n",posx,posy,posz);
+			ImGui::Text("FRONT:	    [%f][%f][%f]\n",frontx,fronty,frontz);
+			ImGui::Text("HEIGHT:	[%f][%f][%f]\n",upx,upy,upz);
 		}
+		//ImGui::Begin("Select Texture: ", &show_about_window);
+		ImGui::LabelText("","Select Texture: ");
+
+		{
+			const char* textures_[] = { IMAGE1, IMAGE2, IMAGE3, IMAGE4 };
+			static const char* selected_item_ = NULL;
+			if (ImGui::BeginCombo("", selected_item_))
+			{
+				for (int n = 0; n < IM_ARRAYSIZE(textures_); n++)
+				{
+					bool is_selected = (selected_item_ == textures_[n]);
+					if (ImGui::Selectable(textures_[n], is_selected)) {
+						selected_item_ = textures_[n];
+						ImGui::SetItemDefaultFocus();   // Set the initial focus when opening the combo (scrolling + for keyboard navigation support in the upcoming navigation branch)
+						App->renderer->SetIdImage(n);
+					}
+				}
+				ImGui::EndCombo();
+			}
+		}
+
+
+		//if (ImGui::BeginCombo("",IMAGE1,3)) {}
 		if (ImGui::CollapsingHeader("Texture")) {
-			ImGui::Text("WIDTH: %d",width);
-			ImGui::Text("HEIGTH: %d", heigth);
-			ImGui::Text("MAG: %d", mag);
-			ImGui::Text("MIN: %d", min);
-			if (format== FORMATPNG)ImGui::Text("FORMAT: PNG");
+			ImGui::Text("WIDTH: %d",width_);
+			ImGui::Text("HEIGTH: %d", heigth_);
+			ImGui::Text("MAG: %d", mag_);
+			ImGui::Text("MIN: %d", min_);
+			ImGui::Text("FORMAT: %d", format_);
+			//ImGui::Text("WRAPS: %d", wraps_);
+			//ImGui::Text("WRAPT: %d", wrapt_);
+//			if (format== FORMATPNG)ImGui::Text("FORMAT: PNG");
 		}
 		if (ImGui::CollapsingHeader("Camera"))
 		{

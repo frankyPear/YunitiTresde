@@ -27,13 +27,15 @@ public:
 	float posx, posy, posz, posw;
 	float frontx, fronty, frontz, frontw;
 	float upx, upy, upz, upw;
-	int format, width, heigth, mag, min =0;
-
+	int format_, width_, heigth_, mag_, min_,wraps_,wrapt_ =0;
+	
 private:
 
 	bool show_demo_window = true;
 	bool show_about_window = true;
 	const char* license_;
+	const char* image_[4];
+
 };
 
 

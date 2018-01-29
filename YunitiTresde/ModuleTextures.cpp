@@ -120,11 +120,13 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 			ilGetInteger(IL_IMAGE_FORMAT),
 			GL_UNSIGNED_BYTE, ilGetData()
 		);
-		App->imgui->format = ilGetInteger(IL_IMAGE_FORMAT);
-		App->imgui->width = ilGetInteger(IL_IMAGE_WIDTH);
-		App->imgui->heigth = ilGetInteger(IL_IMAGE_HEIGHT);
-		App->imgui->mag = ilGetInteger(GL_TEXTURE_MAG_FILTER);
-		App->imgui->min = ilGetInteger(GL_TEXTURE_MIN_FILTER);
+		App->imgui->wraps_ = ilGetInteger(GL_TEXTURE_WRAP_S);
+		App->imgui->wrapt_ = ilGetInteger(GL_TEXTURE_WRAP_T);
+		App->imgui->format_ = ilGetInteger(IL_IMAGE_FORMAT);
+		App->imgui->width_ = ilGetInteger(IL_IMAGE_WIDTH);
+		App->imgui->heigth_ = ilGetInteger(IL_IMAGE_HEIGHT);
+		App->imgui->mag_ = ilGetInteger(GL_TEXTURE_MAG_FILTER);
+		App->imgui->min_ = ilGetInteger(GL_TEXTURE_MIN_FILTER);
 	}
 	else {
 		ILenum error = ilGetError();
