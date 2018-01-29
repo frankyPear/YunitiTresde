@@ -28,7 +28,7 @@ public:
 	void setFilterMode(int filter);
 
 public:
-
+	//@MAX Why you want them public?
 	GLfloat texVect[8] =
 	{
 		0.0f,0.0f,	1.0f,0.0f,
