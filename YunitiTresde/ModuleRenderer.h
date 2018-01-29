@@ -34,16 +34,23 @@ public:
 	update_status PostUpdate(float dt);
 	void ConfigurationManager();
 	bool CleanUp();
-
+	void toggleDepthTest(bool check = true);
+	void toggleCullFace(bool check = true);
+	void toggleLightning(bool check = true);
+	void toggleColorMaterial(bool check = true);
+	void toggleTexture2D(bool check = true);
+	void toggleFog(bool check = true);
 
 private:
 	SDL_GLContext context_;
 	SolidSphere *sphere;
-	bool checkDepthTest_;
-	bool checkCullFace_;
-	bool checkLightning_;
-	bool checkColorMaterial_;
-	bool checkTexture2D_;
+
+	bool checkDepthTest_ = true;
+	bool checkCullFace_ = true;
+	bool checkLightning_ = true;
+	bool checkColorMaterial_ = true;
+	bool checkTexture2D_ = true;
+	bool checkFog_ = false;
 };
 
 #endif // !_RENDER_

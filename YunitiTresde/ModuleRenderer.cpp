@@ -78,12 +78,12 @@ bool ModuleRenderer::Init() {
 	//Init color to black
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_DEPTH_TEST); checkDepthTest_ = true;
-	glEnable(GL_CULL_FACE); checkCullFace_ = true;
-	glEnable(GL_LIGHTING); checkLightning_ = true;
-	glEnable(GL_COLOR_MATERIAL); checkColorMaterial_ = true;
-	glEnable(GL_TEXTURE_2D); checkTexture2D_ = true;
-
+	toggleDepthTest(checkDepthTest_);
+	toggleCullFace(checkCullFace_);
+	toggleLightning(checkLightning_);
+	toggleColorMaterial(checkColorMaterial_);
+	toggleTexture2D(checkTexture2D_);
+	checkFog_ = false;
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//Implement gluLookAt in a ImGUI
@@ -100,34 +100,59 @@ void ModuleRenderer::ConfigurationManager()
 	
 	if (ImGui::Checkbox("DEPTH TEST", &checkDepthTest_))
 	{
-		if(checkDepthTest_) glDisable(GL_DEPTH_TEST);
-		if (!checkDepthTest_) glEnable(GL_DEPTH_TEST);
+		toggleDepthTest(checkDepthTest_);
 	}
 	if (ImGui::Checkbox("CULLFACE", &checkCullFace_))
 	{
-		if (checkCullFace_) glDisable(GL_CULL_FACE);
-		if (!checkCullFace_) glEnable(GL_CULL_FACE);
+		toggleCullFace(checkCullFace_);
 	}
 	if (ImGui::Checkbox("LIGHTNING", &checkLightning_))
 	{
-		if (checkLightning_) glDisable(GL_LIGHTING);
-		if (!checkLightning_) glEnable(GL_LIGHTING);
+		toggleLightning(checkLightning_);
 	}
 	if (ImGui::Checkbox("COLORMATERIAL", &checkColorMaterial_))
 	{
-		if (checkColorMaterial_) glDisable(GL_COLOR_MATERIAL);
-		if (!checkColorMaterial_) glEnable(GL_COLOR_MATERIAL);
+		toggleColorMaterial(checkColorMaterial_);
 	}
 	if (ImGui::Checkbox("TEXTURE 2D", &checkTexture2D_))
 	{
-		if (checkTexture2D_) glDisable(GL_TEXTURE_2D);
-		if (!checkTexture2D_) glEnable(GL_TEXTURE_2D);
+		toggleTexture2D(checkTexture2D_);
 	}
-	if (ImGui::Button("fog"))
+	if (ImGui::Checkbox("FOG",&checkFog_))
 	{
-
+		toggleFog(checkFog_);
 	}
 	ImGui::End();
+}
+void  ModuleRenderer::toggleDepthTest(bool check)
+{
+	check ? glEnable(GL_DEPTH_TEST): glDisable(GL_DEPTH_TEST);
+	check = !check;
+}
+void  ModuleRenderer::toggleCullFace(bool check)
+{
+	check ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+	check = !check;
+}
+void  ModuleRenderer::toggleLightning(bool check)
+{
+	check ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
+	check = !check;
+}
+void  ModuleRenderer::toggleColorMaterial(bool check)
+{
+	check ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
+	check = !check;
+}
+void  ModuleRenderer::toggleTexture2D(bool check)
+{
+	check ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
+	check = !check;
+}
+void  ModuleRenderer::toggleFog(bool check)
+{
+	check ? glEnable(GL_FOG) : glDisable(GL_FOG);
+	check = !check;
 }
 bool ModuleRenderer::Start()
 {
@@ -168,6 +193,7 @@ update_status ModuleRenderer::PostUpdate(float dt)
 	
 	DrawElementPlane();
 	sphere->draw(0.0f,0.0f,0.0f);
+
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
