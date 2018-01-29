@@ -256,6 +256,12 @@
     <Library Include="DevIL\lib\x86\Release\ILU.lib" />
     <Library Include="DevIL\lib\x86\Release\ILUT.lib" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\lena.png" />
+    <Image Include="Resources\mario.bmp" />
+    <Image Include="Resources\residentevil.jpg" />
+    <Image Include="Resources\sonic.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

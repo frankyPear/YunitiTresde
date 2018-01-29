@@ -35,7 +35,6 @@ public:
 	update_status PostUpdate();
 
 	bool CleanUp();
-	GLuint* GetImage() const;
 
 	void SetIdImage(int texID_);
 	GLuint loadedTexId_;

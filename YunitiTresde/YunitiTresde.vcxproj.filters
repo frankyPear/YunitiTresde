@@ -401,6 +401,9 @@
     <Filter Include="Tools\DevIL\IL">
       <UniqueIdentifier>{d3665e39-5647-4e2a-b70e-5104c3d73b2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{91e6c4ab-b1f4-4c32-b335-e64fef58d2b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl">
@@ -429,5 +432,19 @@
     <Library Include="DevIL\lib\x86\Release\ILUT.lib">
       <Filter>Tools\DevIL\IL</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\lena.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Resources\mario.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Resources\residentevil.jpg">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Resources\sonic.jpg">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
