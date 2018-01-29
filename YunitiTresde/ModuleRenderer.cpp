@@ -118,10 +118,11 @@ void ModuleRenderer::ConfigurationManager()
 	{
 		toggleTexture2D(checkTexture2D_);
 	}
-	if (ImGui::Checkbox("FOG",&checkFog_))
+	if (ImGui::CollapsingHeader("Fog"))
 	{
-		toggleFog(checkFog_);
+		toggleFog(checkFog_); //FOG NEEDS TO BE FINISHED
 	}
+	//TODO: COLOR PICKER FOR AMBIENT LIGHT
 	ImGui::End();
 }
 void  ModuleRenderer::toggleDepthTest(bool check)
@@ -151,7 +152,7 @@ void  ModuleRenderer::toggleTexture2D(bool check)
 }
 void  ModuleRenderer::toggleFog(bool check)
 {
-	check ? glEnable(GL_FOG) : glDisable(GL_FOG);
+	check ? glEnable(GL_FOG_MODE) : glDisable(GL_FOG_MODE);
 	check = !check;
 }
 bool ModuleRenderer::Start()
