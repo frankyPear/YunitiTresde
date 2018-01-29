@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
+#include "imgui-1.53\imgui.h"
+#include "imgui-1.53\imgui_impl_sdl_gl3.h"
 #include "OpenGL.h"
 #include "Quad.h"
 #include "Sphere.h"
@@ -76,11 +78,11 @@ bool ModuleRenderer::Init() {
 	//Init color to black
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST); checkDepthTest_ = true;
+	glEnable(GL_CULL_FACE); checkCullFace_ = true;
+	glEnable(GL_LIGHTING); checkLightning_ = true;
+	glEnable(GL_COLOR_MATERIAL); checkColorMaterial_ = true;
+	glEnable(GL_TEXTURE_2D); checkTexture2D_ = true;
 
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
@@ -94,7 +96,38 @@ bool ModuleRenderer::Init() {
 //Perhaps better to use bool?
 void ModuleRenderer::ConfigurationManager()
 {
+	ImGui::Begin("Render Manager");
+	
+	if (ImGui::Checkbox("DEPTH TEST", &checkDepthTest_))
+	{
+		if(checkDepthTest_) glDisable(GL_DEPTH_TEST);
+		if (!checkDepthTest_) glEnable(GL_DEPTH_TEST);
+	}
+	if (ImGui::Checkbox("CULLFACE", &checkCullFace_))
+	{
+		if (checkCullFace_) glDisable(GL_CULL_FACE);
+		if (!checkCullFace_) glEnable(GL_CULL_FACE);
+	}
+	if (ImGui::Checkbox("LIGHTNING", &checkLightning_))
+	{
+		if (checkLightning_) glDisable(GL_LIGHTING);
+		if (!checkLightning_) glEnable(GL_LIGHTING);
+	}
+	if (ImGui::Checkbox("COLORMATERIAL", &checkColorMaterial_))
+	{
+		if (checkColorMaterial_) glDisable(GL_COLOR_MATERIAL);
+		if (!checkColorMaterial_) glEnable(GL_COLOR_MATERIAL);
+	}
+	if (ImGui::Checkbox("TEXTURE 2D", &checkTexture2D_))
+	{
+		if (checkTexture2D_) glDisable(GL_TEXTURE_2D);
+		if (!checkTexture2D_) glEnable(GL_TEXTURE_2D);
+	}
+	if (ImGui::Button("fog"))
+	{
 
+	}
+	ImGui::End();
 }
 bool ModuleRenderer::Start()
 {
@@ -124,6 +157,7 @@ update_status ModuleRenderer::PreUpdate(float dt)
 
 update_status ModuleRenderer::Update(float dt)
 {
+	ConfigurationManager();
 	return UPDATE_CONTINUE;
 }
 

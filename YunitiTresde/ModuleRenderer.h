@@ -37,10 +37,13 @@ public:
 
 
 private:
-
 	SDL_GLContext context_;
-	
 	SolidSphere *sphere;
+	bool checkDepthTest_;
+	bool checkCullFace_;
+	bool checkLightning_;
+	bool checkColorMaterial_;
+	bool checkTexture2D_;
 };
 
 #endif // !_RENDER_
