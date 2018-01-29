@@ -117,6 +117,7 @@ update_status ModuleRenderer::Update()
 
 update_status ModuleRenderer::PostUpdate()
 {
+//	Quad
 	DrawElementPlane();
 	DrawElementQuadTexturized(loadedTexId);
 	//DrawElementQuad();

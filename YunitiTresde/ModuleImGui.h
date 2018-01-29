@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "imgui-1.53\imgui.h"
+#include "Math.h"
 
 
 class ModuleImGui :
@@ -21,9 +22,12 @@ public:
 
 	bool CleanUp();
 
-public:
-
-	
+	//Matrix
+	//float4x4 
+	float posx, posy, posz, posw;
+	float frontx, fronty, frontz, frontw;
+	float upx, upy, upz, upw;
+	int format, width, heigth, mag, min =0;
 
 private:
 

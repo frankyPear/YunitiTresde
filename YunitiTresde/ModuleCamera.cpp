@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "ModuleInput.h"
-
+#include "ModuleImGui.h"
 
 #include "Glew\include\glew.h"
 #include "Mathgeolib\include\Math\MathAll.h"
@@ -83,13 +83,14 @@ update_status ModuleCamera::Update()
 	{
 		Quat q = Quat::RotateAxisAngle(frustum_.up, camSpeed);
 		frustum_.Transform(q); 
+
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		Quat q = Quat::RotateAxisAngle(frustum_.up, -camSpeed);
 		frustum_.Transform(q);
 	}
-	
+	DrawMatrix(frustum_);
 	return UPDATE_CONTINUE;
 }
 
@@ -123,4 +124,15 @@ void ModuleCamera::SetPlaneDistances(float zNear, float zFar)
 void ModuleCamera::SetPosition(float3 newPos)
 {
 	frustum_.pos = newPos;
+}
+void ModuleCamera::DrawMatrix(Frustum fr_) {
+	App->imgui->posx = fr_.pos.x;
+	App->imgui->posy = fr_.pos.y;
+	App->imgui->posz = fr_.pos.z;
+	App->imgui->frontx =fr_.front.x;
+	App->imgui->fronty =fr_.front.y;
+	App->imgui->frontz =fr_.front.z;
+	App->imgui->upx = fr_.up.x;
+	App->imgui->upy = fr_.up.y;
+	App->imgui->upz = fr_.up.z;
 }

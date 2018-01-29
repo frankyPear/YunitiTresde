@@ -48,5 +48,6 @@ typedef unsigned int uint;
 #define SCREEN_HEIGHT 720 // 240
 #define FULLSCREEN false
 #define VSYNC true
+#define FORMATPNG 6407
 
 #endif //__GLOBALS_H__
