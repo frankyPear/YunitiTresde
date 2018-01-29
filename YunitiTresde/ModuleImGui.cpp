@@ -58,11 +58,11 @@ update_status ModuleImGui::Update()
 	{
 	
 		ImGui::Begin("Configuration", &show_about_window);
-//		if (ImGui::CollapsingHeader("View Matrix")) {
-////			ImGui::Text("%s",posx.c_str());
-//			ImGui::Text("[][][]\n");
-//			ImGui::Text("[][][]\n");
-//		}
+		if (ImGui::CollapsingHeader("View Matrix")) {
+			ImGui::Text("[%f][%f][%f]\n",posx,posy,posz);
+			ImGui::Text("[%f][%f][%f]\n",frontx,fronty,frontz);
+			ImGui::Text("[%f][%f][%f]\n",upx,upy,upz);
+		}
 		if (ImGui::CollapsingHeader("Texture")) {
 			ImGui::Text("WIDTH: %d",width);
 			ImGui::Text("HEIGTH: %d", heigth);
