@@ -72,6 +72,7 @@ bool ModuleRenderer::Init() {
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glClearDepth(1.0f);
+
 	//Init color to black
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -90,8 +91,11 @@ bool ModuleRenderer::Init() {
 
 	return ret;
 }
+//Perhaps better to use bool?
+void ModuleRenderer::ConfigurationManager()
+{
 
-
+}
 bool ModuleRenderer::Start()
 {
 	return true;
@@ -113,11 +117,6 @@ update_status ModuleRenderer::PreUpdate(float dt)
 	//Init Modelview Matrix
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->cam->GetViewMatrix());
-
-
-	
-
-
 
 
 	return UPDATE_CONTINUE;
