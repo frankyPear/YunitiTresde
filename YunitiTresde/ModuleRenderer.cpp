@@ -84,6 +84,14 @@ bool ModuleRenderer::Init() {
 	toggleColorMaterial(checkColorMaterial_);
 	toggleTexture2D(checkTexture2D_);
 	checkFog_ = false;
+	//FOG Config
+	glFogi(GL_FOG_MODE, GL_EXP2);
+	fogDensity_ = 0.3;
+	glFogfv(GL_FOG_COLOR, fogColor);
+	glFogf(GL_FOG_DENSITY, fogDensity_);
+	glHint(GL_FOG_HINT, GL_NICEST);
+	//-----
+
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//Implement gluLookAt in a ImGUI
@@ -120,7 +128,8 @@ void ModuleRenderer::ConfigurationManager()
 	}
 	if (ImGui::CollapsingHeader("Fog"))
 	{
-		toggleFog(checkFog_); //FOG NEEDS TO BE FINISHED
+		if(ImGui::Checkbox("Enable Fog", &checkFog_)) toggleFog(checkFog_); 
+		
 	}
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
 	ImGui::End();

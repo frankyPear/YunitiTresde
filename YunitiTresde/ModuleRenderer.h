@@ -51,6 +51,9 @@ private:
 	bool checkColorMaterial_ = true;
 	bool checkTexture2D_ = true;
 	bool checkFog_ = false;
+	GLfloat fogDensity_;
+	GLfloat fogColor[4] = { 0.5,0.5,0.5,1.0 };
+
 };
 
 #endif // !_RENDER_
