@@ -15,15 +15,14 @@ public:
 	SDL_Window* GetWindow() const;
 	int GetHeight();
 	int GetWidth();
-
 	void SetWindowHeight(int height);
 	void SetWindowWidth(int width);
 	void WindowImGui();
-
 	bool Init();
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+	
 	
 
 private:
@@ -35,12 +34,11 @@ private:
 	int height_;
 	int width_;
 	int* h = nullptr;
-  int* w = nullptr;
+    int* w = nullptr;
 	Uint32 flags_;
 	SDL_DisplayMode display_;
 	float brightness_;
 	
-
 };
 
 #endif // !_MODULEWINDOW_

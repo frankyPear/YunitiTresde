@@ -4,9 +4,6 @@
 
 #include "Module.h"
 #include "SDL\include\SDL.h"
-#include "OpenGL.h"
-
-class SolidSphere;
 
 
 class SolidSphere;
@@ -38,10 +35,6 @@ public:
 	update_status PostUpdate(float dt);
 	void ConfigurationManager();
 	bool CleanUp();
-
-	void SetIdImage(int texID_);
-	GLuint loadedTexId_;
-
 	void toggleDepthTest(bool check = true);
 	void toggleCullFace(bool check = true);
 	void toggleLightning(bool check = true);
@@ -50,13 +43,9 @@ public:
 	void toggleFog(bool check = true);
 	void SetFogColor();
 	void SetAmbientLightning();
+
 private:
 	SDL_GLContext context_;
-
-	
-	int intTex = -1;
-
-
 	SolidSphere *sphere;
 
 	bool checkDepthTest_ = true;
@@ -74,7 +63,6 @@ private:
 	float ambientRed_ = 0.5f;
 	float ambientBlue_ = 0.5f;
 	float ambientGreen_ = 0.5f;
-
 };
 
 #endif // !_RENDER_
