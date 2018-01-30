@@ -42,6 +42,7 @@ public:
 	void toggleTexture2D(bool check = true);
 	void toggleFog(bool check = true);
 	void SetFogColor();
+	void SetAmbientLightning();
 
 private:
 	SDL_GLContext context_;
@@ -58,8 +59,10 @@ private:
 	float fogRed_;
 	float fogBlue_;
 	float fogGreen_;
-	float fogColor_;
-
+	//Perhaps init them at init() Discuse with the team--
+	float ambientRed_ = 0.5f;
+	float ambientBlue_ = 0.5f;
+	float ambientGreen_ = 0.5f;
 };
 
 #endif // !_RENDER_
