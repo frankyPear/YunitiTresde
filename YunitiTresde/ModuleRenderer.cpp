@@ -130,7 +130,10 @@ void ModuleRenderer::ConfigurationManager()
 	if (ImGui::CollapsingHeader("Fog"))
 	{
 		if(ImGui::Checkbox("Enable Fog", &checkFog_)) toggleFog(checkFog_); 
-		if (ImGui::SliderFloat("Red", &fogRed_, 0.0f, 1.0f));
+		if (ImGui::SliderFloat("Red", &fogRed_, 0.0f, 1.0f)); SetFogColor();
+		if (ImGui::SliderFloat("Blue", &fogGreen_, 0.0f, 1.0f)); SetFogColor();
+		if (ImGui::SliderFloat("Green", &fogGreen_, 0.0f, 1.0f)); SetFogColor();
+
 		
 	}
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
@@ -165,6 +168,10 @@ void  ModuleRenderer::toggleFog(bool check)
 {
 	check ? glEnable(GL_FOG) : glDisable(GL_FOG);
 	check = !check;
+}
+void ModuleRenderer::SetFogColor()
+{
+	//fogColor_[4] = { fogRed_,fogBlue_,fogGreen_, 1.0f };
 }
 bool ModuleRenderer::Start()
 {

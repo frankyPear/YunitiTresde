@@ -5,6 +5,7 @@
 #include "Module.h"
 #include "SDL\include\SDL.h"
 
+
 class SolidSphere;
 
 class Color 
@@ -40,6 +41,7 @@ public:
 	void toggleColorMaterial(bool check = true);
 	void toggleTexture2D(bool check = true);
 	void toggleFog(bool check = true);
+	void SetFogColor();
 
 private:
 	SDL_GLContext context_;
@@ -54,7 +56,9 @@ private:
 	float fogDensity_ = 0.3f;
 	float fogColor[4] = { 0.5f,0.5f,0.5f,1.0f };
 	float fogRed_;
-
+	float fogBlue_;
+	float fogGreen_;
+	float fogColor_;
 
 };
 
