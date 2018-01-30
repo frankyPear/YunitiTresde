@@ -186,7 +186,7 @@ void ModuleRenderer::SetAmbientLightning()
 
  void ModuleRenderer::SetIdImage(int texID_)
 {
-	int Tex = texID_;
+	intTex = texID_;
 }
 bool ModuleRenderer::Start()
 {
