@@ -84,9 +84,10 @@ bool ModuleRenderer::Init() {
 	toggleColorMaterial(checkColorMaterial_);
 	toggleTexture2D(checkTexture2D_);
 	checkFog_ = false;
-	//FOG Config
+	//FOG Config //NEED OPTIMIZATION
 	glFogi(GL_FOG_MODE, GL_EXP2);
-	fogDensity_ = 0.3;
+	glFogf(GL_FOG_START, 1000.0f); 
+	fogDensity_ = .1f;
 	glFogfv(GL_FOG_COLOR, fogColor);
 	glFogf(GL_FOG_DENSITY, fogDensity_);
 	glHint(GL_FOG_HINT, GL_NICEST);
@@ -129,6 +130,7 @@ void ModuleRenderer::ConfigurationManager()
 	if (ImGui::CollapsingHeader("Fog"))
 	{
 		if(ImGui::Checkbox("Enable Fog", &checkFog_)) toggleFog(checkFog_); 
+		if (ImGui::SliderFloat("Red", &fogRed_, 0.0f, 1.0f));
 		
 	}
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
@@ -161,7 +163,7 @@ void  ModuleRenderer::toggleTexture2D(bool check)
 }
 void  ModuleRenderer::toggleFog(bool check)
 {
-	check ? glEnable(GL_FOG_MODE) : glDisable(GL_FOG_MODE);
+	check ? glEnable(GL_FOG) : glDisable(GL_FOG);
 	check = !check;
 }
 bool ModuleRenderer::Start()
