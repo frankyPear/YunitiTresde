@@ -12,6 +12,7 @@ class ModuleInput;
 class ModuleImGui;
 class ModuleCamera;
 class ModuleTextures;
+class ModuleShader;
 
 class Application
 {
@@ -33,6 +34,7 @@ public:
 	ModuleImGui* imgui;
 	ModuleCamera* cam;
 	ModuleTextures* textures;
+	ModuleShader* shaders;
 
 	bool switchmap = false;
 private:

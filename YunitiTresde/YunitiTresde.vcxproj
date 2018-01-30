@@ -193,6 +193,7 @@
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRenderer.h" />
+    <ClInclude Include="ModuleShader.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="OpenGL.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer.cpp" />
+    <ClCompile Include="ModuleShader.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>

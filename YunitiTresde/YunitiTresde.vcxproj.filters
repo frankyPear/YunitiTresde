@@ -130,6 +130,9 @@
     <ClCompile Include="ModuleTextures.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleShader.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -371,6 +374,9 @@
     </ClInclude>
     <ClInclude Include="Math.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleShader.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

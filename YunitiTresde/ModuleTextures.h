@@ -46,6 +46,7 @@ public:
 	GLubyte checkImage[128][128][4];
 
 	int wrapModeID, filterID;
-	GLint actualWrapMode, actualFilterMode;
+	GLint actualWrapMode = GL_CLAMP;
+	GLint actualFilterMode = GL_LINEAR;
 };
 

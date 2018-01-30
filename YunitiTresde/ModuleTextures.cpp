@@ -20,6 +20,8 @@ ModuleTextures::~ModuleTextures()
 bool ModuleTextures::Init()
 {
 	bool ret = true;
+	actualWrapMode = GL_CLAMP;
+	actualFilterMode = GL_LINEAR;
 	return ret;
 }
 

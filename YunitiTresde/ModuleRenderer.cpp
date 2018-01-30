@@ -3,6 +3,7 @@
 #include "ModuleCamera.h"
 #include "ModuleTextures.h"
 #include "ModuleWindow.h"
+#include "ModuleShader.h"
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 #include "Quad.h"
@@ -82,7 +83,7 @@ bool ModuleRenderer::Init() {
 	colorMaterialEnabled = true;
 	textureEnabled = true;
 	fogEnabled = false;
-	wireframeEnabled = false;
+	wireframeEnabled = true;
 	wireframeEnabled ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	//InitCube();
@@ -97,6 +98,8 @@ bool ModuleRenderer::Init() {
 
 bool ModuleRenderer::Start()
 {
+	App->shaders->VertexShaderLoad();
+	App->shaders->FragmentShaderLoad();
 	return true;
 }
 
@@ -118,28 +121,7 @@ update_status ModuleRenderer::PreUpdate()
 
 update_status ModuleRenderer::Update()
 {
-	/*glBindTexture(GL_TEXTURE_2D, loadedTexId);
-	glBegin(GL_TRIANGLES);
-	// front faces
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-1.0f, 1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);  // Bottom Left Of The Texture and Quad
-
-
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, 0);*/
 
 	return UPDATE_CONTINUE;
 }
@@ -148,7 +130,7 @@ update_status ModuleRenderer::Update()
 update_status ModuleRenderer::PostUpdate()
 {
 	DrawElementPlane();
-	DrawElementQuadTexturized(loadedTexId);
+	//DrawElementQuadTexturized(loadedTexId);
 	//DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
