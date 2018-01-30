@@ -128,6 +128,10 @@
       <Filter>Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTextures.cpp">
+    <ClCompile Include="Timer.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTimeManager.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -371,6 +375,11 @@
     </ClInclude>
     <ClInclude Include="Math.h">
       <Filter>Utils</Filter>
+    <ClInclude Include="Timer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTimerManager.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

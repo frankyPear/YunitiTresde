@@ -15,13 +15,18 @@ public:
 
 	bool Init();
 
-	update_status PreUpdate();
-	update_status Update();
+
+	update_status PreUpdate(float dt);
+	update_status Update(float dt);
+
 	void SetFOV(float degrees);
 	void SetAspectRatio();
 	void SetPlaneDistances(float zNear, float zFar);
 	void SetPosition(float3 newPos);
-	void DrawMatrix(Frustum fr_);
+
+//	void DrawMatrix(Frustum fr_);
+
+
 	//void LookAt(int x, int y, int z);
 	float *GetProjectionMatrix();
 	float *GetViewMatrix();
@@ -35,8 +40,8 @@ public:
 private:
 
 	Frustum frustum_;
-	float camSpeed;
-	float aspectRatio;
+	float camSpeed_;
+	float aspectRatio_;
 };
 
 

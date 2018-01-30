@@ -15,23 +15,31 @@ public:
 	SDL_Window* GetWindow() const;
 	int GetHeight();
 	int GetWidth();
+
+	void SetWindowHeight(int height);
+	void SetWindowWidth(int width);
+	void WindowImGui();
+
 	bool Init();
 	bool Start();
-	update_status Update();
+	update_status Update(float dt);
 	bool CleanUp();
 	
-
 
 private:
 
 	SDL_Surface* screen_surface_ = nullptr;
 	SDL_Window* window_ = nullptr;
 	SDL_Event* event_;
-
+	SDL_DisplayMode DM;
 	int height_;
 	int width_;
 	int* h = nullptr;
-    int *w = nullptr;
+  int* w = nullptr;
+	Uint32 flags_;
+	SDL_DisplayMode display_;
+	float brightness_;
+	
 
 };
 

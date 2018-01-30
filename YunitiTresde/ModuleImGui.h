@@ -17,8 +17,8 @@ public:
 
 	bool Init();
 
-	update_status PreUpdate();
-	update_status Update();
+	update_status PreUpdate(float dt);
+	update_status Update(float dt);
 
 	bool CleanUp();
 
@@ -35,6 +35,7 @@ private:
 	bool show_about_window = true;
 	const char* license_;
 	const char* image_[4];
+
 
 };
 

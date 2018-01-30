@@ -297,13 +297,60 @@ void DrawElementQuad()
 	glColorPointer(3, GL_FLOAT, 0, colors2);
 	glVertexPointer(3, GL_FLOAT, 0, vertices2);
 	//glRotatef(0.75f, 1, 1, 0);
-	glPushMatrix();
+
+	glPushMatrix();	
+
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();
 	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
+
+
+void DrawElementPlane()
+{
+	float size = 25.0f;
+	float step = 0.5f; // Space between squares
+
+	glDisable(GL_LIGHTING);
+
+	glBegin(GL_LINES);
+
+	glColor3f(1.5f, 1.5f, 1.5f);
+	for (float i = step; i <= size; i += step)
+	{
+		//Parallel lines to Z
+		glVertex3f(i, 0, -size);
+		glVertex3f(i, 0, size);
+		glVertex3f(-i, 0, -size);
+		glVertex3f(-i, 0, size);
+		//Parallel lines to X
+		glVertex3f(-size, 0, i);
+		glVertex3f(size, 0, i);
+		glVertex3f(-size, 0, -i);
+		glVertex3f(size, 0, -i);
+	}
+
+	//// x-axis
+	glColor3f(1, 0, 0);
+	glVertex3f(-size, 0, 0);
+	glVertex3f(size, 0, 0);
+
+	// z-axis
+	glColor3f(0, 0, 1);
+	glVertex3f(0, 0, -size);
+	glVertex3f(0, 0, size);
+
+	glEnd();
+
+
+	glEnable(GL_LIGHTING);
+
+}
+
+#endif // !_QUAD_
+
 
 
 /*
