@@ -183,6 +183,11 @@ void ModuleRenderer::SetAmbientLightning()
 	GLfloat ambientLight[4] = { ambientRed_,ambientGreen_, ambientBlue_, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 }
+
+ void ModuleRenderer::SetIdImage(int texID_)
+{
+	int Tex = texID_;
+}
 bool ModuleRenderer::Start()
 {
 	return true;
@@ -205,6 +210,29 @@ update_status ModuleRenderer::PreUpdate(float dt)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->cam->GetViewMatrix());
 
+	switch (intTex)
+	{
+	case 0:
+		loadedTexId_ = App->textures->loadImage(IMAGE1);
+		intTex = -1;
+		break;
+	case 1:
+		loadedTexId_ = App->textures->loadImage(IMAGE2);
+		intTex = -1;
+		break;
+	case 2:
+		loadedTexId_ = App->textures->loadImage(IMAGE3);
+		intTex = -1;
+		break;
+	case 3:
+		loadedTexId_ = App->textures->loadImage(IMAGE4);
+		intTex = -1;
+		break;
+	default:
+		App->textures->DeleteImage(loadedTexId_);
+		App->renderer->SetIdImage(-1);
+		break;
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -221,7 +249,7 @@ update_status ModuleRenderer::PostUpdate(float dt)
 
 	
 	DrawElementPlane();
-	sphere->draw(0.0f,0.0f,0.0f);
+	DrawElementQuadTexturized(loadedTexId_);
 
 	SDL_GL_SwapWindow(App->window->GetWindow());
 

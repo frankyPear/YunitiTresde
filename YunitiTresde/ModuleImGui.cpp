@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "ModuleImGui.h"
 #include "ModuleWindow.h"
+#include "ModuleRenderer.h"
 
 
 ModuleImGui::ModuleImGui()
@@ -59,6 +60,41 @@ update_status ModuleImGui::PreUpdate(float dt)
 		if (show_about_window)
 		{
 			ImGui::Begin("Configuration", &show_about_window);
+			if (ImGui::CollapsingHeader("View Matrix")) {
+				ImGui::Text("POSITION:  [%f][%f][%f]\n", posx, posy, posz);
+				ImGui::Text("FRONT:        [%f][%f][%f]\n", frontx, fronty, frontz);
+				ImGui::Text("HEIGHT:    [%f][%f][%f]\n", upx, upy, upz);
+			}
+			//ImGui::Begin("Select Texture: ", &show_about_window);
+			static const char* selected_item_ = NULL;
+			ImGui::LabelText("", "Select Texture: ");
+
+			{
+				const char* textures_[] = { IMAGE1, IMAGE2, IMAGE3, IMAGE4 };
+
+				if (ImGui::BeginCombo("", selected_item_))
+				{
+					for (int n = 0; n < IM_ARRAYSIZE(textures_); n++)
+					{
+						bool is_selected = (selected_item_ == textures_[n]);
+						if (ImGui::Selectable(textures_[n], is_selected)) {
+							selected_item_ = textures_[n];
+							ImGui::SetItemDefaultFocus();
+							App->renderer->SetIdImage(n);
+						}
+					}
+					ImGui::EndCombo();
+				}
+			}
+
+			if (ImGui::CollapsingHeader("Texture")) {
+				ImGui::Text("WIDTH: %d", width_);
+				ImGui::Text("HEIGTH: %d", heigth_);
+				ImGui::Text("File: %s", selected_item_);
+				ImGui::Text("FORMAT: %d", format_);
+			}
+
+			
 			if (ImGui::CollapsingHeader("Camera"))
 			{
 				ImGui::Text("Active\n");

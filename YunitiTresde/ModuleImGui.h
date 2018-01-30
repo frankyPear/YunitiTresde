@@ -23,6 +23,10 @@ public:
 
 public:
 
+	float posx, posy, posz, posw;
+	float frontx, fronty, frontz, frontw;
+	float upx, upy, upz, upw;
+	int format_, width_, heigth_, mag_, min_, wraps_, wrapt_ = 0;
 	
 
 private:

@@ -11,6 +11,7 @@ class ModuleWindow;
 class ModuleInput;
 class ModuleImGui;
 class ModuleCamera;
+class ModuleTextures;
 
 class Application
 {
@@ -32,7 +33,7 @@ public:
 	ModuleInput* input;
 	ModuleImGui* imgui;
 	ModuleCamera* cam;
-
+	ModuleTextures* textures;
 	bool switchmap = false;
 private:
 	Timer ms_timer_;

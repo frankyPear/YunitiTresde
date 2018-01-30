@@ -4,7 +4,7 @@
 
 #include "Module.h"
 #include "SDL\include\SDL.h"
-
+#include "OpenGL.h"
 
 class SolidSphere;
 
@@ -43,6 +43,7 @@ public:
 	void toggleFog(bool check = true);
 	void SetFogColor();
 	void SetAmbientLightning();
+	void SetIdImage(int texID_);
 
 private:
 	SDL_GLContext context_;
@@ -63,6 +64,8 @@ private:
 	float ambientRed_ = 0.5f;
 	float ambientBlue_ = 0.5f;
 	float ambientGreen_ = 0.5f;
+	GLuint loadedTexId_;
+	int intTex = -1;
 };
 
 #endif // !_RENDER_

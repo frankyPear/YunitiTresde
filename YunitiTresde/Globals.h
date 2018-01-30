@@ -48,5 +48,9 @@ typedef unsigned int uint;
 #define SCREEN_HEIGHT 720 // 240
 #define FULLSCREEN false
 #define VSYNC true
-
+#define FORMATING 6407
+#define IMAGE1	"../Resources/lena.png"
+#define IMAGE2	"../Resources/sonic.jpg"
+#define IMAGE3	"../Resources/residentevil.jpg"
+#define IMAGE4	"../Resources/mario.bmp"
 #endif //__GLOBALS_H__

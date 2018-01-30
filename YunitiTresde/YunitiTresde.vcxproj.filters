@@ -133,6 +133,9 @@
     <ClCompile Include="ModuleTimeManager.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -351,6 +354,33 @@
     <ClInclude Include="ModuleTimerManager.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\devil_internal_exports.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\il.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\il_wrap.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\ilu.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\ilu_region.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\ilut.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\IL\ilut_config.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -373,6 +403,9 @@
     </Filter>
     <Filter Include="Tools\MathGeoLib\extras">
       <UniqueIdentifier>{736a41ac-0427-4592-b5ed-e9abc80ac705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\DevIL">
+      <UniqueIdentifier>{ba033fd6-e8a6-47ac-a5e4-a63290c6eb20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
