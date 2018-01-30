@@ -98,8 +98,9 @@ bool ModuleRenderer::Init() {
 
 bool ModuleRenderer::Start()
 {
-	App->shaders->VertexShaderLoad();
-	App->shaders->FragmentShaderLoad();
+	GLuint v = App->shaders->VertexShaderLoad();
+	GLuint f = App->shaders->FragmentShaderLoad();
+	App->shaders->LinkShaders(v, f);
 	return true;
 }
 

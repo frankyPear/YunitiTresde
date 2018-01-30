@@ -75,7 +75,7 @@ GLuint ModuleShader::FragmentShaderLoad()
 	return fragmentShader;
 }
 
-void ModuleShader::LinkShaders(GLuint vertexID, GLuint fragmentID)
+GLuint ModuleShader::LinkShaders(GLuint vertexID, GLuint fragmentID)
 {
 	if (vertexID != -1 && fragmentID != -1)
 	{
@@ -89,10 +89,12 @@ void ModuleShader::LinkShaders(GLuint vertexID, GLuint fragmentID)
 		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 		if (!success) {
 			glGetProgramInfoLog(shaderProgram, 512, NULL, linking_infoLog);
-			LOG("Shader link error: %s", linking_infoLog);
+			cout << "Shader link error: " << linking_infoLog << endl;
 		}
-
+		cout << "linking shaders compiled succefully with ID: " << shaderProgram << endl;
 		if (vertexID != -1)	glDeleteShader(vertexID);
 		if (fragmentID != -1) glDeleteShader(fragmentID);
+		return shaderProgram;
 	}
+	return -1;
 }
