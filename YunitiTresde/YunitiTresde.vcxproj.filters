@@ -425,4 +425,9 @@
       <Filter>Tools\MathGeoLib\extras</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="DevIL\lib\x86\Release\DevIL.lib" />
+    <Library Include="DevIL\lib\x86\Release\ILU.lib" />
+    <Library Include="DevIL\lib\x86\Release\ILUT.lib" />
+  </ItemGroup>
 </Project>

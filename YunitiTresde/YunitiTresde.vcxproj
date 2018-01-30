@@ -103,6 +103,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -253,6 +254,11 @@
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_AVX.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_CPP.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="DevIL\lib\x86\Release\DevIL.lib" />
+    <Library Include="DevIL\lib\x86\Release\ILU.lib" />
+    <Library Include="DevIL\lib\x86\Release\ILUT.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
