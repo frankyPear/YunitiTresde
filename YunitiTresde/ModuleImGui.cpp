@@ -87,6 +87,8 @@ update_status ModuleImGui::PreUpdate(float dt)
 				}
 			}
 
+
+
 			if (ImGui::CollapsingHeader("Texture")) {
 				ImGui::Text("WIDTH: %d", width_);
 				ImGui::Text("HEIGTH: %d", heigth_);

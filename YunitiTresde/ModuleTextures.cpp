@@ -106,11 +106,13 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 		// Bind id to texture.
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, actualWrapMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, actualWrapMode);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, actualFilterMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, actualFilterMode);
+
+		glGenerateMipmap(GL_TEXTURE_2D);
 
 		glTexImage2D(GL_TEXTURE_2D, 0,
 			ilGetInteger(IL_IMAGE_FORMAT),
@@ -120,13 +122,6 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 			ilGetInteger(IL_IMAGE_FORMAT),
 			GL_UNSIGNED_BYTE, ilGetData()
 		);
-		App->imgui->wraps_ = ilGetInteger(GL_TEXTURE_WRAP_S);
-		App->imgui->wrapt_ = ilGetInteger(GL_TEXTURE_WRAP_T);
-		App->imgui->format_ = ilGetInteger(IL_IMAGE_FORMAT);
-		App->imgui->width_ = ilGetInteger(IL_IMAGE_WIDTH);
-		App->imgui->heigth_ = ilGetInteger(IL_IMAGE_HEIGHT);
-		App->imgui->mag_ = ilGetInteger(GL_TEXTURE_MAG_FILTER);
-		App->imgui->min_ = ilGetInteger(GL_TEXTURE_MIN_FILTER);
 	}
 	else {
 		ILenum error = ilGetError();
@@ -139,4 +134,47 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 
 void  ModuleTextures::DeleteImage(uint imageID) {
 	ilDeleteImages(1, &imageID);
+}
+
+void ModuleTextures::setWrapMode(int mode)
+{
+	switch (mode)
+	{
+	case 0:
+		actualWrapMode = GL_REPEAT;
+		break;
+	case 1:
+		actualWrapMode = GL_MIRRORED_REPEAT;
+		break;
+	case 2:
+		actualWrapMode = GL_CLAMP_TO_EDGE;
+		break;
+	case 3:
+		actualWrapMode = GL_CLAMP_TO_BORDER;
+		break;
+	}
+}
+
+void ModuleTextures::setFilterMode(int filter) {
+	switch (filter)
+	{
+	case 0:
+		actualFilterMode = GL_NEAREST;
+		break;
+	case 1:
+		actualFilterMode = GL_LINEAR;
+		break;
+	case 2:
+		actualFilterMode = GL_NEAREST_MIPMAP_NEAREST;
+		break;
+	case 3:
+		actualFilterMode = GL_LINEAR_MIPMAP_NEAREST;
+		break;
+	case 4:
+		actualFilterMode = GL_NEAREST_MIPMAP_LINEAR;
+		break;
+	case 5:
+		actualFilterMode = GL_LINEAR_MIPMAP_LINEAR;
+		break;
+	}
 }
