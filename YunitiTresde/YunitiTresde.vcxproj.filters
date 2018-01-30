@@ -127,7 +127,6 @@
     <ClCompile Include="ModuleCamera.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp">
     <ClCompile Include="Timer.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
@@ -155,6 +154,9 @@
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Outrun1986-\Point.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Quad.h">
@@ -343,38 +345,6 @@
     <ClInclude Include="ModuleCamera.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTextures.h">
-      <Filter>Core Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp">
-      <Filter>Tools\DevIL\IL</Filter>
-    </ClInclude>
-    <ClInclude Include="DevIL\include\IL\devil_internal_exports.h">
-      <Filter>Tools\DevIL\IL</Filter>
-    </ClInclude>
-    <ClInclude Include="DevIL\include\IL\il.h">
-      <Filter>Tools\DevIL\IL</Filter>
-    </ClInclude>
-    <ClInclude Include="DevIL\include\IL\il_wrap.h">
-      <Filter>Tools\DevIL\IL</Filter>
-    </ClInclude>
-    <ClInclude Include="DevIL\include\IL\ilu.h">
-      <Filter>Tools\DevIL\IL</Filter>
-    </ClInclude>
-    <ClInclude Include="DevIL\include\IL\ilu_region.h">
-      <Filter>Tools\DevIL\IL</Filter>
-    </ClInclude>
-    <ClInclude Include="DevIL\include\IL\ilut.h">
-      <Filter>Tools\DevIL\IL</Filter>
-    </ClInclude>
-    <ClInclude Include="DevIL\include\IL\ilut_config.h">
-      <Filter>Tools\DevIL\IL</Filter>
-    </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Math.h">
-      <Filter>Utils</Filter>
     <ClInclude Include="Timer.h">
       <Filter>Tools</Filter>
     </ClInclude>
@@ -404,15 +374,6 @@
     <Filter Include="Tools\MathGeoLib\extras">
       <UniqueIdentifier>{736a41ac-0427-4592-b5ed-e9abc80ac705}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tools\DevIL">
-      <UniqueIdentifier>{b9ff9ea2-0a5e-4c13-81c8-eac6e4503c73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools\DevIL\IL">
-      <UniqueIdentifier>{d3665e39-5647-4e2a-b70e-5104c3d73b2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{91e6c4ab-b1f4-4c32-b335-e64fef58d2b4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl">
@@ -430,30 +391,5 @@
     <None Include="Mathgeolib\include\Math\Matrix.inl">
       <Filter>Tools\MathGeoLib\extras</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="DevIL\lib\x86\Release\DevIL.lib">
-      <Filter>Tools\DevIL\IL</Filter>
-    </Library>
-    <Library Include="DevIL\lib\x86\Release\ILU.lib">
-      <Filter>Tools\DevIL\IL</Filter>
-    </Library>
-    <Library Include="DevIL\lib\x86\Release\ILUT.lib">
-      <Filter>Tools\DevIL\IL</Filter>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\lena.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="Resources\mario.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="Resources\residentevil.jpg">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="Resources\sonic.jpg">
-      <Filter>Resources</Filter>
-    </Image>
   </ItemGroup>
 </Project>
