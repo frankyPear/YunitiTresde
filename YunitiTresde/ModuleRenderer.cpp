@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleRenderer.h"
 #include "ModuleCamera.h"
+#include "ModuleTextures.h"
 #include "ModuleWindow.h"
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
@@ -19,7 +20,6 @@
 
 ModuleRenderer::ModuleRenderer()
 {
-	
 }
 
 
@@ -29,8 +29,9 @@ ModuleRenderer::~ModuleRenderer()
 
 bool ModuleRenderer::Init() {
 	bool ret = true;
-	
+
 	sphere = new SolidSphere(1.0f,20.0f,20.0f);
+
 	//Set Attributes 
 	//CORE_PROFILE, uses the new opengl profile
 	//There are several context profiles (Ex:_ES for mobile
@@ -43,7 +44,6 @@ bool ModuleRenderer::Init() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-	
 	//Create context
 	context_ = SDL_GL_CreateContext(App->window->GetWindow());
 
@@ -55,7 +55,7 @@ bool ModuleRenderer::Init() {
 	//used in the tutorial, to use modern way of glew
 	glewExperimental = GL_TRUE;
 	//Init GLEW
-	if (glewInit()!=GLEW_OK)
+	if (glewInit() != GLEW_OK)
 	{
 		LOG("Failed to initalize GLEW! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
@@ -93,15 +93,40 @@ bool ModuleRenderer::Init() {
 	glHint(GL_FOG_HINT, GL_NICEST);
 	//-----
 
+	
+
 	//Set the camera 
 	//glOrtho(-5, 5, -5, 5, -5, 5);
+	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
+	//loadedTexId = App->textures->loadImage	("../Resources/lena.png");
+	//loadedTexId = App->textures->loadImage("../Resources/sonic.jpg");
+	//loadedTexId = App->textures->loadImage("../Resources/residentevil.gif");
+	//loadedTexId = App->textures->loadImage	("../Resources/mario.bmp");
+	//switch (0)
+	//{
+	//case 1:
+	//	loadedTexId = App->textures->loadImage(IMAGE1);
+	//	break;
+	//case 2:
+	//	loadedTexId = App->textures->loadImage(IMAGE2);
+	//	break;
+	//case 3:
+	//	loadedTexId = App->textures->loadImage(IMAGE3);
+	//	break;
+	//case 4:
+	//	loadedTexId = App->textures->loadImage(IMAGE4);
+	//	break;
+	//
+	//default:
+	//	loadedTexId = App->textures->loadImage(IMAGE1);
+	//	break;
+	//}
+
 	//Implement gluLookAt in a ImGUI
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-
-		
-
 	return ret;
 }
+
 //Perhaps better to use bool?
 void ModuleRenderer::ConfigurationManager()
 {
@@ -206,6 +231,36 @@ update_status ModuleRenderer::PreUpdate(float dt)
 	glLoadMatrixf(App->cam->GetViewMatrix());
 
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->cam->GetProjectionMatrix());
+
+	//Init Modelview Matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(App->cam->GetViewMatrix());
+	switch (intTex)
+	{
+	case 0:
+		loadedTexId_ = App->textures->loadImage(IMAGE1);
+		intTex = -1;
+		break;
+	case 1:
+		loadedTexId_ = App->textures->loadImage(IMAGE2);
+		intTex = -1;
+		break;
+	case 2:
+		loadedTexId_ = App->textures->loadImage(IMAGE3);
+		intTex = -1;
+		break;
+	case 3:
+		loadedTexId_ = App->textures->loadImage(IMAGE4);
+		intTex = -1;
+		break;
+	default:
+		App->textures->DeleteImage(loadedTexId_);
+		App->renderer->SetIdImage(-1);
+		break;
+	}
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -219,10 +274,10 @@ update_status ModuleRenderer::Update(float dt)
 update_status ModuleRenderer::PostUpdate(float dt)
 {
 
-	
+//	Quad
 	DrawElementPlane();
-	sphere->draw(0.0f,0.0f,0.0f);
-
+	DrawElementQuadTexturized(loadedTexId_);
+	//DrawElementQuad();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
@@ -236,4 +291,12 @@ bool ModuleRenderer::CleanUp() {
 	SDL_GL_DeleteContext(context_);
 
 	return ret;
+}
+//GLuint ModuleRenderer::GetImage()
+//{
+//	return loadedTexId_;
+//}
+void ModuleRenderer::SetIdImage(int texID_)
+{
+	intTex = texID_;
 }

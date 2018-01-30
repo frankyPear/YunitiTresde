@@ -1,9 +1,7 @@
 #include "ModuleCamera.h"
-
 #include "Application.h"
 #include "ModuleInput.h"
-
-
+#include "ModuleImGui.h"
 #include "Glew\include\glew.h"
 #include "Mathgeolib\include\Math\MathAll.h"
 
@@ -26,7 +24,6 @@ ModuleCamera::ModuleCamera()
 	frustum_.verticalFov = DegToRad(60.0f);
 	frustum_.horizontalFov = DegToRad(36.0f);
 		//2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
-
 }
 
 ModuleCamera::~ModuleCamera()
@@ -48,6 +45,7 @@ bool ModuleCamera::CleanUp()
 
 	return ret;
 }
+
 update_status ModuleCamera::PreUpdate(float dt)
 {
 	
@@ -107,6 +105,7 @@ void ModuleCamera::SetFOV(float degrees)
 {
 	frustum_.verticalFov = DegToRad(degrees);
 	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio_));
+
 }
 
 void ModuleCamera::SetAspectRatio()
@@ -124,3 +123,15 @@ void ModuleCamera::SetPosition(float3 newPos)
 {
 	frustum_.pos = newPos;
 }
+
+//void ModuleCamera::DrawMatrix(Frustum fr_) {
+	//App->imgui->posx = fr_.pos.x;
+	//App->imgui->posy = fr_.pos.y;
+	//App->imgui->posz = fr_.pos.z;
+  //App->imgui->frontx =fr_.front.x;
+  //App->imgui->fronty =fr_.front.y;
+  //App->imgui->frontz =fr_.front.z;
+	//App->imgui->upx = fr_.up.x;
+	//App->imgui->upy = fr_.up.y;
+	//App->imgui->upz = fr_.up.z;
+//}

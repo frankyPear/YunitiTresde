@@ -8,7 +8,6 @@ ModuleWindow::ModuleWindow()
 {
 	height_ = SCREEN_HEIGHT*SCREEN_SIZE;
 	width_ = SCREEN_WIDTH*SCREEN_SIZE;
-	
 }
 
 
@@ -33,6 +32,7 @@ bool ModuleWindow::Init() {
 		//Window can resize
 		window_ = SDL_CreateWindow("YunitiTresDe", SDL_WINDOWPOS_CENTERED, 
 			SDL_WINDOWPOS_CENTERED, width_, height_, flags_ );
+
 		if (window_ == nullptr)
 		{
 			LOG("Failed to create window! SDL_Error: %s\n", SDL_GetError());
@@ -42,6 +42,7 @@ bool ModuleWindow::Init() {
 		//screen_surface not needed yet
 		screen_surface_ = SDL_GetWindowSurface(window_);
 		brightness_ = SDL_GetWindowBrightness(window_);
+
 	}
 
 	//Get the screen size
@@ -60,9 +61,9 @@ bool ModuleWindow::Start() {
 
 
 
-update_status ModuleWindow::Update(float dt) {
-	
-		
+
+update_status ModuleWindow::Update(float dt) 
+{
 	WindowImGui();
 	//In case people wants to modify them directly from the window borders
 	//TODO: FORCE to respect aspect ratio
@@ -82,6 +83,7 @@ int ModuleWindow::GetHeight()
 {
 	return SDL_GetWindowSurface(window_)->h;
 }
+
 
 void ModuleWindow::SetWindowHeight(int height)
 {
@@ -146,7 +148,6 @@ void ModuleWindow::WindowImGui()
 	}
 	ImGui::End();
 }
-
 bool ModuleWindow::CleanUp() {
 	LOG("Destroying SDL window and quitting all SDL systems");
 

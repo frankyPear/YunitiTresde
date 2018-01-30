@@ -119,9 +119,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Outrun1986-\Point.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp" />
+    <ClInclude Include="DevIL\include\IL\devil_internal_exports.h" />
+    <ClInclude Include="DevIL\include\IL\il.h" />
+    <ClInclude Include="DevIL\include\IL\ilu.h" />
+    <ClInclude Include="DevIL\include\IL\ilut.h" />
+    <ClInclude Include="DevIL\include\IL\ilut_config.h" />
+    <ClInclude Include="DevIL\include\IL\ilu_region.h" />
+    <ClInclude Include="DevIL\include\IL\il_wrap.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Math.h" />
+
+
     <ClInclude Include="Mathgeolib\include\Algorithm\Random\LCG.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB2D.h" />
@@ -185,12 +195,15 @@
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRenderer.h" />
+    <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleTimerManager.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="OpenGL.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Timer.h" />
+
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -234,6 +247,7 @@
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer.cpp" />
+    <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTimeManager.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -243,6 +257,23 @@
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_AVX.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_CPP.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mathgeolib\include\Math\Matrix.inl" />
+    <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_AVX.inl" />
+    <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_CPP.inl" />
+    <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="DevIL\lib\x86\Release\DevIL.lib" />
+    <Library Include="DevIL\lib\x86\Release\ILU.lib" />
+    <Library Include="DevIL\lib\x86\Release\ILUT.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\lena.png" />
+    <Image Include="Resources\mario.bmp" />
+    <Image Include="Resources\residentevil.jpg" />
+    <Image Include="Resources\sonic.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
