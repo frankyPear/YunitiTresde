@@ -139,6 +139,9 @@
     <ClCompile Include="ModuleShaders.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Quad33.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -386,6 +389,9 @@
     </ClInclude>
     <ClInclude Include="ModuleShaders.h">
       <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Quad33.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

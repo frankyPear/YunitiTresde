@@ -12,11 +12,16 @@ public:
 
 	bool CompileVertexShader();
 	bool CompileFragmentShader();
+	bool CreateShaderProgram();
+public:
+	GLuint shaderProgram;
 
 private:
-	const GLchar* vertexShader_;
-	const GLchar* fragmentShader_;
-
+	const GLchar* vertexShaderSource_;
+	const GLchar* fragmentShaderSource_;
+	GLuint vertexShader_;
+	GLuint fragmentShader_;
+	
 
 };
 
