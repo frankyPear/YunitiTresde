@@ -18,7 +18,10 @@ ModuleShaders::ModuleShaders()
 		"	gl_Position = projection * view * model_matrix * vec4(position, 1.0f);\n"
 		"	ourColor = color;\n"
 		"	TexCoord = texCoord;\n"
-		"}\n";	fragmentShader_ =		"#version 330 core\n"
+		"}\n";
+
+	fragmentShader_ =
+		"#version 330 core\n"
 		"in vec3 ourColor;\n"
 		"in vec2 TexCoord;\n"
 		"out vec4 color;\n"
@@ -29,7 +32,7 @@ ModuleShaders::ModuleShaders()
 		"}\n";
 }
 
-bool ModuleShaders::CompileShader()
+bool ModuleShaders::CompileVertexShader()
 {
 	bool ret = true;
 
@@ -44,6 +47,27 @@ bool ModuleShaders::CompileShader()
 	{
 		glGetShaderInfoLog(vertexShader, 512,NULL, infoLog);
 		LOG("SHADER::VERTEX::COMPILATION_FAILED\n", infoLog);
+		ret = false;
+	}
+	return ret;
+}
+
+bool ModuleShaders::CompileFragmentShader()
+{
+	bool ret = true;
+
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentShader_, NULL);
+	glCompileShader(fragmentShader);
+
+	GLint success;
+	GLchar infoLog[512];
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		LOG("SHADER::FRAGMENT::COMPILATION_FAILED\n", infoLog);
+		ret = false;
 	}
 	return ret;
 }

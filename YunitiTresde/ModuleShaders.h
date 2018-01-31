@@ -10,7 +10,9 @@ public:
 	ModuleShaders();
 	~ModuleShaders();
 
-	bool CompileShader();
+	bool CompileVertexShader();
+	bool CompileFragmentShader();
+
 private:
 	const GLchar* vertexShader_;
 	const GLchar* fragmentShader_;
