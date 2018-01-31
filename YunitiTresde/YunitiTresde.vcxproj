@@ -131,6 +131,7 @@
     <ClInclude Include="DevIL\include\IL\ilu_region.h" />
     <ClInclude Include="DevIL\include\IL\il_wrap.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="ModuleShaders.h" />
     <ClInclude Include="Mathgeolib\include\Algorithm\Random\LCG.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB2D.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer.cpp" />
+    <ClCompile Include="ModuleShaders.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTimeManager.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
