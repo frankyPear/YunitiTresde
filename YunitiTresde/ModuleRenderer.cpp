@@ -106,24 +106,7 @@ bool ModuleRenderer::Init() {
 	App->shaders->CompileVertexShader();
 	App->shaders->CompileFragmentShader();
 	App->shaders->CreateShaderProgram();
-
-
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	// Position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)0);
-	glEnableVertexAttribArray(0);
-	// Color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-
-	glBindVertexArray(0); // Unbind VAO
+	App->shaders->ActivateShaderProgram();
 
 	return ret;
 }
@@ -272,14 +255,11 @@ update_status ModuleRenderer::Update(float dt)
 update_status ModuleRenderer::PostUpdate(float dt)
 {
 
-	App->shaders->ActivateShaderProgram();
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glBindVertexArray(0);
+	
+	DrawElementQuadTexturized(loadedTexId_);
+	DrawElementPlane();
 
 
-	//DrawElementPlane();
-	//DrawElementQuadTexturized(loadedTexId_);
 	//Using Shaders
 	
 	SDL_GL_SwapWindow(App->window->GetWindow());
