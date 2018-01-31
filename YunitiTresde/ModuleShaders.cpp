@@ -9,7 +9,7 @@ ModuleShaders::ModuleShaders()
 		"layout(location = 1) in vec3 color;\n"
 		//"layout(location = 2) in vec2 texCoord;\n"
 		"out vec3 ourColor;\n"
-		"out vec2 TexCoord;\n"
+		//"out vec2 TexCoord;\n"
 		"uniform mat4 model_matrix;\n"
 		"uniform mat4 view;\n"
 		"uniform mat4 projection;\n"
@@ -25,7 +25,7 @@ ModuleShaders::ModuleShaders()
 		"in vec3 ourColor;\n"
 	//	"in vec2 TexCoord;\n"
 		"out vec4 color;\n"
-		"uniform sampler2D ourTexture;\n"
+	//	"uniform sampler2D ourTexture;\n"
 		"void main()\n"
 		"{\n"
 		//"color = texture(ourTexture, TexCoord);\n"
@@ -35,7 +35,7 @@ ModuleShaders::ModuleShaders()
 
 ModuleShaders::~ModuleShaders()
 {
-
+	glDeleteProgram(shaderProgram);
 }
 
 bool ModuleShaders::CompileVertexShader()
@@ -99,6 +99,15 @@ bool ModuleShaders::CreateShaderProgram()
 
 	glDeleteShader(vertexShader_);
 	glDeleteShader(fragmentShader_);
+
+	return ret;
+}
+
+bool ModuleShaders::ActivateShaderProgram()
+{
+	//TODO: Add LOG
+	bool ret = true;
+	glUseProgram(shaderProgram);
 
 	return ret;
 }

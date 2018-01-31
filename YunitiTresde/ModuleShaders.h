@@ -13,6 +13,7 @@ public:
 	bool CompileVertexShader();
 	bool CompileFragmentShader();
 	bool CreateShaderProgram();
+	bool ActivateShaderProgram();
 public:
 	GLuint shaderProgram;
 
