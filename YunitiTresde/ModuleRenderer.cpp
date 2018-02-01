@@ -256,11 +256,11 @@ update_status ModuleRenderer::PostUpdate(float dt)
 {
 	App->shaders->ActivateShaderProgram();
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
 
 	//DrawElementQuadTexturized(loadedTexId_);
-	//DrawElementPlane();
+	DrawElementPlane();
 
 	//Using Shaders
 	
