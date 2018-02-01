@@ -259,6 +259,7 @@ update_status ModuleRenderer::PostUpdate(float dt)
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
 
+	glUseProgram(0);
 	//DrawElementQuadTexturized(loadedTexId_);
 	DrawElementPlane();
 
