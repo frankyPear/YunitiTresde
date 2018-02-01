@@ -5,14 +5,19 @@ ModuleShaders::ModuleShaders()
 {
 	 vertexShaderSource_ =
 	"layout (location = 0) in vec3 position; \n"
+	"layout (location = 1) in vec3  color; \n"
+		 "out vec3 ourColor;"
 	"uniform mat4 gl_ModelViewMatrix;\n"
 	"uniform mat4 gl_ProjectionMatrix;\n"
 	"void main()\n"
 		 "{ gl_Position =gl_ProjectionMatrix*gl_ModelViewMatrix* vec4 (position.x, position.y, position.z, 1.0);\n"
+		 "ourColor = color;"
 		 "}";
 
-	 fragmentShaderSource_ = "void main()"
-	 " { gl_FragColor = vec4(1.0f, 1.0f, .0f, 1.0f); }";
+	 fragmentShaderSource_ =
+		 "in vec3 ourColor;"
+		 "void main()"
+	 " { gl_FragColor = vec4(ourColor.x,ourColor.y,ourColor.z, 1.0f); }";
 
 }
 
