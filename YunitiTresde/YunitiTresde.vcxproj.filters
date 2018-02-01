@@ -136,6 +136,24 @@
     <ClCompile Include="ModuleTextures.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleScene.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMaterial.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransform.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -381,6 +399,24 @@
     <ClInclude Include="DevIL\include\IL\ilut_config.h">
       <Filter>Tools\DevIL</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentMaterial.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentMesh.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTransform.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -406,6 +442,9 @@
     </Filter>
     <Filter Include="Tools\DevIL">
       <UniqueIdentifier>{ba033fd6-e8a6-47ac-a5e4-a63290c6eb20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreClasses">
+      <UniqueIdentifier>{5e3035f3-ba3c-4b78-9de0-9c636fddaa98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
