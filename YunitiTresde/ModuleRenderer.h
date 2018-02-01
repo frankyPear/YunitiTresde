@@ -66,6 +66,7 @@ private:
 	float ambientGreen_ = 0.5f;
 	GLuint loadedTexId_;
 	int intTex = -1;
+
 };
 
 #endif // !_RENDER_
