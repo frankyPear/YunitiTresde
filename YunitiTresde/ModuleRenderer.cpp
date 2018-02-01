@@ -106,7 +106,7 @@ bool ModuleRenderer::Init() {
 	App->shaders->CompileVertexShader();
 	App->shaders->CompileFragmentShader();
 	App->shaders->CreateShaderProgram();
-	App->shaders->ActivateShaderProgram();
+	CreateTriangle();
 
 	return ret;
 }
@@ -254,11 +254,13 @@ update_status ModuleRenderer::Update(float dt)
 
 update_status ModuleRenderer::PostUpdate(float dt)
 {
+	App->shaders->ActivateShaderProgram();
+	glBindVertexArray(VAO);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glBindVertexArray(0);
 
-	
-	DrawElementQuadTexturized(loadedTexId_);
-	DrawElementPlane();
-
+	//DrawElementQuadTexturized(loadedTexId_);
+	//DrawElementPlane();
 
 	//Using Shaders
 	
