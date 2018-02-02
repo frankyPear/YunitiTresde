@@ -6,6 +6,10 @@ Component::Component()
 {
 }
 
+Component::Component(Type componentType, GameObject* obj): type(componentType), linked_to(obj), enabled(true)
+{
+}
+
 
 Component::~Component()
 {

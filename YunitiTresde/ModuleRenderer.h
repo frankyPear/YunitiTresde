@@ -6,7 +6,6 @@
 #include "SDL\include\SDL.h"
 #include "OpenGL.h"
 
-class SolidSphere;
 
 class Color 
 {
@@ -47,7 +46,6 @@ public:
 
 private:
 	SDL_GLContext context_;
-	SolidSphere *sphere;
 
 	bool checkDepthTest_ = true;
 	bool checkCullFace_ = true;

@@ -30,7 +30,6 @@ ModuleRenderer::~ModuleRenderer()
 bool ModuleRenderer::Init() {
 	bool ret = true;
 	
-	sphere = new SolidSphere(1.0f,20.0f,20.0f);
 	//Set Attributes 
 	//CORE_PROFILE, uses the new opengl profile
 	//There are several context profiles (Ex:_ES for mobile

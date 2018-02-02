@@ -154,6 +154,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>CoreClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
