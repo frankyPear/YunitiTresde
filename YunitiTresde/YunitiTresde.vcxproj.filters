@@ -136,6 +136,9 @@
     <ClCompile Include="ModuleTextures.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleScene.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -380,6 +383,9 @@
     </ClInclude>
     <ClInclude Include="DevIL\include\IL\ilut_config.h">
       <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
