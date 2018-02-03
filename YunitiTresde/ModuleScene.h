@@ -13,6 +13,9 @@ public:
 	ModuleScene();
 	~ModuleScene();
 
+};
+
+
 	bool Init();
 	bool Start();
 	bool CleanUp();
