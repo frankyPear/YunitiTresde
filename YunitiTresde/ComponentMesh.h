@@ -1,10 +1,8 @@
 #pragma once
 #include "Component.h"
 #include "SolidSphere.h"
+#include "Quad.h"
 #include "OpenGL.h"
-#include "SDL\include\SDL.h"
-
-
 
 enum Shape {CUBE,SPHERE};
 
@@ -25,6 +23,7 @@ public:
 
 private:
 	Shape meshShape;
+	Cube *cube = nullptr;
 	SolidSphere *sphere = nullptr;
 };
 

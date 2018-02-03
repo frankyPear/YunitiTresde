@@ -23,8 +23,10 @@ ComponentMesh::ComponentMesh(Shape shape) {
 			sphere = new SolidSphere(1.0f,20.0f,20.0f);
 			break;
 		case CUBE:
+			cube = new Cube();
 			break;
 	}
+	meshShape = shape;
 }
 
 
@@ -38,7 +40,10 @@ bool ComponentMesh::Update()
 	switch (meshShape) {
 		case SPHERE:
 			sphere->Draw(0.0f,0.0f,0.0f);
-		break;
+			break;
+		case CUBE:
+			cube->DrawElementQuad();
+			break;
 	}
 	return true;
 }
