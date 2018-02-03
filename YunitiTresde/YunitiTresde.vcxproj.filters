@@ -157,6 +157,9 @@
     <ClCompile Include="SolidSphere.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Quad.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -449,6 +452,9 @@
     <Filter Include="CoreClasses">
       <UniqueIdentifier>{5e3035f3-ba3c-4b78-9de0-9c636fddaa98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\DevIL\Libs">
+      <UniqueIdentifier>{4036ad05-9031-40a1-b00c-341977550b0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl">
@@ -468,8 +474,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="DevIL\lib\x86\Release\DevIL.lib" />
-    <Library Include="DevIL\lib\x86\Release\ILU.lib" />
-    <Library Include="DevIL\lib\x86\Release\ILUT.lib" />
+    <Library Include="DevIL\lib\x86\Release\DevIL.lib">
+      <Filter>Tools\DevIL\Libs</Filter>
+    </Library>
+    <Library Include="DevIL\lib\x86\Release\ILUT.lib">
+      <Filter>Tools\DevIL\Libs</Filter>
+    </Library>
+    <Library Include="DevIL\lib\x86\Release\ILU.lib">
+      <Filter>Tools\DevIL\Libs</Filter>
+    </Library>
   </ItemGroup>
 </Project>

@@ -6,6 +6,8 @@
 #include "SDL\include\SDL.h"
 #include "OpenGL.h"
 
+#include "ComponentMesh.h"
+
 
 class Color 
 {
@@ -46,6 +48,7 @@ public:
 
 private:
 	SDL_GLContext context_;
+	ComponentMesh *cm = nullptr;
 
 	bool checkDepthTest_ = true;
 	bool checkCullFace_ = true;

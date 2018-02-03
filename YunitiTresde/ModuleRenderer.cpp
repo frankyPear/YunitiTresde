@@ -8,7 +8,6 @@
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
 #include "OpenGL.h"
 #include "Quad.h"
-#include "SolidSphere.h"
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
@@ -96,7 +95,7 @@ bool ModuleRenderer::Init() {
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//Implement gluLookAt in a ImGUI
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-
+	cm = new ComponentMesh(CUBE);
 		
 
 	return ret;
@@ -248,8 +247,8 @@ update_status ModuleRenderer::PostUpdate(float dt)
 
 	
 	DrawElementPlane();
-	DrawElementQuadTexturized(loadedTexId_);
-
+	//DrawElementQuadTexturized(loadedTexId_);
+	cm->Update();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
