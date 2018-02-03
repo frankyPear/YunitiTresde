@@ -1,8 +1,9 @@
 #pragma once
 #include "Component.h"
+#include "SolidSphere.h"
 #include "OpenGL.h"
 #include "SDL\include\SDL.h"
-#include "Sphere.h"
+
 
 
 enum Shape {CUBE,SPHERE};

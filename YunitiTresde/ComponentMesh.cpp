@@ -20,8 +20,10 @@ ComponentMesh::~ComponentMesh()
 ComponentMesh::ComponentMesh(Shape shape) {
 	switch (shape) {
 		case SPHERE:
-			//sphere = new SolidSphere(1.0f,20.0f,20.0f);
-		break;
+			sphere = new SolidSphere(1.0f,20.0f,20.0f);
+			break;
+		case CUBE:
+			break;
 	}
 }
 
@@ -35,7 +37,7 @@ bool ComponentMesh::Update()
 {
 	switch (meshShape) {
 		case SPHERE:
-			//sphere->Draw(0.0f,0.0f,0.0f);
+			sphere->Draw(0.0f,0.0f,0.0f);
 		break;
 	}
 	return true;
@@ -48,8 +50,8 @@ bool ComponentMesh::PostUpdate()
 
 bool ComponentMesh::Destroy() 
 {
-	//delete sphere;
-	//sphere = nullptr;
+	delete sphere;
+	sphere = nullptr;
 	return true;
 }
 

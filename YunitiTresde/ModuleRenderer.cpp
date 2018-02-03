@@ -8,7 +8,7 @@
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
 #include "OpenGL.h"
 #include "Quad.h"
-#include "Sphere.h"
+#include "SolidSphere.h"
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "SDL/libx86/SDL2.lib")

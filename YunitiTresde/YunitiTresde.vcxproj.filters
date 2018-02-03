@@ -154,7 +154,7 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>CoreClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere.cpp">
+    <ClCompile Include="SolidSphere.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,9 +188,6 @@
     </ClInclude>
     <ClInclude Include="ModuleImGui.h">
       <Filter>Core Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Mathgeolib\include\MathBuildConfig.h">
       <Filter>Tools\MathGeoLib</Filter>
@@ -419,6 +416,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SolidSphere.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
