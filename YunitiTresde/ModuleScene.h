@@ -13,7 +13,6 @@ public:
 	ModuleScene();
 	~ModuleScene();
 
-};
 
 
 	bool Init();
