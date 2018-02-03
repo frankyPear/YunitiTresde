@@ -17,31 +17,31 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init()
 {
-	return false;
+	return true;
 }
 
 bool ModuleScene::Start()
 {
-	return false;
+	return true;
 }
 
 bool ModuleScene::CleanUp()
 {
-	return false;
+	return true;
 }
 
 
 update_status ModuleScene::PreUpdate(float dt)
 {
-	return update_status();
+	return UPDATE_CONTINUE;
 }
 
 update_status ModuleScene::Update(float dt)
 {
-	return update_status();
+	return UPDATE_CONTINUE;
 }
 
 update_status ModuleScene::PostUpdate(float dt)
 {
-	return update_status();
+	return UPDATE_CONTINUE;
 }
