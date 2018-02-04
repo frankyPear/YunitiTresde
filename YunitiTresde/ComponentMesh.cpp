@@ -21,7 +21,7 @@ ComponentMesh::~ComponentMesh()
 ComponentMesh::ComponentMesh(Shape shape) {
 	switch (shape) {
 		case SPHERE:
-			sphere = new SolidSphere(1.0f,20.0f,20.0f);
+			sphere = new SolidSphere(1.0f,15.0f,15.0f);
 			meshvertices = sphere->GetVertices();
 			meshnormals = sphere->GetNormals();
 			meshtexcoords = sphere->GetTexcoords();
