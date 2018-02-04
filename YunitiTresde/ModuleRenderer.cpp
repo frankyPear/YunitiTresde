@@ -274,7 +274,7 @@ void ModuleRenderer::Draw(ComponentMesh *cm) {
 	vector<GLfloat> vertex = cm->GetMeshVertices();
 	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
 	if (cm->GetMeshNormals().size() > 0) {
-		glEnable(GL_LIGHTING);
+		//glEnable(GL_LIGHTING);
 		glEnableClientState(GL_NORMAL_ARRAY);
 		vector<GLfloat> normal = cm->GetMeshNormals();
 		glNormalPointer(GL_FLOAT, 0, &normal[0]);
