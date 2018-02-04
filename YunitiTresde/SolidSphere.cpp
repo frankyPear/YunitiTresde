@@ -15,6 +15,7 @@ SolidSphere::SolidSphere(float radius, unsigned int rings, unsigned int sectors)
 	vertices.resize(rings * sectors * 3);
 	normals.resize(rings * sectors * 3);
 	texcoords.resize(rings * sectors * 2);
+	colors.resize(rings * sectors * 3);
 	std::vector<GLfloat>::iterator v = vertices.begin();
 	std::vector<GLfloat>::iterator n = normals.begin();
 	std::vector<GLfloat>::iterator t = texcoords.begin();
@@ -68,7 +69,7 @@ void SolidSphere::Draw(GLfloat x, GLfloat y, GLfloat z)
 	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
 	glNormalPointer(GL_FLOAT, 0, &normals[0]);
 	glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
-	glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
+	glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
 	glPopMatrix();
 
 	glDisableClientState(GL_VERTEX_ARRAY);
