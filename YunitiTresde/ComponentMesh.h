@@ -3,6 +3,7 @@
 #include "SolidSphere.h"
 #include "Quad.h"
 #include "OpenGL.h"
+#include <vector>
 
 enum Shape {CUBE,SPHERE};
 
@@ -20,10 +21,21 @@ public:
 	bool Destroy();
 
 	Shape GetShape() const;
+	std::vector<GLfloat> GetMeshVertices() const;
+	std::vector<GLfloat> GetMeshNormals() const;
+	std::vector<GLfloat> GetMeshTexcoords() const;
+	std::vector<GLubyte> GetMeshIndices() const;
+	std::vector<GLfloat> GetMeshColors() const;
 
-private:
+public:
 	Shape meshShape;
 	Cube *cube = nullptr;
 	SolidSphere *sphere = nullptr;
+
+	std::vector<GLfloat> meshvertices;
+	std::vector<GLfloat> meshnormals;
+	std::vector<GLfloat> meshtexcoords;
+	std::vector<GLubyte> meshindices;
+	std::vector<GLfloat> meshcolors;
 };
 

@@ -8,6 +8,9 @@
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
 #include "OpenGL.h"
 #include "Quad.h"
+#include <vector>
+using namespace std;
+
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
@@ -248,7 +251,7 @@ update_status ModuleRenderer::PostUpdate(float dt)
 	
 	DrawElementPlane();
 	//DrawElementQuadTexturized(loadedTexId_);
-	cm->Update();
+	Draw(cm);
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
@@ -262,4 +265,41 @@ bool ModuleRenderer::CleanUp() {
 	SDL_GL_DeleteContext(context_);
 
 	return ret;
+}
+
+void ModuleRenderer::Draw(ComponentMesh *cm) {
+	assert(cm != nullptr);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	vector<GLfloat> vertex = cm->GetMeshVertices();
+	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
+	if (cm->GetMeshNormals().size() > 0) {
+		glEnable(GL_LIGHTING);
+		glEnableClientState(GL_NORMAL_ARRAY);
+		vector<GLfloat> normal = cm->GetMeshNormals();
+		glNormalPointer(GL_FLOAT, 0, &normal[0]);
+	}
+	if (cm->GetMeshColors().size() > 0) {
+		glEnableClientState(GL_COLOR_ARRAY);
+		vector<GLfloat> colors = cm->GetMeshColors();
+		glColorPointer(3, GL_FLOAT, 0, &colors[0]);
+	}
+	if (cm->GetMeshTexcoords().size() > 0) {
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	vector<GLfloat> texcoords = cm->GetMeshTexcoords();
+	glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
+	}
+
+	vector<GLubyte> indices = cm->GetMeshIndices();
+	
+	glPushMatrix();
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
+	glPopMatrix();
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+
 }

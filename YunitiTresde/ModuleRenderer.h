@@ -45,6 +45,7 @@ public:
 	void SetFogColor();
 	void SetAmbientLightning();
 	void SetIdImage(int texID_);
+	void Draw(ComponentMesh *cm);
 
 private:
 	SDL_GLContext context_;

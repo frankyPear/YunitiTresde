@@ -3,6 +3,7 @@
 
 #include "OpenGL.h"
 #include "ModuleTextures.h"
+#include <vector>
 
 void DrawElementPlane();
 
@@ -19,6 +20,12 @@ public:
 	void DrawElementQuad();
 	void InitCube();
 	void DrawElementQuadTexturized(GLuint textureID);
+	std::vector<GLfloat>  GetVertices();
+	std::vector<GLfloat>  GetNormals();
+	std::vector<GLfloat>  GetColors();
+	std::vector<GLfloat>  GetTexcoords();
+	std::vector<GLubyte>  GetIndices();
+
 
 public:
 	GLuint indexID;
@@ -26,6 +33,12 @@ public:
 	GLuint normalID;
 	GLuint colorID;
 	GLuint texID;
+
+	std::vector<GLfloat> vertices;
+	std::vector<GLfloat> normals;
+	std::vector<GLfloat> colors;
+	std::vector<GLfloat> texcoords;
+	std::vector<GLubyte> indicesVector;
 
 	GLfloat vertices1[108] =
 	{
@@ -136,7 +149,7 @@ public:
 		1,0,    0,0,    0,1,    1,1        // back
 	};
 
-	GLubyte texIndex[36] = {
+	GLshort texIndex[36] = {
 		3,1,0,   0,2,3,
 		1,0,2,     2,3,0,
 		2,3,1,   1,0,2,

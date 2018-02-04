@@ -240,3 +240,34 @@ void DrawElementPlane()
 	glEnable(GL_LIGHTING);
 	glColor3f(1, 1, 1);
 }
+
+std::vector<GLfloat>  Cube::GetVertices()
+{
+	for (int i = 0; i < 72; ++i) vertices.push_back(vertices2[i]);
+	return vertices;
+}
+
+std::vector<GLfloat>  Cube::GetNormals()
+{
+	for (int i = 0; i < 72; ++i) normals.push_back(normals2[i]);
+	return normals;
+}
+
+std::vector<GLfloat>  Cube::GetColors()
+{
+	for (int i = 0; i < 72; ++i) colors.push_back(colors2[i]);
+	return colors;
+}
+
+std::vector<GLfloat>  Cube::GetTexcoords()
+{
+	for (int i = 0; i < 48; ++i) texcoords.push_back(texCoords[i]);
+	return texcoords;
+}
+
+std::vector<GLubyte>  Cube::GetIndices()
+{
+	for (int i = 0; i < 36; ++i) indicesVector.push_back(indices[i]);
+
+	return indicesVector;
+}
