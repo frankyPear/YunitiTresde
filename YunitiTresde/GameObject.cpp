@@ -126,7 +126,7 @@ void GameObject::DestroyComponent(Component * component)
 	unsigned int componentsSize = _components.size();
 	for (int i = 0; i < componentsSize; i++) {
 		if (_components[i] == component) {
-
+			
 
 		}
 
