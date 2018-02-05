@@ -32,10 +32,18 @@ public:
 		return true;
 	}
 
+	virtual bool DisplayImgUINode(){
+		return true;
+	}
+
 private:
 
 	Type type;
 	GameObject *linked_to;
 	bool enabled;
+
+protected:
+
+	bool to_be_destroyed;
 };
 

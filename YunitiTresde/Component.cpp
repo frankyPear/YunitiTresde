@@ -6,7 +6,7 @@ Component::Component()
 {
 }
 
-Component::Component(Type componentType, GameObject* obj): type(componentType), linked_to(obj), enabled(true)
+Component::Component(Type componentType, GameObject* obj) : type(componentType), linked_to(obj), enabled(true), to_be_destroyed(false)
 {
 }
 
@@ -36,3 +36,4 @@ Type Component::GetType() const
 {
 	return type;
 }
+

@@ -19,6 +19,7 @@ public:
 	bool Update();
 	bool PostUpdate();
 	bool Destroy();
+	bool DisplayImgUINode();
 
 	Shape GetShape() const;
 	std::vector<GLfloat> GetMeshVertices() const;
@@ -26,6 +27,8 @@ public:
 	std::vector<GLfloat> GetMeshTexcoords() const;
 	std::vector<GLubyte> GetMeshIndices() const;
 	std::vector<GLfloat> GetMeshColors() const;
+
+
 
 public:
 	Shape meshShape;

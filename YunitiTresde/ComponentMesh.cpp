@@ -1,4 +1,6 @@
 #include "ComponentMesh.h"
+#include "imgui-1.53\imgui.h"
+#include "imgui-1.53\imgui_impl_sdl_gl3.h"
 using namespace std;
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
@@ -49,12 +51,12 @@ bool ComponentMesh::PreUpdate()
 bool ComponentMesh::Update() 
 {
 	switch (meshShape) {
-		case SPHERE:
-			sphere->Draw(0.0f,0.0f,0.0f);
-			break;
-		case CUBE:
-			cube->DrawElementQuad();
-			break;
+	case SPHERE:
+		sphere->Draw(0.0f, 0.0f, 0.0f);
+		break;
+	case CUBE:
+		cube->DrawElementQuad();
+		break;
 	}
 	return true;
 }
@@ -66,8 +68,16 @@ bool ComponentMesh::PostUpdate()
 
 bool ComponentMesh::Destroy() 
 {
-	delete sphere;
-	sphere = nullptr;
+	switch (meshShape) {
+	case CUBE:
+		delete cube;
+		cube = nullptr;
+		break;
+	case SPHERE:
+		delete sphere;
+		sphere = nullptr;
+		break;
+	}
 	return true;
 }
 
@@ -99,4 +109,27 @@ std::vector<GLubyte> ComponentMesh::GetMeshIndices() const
 std::vector<GLfloat> ComponentMesh::GetMeshColors() const
 {
 	return meshcolors;
+}
+
+bool ComponentMesh::DisplayImgUINode() {
+	if (ImGui::TreeNodeEx(meshShape == CUBE ? "CUBE Mesh":"SPHERE Mesh"))
+	{
+		if (cube != nullptr || sphere != nullptr)
+		{
+			ImGui::Text("Num Vertices: %i", GetMeshVertices().size());
+			ImGui::Text("Num Indexes: %i", GetMeshIndices().size());
+			ImGui::Text("Num Normals: %i",GetMeshNormals().size());
+			ImGui::Text("Texture Coords: %i", GetMeshTexcoords().size());
+		}
+		else
+		{
+			ImGui::Text("Missing resource mesh!");
+		}
+		if (ImGui::Button("Delete Component"))
+		{
+			to_be_destroyed = true;
+		}
+		ImGui::TreePop();
+	}
+	return true;
 }
