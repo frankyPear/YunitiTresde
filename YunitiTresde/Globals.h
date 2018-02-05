@@ -31,6 +31,8 @@ typedef unsigned int uint;
        }                      \
     }
 
+
+
 // Deletes an array of buffers
 #define RELEASE_ARRAY( x ) \
 	{                              \
@@ -43,6 +45,8 @@ typedef unsigned int uint;
 	 }
 
 // Configuration -----------
+
+
 #define SCREEN_SIZE 1
 #define SCREEN_WIDTH  1024 //384
 #define SCREEN_HEIGHT 720 // 240

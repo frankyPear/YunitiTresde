@@ -56,6 +56,7 @@ update_status ModuleCamera::PreUpdate(float dt)
 
 update_status ModuleCamera::Update(float dt)
 {
+	Quat quatOffset = Quat::identity;
 	camSpeed_ = 3.0f*dt;
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, camSpeed_, 0.0f));
 
@@ -71,25 +72,24 @@ update_status ModuleCamera::Update(float dt)
 	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) 
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), camSpeed_);
-		frustum_.Transform(q);
+		quatOffset = quatOffset.Mul(Quat::RotateAxisAngle(frustum_.WorldRight(), camSpeed_));
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) 
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.WorldRight(), -camSpeed_);
-		frustum_.Transform(q);
+		quatOffset = quatOffset.Mul(Quat::RotateAxisAngle(frustum_.WorldRight(), -camSpeed_));
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.up, -camSpeed_);
-		frustum_.Transform(q); 
+		quatOffset = quatOffset.Mul(Quat::RotateY(-camSpeed_));
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		Quat q = Quat::RotateAxisAngle(frustum_.up, camSpeed_);
-		frustum_.Transform(q);
+		quatOffset = quatOffset.Mul(Quat::RotateY(camSpeed_));
 	}
-
+	frustum_.up = quatOffset.Mul(frustum_.up);
+	frustum_.up.Normalize();
+	frustum_.front = quatOffset.Mul(frustum_.front);
+	frustum_.front.Normalize();
 	return UPDATE_CONTINUE;
 }
 
