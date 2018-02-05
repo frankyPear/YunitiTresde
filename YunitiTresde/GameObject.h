@@ -2,11 +2,12 @@
 #include <string>
 #include <vector>
 #include "Component.h"
+
+
+
 class GameObject
 {
 public:
-
-
 	///Constructor
 	GameObject();
 
@@ -53,18 +54,29 @@ public:
 
 	GameObject* GetParent()const;
 
-	void SetParent(GameObject & parent);
+	void SetParent(GameObject  * parent);
 
-	void AddChild(GameObject &child);
+	void AddChild(GameObject *child);
 
 	GameObject* GetChild(int index)const;
+
+	void DetatchChild(int index);
+
+	void DetachChildren();
+
 
 
 #pragma endregion
 
+#pragma region Render Methods
+	void DisplayImgUINode();
+	void DrawComponentImgUI();
+#pragma endregion
 
 #pragma region Component Methods
-	void AddComponent(Component &component);
+	void AddComponent(Component *component);
+
+	void DestroyComponent(Component *component);
 
 	//GetComponent per fer a analitzar tema dels tipus
 

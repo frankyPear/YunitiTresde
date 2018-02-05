@@ -1,5 +1,5 @@
 #include "GameObject.h"
-
+#include "Globals.h"
 GameObject::GameObject()
 {
 	//Do anything it should
@@ -10,7 +10,14 @@ GameObject::GameObject()
 GameObject::~GameObject()
 {
 
-	//Do anything it should
+	unsigned int componentsSize = _components.size();
+	int *d;
+	
+	for (unsigned int i = 0; i < componentsSize; i++) 
+		RELEASE(_components[i]);
+	
+	_components.clear();
+
 	OnDestroy();
 }
 
@@ -68,28 +75,62 @@ GameObject* GameObject::GetParent() const
 	return _parent;
 }
 
-void GameObject::SetParent(GameObject & parent)
-{	
-	_parent = &parent;
+void GameObject::SetParent(GameObject  * parent)
+{
+	_parent = parent;
 }
 
-void GameObject::AddChild(GameObject & child)
+void GameObject::AddChild(GameObject * child)
 {
-	_childs.push_back(&child);
+	_childs.push_back(child);
 }
 
 GameObject*  GameObject::GetChild(int index) const
 {
-	if (index < 0 || index >= _childs.size()) 
+	if (index < 0 || index >= _childs.size())
 		throw "Index of childs out of range";
-	
+
 
 	return _childs[index];
 }
 
-void GameObject::AddComponent(Component & component)
+void GameObject::DetatchChild(int index)
 {
-	_components.push_back(&component);
+}
+
+void GameObject::DetachChildren()
+{
+	unsigned int childrenSize = _childs.size();
+
+	for (int i = 0; i < childrenSize; i++)
+		_childs[i]->SetParent(nullptr);
+
+	_childs.clear();
+}
+
+void GameObject::DisplayImgUINode()
+{
+}
+
+void GameObject::DrawComponentImgUI()
+{
+}
+
+void GameObject::AddComponent(Component * component)
+{
+	_components.push_back(component);
+}
+
+void GameObject::DestroyComponent(Component * component)
+{
+	unsigned int componentsSize = _components.size();
+	for (int i = 0; i < componentsSize; i++) {
+		if (_components[i] == component) {
+
+
+		}
+
+	}
 }
 
 
