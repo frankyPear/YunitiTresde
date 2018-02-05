@@ -52,7 +52,7 @@ update_status ModuleScene::PostUpdate(float dt)
 }
 
 void ModuleScene::ShowImguiStatus() {
-	ImGui::Begin("Render Manager");
+	/*ImGui::Begin("Scene Manager");
 
 	if (ImGui::CollapsingHeader("GameObjects"))
 	{
@@ -60,5 +60,5 @@ void ModuleScene::ShowImguiStatus() {
 	}
 
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
-	ImGui::End();
+	ImGui::End();*/
 }
