@@ -98,7 +98,6 @@ bool ModuleRenderer::Init() {
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//Implement gluLookAt in a ImGUI
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-	cm = new ComponentMesh(SPHERE);
 		
 
 	return ret;
@@ -251,7 +250,6 @@ update_status ModuleRenderer::PostUpdate(float dt)
 	
 	DrawElementPlane();
 	//DrawElementQuadTexturized(loadedTexId_);;
-	Draw(cm);
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
@@ -267,8 +265,13 @@ bool ModuleRenderer::CleanUp() {
 	return ret;
 }
 
-void ModuleRenderer::Draw(ComponentMesh *cm) {
-	assert(cm != nullptr);
+void ModuleRenderer::Draw(GameObject *obj) {
+	assert(obj != nullptr);
+	ComponentTransform* ct = (ComponentTransform *)obj->GetComponent(TRANSFORMATION);
+	float4x4 mat = ct->GetGlobalTransform().Transposed();
+	glPushMatrix();
+	if (ct != nullptr)	glMultMatrixf(ct->GetGlobalTransform().Transposed().ptr());
+	ComponentMesh* cm = (ComponentMesh *)obj->GetComponent(MESH);
 	glEnable(GL_LIGHTING);
 	vector<GLfloat> colors = cm->GetMeshColors();
 	vector<GLfloat> normal = cm->GetMeshNormals();
@@ -291,7 +294,6 @@ void ModuleRenderer::Draw(ComponentMesh *cm) {
 		glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
 	}
 
-	glPushMatrix();
 	Shape s = cm->GetShape();
 	switch (s) {
 		case CUBE:

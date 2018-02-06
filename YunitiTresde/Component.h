@@ -8,12 +8,13 @@ class Component
 {
 public:
 	Component();
-	Component(Type componentType, GameObject* obj);
+	Component(Type componentType);
 	~Component();
 	bool IsEnabled() const;
 	void Enable();
 	void Disable();
 	GameObject* LinkedTo() const;
+	void SetLinkedTo(GameObject *parent);
 	Type GetType() const;
 	
 	virtual bool PreUpdate() {
@@ -40,10 +41,9 @@ public:
 	bool to_be_destroyed;
 
 
-private:
-
+protected:
+	GameObject * linked_to;
 	Type type;
-	GameObject *linked_to;
 	bool enabled;
 
 

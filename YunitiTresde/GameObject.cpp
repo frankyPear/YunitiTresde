@@ -82,6 +82,11 @@ std::string GameObject::GetName() const
 	return _name;
 }
 
+std::vector<GameObject*> GameObject::GetChilds() const
+{
+	return _childs;
+}
+
 void GameObject::SetActive(bool b)
 {
 	_isActive = b;
@@ -151,6 +156,7 @@ void GameObject::DrawComponentImgUI()
 void GameObject::AddComponent(Component * component)
 {
 	_components.push_back(component);
+	component->SetLinkedTo(this);
 }
 
 void GameObject::DestroyComponent(Component * component)
@@ -167,6 +173,26 @@ void GameObject::DestroyComponent(Component * component)
 	}
 }
 
+Component* GameObject::GetComponent(Type t) 
+{
+	for (int i = 0; i < _components.size(); ++i)
+	{
+		if (_components[i]->GetType() == t) {
+			return _components[i];
+		}
+	}
+	return nullptr;
+}
 
-
+void GameObject::ChildrenTransformUpdate() 
+{
+	for (int i = 0; i < _childs.size(); ++i)
+	{
+		ComponentTransform *childTransform = (ComponentTransform*) _childs[i]->GetComponent(TRANSFORMATION);
+		if (childTransform != nullptr) {
+			childTransform->UpdateTransform();
+			_childs[i]->ChildrenTransformUpdate();
+		}
+	}
+}
 
