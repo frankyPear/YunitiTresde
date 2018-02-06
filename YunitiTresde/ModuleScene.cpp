@@ -37,7 +37,10 @@ bool ModuleScene::Init()
 	root->AddChild(object1);
 	object1->AddChild(object2);
 
-	acum = 0;
+	sceneObjects_.push_back(object1);
+	sceneObjects_.push_back(object2);
+    
+
 	return true;
 }
 
@@ -67,7 +70,6 @@ update_status ModuleScene::Update(float dt)
 	//float3 rotation = float3(0.0f,acum,0.0f);
 	//Quat q = Quat::FromEulerXYZ(rotation.x,rotation.y,rotation.z);
 	//ct->SetRotation(q);
-	ct->UpdateTransform();
 	return UPDATE_CONTINUE;
 }
 
@@ -81,12 +83,24 @@ void ModuleScene::ShowImguiStatus() {
 	ImGui::Begin("Scene Manager");
 	if (ImGui::CollapsingHeader("GameObjects"))
 	{
-		for (int i = 0; i < root->GetChilds().size(); i++)
+
+		
+		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
-			ComponentTransform *ct = (ComponentTransform*)root->GetChild(i)->GetComponent(TRANSFORMATION);
+			ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 			if (ct != nullptr)
 			{
 				ct->OnEditor();
+				ct->Update();
+
+			}
+		}
+		for (int i = 0; i < sceneObjects_.size(); i++)
+		{
+			ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+			if (cm != nullptr)
+			{
+				cm->OnEditor();
 			}
 		}
 	}
