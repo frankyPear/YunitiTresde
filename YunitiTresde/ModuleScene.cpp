@@ -1,9 +1,11 @@
 #include "Application.h"
 #include "ModuleScene.h"
-#include "ModuleRenderer.h"
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
+
+#include "Mathgeolib\include\MathGeoLib.h"
+
 
 #include "GameObject.h"
 #include "ComponentMesh.h"
@@ -27,7 +29,15 @@ bool ModuleScene::Init()
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 	object1->AddComponent(cm);
 	object1->AddComponent(ct);
+	GameObject *object2 = new GameObject();
+	ComponentMesh *cm2 = new ComponentMesh(CUBE);
+	ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	object2->AddComponent(cm2);
+	object2->AddComponent(ct2);
 	root->AddChild(object1);
+	object1->AddChild(object2);
+
+	acum = 0;
 	return true;
 }
 
@@ -50,10 +60,13 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	ShowImguiStatus();
-	std::vector<GameObject*> rootchilds = root->GetChilds();
-	for (int i = 0; i < rootchilds.size(); ++i) {
-		App->renderer->Draw( rootchilds[i]);
-	}
+	root->DrawObjectAndChilds();
+	ComponentTransform *ct = (ComponentTransform *) root->GetChild(0)->GetComponent(TRANSFORMATION);
+	acum += 10*dt;
+	float3 rotation = float3(0.0f,acum,0.0f);
+	Quat q = Quat::FromEulerXYZ(rotation.x,rotation.y,rotation.z);
+	ct->SetRotation(q);
+	ct->UpdateTransform();
 	return UPDATE_CONTINUE;
 }
 

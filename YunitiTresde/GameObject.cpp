@@ -1,5 +1,8 @@
 #include "GameObject.h"
 #include "Globals.h"
+#include "ModuleRenderer.h"
+#include "Application.h"
+
 GameObject::GameObject()
 {
 	//Do anything it should
@@ -115,6 +118,7 @@ void GameObject::SetParent(GameObject  * parent)
 void GameObject::AddChild(GameObject * child)
 {
 	_childs.push_back(child);
+	child->SetParent(this);
 }
 
 GameObject*  GameObject::GetChild(int index) const
@@ -196,3 +200,8 @@ void GameObject::ChildrenTransformUpdate()
 	}
 }
 
+void GameObject::DrawObjectAndChilds() 
+{
+	App->renderer->Draw(this);
+	for (int i = 0; i < _childs.size(); ++i) _childs[i]->DrawObjectAndChilds();
+}

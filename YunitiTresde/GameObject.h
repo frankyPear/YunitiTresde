@@ -88,7 +88,8 @@ public:
 	Component* GetComponent(Type t);
 
 	void ChildrenTransformUpdate();
-	//GetComponent per fer a analitzar tema dels tipus
+
+	void DrawObjectAndChilds();
 
 #pragma endregion
 

@@ -110,11 +110,13 @@ void ComponentTransform::UpdateTransform()
 {
 	_rotationEulerAngles = float3(DegToRad(_rotationEulerAngles.x), DegToRad(_rotationEulerAngles.y), DegToRad(_rotationEulerAngles.z));
 	_quatRotation = Quat::FromEulerXYZ(_rotationEulerAngles.x, _rotationEulerAngles.y, _rotationEulerAngles.z);
+	
 	_globalTransMatrix = float4x4::FromTRS(_position, _quatRotation, _scale);
+	
 	_rotationEulerAngles = float3(RadToDeg(_rotationEulerAngles.x), RadToDeg(_rotationEulerAngles.y), RadToDeg(_rotationEulerAngles.z));
 	_localTransMatrix = _globalTransMatrix;
 
-	if (linked_to != nullptr)
+	if (linked_to != nullptr && linked_to->GetParent() != nullptr)
 	{
 		ComponentTransform *parentTransform = (ComponentTransform *)linked_to->GetParent()->GetComponent(type);
 		if (parentTransform != nullptr)
