@@ -2,6 +2,7 @@
 #define __ModuleScene_H__
 
 #include "Module.h"
+#include "ComponentCamera.h"
 #include <vector>
 
 class GameObject;
@@ -32,6 +33,7 @@ public:
 
 public:
 	bool recalcTree = false;
+	ComponentCamera *actualCamera = nullptr;
 
 private:
 	GameObject* root;

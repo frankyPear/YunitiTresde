@@ -2,30 +2,13 @@
 
 #include "Application.h"
 #include "ModuleInput.h"
-
-
 #include "Glew\include\glew.h"
 #include "Mathgeolib\include\Math\MathAll.h"
 
 
 ModuleCamera::ModuleCamera()
 {
-	frustum_ = Frustum();	
-	/*
-	type, projectiveSpace, handedness, pos, front, up,
-	nearPlaneDistance, farPlaneDistance, horizontalFov/orthographicWidth
-	and verticalFov/orthographicHeight are all NaN.
-	*/
-	frustum_.type = PerspectiveFrustum;
-	aspectRatio_ = 16.0f / 9.0f;
-	frustum_.pos = float3(0.0f,1.0f,0.0f);
-	frustum_.front = (float3(0.0f, 0.0f, -1.0f));
-	frustum_.up = float3(0.0f, 1.0f, 0.0f);
-	frustum_.nearPlaneDistance = 0.5f;
-	frustum_.farPlaneDistance = 1000.0f;
-	frustum_.verticalFov = DegToRad(60.0f);
-	frustum_.horizontalFov = DegToRad(36.0f);
-		//2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio)); //frustum_.verticalFov * (aspectRatio);
+	dummyCamera = new ComponentCamera();
 
 }
 
@@ -58,25 +41,26 @@ update_status ModuleCamera::Update(float dt)
 {
 	Quat quatOffset = Quat::identity;
 	camSpeed_ = 3.0f*dt;
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, camSpeed_, 0.0f));
 
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) frustum_.pos = frustum_.pos.Add(float3(0.0f, -camSpeed_, 0.0f));
-	
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) frustum_.pos += frustum_.front.Add(float3(0.0f, 0.0f, camSpeed_));
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition().Add(float3(0.0f, camSpeed_, 0.0f)));
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) frustum_.pos -= frustum_.front.Add(float3(0.0f, 0.0f, camSpeed_));
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition().Add(float3(0.0f, -camSpeed_, 0.0f)));
 	
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) frustum_.pos -= frustum_.WorldRight().Add(float3(camSpeed_, 0.0f, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition() + dummyCamera->GetFront().Add(float3(0.0f, 0.0f, camSpeed_)));
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition() - dummyCamera->GetFront().Add(float3(0.0f, 0.0f, camSpeed_)));
 	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) frustum_.pos += frustum_.WorldRight().Add(float3(camSpeed_, 0.0f, 0.0f));
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition() - dummyCamera->GetWorldRight().Add(float3(camSpeed_, 0.0f, 0.0f)));
+	
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition() + dummyCamera->GetWorldRight().Add(float3(camSpeed_, 0.0f, 0.0f)));
 	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) 
 	{
-		quatOffset = quatOffset.Mul(Quat::RotateAxisAngle(frustum_.WorldRight(), camSpeed_));
+		quatOffset = quatOffset.Mul(Quat::RotateAxisAngle(dummyCamera->GetWorldRight(), camSpeed_));
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) 
 	{
-		quatOffset = quatOffset.Mul(Quat::RotateAxisAngle(frustum_.WorldRight(), -camSpeed_));
+		quatOffset = quatOffset.Mul(Quat::RotateAxisAngle(dummyCamera->GetWorldRight(), -camSpeed_));
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{

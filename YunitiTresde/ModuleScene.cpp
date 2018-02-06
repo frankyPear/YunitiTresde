@@ -13,6 +13,7 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
+#include "ModuleCamera.h"
 
 ModuleScene::ModuleScene()
 {
@@ -42,6 +43,7 @@ bool ModuleScene::Init()
 	sceneObjects_.push_back(object1);
 	sceneObjects_.push_back(object2);
     
+	actualCamera = App->cam->dummyCamera;
 
 	return true;
 }

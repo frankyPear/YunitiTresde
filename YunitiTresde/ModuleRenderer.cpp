@@ -3,6 +3,7 @@
 #include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "ModuleImGui.h"
+#include "ModuleScene.h"
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 #include "imgui-1.53\imgui.h"
@@ -203,11 +204,11 @@ update_status ModuleRenderer::PreUpdate(float dt)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->cam->GetProjectionMatrix());
+	glLoadMatrixf(App->scene->actualCamera->GetProjectionMatrix());
 
 	//Init Modelview Matrix
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->cam->GetViewMatrix());
+	glLoadMatrixf(App->scene->actualCamera->GetViewMatrix());
 
 	switch (intTex)
 	{
