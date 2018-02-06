@@ -29,6 +29,8 @@ public:
 #pragma endregion
 
 
+	void UpdateTransform();
+
 #pragma region Setters
 	void SetPosition(math::float3 position);
 

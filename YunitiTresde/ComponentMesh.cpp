@@ -119,7 +119,7 @@ bool ComponentMesh::DisplayImgUINode() {
 		}
 		if (ImGui::Button("Delete Component"))
 		{
-			to_be_destroyed = true;
+			//to_be_destroyed = true;
 		}
 		ImGui::TreePop();
 	}

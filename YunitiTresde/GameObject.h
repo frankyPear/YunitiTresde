@@ -18,22 +18,19 @@ public:
 	//OnStart callback
 	virtual void OnStart();
 
-	///OnDestroy callback
+	//OnDestroy callback
 	virtual void OnDestroy();
 #pragma endregion
 
 #pragma region Life cycle methods
 
-	///PreUpdate
+	//PreUpdate
 	virtual bool PreUpdate();
 
-<<<<<<< HEAD
-	///PostUpdatee
-=======
+	//Update
 	virtual bool Update();
 
-	///PostUpdate
->>>>>>> bb4e78869e77b5c22672cc5e746561eeef439b00
+	//PostUpdate
 	virtual bool PostUpdate();
 
 #pragma endregion
@@ -80,7 +77,7 @@ public:
 
 #pragma endregion
 
-#pragma region Render Methods
+#pragma region Inspector Methods
 	void DrawGameObjectImgUI();
 	void DrawComponentImgUI();
 #pragma endregion
@@ -101,6 +98,10 @@ private:
 
 	bool _isStatic = false;
 
+	bool _drawBoundingBox = false;
+
+	unsigned int _disactivedGameObjectsIndex=0, _destroyGameObjectsIndex=0;
+	unsigned int _disabledComponentsIndex = 0, _destroyComponentsIndex = 0;
 	std::string _name = "Default name";
 
 #pragma region Hierarchy attributes

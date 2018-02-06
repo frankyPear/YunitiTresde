@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Globals.h"
+#include "ModuleImGui.h"
 GameObject::GameObject()
 {
 	//Do anything it should
@@ -9,13 +10,11 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-
 	unsigned int componentsSize = _components.size();
-	int *d;
-	
-	for (unsigned int i = 0; i < componentsSize; i++) 
+
+	for (unsigned int i = 0; i < componentsSize; i++)
 		RELEASE(_components[i]);
-	
+
 	_components.clear();
 
 	OnDestroy();
@@ -32,38 +31,36 @@ void GameObject::OnDestroy()
 
 bool GameObject::PreUpdate()
 {
+	for (int i = 0; i < _disactivedGameObjectsIndex; i++)
+		_childs[i]->PreUpdate();
+
+
+	for (int i = 0; i < _disabledComponentsIndex; i++)
+		_components[i]->PreUpdate();
 	return true;
+
 }
 
 bool GameObject::Update()
 {
-	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();) {
-			(*it)->Update();		
-	}
-	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end();) {
-		(*it)->Update();
-	}
+	for (int i = 0; i < _disactivedGameObjectsIndex; i++)
+		_childs[i]->Update();
+
+	for (int i = 0; i < _disabledComponentsIndex; i++)
+		_components[i]->Update();
+
 	return true;
 }
 
 bool GameObject::PostUpdate()
 {
+	for (int i = 0; i < _disactivedGameObjectsIndex; i++)
+		_childs[i]->PostUpdate();
 
-	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();) {
-		if ((*it)->to_be_destroyed) {
-			(*it)->Destroy();
-			delete *it;
-			*it = nullptr;
-			it = _components.erase(it);
-		}
 
-		else {
-			(*it)->PostUpdate();
-		}
-	}
-	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end();) {
-		(*it)->PostUpdate();
-	}
+	for (int i = 0; i < _disabledComponentsIndex; i++)
+		_components[i]->PostUpdate();
+
 	return true;
 }
 
@@ -109,17 +106,35 @@ GameObject* GameObject::GetParent() const
 
 void GameObject::SetParent(GameObject  * parent)
 {
-	if (parent == nullptr && _parent != nullptr)
+	if (parent == _parent)
+		return;
+
+	if (_parent != nullptr)
 		_parent->DetatchChild(*this);
-	else if (parent != nullptr && parent!=_parent)
+	if (parent != nullptr)
 		parent->AddChild(this);
-	_parent = parent;	
-	
+	else
+		_parent = nullptr;
 }
 
 void GameObject::AddChild(GameObject * child)
 {
-	_childs.push_back(child);
+	_childs.push_back(nullptr);
+	unsigned int childsSize = _childs.size();
+
+	//Swapping
+	if (_destroyComponentsIndex == _disactivedGameObjectsIndex) {
+		_childs[childsSize - 1] = _childs[_disactivedGameObjectsIndex];
+	}
+	else {
+		_childs[childsSize - 1] = _childs[_destroyComponentsIndex];
+		_childs[_destroyComponentsIndex] = _childs[_disactivedGameObjectsIndex];
+	}
+
+	_childs[_disactivedGameObjectsIndex] = child;
+	_destroyGameObjectsIndex++;
+	_disactivedGameObjectsIndex++;
+	child->_parent = this;
 }
 
 GameObject*  GameObject::GetChild(int index) const
@@ -143,7 +158,6 @@ void GameObject::DetatchChild(int index)
 		_childs[index]->_parent = nullptr;
 		_childs.erase(_childs.begin() + index);
 	}
-	
 }
 
 void GameObject::DetatchChild(GameObject & child)
@@ -157,10 +171,8 @@ void GameObject::DetatchChild(GameObject & child)
 		}
 	}
 	if (selectedIndex != -1) {
-		child._parent = nullptr;
 		_childs.erase(_childs.begin() + selectedIndex);
-		
-		
+		child._parent = nullptr;
 	}
 
 }
@@ -170,7 +182,7 @@ void GameObject::DetachChildren()
 	unsigned int childrenSize = _childs.size();
 
 	for (int i = 0; i < childrenSize; i++)
-		_childs[i]->_parent=nullptr;
+		_childs[i]->_parent = nullptr;
 
 	_childs.clear();
 }
@@ -178,14 +190,45 @@ void GameObject::DetachChildren()
 void GameObject::DrawGameObjectImgUI() {
 	// Mirar que no sigui el root, renderitzar al imgui les propietats
 	// Si ho es cridar per cada fill la seva funcio de DrawGameObjectImgUI
+	ImGui::Checkbox("##object_active", &_isActive);
+
+	ImGui::SameLine();
+
+	ImGui::SameLine();
+
+	//Static Object
+	if (ImGui::Checkbox("Static##object_static", &_isStatic))	
+		SetStatic(_isStatic);	
+
+	//Bounding box
+	ImGui::Checkbox("Bounding Box", &_drawBoundingBox);
+
+	//Components inspectors
+	uint size = _components.size();
+	for (uint k = 0; k < size; k++)
+	{
+		//Show component inspector data
+		_components[k]->DisplayImgUINode();
+
+	
+	}
+
+	//Components factory
+	ImGui::Separator();
+
+
+	/*if (App->scene->GetComponentsWinState())
+	{
+		App->scene->BlitComponentsWindow(this);
+	}*/
+
+	//Add a margin to scroll
+	ImGui::NewLine(); ImGui::NewLine(); ImGui::NewLine(); ImGui::NewLine();
 }
 
 
 void GameObject::DrawComponentImgUI()
 {
-	for (int i = 0; i < _components.size(); ++i) {
-		//_components[i]->DisplayImgUINode();
-	}
 }
 
 void GameObject::AddComponent(Component * component)
@@ -197,20 +240,11 @@ void GameObject::AddComponent(Component * component)
 void GameObject::DestroyComponent(Component * component)
 {
 	unsigned int componentsSize = _components.size();
-<<<<<<< HEAD
 	int selectedIndex = -1;
 	for (int i = 0; i < componentsSize; i++) {
-		if (_components[i] == component) {			
+		if (_components[i] == component) {
 			selectedIndex = i;
 			break;
-=======
-	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();){
-		if ((*it)->to_be_destroyed) {
-			(*it)->Destroy();
-
-			delete *it;
-			*it = nullptr;
->>>>>>> bb4e78869e77b5c22672cc5e746561eeef439b00
 		}
 	}
 	if (selectedIndex != -1) {

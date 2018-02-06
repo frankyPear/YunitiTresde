@@ -41,6 +41,12 @@ math::float4x4 ComponentTransform::GetInheritedTransform() const
 	return _inheritedTransform;
 }
 
+void ComponentTransform::UpdateTransform()
+{
+
+
+}
+
 void ComponentTransform::SetPosition(math::float3 position)
 {
 	_position = position;
