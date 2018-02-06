@@ -1,5 +1,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
+#include "ModuleWindow.h"
+#include "ModuleRenderer.h"
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
@@ -83,8 +85,6 @@ void ModuleScene::ShowImguiStatus() {
 	ImGui::Begin("Scene Manager");
 	if (ImGui::CollapsingHeader("GameObjects"))
 	{
-
-		
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
 			ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
@@ -104,7 +104,11 @@ void ModuleScene::ShowImguiStatus() {
 			}
 		}
 	}
-
+	if (ImGui::CollapsingHeader("Settings"))
+	{
+		App->window->WindowImGui();
+		App->renderer->ConfigurationManager();
+	}
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
 	ImGui::End();
 
