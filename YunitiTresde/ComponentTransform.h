@@ -23,6 +23,8 @@ public:
 
 	bool DisplayImgUINode();
 
+	void OnEditor();
+
 #pragma region Getters
 
 	float3 GetPosition()const;

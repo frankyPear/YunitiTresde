@@ -1,6 +1,7 @@
 #include "ComponentTransform.h"
 #include "GameObject.h"
-
+#include "imgui-1.53\imgui.h"
+#include "imgui-1.53\imgui_impl_sdl_gl3.h"
 
 ComponentTransform::ComponentTransform()
 {
@@ -131,4 +132,55 @@ void ComponentTransform::UpdateTransform()
 void ComponentTransform::ForceUpdate()
 {
 	updateTrans = true;
+}
+
+void ComponentTransform::OnEditor()
+{
+	if (ImGui::TreeNode("Transform"))
+	{
+		ImGui::Text("Position:");
+		ImGui::Text("X: %.2f", _position.x);
+		ImGui::SameLine;
+		ImGui::Text("Y: %.2f", _position.y);
+		ImGui::SameLine;
+		ImGui::Text("Z: %.2f", _position.z);
+		ImGui::Text("Scale");
+		ImGui::Text("X: %.2f", _scale.x);
+		ImGui::SameLine;
+		ImGui::Text("Y: %.2f", _scale.y);
+		ImGui::SameLine;
+		ImGui::Text("Z: %.2f", _scale.y);
+		ImGui::Text("Rotation");
+		ImGui::Text("X: %.2f", _rotationEulerAngles.x);
+		ImGui::SameLine;
+		ImGui::Text("Y: %.2f", _rotationEulerAngles.y);
+		ImGui::SameLine;
+		ImGui::Text("Z: %.2f", _rotationEulerAngles.z);
+
+		ImGui::Text("Position:");
+		if (ImGui::DragFloat3("X", &_position.x, 0.05f, NULL, NULL, "%.2f"))
+		{
+			updateTrans = true;
+		}
+		ImGui::Text("Scale:");
+		if (ImGui::DragFloat3("X##1", &_scale.x, 0.05f, 1.0f, NULL, "%.2f"))
+		{
+			updateTrans = true;
+		}
+		ImGui::Text("Rotation:");
+		if (ImGui::DragFloat3("X##2", &_rotationEulerAngles.x, 0.05f, -180, 180, "%.2f"))
+		{
+			updateTrans = true;
+		}
+
+		if (ImGui::Button("Reset"))
+		{
+			_position = float3::zero;
+			_scale = float3::one;
+			_rotationEulerAngles = float3::zero;
+			updateTrans = true;
+		}
+		ImGui::TreePop();
+	}
+
 }

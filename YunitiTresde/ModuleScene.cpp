@@ -54,18 +54,19 @@ bool ModuleScene::CleanUp()
 
 update_status ModuleScene::PreUpdate(float dt)
 {
+	ShowImguiStatus();
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleScene::Update(float dt)
 {
-	ShowImguiStatus();
+
 	root->DrawObjectAndChilds();
 	ComponentTransform *ct = (ComponentTransform *) root->GetChild(0)->GetComponent(TRANSFORMATION);
-	acum += 10*dt;
-	float3 rotation = float3(0.0f,acum,0.0f);
-	Quat q = Quat::FromEulerXYZ(rotation.x,rotation.y,rotation.z);
-	ct->SetRotation(q);
+	//acum += 10*dt;
+	//float3 rotation = float3(0.0f,acum,0.0f);
+	//Quat q = Quat::FromEulerXYZ(rotation.x,rotation.y,rotation.z);
+	//ct->SetRotation(q);
 	ct->UpdateTransform();
 	return UPDATE_CONTINUE;
 }
@@ -76,13 +77,21 @@ update_status ModuleScene::PostUpdate(float dt)
 }
 
 void ModuleScene::ShowImguiStatus() {
-	/*ImGui::Begin("Scene Manager");
 
+	ImGui::Begin("Scene Manager");
 	if (ImGui::CollapsingHeader("GameObjects"))
 	{
-
+		for (int i = 0; i < root->GetChilds().size(); i++)
+		{
+			ComponentTransform *ct = (ComponentTransform*)root->GetChild(i)->GetComponent(TRANSFORMATION);
+			if (ct != nullptr)
+			{
+				ct->OnEditor();
+			}
+		}
 	}
 
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
-	ImGui::End();*/
+	ImGui::End();
+
 }
