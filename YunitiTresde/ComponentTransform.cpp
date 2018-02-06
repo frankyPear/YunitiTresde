@@ -1,6 +1,9 @@
 #include "ComponentTransform.h"
+//NOTICE:
 
-
+//Added includes
+#include "imgui-1.53\imgui.h"
+#include "imgui-1.53\imgui_impl_sdl_gl3.h"
 
 ComponentTransform::ComponentTransform()
 {

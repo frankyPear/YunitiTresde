@@ -1,6 +1,9 @@
 #pragma once
 #include "Component.h"
 #include "Math.h"
+
+//ERASE COMMENTS WHILE NOTICED:
+
 class ComponentTransform :
 	public Component
 {
@@ -10,8 +13,9 @@ public:
 
 	///Destructor
 	~ComponentTransform();
-
-
+	//REQUIRED FUNCTIONS:
+	//forced to override a virtual function
+	bool Update() override; // //Recalculate Trans Matrix and Rotation matrix
 #pragma region Getters
 
 	math::float3 GetPosition()const;
