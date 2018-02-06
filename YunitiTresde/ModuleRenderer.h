@@ -45,10 +45,12 @@ public:
 	void SetFogColor();
 	void SetAmbientLightning();
 	void SetIdImage(int texID_);
+	void Draw(ComponentMesh *cm);
 
 private:
 	SDL_GLContext context_;
 	ComponentMesh *cm = nullptr;
+	SolidSphere *sphere = nullptr;
 
 	bool checkDepthTest_ = true;
 	bool checkCullFace_ = true;

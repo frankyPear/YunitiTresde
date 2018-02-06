@@ -27,7 +27,13 @@ public:
 	///PreUpdate
 	virtual bool PreUpdate();
 
+<<<<<<< HEAD
 	///PostUpdatee
+=======
+	virtual bool Update();
+
+	///PostUpdate
+>>>>>>> bb4e78869e77b5c22672cc5e746561eeef439b00
 	virtual bool PostUpdate();
 
 #pragma endregion
@@ -75,7 +81,7 @@ public:
 #pragma endregion
 
 #pragma region Render Methods
-	void DisplayImgUINode();
+	void DrawGameObjectImgUI();
 	void DrawComponentImgUI();
 #pragma endregion
 
