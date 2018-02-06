@@ -7,7 +7,7 @@ Component::Component()
 	OnStart();
 }
 
-Component::Component(Type componentType, GameObject* obj) : _type(componentType), _gameObject(obj), _enabled(true), to_be_destroyed(false)
+Component::Component(Type componentType, GameObject* obj) : _type(componentType), _gameObject(obj), _enabled(true)
 {
 
 	OnStart();

@@ -106,11 +106,12 @@ GameObject* GameObject::GetParent() const
 
 void GameObject::SetParent(GameObject  * parent)
 {
-	if (parent == _parent)
+	if (_parent == parent)
 		return;
 
 	if (_parent != nullptr)
 		_parent->DetatchChild(*this);
+
 	if (parent != nullptr)
 		parent->AddChild(this);
 	else
@@ -121,7 +122,6 @@ void GameObject::AddChild(GameObject * child)
 {
 	_childs.push_back(nullptr);
 	unsigned int childsSize = _childs.size();
-
 	//Swapping
 	if (_destroyComponentsIndex == _disactivedGameObjectsIndex) {
 		_childs[childsSize - 1] = _childs[_disactivedGameObjectsIndex];
@@ -173,6 +173,8 @@ void GameObject::DetatchChild(GameObject & child)
 	if (selectedIndex != -1) {
 		_childs.erase(_childs.begin() + selectedIndex);
 		child._parent = nullptr;
+
+
 	}
 
 }
