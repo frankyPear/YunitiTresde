@@ -2,51 +2,20 @@
 
 class GameObject;
 
-
+enum Type {TRANSFORMATION,MATERIAL,MESH};
 
 class Component
 {
 public:
-	///Component type enum
-	enum Type {
-		DEFAULT,
-		TRANSFORMATION,
-		MATERIAL,
-		MESH
-	};
-
-	///Constructor
 	Component();
-
-	//Constructor
-	Component(Type componentType, GameObject &obj);
-
-	///Destructor
-	virtual ~Component();
-	
-#pragma region Getters
+	Component(Type componentType, GameObject* obj);
+	~Component();
 	bool IsEnabled() const;
-	GameObject* GetGameObject() const;
-	Type GetType() const;
-
-#pragma endregion
-
-#pragma region Setters
 	void Enable();
 	void Disable();
-#pragma endregion
-
-#pragma region Callbacks
-	virtual void OnStart();
-
-	virtual void OnDestroy();
-
-
-#pragma endregion
-
-#pragma region Life cycle methods
-
-
+	GameObject* LinkedTo() const;
+	Type GetType() const;
+	
 	virtual bool PreUpdate() {
 		return true;
 	}	
@@ -59,13 +28,24 @@ public:
 		return true;
 	}
 
-#pragma endregion
+	virtual bool Destroy() {
+		return true;
+	}
 
-	
+	virtual bool DisplayImgUINode(){
+		return true;
+	}
+
+public:
+	bool to_be_destroyed;
+
 
 private:
-	Type _type=Type::DEFAULT;
-	GameObject *_gameObject=nullptr;
-	bool _enabled=true;
+
+	Type type;
+	GameObject *linked_to;
+	bool enabled;
+
+
 };
 

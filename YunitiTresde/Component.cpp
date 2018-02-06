@@ -4,47 +4,36 @@
 
 Component::Component()
 {
-
-	OnStart();
 }
 
-Component::Component(Type componentType, GameObject& obj): _type(componentType), _gameObject(&obj), _enabled(true)
+Component::Component(Type componentType, GameObject* obj) : type(componentType), linked_to(obj), enabled(true), to_be_destroyed(false)
 {
-
-	OnStart();
 }
 
 
 Component::~Component()
 {
 
-	OnDestroy();
-
 }
 
 bool Component::IsEnabled() const
 {
-	return _enabled;
+	return enabled;
 }
 void Component::Enable()
 {
-	if (!_enabled) _enabled = true;
+	if (!enabled) enabled = true;
 }
 void Component::Disable()
 {
-	if (_enabled) _enabled = false;
+	if (enabled) enabled = false;
 }
-void Component::OnStart()
+GameObject* Component::LinkedTo() const
 {
+	return linked_to;
 }
-void Component::OnDestroy()
+Type Component::GetType() const
 {
+	return type;
 }
-GameObject* Component::GetGameObject() const
-{
-	return _gameObject;
-}
-Component::Type Component::GetType() const
-{
-	return _type;
-}
+
