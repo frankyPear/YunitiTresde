@@ -20,10 +20,13 @@ public:
 
 	//OnDestroy callback
 	virtual void OnDestroy();
+
+
+
 #pragma endregion
 
 #pragma region Life cycle methods
-
+public:
 	//PreUpdate
 	virtual bool PreUpdate();
 
@@ -63,6 +66,8 @@ public:
 
 	void AddChild(GameObject *child);
 
+	int FindChildIndex(GameObject & gameObject)const;
+
 	GameObject* GetChild(int index)const;
 
 	unsigned int GetChildsCount()const;
@@ -73,11 +78,20 @@ public:
 
 	void DetachChildren();
 
+private:
+	void OnChildIsDisactived(GameObject &e);
+
+	void OnChildIsActived(GameObject &g);
+
+	void OnChildIsDestroyed(GameObject &g);
+
+
 
 
 #pragma endregion
 
 #pragma region Inspector Methods
+public:
 	void DrawGameObjectImgUI();
 	void DrawComponentImgUI();
 #pragma endregion
@@ -101,6 +115,7 @@ private:
 	bool _drawBoundingBox = false;
 
 	unsigned int _disactivedGameObjectsIndex=0, _destroyGameObjectsIndex=0;
+
 	unsigned int _disabledComponentsIndex = 0, _destroyComponentsIndex = 0;
 	std::string _name = "Default name";
 

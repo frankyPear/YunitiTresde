@@ -18,6 +18,7 @@ GameObject::~GameObject()
 	_components.clear();
 
 	OnDestroy();
+	OnChildIsDestroyed(*this);
 }
 
 void GameObject::OnStart()
@@ -26,7 +27,65 @@ void GameObject::OnStart()
 
 void GameObject::OnDestroy()
 {
+}
 
+void GameObject::OnChildIsDisactived(GameObject &g)
+{
+	//Swap to disactiveblock
+	int index = FindChildIndex(g);
+	if (index != -1) {
+		if (index != (_disactivedGameObjectsIndex - 1)) {
+			GameObject *aux = _childs[_disactivedGameObjectsIndex - 1];
+			_childs[_disactivedGameObjectsIndex - 1] = &g;
+			_childs[index] = aux;
+		}
+		_disactivedGameObjectsIndex--;
+	}
+}
+
+
+
+void GameObject::OnChildIsDestroyed(GameObject & g)
+{
+	int index = FindChildIndex(g);
+	if (index != -1) {
+		if (index < _disabledComponentsIndex) {//Destroy an activeObject
+			if (index != (_disabledComponentsIndex - 1)) 
+				_childs[index] = _childs[_disabledComponentsIndex - 1];
+			if(_disabledComponentsIndex!=_destroyComponentsIndex)
+			_childs[_disabledComponentsIndex-1]=_childs[_destroyComponentsIndex-1];
+
+		}
+		else if (index < _destroyComponentsIndex) {//Destroy an disactiveObject
+			if (index != (_destroyComponentsIndex - 1)) {
+				GameObject *aux = _childs[index];
+				_childs[index] = _childs[_destroyComponentsIndex - 1];
+				_childs[_destroyComponentsIndex - 1] = aux;
+			}
+
+		}
+		_childs[_destroyComponentsIndex - 1] = &g;
+		_destroyComponentsIndex--;
+		_disabledComponentsIndex--;
+
+
+	}
+
+
+
+}
+
+void GameObject::OnChildIsActived(GameObject &g)
+{
+	int index = FindChildIndex(g);
+	if (index != -1) {
+		if (index != (_disactivedGameObjectsIndex)) {
+			GameObject *aux = _childs[_disactivedGameObjectsIndex];
+			_childs[_disactivedGameObjectsIndex] = &g;
+			_childs[index] = aux;
+		}
+		_disactivedGameObjectsIndex++;
+	}
 }
 
 bool GameObject::PreUpdate()
@@ -86,6 +145,15 @@ std::string GameObject::GetName() const
 
 void GameObject::SetActive(bool b)
 {
+	if (_isActive == b)
+		return;
+	if (_parent != nullptr) {
+		if (b)
+			_parent->OnChildIsActived(*this);
+		else
+			_parent->OnChildIsDisactived(*this);
+	}
+
 	_isActive = b;
 }
 
@@ -116,6 +184,7 @@ void GameObject::SetParent(GameObject  * parent)
 		parent->AddChild(this);
 	else
 		_parent = nullptr;
+
 }
 
 void GameObject::AddChild(GameObject * child)
@@ -137,11 +206,24 @@ void GameObject::AddChild(GameObject * child)
 	child->_parent = this;
 }
 
+int GameObject::FindChildIndex(GameObject & gameObject) const
+{
+	int selectedIndex = -1;
+	unsigned int childrenSize = _childs.size();
+	for (int i = 0; i < childrenSize; i++) {
+		if (&gameObject == _childs[i]) {
+			selectedIndex = i;
+			break;
+		}
+	}
+
+	return selectedIndex;
+}
+
 GameObject*  GameObject::GetChild(int index) const
 {
 	if (index < 0 || index >= _childs.size())
 		throw "Index of childs out of range";
-
 
 	return _childs[index];
 }
@@ -162,19 +244,10 @@ void GameObject::DetatchChild(int index)
 
 void GameObject::DetatchChild(GameObject & child)
 {
-	unsigned int childrenSize = _childs.size();
-	unsigned int selectedIndex = -1;
-	for (int i = 0; i < childrenSize; i++) {
-		if (&child == _childs[i]) {
-			selectedIndex = i;
-			break;
-		}
-	}
+	unsigned int selectedIndex = FindChildIndex(child);
 	if (selectedIndex != -1) {
 		_childs.erase(_childs.begin() + selectedIndex);
 		child._parent = nullptr;
-
-
 	}
 
 }
@@ -199,8 +272,8 @@ void GameObject::DrawGameObjectImgUI() {
 	ImGui::SameLine();
 
 	//Static Object
-	if (ImGui::Checkbox("Static##object_static", &_isStatic))	
-		SetStatic(_isStatic);	
+	if (ImGui::Checkbox("Static##object_static", &_isStatic))
+		SetStatic(_isStatic);
 
 	//Bounding box
 	ImGui::Checkbox("Bounding Box", &_drawBoundingBox);
@@ -211,8 +284,6 @@ void GameObject::DrawGameObjectImgUI() {
 	{
 		//Show component inspector data
 		_components[k]->DisplayImgUINode();
-
-	
 	}
 
 	//Components factory

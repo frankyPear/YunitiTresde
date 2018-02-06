@@ -14,6 +14,11 @@ ComponentTransform::~ComponentTransform()
 {
 }
 
+bool ComponentTransform::Update()
+{
+	return false;
+}
+
 math::float3 ComponentTransform::GetPosition() const
 {
 	return _position;
