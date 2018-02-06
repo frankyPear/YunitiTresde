@@ -2,6 +2,7 @@
 #define __ModuleScene_H__
 
 #include "Module.h"
+#include <vector>
 
 class GameObject;
 class Mesh;
@@ -27,7 +28,7 @@ public:
 	void ShowImguiStatus();
 
 	GameObject* GetRoot();
-
+	void Hierarchy();
 
 public:
 	bool recalcTree = false;
@@ -42,8 +43,8 @@ private:
 	std::string loadPath;
 
 	Timer saveLoadTimer;
+	std::vector<GameObject*> sceneObjects_;
 
-	float acum;
 };
 
 #endif

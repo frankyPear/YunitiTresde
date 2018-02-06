@@ -19,7 +19,7 @@ public:
 	bool Update();
 	bool PostUpdate();
 	bool Destroy();
-	bool DisplayImgUINode();
+	bool OnEditor();
 
 	Shape GetShape() const;
 	std::vector<GLfloat> GetMeshVertices() const;

@@ -50,7 +50,7 @@ update_status ModuleImGui::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 		
-	update_status ModuleImGui::Update(float dt)
+update_status ModuleImGui::Update(float dt)
 	{
 		//Rendering before than that of Module Render, shall we changed?
 		if (show_demo_window)
@@ -182,6 +182,13 @@ update_status ModuleImGui::PreUpdate(float dt)
 			}
 			ImGui::End();
 		}
-		ImGui::Render();
+	
 		return UPDATE_CONTINUE;
 	}
+
+
+void ModuleImGui::RenderImGui()
+{
+	ImGui::Render();
+
+}

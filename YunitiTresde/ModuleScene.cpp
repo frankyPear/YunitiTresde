@@ -1,5 +1,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
+#include "ModuleWindow.h"
+#include "ModuleRenderer.h"
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
@@ -37,7 +39,10 @@ bool ModuleScene::Init()
 	root->AddChild(object1);
 	object1->AddChild(object2);
 
-	acum = 0;
+	sceneObjects_.push_back(object1);
+	sceneObjects_.push_back(object2);
+    
+
 	return true;
 }
 
@@ -50,7 +55,10 @@ bool ModuleScene::CleanUp()
 {
 	return true;
 }
-
+void ModuleScene::Hierarchy()
+{
+	
+}
 
 update_status ModuleScene::PreUpdate(float dt)
 {
@@ -60,14 +68,11 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
-
-	root->DrawObjectAndChilds();
-	ComponentTransform *ct = (ComponentTransform *) root->GetChild(0)->GetComponent(TRANSFORMATION);
-	//acum += 10*dt;
-	//float3 rotation = float3(0.0f,acum,0.0f);
-	//Quat q = Quat::FromEulerXYZ(rotation.x,rotation.y,rotation.z);
-	//ct->SetRotation(q);
-	ct->UpdateTransform();
+	for (int i = 0; i < sceneObjects_.size(); i++)
+	{
+		sceneObjects_[i]->DrawObjectAndChilds();
+	}
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -81,16 +86,30 @@ void ModuleScene::ShowImguiStatus() {
 	ImGui::Begin("Scene Manager");
 	if (ImGui::CollapsingHeader("GameObjects"))
 	{
-		for (int i = 0; i < root->GetChilds().size(); i++)
+		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
-			ComponentTransform *ct = (ComponentTransform*)root->GetChild(i)->GetComponent(TRANSFORMATION);
+			ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 			if (ct != nullptr)
 			{
 				ct->OnEditor();
+				ct->Update();
+
+			}
+		}
+		for (int i = 0; i < sceneObjects_.size(); i++)
+		{
+			ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+			if (cm != nullptr)
+			{
+				cm->OnEditor();
 			}
 		}
 	}
-
+	if (ImGui::CollapsingHeader("Settings"))
+	{
+		App->window->WindowImGui();
+		App->renderer->ConfigurationManager();
+	}
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
 	ImGui::End();
 

@@ -2,6 +2,7 @@
 #include "ModuleRenderer.h"
 #include "ModuleCamera.h"
 #include "ModuleWindow.h"
+#include "ModuleImGui.h"
 #include "SDL\include\SDL.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 #include "imgui-1.53\imgui.h"
@@ -105,7 +106,7 @@ bool ModuleRenderer::Init() {
 //Perhaps better to use bool?
 void ModuleRenderer::ConfigurationManager()
 {
-	ImGui::Begin("Render Manager");
+	ImGui::Text("Renderer Settings");
 	
 	if (ImGui::Checkbox("DEPTH TEST", &checkDepthTest_))
 	{
@@ -141,7 +142,7 @@ void ModuleRenderer::ConfigurationManager()
 		if (ImGui::SliderFloat("Green", &ambientGreen_, 0.0f, 1.0f)); SetAmbientLightning();
 	}
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
-	ImGui::End();
+
 }
 void  ModuleRenderer::toggleDepthTest(bool check)
 {
@@ -183,7 +184,6 @@ void ModuleRenderer::SetAmbientLightning()
 	GLfloat ambientLight[4] = { ambientRed_,ambientGreen_, ambientBlue_, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 }
-
  void ModuleRenderer::SetIdImage(int texID_)
 {
 	intTex = texID_;
@@ -192,7 +192,6 @@ bool ModuleRenderer::Start()
 {
 	return true;
 }
-
 update_status ModuleRenderer::PreUpdate(float dt)
 {
 	//Readapt the render size, once window is resized
@@ -236,25 +235,22 @@ update_status ModuleRenderer::PreUpdate(float dt)
 
 	return UPDATE_CONTINUE;
 }
-
 update_status ModuleRenderer::Update(float dt)
 {
-	ConfigurationManager();
 	return UPDATE_CONTINUE;
 }
-
-
 update_status ModuleRenderer::PostUpdate(float dt)
 {
 
 	
 	DrawElementPlane();
 	//DrawElementQuadTexturized(loadedTexId_);;
+
+	App->imgui->RenderImGui();
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
 }
-
 bool ModuleRenderer::CleanUp() {
 
 	bool ret = true;
@@ -264,7 +260,6 @@ bool ModuleRenderer::CleanUp() {
 
 	return ret;
 }
-
 void ModuleRenderer::Draw(GameObject *obj) {
 	assert(obj != nullptr);
 	ComponentTransform* ct = (ComponentTransform *)obj->GetComponent(TRANSFORMATION);

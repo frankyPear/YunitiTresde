@@ -46,6 +46,7 @@ ComponentMesh::ComponentMesh(Shape shape) {
 
 bool ComponentMesh::PreUpdate()
 {
+	OnEditor();
 	return true;
 }
 
@@ -104,7 +105,7 @@ std::vector<GLfloat> ComponentMesh::GetMeshColors() const
 	return meshcolors;
 }
 
-bool ComponentMesh::DisplayImgUINode() {
+bool ComponentMesh::OnEditor() {
 	if (ImGui::TreeNodeEx(meshShape == CUBE ? "CUBE Mesh":"SPHERE Mesh"))
 	{
 		if (cube != nullptr || sphere != nullptr)

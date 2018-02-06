@@ -13,7 +13,7 @@ class ModuleImGui;
 class ModuleCamera;
 class ModuleTextures;
 class ModuleScene;
-
+class ModuleImGui;
 class Application
 {
 public:
@@ -36,6 +36,7 @@ public:
 	ModuleCamera* cam;
 	ModuleTextures* textures;
 	ModuleScene* scene;
+
 	bool switchmap = false;
 private:
 	Timer ms_timer_;

@@ -62,8 +62,6 @@ bool ModuleWindow::Start() {
 
 update_status ModuleWindow::Update(float dt) {
 	
-		
-	WindowImGui();
 	//In case people wants to modify them directly from the window borders
 	//TODO: FORCE to respect aspect ratio
 	height_ = GetHeight();
@@ -100,7 +98,7 @@ void ModuleWindow::SetWindowWidth(int width)
 void ModuleWindow::WindowImGui()
 {
 	//TODO: Force ImGui to respect aspect ratio, shall we modify the camera or the render?
-	ImGui::Begin("Window");
+	ImGui::Text("Window");
 	static bool check1 = true;
 	if (ImGui::Checkbox("Shown", &check1))
 	{
@@ -144,7 +142,6 @@ void ModuleWindow::WindowImGui()
 	{
 		SetWindowWidth(width_);
 	}
-	ImGui::End();
 }
 
 bool ModuleWindow::CleanUp() {

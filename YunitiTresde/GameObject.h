@@ -70,9 +70,6 @@ public:
 
 	void DetachChildren();
 
-
-
-
 #pragma endregion
 
 #pragma region Render Methods
@@ -108,7 +105,6 @@ private:
 	GameObject * _parent;
 
 #pragma endregion
-
 
 	std::vector<Component*> _components;
 
