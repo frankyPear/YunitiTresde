@@ -20,6 +20,12 @@ public:
 
 	math::float3 GetEulerRotation()const;
 
+	math::Quat GetRotationQuat()const;
+
+	math::float4x4 GetTransform()const;
+
+	math::float4x4 GetInheritedTransform()const;
+
 #pragma endregion
 
 
@@ -30,15 +36,22 @@ public:
 
 	void SetEulerRotation(math::float3 rotation);
 
+	void SetTransform(math::float4x4 matrix);
 
 
 #pragma endregion
 
 private:
+	math::float4x4 _matrixTransform = math::float4x4::identity;
+
 	math::float3 _position = { 0,0,0 };
+
+	math::float4x4 _inheritedTransform = math::float4x4::identity;
 
 	math::float3 _scale = {1,1,1};
 
 	math::float3 _rotationEulerAngles = { 0,0,0 };
+
+	math::Quat _rotationQuaternion = math::Quat::identity;
 };
 

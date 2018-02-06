@@ -40,6 +40,11 @@ bool GameObject::PostUpdate()
 	return false;
 }
 
+unsigned int GameObject::GetId() const
+{
+	return _id;
+}
+
 bool GameObject::GetActive() const
 {
 	return _isActive;
@@ -77,7 +82,12 @@ GameObject* GameObject::GetParent() const
 
 void GameObject::SetParent(GameObject  * parent)
 {
-	_parent = parent;
+	if (parent == nullptr && _parent != nullptr)
+		_parent->DetatchChild(*this);
+	else if (parent != nullptr && parent!=_parent)
+		parent->AddChild(this);
+	_parent = parent;	
+	
 }
 
 void GameObject::AddChild(GameObject * child)
@@ -94,8 +104,38 @@ GameObject*  GameObject::GetChild(int index) const
 	return _childs[index];
 }
 
+unsigned int GameObject::GetChildsCount() const
+{
+	return _childs.size();
+}
+
 void GameObject::DetatchChild(int index)
 {
+	unsigned int childrenSize = _childs.size();
+	if (index >= 0 && index < childrenSize) {
+		_childs[index]->_parent = nullptr;
+		_childs.erase(_childs.begin() + index);
+	}
+	
+}
+
+void GameObject::DetatchChild(GameObject & child)
+{
+	unsigned int childrenSize = _childs.size();
+	unsigned int selectedIndex = -1;
+	for (int i = 0; i < childrenSize; i++) {
+		if (&child == _childs[i]) {
+			selectedIndex = i;
+			break;
+		}
+	}
+	if (selectedIndex != -1) {
+		child._parent = nullptr;
+		_childs.erase(_childs.begin() + selectedIndex);
+		
+		
+	}
+
 }
 
 void GameObject::DetachChildren()
@@ -103,7 +143,7 @@ void GameObject::DetachChildren()
 	unsigned int childrenSize = _childs.size();
 
 	for (int i = 0; i < childrenSize; i++)
-		_childs[i]->SetParent(nullptr);
+		_childs[i]->_parent=nullptr;
 
 	_childs.clear();
 }
@@ -118,18 +158,23 @@ void GameObject::DrawComponentImgUI()
 
 void GameObject::AddComponent(Component * component)
 {
+	component->SetGameObject(*this);
 	_components.push_back(component);
 }
 
 void GameObject::DestroyComponent(Component * component)
 {
 	unsigned int componentsSize = _components.size();
+	int selectedIndex = -1;
 	for (int i = 0; i < componentsSize; i++) {
-		if (_components[i] == component) {
-			
-
+		if (_components[i] == component) {			
+			selectedIndex = i;
+			break;
 		}
-
+	}
+	if (selectedIndex != -1) {
+		RELEASE(_components[selectedIndex]);
+		_components.erase(_components.begin() + selectedIndex);
 	}
 }
 

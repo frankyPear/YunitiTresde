@@ -34,6 +34,8 @@ public:
 #pragma region Setters
 	void Enable();
 	void Disable();
+
+	void SetGameObject(GameObject &gameObject);
 #pragma endregion
 
 #pragma region Callbacks

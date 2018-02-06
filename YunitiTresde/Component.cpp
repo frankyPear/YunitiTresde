@@ -34,6 +34,10 @@ void Component::Disable()
 {
 	if (_enabled) _enabled = false;
 }
+void Component::SetGameObject(GameObject & gameObject)
+{
+	_gameObject = &gameObject;
+}
 void Component::OnStart()
 {
 }

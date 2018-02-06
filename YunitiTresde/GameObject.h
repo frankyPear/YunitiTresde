@@ -27,12 +27,14 @@ public:
 	///PreUpdate
 	virtual bool PreUpdate();
 
-	///PostUpdate
+	///PostUpdatee
 	virtual bool PostUpdate();
 
 #pragma endregion
 
 #pragma region Getters
+	unsigned int GetId()const;
+
 	bool GetActive()const;
 
 	bool GetStatic()const;
@@ -60,7 +62,11 @@ public:
 
 	GameObject* GetChild(int index)const;
 
+	unsigned int GetChildsCount()const;
+
 	void DetatchChild(int index);
+
+	void DetatchChild(GameObject &child);
 
 	void DetachChildren();
 
