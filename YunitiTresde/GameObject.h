@@ -36,6 +36,8 @@ public:
 	//PostUpdate
 	virtual bool PostUpdate();
 
+	void Destroy();
+
 #pragma endregion
 
 #pragma region Getters
@@ -114,9 +116,12 @@ private:
 
 	bool _drawBoundingBox = false;
 
+	bool _removeOnFrameEnd = false;
+
 	unsigned int _disactivedGameObjectsIndex=0, _destroyGameObjectsIndex=0;
 
 	unsigned int _disabledComponentsIndex = 0, _destroyComponentsIndex = 0;
+
 	std::string _name = "Default name";
 
 #pragma region Hierarchy attributes

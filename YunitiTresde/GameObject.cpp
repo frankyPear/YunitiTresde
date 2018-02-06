@@ -18,7 +18,7 @@ GameObject::~GameObject()
 	_components.clear();
 
 	OnDestroy();
-	OnChildIsDestroyed(*this);
+
 }
 
 void GameObject::OnStart()
@@ -50,36 +50,32 @@ void GameObject::OnChildIsDestroyed(GameObject & g)
 	int index = FindChildIndex(g);
 	if (index != -1) {
 		if (index < _disabledComponentsIndex) {//Destroy an activeObject
-			if (index != (_disabledComponentsIndex - 1)) 
+			if (index != (_disabledComponentsIndex - 1))
 				_childs[index] = _childs[_disabledComponentsIndex - 1];
-			if(_disabledComponentsIndex!=_destroyComponentsIndex)
-			_childs[_disabledComponentsIndex-1]=_childs[_destroyComponentsIndex-1];
+			if (_disabledComponentsIndex != _destroyComponentsIndex)
+				_childs[_disabledComponentsIndex - 1] = _childs[_destroyComponentsIndex - 1];
+			_disabledComponentsIndex--;
 
 		}
 		else if (index < _destroyComponentsIndex) {//Destroy an disactiveObject
 			if (index != (_destroyComponentsIndex - 1)) {
-				GameObject *aux = _childs[index];
 				_childs[index] = _childs[_destroyComponentsIndex - 1];
-				_childs[_destroyComponentsIndex - 1] = aux;
 			}
 
 		}
 		_childs[_destroyComponentsIndex - 1] = &g;
 		_destroyComponentsIndex--;
-		_disabledComponentsIndex--;
-
 
 	}
 
-
-
 }
+
 
 void GameObject::OnChildIsActived(GameObject &g)
 {
 	int index = FindChildIndex(g);
 	if (index != -1) {
-		if (index != (_disactivedGameObjectsIndex)) {
+		if (index != _disactivedGameObjectsIndex) {
 			GameObject *aux = _childs[_disactivedGameObjectsIndex];
 			_childs[_disactivedGameObjectsIndex] = &g;
 			_childs[index] = aux;
@@ -116,11 +112,20 @@ bool GameObject::PostUpdate()
 	for (int i = 0; i < _disactivedGameObjectsIndex; i++)
 		_childs[i]->PostUpdate();
 
-
 	for (int i = 0; i < _disabledComponentsIndex; i++)
 		_components[i]->PostUpdate();
 
+	unsigned int childsSize = _childs.size();
+	for (int i = _destroyGameObjectsIndex; i < childsSize; i++) {
+		_childs.pop_back();
+	}
+
 	return true;
+}
+
+void GameObject::Destroy()
+{
+	_removeOnFrameEnd = true;
 }
 
 unsigned int GameObject::GetId() const
