@@ -12,10 +12,10 @@ GameObject::~GameObject()
 
 	unsigned int componentsSize = _components.size();
 	int *d;
-	
-	for (unsigned int i = 0; i < componentsSize; i++) 
+
+	for (unsigned int i = 0; i < componentsSize; i++)
 		RELEASE(_components[i]);
-	
+
 	_components.clear();
 
 	OnDestroy();
@@ -82,17 +82,23 @@ GameObject* GameObject::GetParent() const
 
 void GameObject::SetParent(GameObject  * parent)
 {
-	if (parent == nullptr && _parent != nullptr)
+	if (_parent == parent)
+		return;
+
+	if (_parent != nullptr)
 		_parent->DetatchChild(*this);
-	else if (parent != nullptr && parent!=_parent)
+
+	if (parent != nullptr)
 		parent->AddChild(this);
-	_parent = parent;	
-	
+	else
+		_parent = nullptr;
+
 }
 
 void GameObject::AddChild(GameObject * child)
 {
 	_childs.push_back(child);
+	child->_parent = this;
 }
 
 GameObject*  GameObject::GetChild(int index) const
@@ -116,7 +122,7 @@ void GameObject::DetatchChild(int index)
 		_childs[index]->_parent = nullptr;
 		_childs.erase(_childs.begin() + index);
 	}
-	
+
 }
 
 void GameObject::DetatchChild(GameObject & child)
@@ -132,8 +138,8 @@ void GameObject::DetatchChild(GameObject & child)
 	if (selectedIndex != -1) {
 		child._parent = nullptr;
 		_childs.erase(_childs.begin() + selectedIndex);
-		
-		
+
+
 	}
 
 }
@@ -143,7 +149,7 @@ void GameObject::DetachChildren()
 	unsigned int childrenSize = _childs.size();
 
 	for (int i = 0; i < childrenSize; i++)
-		_childs[i]->_parent=nullptr;
+		_childs[i]->_parent = nullptr;
 
 	_childs.clear();
 }
@@ -167,7 +173,7 @@ void GameObject::DestroyComponent(Component * component)
 	unsigned int componentsSize = _components.size();
 	int selectedIndex = -1;
 	for (int i = 0; i < componentsSize; i++) {
-		if (_components[i] == component) {			
+		if (_components[i] == component) {
 			selectedIndex = i;
 			break;
 		}
