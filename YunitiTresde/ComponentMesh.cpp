@@ -50,14 +50,6 @@ bool ComponentMesh::PreUpdate()
 
 bool ComponentMesh::Update() 
 {
-	switch (meshShape) {
-	case SPHERE:
-		sphere->Draw(0.0f, 0.0f, 0.0f);
-		break;
-	case CUBE:
-		cube->DrawElementQuad();
-		break;
-	}
 	return true;
 }
 

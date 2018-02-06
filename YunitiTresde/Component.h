@@ -36,14 +36,16 @@ public:
 		return true;
 	}
 
+public:
+	bool to_be_destroyed;
+
+
 private:
 
 	Type type;
 	GameObject *linked_to;
 	bool enabled;
 
-protected:
 
-	bool to_be_destroyed;
 };
 
