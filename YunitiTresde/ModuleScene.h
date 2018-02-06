@@ -28,7 +28,7 @@ public:
 	void ShowImguiStatus();
 
 	GameObject* GetRoot();
-
+	void Hierarchy();
 
 public:
 	bool recalcTree = false;

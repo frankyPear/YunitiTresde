@@ -55,7 +55,10 @@ bool ModuleScene::CleanUp()
 {
 	return true;
 }
-
+void ModuleScene::Hierarchy()
+{
+	
+}
 
 update_status ModuleScene::PreUpdate(float dt)
 {
@@ -65,13 +68,11 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
-
-	root->DrawObjectAndChilds();
-	ComponentTransform *ct = (ComponentTransform *) root->GetChild(0)->GetComponent(TRANSFORMATION);
-	//acum += 10*dt;
-	//float3 rotation = float3(0.0f,acum,0.0f);
-	//Quat q = Quat::FromEulerXYZ(rotation.x,rotation.y,rotation.z);
-	//ct->SetRotation(q);
+	for (int i = 0; i < sceneObjects_.size(); i++)
+	{
+		sceneObjects_[i]->DrawObjectAndChilds();
+	}
+	
 	return UPDATE_CONTINUE;
 }
 
