@@ -6,9 +6,9 @@
 GLuint VBO, VAO;
 GLfloat vertices[] =
 {
-	1, 1, 1,    .0f,1.0f,1.0f,
-	-1, 1, 1,   1.0f,.0f,1.0f,
-	-1,-1, 1,   1.0f,1.0f,.0f,   // v0-v1-v2 (front)
+	1, 1, 1,    .0f,1.0f,1.0f,  // .0f, 1.0f,
+	-1, 1, 1,   1.0f,.0f,1.0f,  // 0.0f, 1.0f,
+	-1,-1, 1,   1.0f,1.0f,.0f,  //  0.0f, 0.0f,// v0-v1-v2 (front)
 	-1,-1, 1,   .0f,1.0f,1.0f,
 	1,-1, 1,    1.0f,.0f,1.0f,
 	1, 1, 1,    1.0f,1.0f,.0f,   // v2-v3-v0
@@ -34,19 +34,19 @@ GLfloat vertices[] =
 	-1,-1, 1,   1.0f,.0f,1.0f,
 	-1, 1, 1,   1.0f,1.0f,.0f,  // v7-v2-v1
 
-	-1,-1,-1,   .0f,1.0f,1.0f,
-	1,-1,-1,    1.0f,.0f,1.0f,
-	1,-1, 1,    1.0f,1.0f,.0f,   // v7-v4-v3 (bottom)
-	1,-1, 1,    .0f,1.0f,1.0f,
-	-1,-1, 1,   1.0f,.0f,1.0f,
-	-1,-1,-1,   1.0f,1.0f,.0f,   // v3-v2-v7
+	-1,-1,-1,   .0f,1.0f,1.0f,   // 1.0f, 0.0f,
+	1,-1,-1,    1.0f,.0f,1.0f,   // 0.0f, 0.0f,
+	1,-1, 1,    1.0f,1.0f,.0f,	//0.0f, 1.0f,	// v7-v4-v3 (bottom)
+	1,-1, 1,    .0f,1.0f,1.0f,	//0.0f, 1.0f,
+	-1,-1, 1,   1.0f,.0f,1.0f,	//1.0f, 1.0f,
+	-1,-1,-1,   1.0f,1.0f,.0f,  //1.0f, 0.0f,  // v3-v2-v7
 
-	1,-1,-1,    .0f,1.0f,1.0f,
-	-1,-1,-1,   1.0f,.0f,1.0f,
-	-1, 1,-1,   1.0f,1.0f,.0f,  // v4-v7-v6 (back)
-	-1, 1,-1,   .0f,1.0f,1.0f,
-	1, 1,-1,    1.0f,.0f,1.0f,
-	1,-1,-1,    1.0f,1.0f,.0f  // v6-v5-v4
+	1,-1,-1,    .0f,1.0f,1.0f,  //1.0f, 0.0f,
+	-1,-1,-1,   1.0f,.0f,1.0f,  //0.0f, 0.0f,
+	-1, 1,-1,   1.0f,1.0f,.0f,  //0.0f, 1.0f,// v4-v7-v6 (back)
+	-1, 1,-1,   .0f,1.0f,1.0f,  //0.0f, 1.0f,
+	1, 1,-1,    1.0f,.0f,1.0f,  //1.0f, 1.0f,
+	1,-1,-1,    1.0f,1.0f,.0f   //1.0f, 0.0f// v6-v5-v4
 };
 void CreateTriangle()
 {
@@ -59,13 +59,17 @@ void CreateTriangle()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	// Position attribute
+	// Position attribute // NOT 8 YET!!
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)0);
 	glEnableVertexAttribArray(0);
+	
 	// Color attribute
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
-
+	
+	//Texture attribute
+	//	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid *)(6 * sizeof(GLfloat)));
+	//	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0); // Unbind VAO
 }

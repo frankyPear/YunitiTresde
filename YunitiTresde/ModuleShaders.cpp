@@ -23,7 +23,7 @@ ModuleShaders::ModuleShaders()
 	//"uniform sampler2D tex0; "
 	"void main() \n"
 	"{ \n"
-		// "vec4 color = texture2D(tex0, TexCoord); \n"
+		// "vec4 color = texture2D(tex0.x, tex0.y, TexCoord.x,TexCoord.y); \n"
 		 // "gl_FragColor = color; \n"
 	"gl_FragColor = vec4(ourColor.x,ourColor.y,ourColor.z, 1.0f); \n"
     "}";
