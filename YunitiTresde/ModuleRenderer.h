@@ -6,8 +6,11 @@
 #include "SDL\include\SDL.h"
 #include "OpenGL.h"
 
+#include "GameObject.h"
+#include "Component.h"
+#include "ComponentTransform.h"
 #include "ComponentMesh.h"
-
+#include "ComponentMaterial.h"
 
 class Color 
 {
@@ -45,11 +48,10 @@ public:
 	void SetFogColor();
 	void SetAmbientLightning();
 	void SetIdImage(int texID_);
-	void Draw(ComponentMesh *cm);
+	void Draw(GameObject *obj);
 
 private:
 	SDL_GLContext context_;
-	ComponentMesh *cm = nullptr;
 	SolidSphere *sphere = nullptr;
 
 	bool checkDepthTest_ = true;

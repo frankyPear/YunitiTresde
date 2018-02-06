@@ -2,7 +2,9 @@
 #include <string>
 #include <vector>
 #include "Component.h"
-
+#include "ComponentTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 
 
 class GameObject
@@ -41,6 +43,8 @@ public:
 
 	std::string GetName()const;
 
+	std::vector<GameObject*> GetChilds() const;
+
 #pragma endregion
 
 #pragma region Setters
@@ -68,6 +72,7 @@ public:
 
 
 
+
 #pragma endregion
 
 #pragma region Render Methods
@@ -80,7 +85,11 @@ public:
 
 	void DestroyComponent(Component *component);
 
-	//GetComponent per fer a analitzar tema dels tipus
+	Component* GetComponent(Type t);
+
+	void ChildrenTransformUpdate();
+
+	void DrawObjectAndChilds();
 
 #pragma endregion
 

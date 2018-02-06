@@ -1,5 +1,8 @@
 #include "GameObject.h"
 #include "Globals.h"
+#include "ModuleRenderer.h"
+#include "Application.h"
+
 GameObject::GameObject()
 {
 	//Do anything it should
@@ -82,6 +85,11 @@ std::string GameObject::GetName() const
 	return _name;
 }
 
+std::vector<GameObject*> GameObject::GetChilds() const
+{
+	return _childs;
+}
+
 void GameObject::SetActive(bool b)
 {
 	_isActive = b;
@@ -110,6 +118,7 @@ void GameObject::SetParent(GameObject  * parent)
 void GameObject::AddChild(GameObject * child)
 {
 	_childs.push_back(child);
+	child->SetParent(this);
 }
 
 GameObject*  GameObject::GetChild(int index) const
@@ -151,6 +160,7 @@ void GameObject::DrawComponentImgUI()
 void GameObject::AddComponent(Component * component)
 {
 	_components.push_back(component);
+	component->SetLinkedTo(this);
 }
 
 void GameObject::DestroyComponent(Component * component)
@@ -167,6 +177,31 @@ void GameObject::DestroyComponent(Component * component)
 	}
 }
 
+Component* GameObject::GetComponent(Type t) 
+{
+	for (int i = 0; i < _components.size(); ++i)
+	{
+		if (_components[i]->GetType() == t) {
+			return _components[i];
+		}
+	}
+	return nullptr;
+}
 
+void GameObject::ChildrenTransformUpdate() 
+{
+	for (int i = 0; i < _childs.size(); ++i)
+	{
+		ComponentTransform *childTransform = (ComponentTransform*) _childs[i]->GetComponent(TRANSFORMATION);
+		if (childTransform != nullptr) {
+			childTransform->UpdateTransform();
+			_childs[i]->ChildrenTransformUpdate();
+		}
+	}
+}
 
-
+void GameObject::DrawObjectAndChilds() 
+{
+	App->renderer->Draw(this);
+	for (int i = 0; i < _childs.size(); ++i) _childs[i]->DrawObjectAndChilds();
+}

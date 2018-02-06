@@ -98,7 +98,6 @@ bool ModuleRenderer::Init() {
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//Implement gluLookAt in a ImGUI
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-	cm = new ComponentMesh(SPHERE);
 		
 
 	return ret;
@@ -251,7 +250,6 @@ update_status ModuleRenderer::PostUpdate(float dt)
 	
 	DrawElementPlane();
 	//DrawElementQuadTexturized(loadedTexId_);;
-	Draw(cm);
 	SDL_GL_SwapWindow(App->window->GetWindow());
 
 	return UPDATE_CONTINUE;
@@ -267,44 +265,50 @@ bool ModuleRenderer::CleanUp() {
 	return ret;
 }
 
-void ModuleRenderer::Draw(ComponentMesh *cm) {
-	assert(cm != nullptr);
-	glEnable(GL_LIGHTING);
-	vector<GLfloat> colors = cm->GetMeshColors();
-	vector<GLfloat> normal = cm->GetMeshNormals();
-	vector<GLfloat> vertex = cm->GetMeshVertices();
-	vector<GLubyte> indices = cm->GetMeshIndices();
-	vector<GLfloat> texcoords = cm->GetMeshTexcoords();
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
-	if (normal.size() > 0) {
-		glEnableClientState(GL_NORMAL_ARRAY);
-		glNormalPointer(GL_FLOAT, 0, &normal[0]);
-	}
-	if (colors.size() > 0) {
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, &colors[0]);
-	}
-	if (texcoords.size() > 0) {
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
-	}
-
+void ModuleRenderer::Draw(GameObject *obj) {
+	assert(obj != nullptr);
+	ComponentTransform* ct = (ComponentTransform *)obj->GetComponent(TRANSFORMATION);
+	ComponentMesh* cm = (ComponentMesh *)obj->GetComponent(MESH);
 	glPushMatrix();
-	Shape s = cm->GetShape();
-	switch (s) {
+	if (ct != nullptr)	glMultMatrixf(ct->GetGlobalTransform().Transposed().ptr());
+	if (cm != nullptr) {
+		glEnable(GL_LIGHTING);
+		vector<GLfloat> colors = cm->GetMeshColors();
+		vector<GLfloat> normal = cm->GetMeshNormals();
+		vector<GLfloat> vertex = cm->GetMeshVertices();
+		vector<GLubyte> indices = cm->GetMeshIndices();
+		vector<GLfloat> texcoords = cm->GetMeshTexcoords();
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
+		if (normal.size() > 0) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_FLOAT, 0, &normal[0]);
+		}
+		if (colors.size() > 0) {
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(3, GL_FLOAT, 0, &colors[0]);
+		}
+		if (texcoords.size() > 0) {
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
+		}
+
+		Shape s = cm->GetShape();
+		switch (s) {
 		case CUBE:
-			glDrawElements( GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
+			glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
 			break;
 		case SPHERE:
 			glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
 			break;
+		}
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 	glPopMatrix();
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
 }

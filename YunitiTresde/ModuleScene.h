@@ -42,6 +42,8 @@ private:
 	std::string loadPath;
 
 	Timer saveLoadTimer;
+
+	float acum;
 };
 
 #endif

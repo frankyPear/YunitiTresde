@@ -39,6 +39,7 @@ ComponentMesh::ComponentMesh(Shape shape) {
 			meshcolors = cube->GetColors();
 			break;
 	}
+	type = MESH;
 	meshShape = shape;
 }
 
