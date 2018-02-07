@@ -2,7 +2,7 @@
 
 class GameObject;
 
-enum Type {TRANSFORMATION,MATERIAL,MESH};
+enum Type {TRANSFORMATION,MATERIAL,MESH,CAMERA};
 
 class Component
 {

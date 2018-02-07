@@ -9,7 +9,7 @@
 ModuleCamera::ModuleCamera()
 {
 	dummyCamera = new ComponentCamera();
-
+	dummyCamera->SetPlaneDistances(0.5f,1000.0f);
 }
 
 ModuleCamera::~ModuleCamera()
@@ -20,7 +20,7 @@ ModuleCamera::~ModuleCamera()
 bool ModuleCamera::Init()
 {
 	bool ret = true;
-
+	
 	return ret;
 }
 
@@ -64,47 +64,16 @@ update_status ModuleCamera::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		quatOffset = quatOffset.Mul(Quat::RotateY(-camSpeed_));
+		quatOffset = quatOffset.Mul(Quat::RotateY(camSpeed_));
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		quatOffset = quatOffset.Mul(Quat::RotateY(camSpeed_));
+		quatOffset = quatOffset.Mul(Quat::RotateY(-camSpeed_));
 	}
-	frustum_.up = quatOffset.Mul(frustum_.up);
-	frustum_.up.Normalize();
-	frustum_.front = quatOffset.Mul(frustum_.front);
-	frustum_.front.Normalize();
+	dummyCamera->SetUp(quatOffset.Mul(dummyCamera->GetUp()));
+	dummyCamera->NormalizeUp();
+	dummyCamera->SetFront(quatOffset.Mul(dummyCamera->GetFront()));
+	dummyCamera->NormalizeFront();
 	return UPDATE_CONTINUE;
 }
 
-float* ModuleCamera::GetProjectionMatrix()
-{
-	return frustum_.ProjectionMatrix().Transposed().ptr();
-}
-
-float* ModuleCamera::GetViewMatrix()
-{
-	return  ((float4x4)frustum_.ViewMatrix()).Transposed().ptr();
-}
-
-void ModuleCamera::SetFOV(float degrees)
-{
-	frustum_.verticalFov = DegToRad(degrees);
-	frustum_.horizontalFov = 2.0f * atanf((tanf(frustum_.verticalFov / 2.0f)) * (aspectRatio_));
-}
-
-void ModuleCamera::SetAspectRatio()
-{
-	aspectRatio_ = frustum_.horizontalFov / frustum_.verticalFov;
-}
-
-void ModuleCamera::SetPlaneDistances(float zNear, float zFar)
-{
-	frustum_.nearPlaneDistance = zNear;
-	frustum_.farPlaneDistance = zFar;
-}
-
-void ModuleCamera::SetPosition(float3 newPos)
-{
-	frustum_.pos = newPos;
-}

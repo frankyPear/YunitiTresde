@@ -1,6 +1,6 @@
 #include "ComponentCamera.h"
-
-
+#include "OpenGL.h"
+#include "GameObject.h"
 
 ComponentCamera::ComponentCamera()
 {
@@ -11,9 +11,12 @@ ComponentCamera::ComponentCamera()
 	frustum_.front = (float3(0.0f, 0.0f, -1.0f));
 	frustum_.up = float3(0.0f, 1.0f, 0.0f);
 	frustum_.nearPlaneDistance = 0.5f;
-	frustum_.farPlaneDistance = 1000.0f;
+	frustum_.farPlaneDistance = 50.0f;
 	frustum_.verticalFov = DegToRad(60.0f);
 	frustum_.horizontalFov = DegToRad(36.0f);
+	drawFrustumEnabled_ = true;
+	frustrumCulling_ = false;
+	type = CAMERA;
 }
 
 
@@ -21,6 +24,35 @@ ComponentCamera::~ComponentCamera()
 {
 }
 
+bool ComponentCamera::PreUpdate()
+{
+	return true;
+}
+
+bool ComponentCamera::Update()
+{
+	ComponentTransform *ct = (ComponentTransform *) linked_to->GetComponent(TRANSFORMATION);
+	if (ct != nullptr) {
+		frustum_.SetWorldMatrix(ct->GetGlobalTransform().Float3x4Part());
+	}
+	if (drawFrustumEnabled_) DrawFrustum();
+	return true;
+}
+
+bool ComponentCamera::PostUpdate()
+{
+	return true;
+}
+
+bool ComponentCamera::Destroy()
+{
+	return true;
+}
+
+bool ComponentCamera::OnEditor()
+{
+	return true;
+}
 
 void ComponentCamera::SetFOV(float degrees)
 {
@@ -72,4 +104,76 @@ float3 ComponentCamera::GetFront() const
 float3 ComponentCamera::GetWorldRight() const
 {
 	return frustum_.WorldRight();
+}
+
+float3  ComponentCamera::GetUp() const
+{
+	return frustum_.up;
+}
+
+void ComponentCamera::SetFront(float3 newFront)
+{
+	frustum_.front = newFront;
+}
+
+void ComponentCamera::SetUp(float3 newUp)
+{
+	frustum_.up = newUp;
+}
+
+
+void ComponentCamera::NormalizeUp()
+{
+	frustum_.up.Normalize();
+}
+
+void ComponentCamera::NormalizeFront()
+{
+	frustum_.front.Normalize();
+}
+
+void ComponentCamera::DrawFrustum()
+{
+	// 0: (-,-,-) 1:(-,-,+) 2:(-,+,-) 3:(-,+,+)
+	// 4: (+,-,-) 5:(+,-,+) 6:(+,+,-) 7:(+,+,+)
+
+	float3 CornerVertex[8];
+	frustum_.GetCornerPoints(CornerVertex);
+	//glPushMatrix();
+	glColor3f(1.0f,1.0f,0.0f);
+	glBegin(GL_QUADS);
+		//front
+		glVertex3fv((GLfloat*)&CornerVertex[0]);
+		glVertex3fv((GLfloat*)&CornerVertex[2]);
+		glVertex3fv((GLfloat*)&CornerVertex[6]);
+		glVertex3fv((GLfloat*)&CornerVertex[4]);
+		//back
+		glVertex3fv((GLfloat*)&CornerVertex[1]);
+		glVertex3fv((GLfloat*)&CornerVertex[5]);
+		glVertex3fv((GLfloat*)&CornerVertex[7]);
+		glVertex3fv((GLfloat*)&CornerVertex[3]);
+		//left
+		glVertex3fv((GLfloat*)&CornerVertex[0]);
+		glVertex3fv((GLfloat*)&CornerVertex[1]);
+		glVertex3fv((GLfloat*)&CornerVertex[3]);
+		glVertex3fv((GLfloat*)&CornerVertex[2]);
+		//right
+		glVertex3fv((GLfloat*)&CornerVertex[4]);
+		glVertex3fv((GLfloat*)&CornerVertex[6]);
+		glVertex3fv((GLfloat*)&CornerVertex[7]);
+		glVertex3fv((GLfloat*)&CornerVertex[5]);
+		//top
+		glVertex3fv((GLfloat*)&CornerVertex[2]);
+		glVertex3fv((GLfloat*)&CornerVertex[3]);
+		glVertex3fv((GLfloat*)&CornerVertex[7]);
+		glVertex3fv((GLfloat*)&CornerVertex[6]);
+		//bottom
+		glVertex3fv((GLfloat*)&CornerVertex[0]);
+		glVertex3fv((GLfloat*)&CornerVertex[4]);
+		glVertex3fv((GLfloat*)&CornerVertex[5]);
+		glVertex3fv((GLfloat*)&CornerVertex[1]);
+	glEnd();
+	//glPopMatrix();
+	glColor3f(1.0f, 1.0f, 1.0f);
+
 }
