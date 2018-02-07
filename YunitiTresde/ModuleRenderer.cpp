@@ -107,7 +107,10 @@ bool ModuleRenderer::Init() {
 void ModuleRenderer::ConfigurationManager()
 {
 	ImGui::Text("Renderer Settings");
-	
+	if (ImGui::Checkbox("Debug Mode", &checkDebugMode_))
+	{
+		toggleDebugMode(checkDebugMode_);
+	}
 	if (ImGui::Checkbox("DEPTH TEST", &checkDepthTest_))
 	{
 		toggleDepthTest(checkDepthTest_);
@@ -141,6 +144,7 @@ void ModuleRenderer::ConfigurationManager()
 		if (ImGui::SliderFloat("Blue", &ambientBlue_, 0.0f, 1.0f)); SetAmbientLightning();
 		if (ImGui::SliderFloat("Green", &ambientGreen_, 0.0f, 1.0f)); SetAmbientLightning();
 	}
+	
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
 
 }
@@ -172,6 +176,10 @@ void  ModuleRenderer::toggleTexture2D(bool check)
 void  ModuleRenderer::toggleFog(bool check)
 {
 	check ? glEnable(GL_FOG) : glDisable(GL_FOG);
+	check = !check;
+}
+void ModuleRenderer::toggleDebugMode(bool check)
+{
 	check = !check;
 }
 void ModuleRenderer::SetFogColor()
@@ -264,6 +272,8 @@ void ModuleRenderer::Draw(GameObject *obj) {
 	assert(obj != nullptr);
 	ComponentTransform* ct = (ComponentTransform *)obj->GetComponent(TRANSFORMATION);
 	ComponentMesh* cm = (ComponentMesh *)obj->GetComponent(MESH);
+	float3 corners[8];
+
 	glPushMatrix();
 	if (ct != nullptr)	glMultMatrixf(ct->GetGlobalTransform().Transposed().ptr());
 	if (cm != nullptr) {
@@ -273,6 +283,7 @@ void ModuleRenderer::Draw(GameObject *obj) {
 		vector<GLfloat> vertex = cm->GetMeshVertices();
 		vector<GLubyte> indices = cm->GetMeshIndices();
 		vector<GLfloat> texcoords = cm->GetMeshTexcoords();
+	
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
@@ -292,10 +303,109 @@ void ModuleRenderer::Draw(GameObject *obj) {
 		Shape s = cm->GetShape();
 		switch (s) {
 		case CUBE:
+	
 			glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
+
+			if (checkDebugMode_)
+			{
+				//Draw BB ---------------
+				obj->axisBoundingBox_.Enclose(cm->cube->GetCubeBB());
+				obj->axisBoundingBox_.GetCornerPoints(corners);
+
+				glColor3f(1.0f, .0f, .0f);
+
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+				glBegin(GL_QUADS);
+
+				//TODO: improve this function
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				glVertex3fv((GLfloat*)&corners[3]);
+
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[2]);
+				glVertex3fv((GLfloat*)&corners[6]);
+
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				glVertex3fv((GLfloat*)&corners[7]);
+
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[2]);
+
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				glVertex3fv((GLfloat*)&corners[2]);
+
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[1]);
+
+				glEnd();
+
+			}
+		//---------------------
+
 			break;
 		case SPHERE:
 			glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
+
+			if (checkDebugMode_)
+			{
+				//Draw BB ---------------
+				obj->axisBoundingBox_.Enclose(cm->sphere->GetSphereBB());
+				obj->axisBoundingBox_.GetCornerPoints(corners);
+
+				glColor3f(1.0f, .0f, .0f);
+
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+				glBegin(GL_QUADS);
+
+				//TODO: improve this function
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				glVertex3fv((GLfloat*)&corners[3]);
+
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[2]);
+				glVertex3fv((GLfloat*)&corners[6]);
+
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				glVertex3fv((GLfloat*)&corners[7]);
+
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[2]);
+
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				glVertex3fv((GLfloat*)&corners[2]);
+
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[1]);
+
+				glEnd();
+
+			}
+
+
 			break;
 		}
 
@@ -304,6 +414,10 @@ void ModuleRenderer::Draw(GameObject *obj) {
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
 	}
+	
+
+
 	glPopMatrix();
 
 }
+

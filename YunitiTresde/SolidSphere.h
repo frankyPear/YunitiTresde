@@ -3,6 +3,7 @@
 #include "OpenGL.h"
 #include <vector>
 #include <cmath>
+#include "Math.h"
 
 #define MY_PI_2 M_PI/2.0f
 
@@ -23,12 +24,16 @@ public:
 	std::vector<GLubyte> GetIndices() const;
 	std::vector<GLfloat> GetColors() const;
 
+	AABB& GetSphereBB();
+
 public:
 	std::vector<GLfloat> vertices;
 	std::vector<GLfloat> normals;
 	std::vector<GLfloat> texcoords;
 	std::vector<GLfloat> colors;
 	std::vector<GLubyte> indices;
+
+	AABB sphereBB;
 };
 
 
