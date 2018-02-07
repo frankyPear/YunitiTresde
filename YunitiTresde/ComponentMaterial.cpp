@@ -4,6 +4,7 @@
 
 ComponentMaterial::ComponentMaterial()
 {
+	//Constructor
 }
 
 
