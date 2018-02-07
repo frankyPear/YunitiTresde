@@ -312,7 +312,7 @@ void ModuleRenderer::Draw(GameObject *obj) {
 				obj->axisBoundingBox_.Enclose(cm->cube->GetCubeBB());
 				obj->axisBoundingBox_.GetCornerPoints(corners);
 
-				glColor3f(.0f, .0f, 1.0f);
+				glColor3f(1.0f, .0f, .0f);
 
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -364,7 +364,7 @@ void ModuleRenderer::Draw(GameObject *obj) {
 				obj->axisBoundingBox_.Enclose(cm->sphere->GetSphereBB());
 				obj->axisBoundingBox_.GetCornerPoints(corners);
 
-				glColor3f(.0f, .0f, 1.0f);
+				glColor3f(1.0f, .0f, .0f);
 
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
