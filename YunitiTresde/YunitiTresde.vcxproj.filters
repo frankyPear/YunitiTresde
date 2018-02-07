@@ -160,6 +160,9 @@
     <ClCompile Include="Quad.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -422,6 +425,9 @@
     </ClInclude>
     <ClInclude Include="SolidSphere.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>CoreClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

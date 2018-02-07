@@ -13,6 +13,8 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
+#include "ModuleCamera.h"
 
 ModuleScene::ModuleScene()
 {
@@ -29,8 +31,13 @@ bool ModuleScene::Init()
 	GameObject *object1 = new GameObject();
 	ComponentMesh *cm = new ComponentMesh(SPHERE);
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
+	ComponentCamera *camera = new ComponentCamera();
 	object1->AddComponent(cm);
 	object1->AddComponent(ct);
+	object1->AddComponent(camera);
+
+	sceneObjects_.push_back(object1);
+
 	//GameObject *object2 = new GameObject();
 	//ComponentMesh *cm2 = new ComponentMesh(CUBE);
 	//ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
@@ -41,7 +48,9 @@ bool ModuleScene::Init()
 
 	sceneObjects_.push_back(object1);
 	//sceneObjects_.push_back(object2);
+
     
+	actualCamera = App->cam->dummyCamera;
 
 	return true;
 }
@@ -71,6 +80,11 @@ update_status ModuleScene::Update(float dt)
 	for (int i = 0; i < sceneObjects_.size(); i++)
 	{
 		sceneObjects_[i]->DrawObjectAndChilds();
+		ComponentCamera *camera = (ComponentCamera*)sceneObjects_[i]->GetComponent(CAMERA);
+		if (camera != nullptr)
+		{
+			camera->Update();
+		}
 	}
 	
 	return UPDATE_CONTINUE;
@@ -78,6 +92,7 @@ update_status ModuleScene::Update(float dt)
 
 update_status ModuleScene::PostUpdate(float dt)
 {
+
 	return UPDATE_CONTINUE;
 }
 

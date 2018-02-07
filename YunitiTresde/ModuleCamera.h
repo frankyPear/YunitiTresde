@@ -2,7 +2,7 @@
 #define _MODULECAMERA_
 
 #include "Module.h"
-#include "Mathgeolib\include\Geometry\Frustum.h"
+#include "ComponentCamera.h"
 
 
 class ModuleCamera :
@@ -17,22 +17,14 @@ public:
 
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
-	void SetFOV(float degrees);
-	void SetAspectRatio();
-	void SetPlaneDistances(float zNear, float zFar);
-	void SetPosition(float3 newPos);
-	//void LookAt(int x, int y, int z);
-	float *GetProjectionMatrix();
-	float *GetViewMatrix();
 
 	bool CleanUp();
 
 public:
-
+	ComponentCamera *dummyCamera;
 
 private:
 
-	Frustum frustum_;
 	float camSpeed_;
 	float aspectRatio_;
 };
