@@ -89,6 +89,10 @@ public:
 
 	void DrawObjectAndChilds();
 
+	void GetAxisBB();
+
+
+	AABB axisBoundingBox_;
 #pragma endregion
 
 private:
@@ -105,7 +109,7 @@ private:
 	std::vector<GameObject*> _childs;
 	GameObject * _parent;
 
-	AABB axisBoundingBox_;
+
 #pragma endregion
 
 	std::vector<Component*> _components;

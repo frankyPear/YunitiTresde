@@ -22,18 +22,22 @@ public:
 	bool OnEditor();
 
 	Shape GetShape() const;
+	//Why not to put void?
 	std::vector<GLfloat> GetMeshVertices() const;
 	std::vector<GLfloat> GetMeshNormals() const;
 	std::vector<GLfloat> GetMeshTexcoords() const;
 	std::vector<GLubyte> GetMeshIndices() const;
 	std::vector<GLfloat> GetMeshColors() const;
 
+    std::vector<float>GetMeshVerticesInFloat();
 
 
 public:
 	Shape meshShape;
 	Cube *cube = nullptr;
 	SolidSphere *sphere = nullptr;
+
+	std::vector<float> meshverticesinfloat;
 
 	std::vector<GLfloat> meshvertices;
 	std::vector<GLfloat> meshnormals;

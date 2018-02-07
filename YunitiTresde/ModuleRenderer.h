@@ -45,16 +45,20 @@ public:
 	void toggleColorMaterial(bool check = true);
 	void toggleTexture2D(bool check = true);
 	void toggleFog(bool check = true);
+	void toggleDebugMode(bool check = true);
 	void SetFogColor();
 	void SetAmbientLightning();
 	void SetIdImage(int texID_);
 	void Draw(GameObject *obj);
+
+	
 
 private:
 	SDL_GLContext context_;
 	SolidSphere *sphere = nullptr;
 
 	bool checkDepthTest_ = true;
+	bool checkDebugMode_ = false;
 	bool checkCullFace_ = true;
 	bool checkLightning_ = true;
 	bool checkColorMaterial_ = true;
@@ -71,6 +75,7 @@ private:
 	float ambientGreen_ = 0.5f;
 	GLuint loadedTexId_;
 	int intTex = -1;
+	
 };
 
 #endif // !_RENDER_

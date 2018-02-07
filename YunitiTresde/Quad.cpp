@@ -271,3 +271,9 @@ std::vector<GLubyte>  Cube::GetIndices()
 
 	return indicesVector;
 }
+
+AABB& Cube::GetCubeBB()
+{
+	cubeBoundingBox.SetFrom((float3*)vertices2, 8);
+	return cubeBoundingBox;
+}
