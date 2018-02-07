@@ -197,9 +197,6 @@ void Cube::DrawElementQuadTexturized(GLuint textureID)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-
-
-
 void DrawElementPlane()
 {
 	float size = 25.0f;
@@ -241,7 +238,7 @@ void DrawElementPlane()
 	glColor3f(1, 1, 1);
 }
 
-std::vector<GLfloat>  Cube::GetVertices()
+std::vector<GLfloat> Cube::GetVertices()
 {
 	for (int i = 0; i < 72; ++i) vertices.push_back(vertices2[i]);
 	return vertices;
@@ -276,4 +273,9 @@ AABB& Cube::GetCubeBB()
 {
 	cubeBoundingBox.SetFrom((float3*)vertices2, 8);
 	return cubeBoundingBox;
+}
+
+float* Cube::GetQuadVertex()
+{
+	return vertices2;
 }

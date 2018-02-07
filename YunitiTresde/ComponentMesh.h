@@ -29,15 +29,12 @@ public:
 	std::vector<GLubyte> GetMeshIndices() const;
 	std::vector<GLfloat> GetMeshColors() const;
 
-    std::vector<float>GetMeshVerticesInFloat();
-
 
 public:
 	Shape meshShape;
 	Cube *cube = nullptr;
 	SolidSphere *sphere = nullptr;
 
-	std::vector<float> meshverticesinfloat;
 
 	std::vector<GLfloat> meshvertices;
 	std::vector<GLfloat> meshnormals;

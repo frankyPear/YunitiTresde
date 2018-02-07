@@ -128,7 +128,3 @@ bool ComponentMesh::OnEditor() {
 	return true;
 }
 
-std::vector<float>ComponentMesh::GetMeshVerticesInFloat() 
-{
-	return meshverticesinfloat;
-}

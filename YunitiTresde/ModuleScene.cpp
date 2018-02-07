@@ -27,20 +27,20 @@ bool ModuleScene::Init()
 {
 	root = new GameObject();
 	GameObject *object1 = new GameObject();
-	ComponentMesh *cm = new ComponentMesh(CUBE);
+	ComponentMesh *cm = new ComponentMesh(SPHERE);
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 	object1->AddComponent(cm);
 	object1->AddComponent(ct);
-	GameObject *object2 = new GameObject();
-	ComponentMesh *cm2 = new ComponentMesh(CUBE);
-	ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	object2->AddComponent(cm2);
-	object2->AddComponent(ct2);
+	//GameObject *object2 = new GameObject();
+	//ComponentMesh *cm2 = new ComponentMesh(CUBE);
+	//ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	//object2->AddComponent(cm2);
+	//object2->AddComponent(ct2);
 	root->AddChild(object1);
-	object1->AddChild(object2);
+	//object1->AddChild(object2);
 
 	sceneObjects_.push_back(object1);
-	sceneObjects_.push_back(object2);
+	//sceneObjects_.push_back(object2);
     
 
 	return true;

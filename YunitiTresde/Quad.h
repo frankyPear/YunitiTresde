@@ -22,6 +22,7 @@ public:
 	void InitCube();
 	void DrawElementQuadTexturized(GLuint textureID);
 	AABB& GetCubeBB();
+	float* GetQuadVertex();
 
 	std::vector<GLfloat>  GetVertices();
 	std::vector<GLfloat>  GetNormals();

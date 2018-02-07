@@ -357,6 +357,55 @@ void ModuleRenderer::Draw(GameObject *obj) {
 			break;
 		case SPHERE:
 			glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
+
+			if (checkDebugMode_)
+			{
+				//Draw BB ---------------
+				obj->axisBoundingBox_.Enclose(cm->sphere->GetSphereBB());
+				obj->axisBoundingBox_.GetCornerPoints(corners);
+
+				glColor3f(.0f, .0f, 1.0f);
+
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+				glBegin(GL_QUADS);
+
+				//TODO: improve this function
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				glVertex3fv((GLfloat*)&corners[3]);
+
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[2]);
+				glVertex3fv((GLfloat*)&corners[6]);
+
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				glVertex3fv((GLfloat*)&corners[7]);
+
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[2]);
+
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				glVertex3fv((GLfloat*)&corners[2]);
+
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[1]);
+
+				glEnd();
+
+			}
+
+
 			break;
 		}
 
