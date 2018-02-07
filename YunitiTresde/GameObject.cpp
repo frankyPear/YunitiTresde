@@ -33,6 +33,9 @@ void GameObject::OnChildIsDisactived(GameObject &g)
 {
 	//Swap to disactiveblock
 	int index = FindChildIndex(g);
+
+
+
 	if (index != -1) {
 		if (index != (_disactivedGameObjectsIndex - 1)) {
 			GameObject *aux = _childs[_disactivedGameObjectsIndex - 1];
@@ -49,25 +52,24 @@ void GameObject::OnChildIsDestroyed(GameObject & g)
 {
 	int index = FindChildIndex(g);
 	if (index != -1) {
-		if (index < _disabledComponentsIndex) {//Destroy an activeObject
-			if (index != (_disabledComponentsIndex - 1))
-				_childs[index] = _childs[_disabledComponentsIndex - 1];
-			if (_disabledComponentsIndex != _destroyComponentsIndex)
-				_childs[_disabledComponentsIndex - 1] = _childs[_destroyComponentsIndex - 1];
-			_disabledComponentsIndex--;
+		if (index < _disactivedGameObjectsIndex) {//Destroy an activeObject
+			if (index != (_disactivedGameObjectsIndex - 1))
+				_childs[index] = _childs[_disactivedGameObjectsIndex - 1];
+			if (_disactivedGameObjectsIndex != _destroyGameObjectsIndex)
+				_childs[_disactivedGameObjectsIndex - 1] = _childs[_destroyGameObjectsIndex - 1];
+			_disactivedGameObjectsIndex--;
 
 		}
-		else if (index < _destroyComponentsIndex) {//Destroy an disactiveObject
-			if (index != (_destroyComponentsIndex - 1)) {
-				_childs[index] = _childs[_destroyComponentsIndex - 1];
+		else if (index < _destroyGameObjectsIndex) {//Destroy an disactiveObject
+			if (index != (_destroyGameObjectsIndex - 1)) {
+				_childs[index] = _childs[_destroyGameObjectsIndex - 1];
 			}
 
 		}
-		_childs[_destroyComponentsIndex - 1] = &g;
-		_destroyComponentsIndex--;
+		_childs[_destroyGameObjectsIndex - 1] = &g;
+		_destroyGameObjectsIndex--;
 
 	}
-
 }
 
 
@@ -92,6 +94,8 @@ bool GameObject::PreUpdate()
 
 	for (int i = 0; i < _disabledComponentsIndex; i++)
 		_components[i]->PreUpdate();
+
+
 	return true;
 
 }
@@ -197,13 +201,12 @@ void GameObject::AddChild(GameObject * child)
 	_childs.push_back(nullptr);
 	unsigned int childsSize = _childs.size();
 	//Swapping
-	if (_destroyComponentsIndex == _disactivedGameObjectsIndex) {
-		_childs[childsSize - 1] = _childs[_disactivedGameObjectsIndex];
-	}
-	else {
-		_childs[childsSize - 1] = _childs[_destroyComponentsIndex];
-		_childs[_destroyComponentsIndex] = _childs[_disactivedGameObjectsIndex];
-	}
+	_childs[childsSize - 1] = _childs[_destroyGameObjectsIndex];
+
+	if (_destroyGameObjectsIndex != _disactivedGameObjectsIndex)
+		_childs[_destroyGameObjectsIndex] = _childs[_disactivedGameObjectsIndex];
+
+
 
 	_childs[_disactivedGameObjectsIndex] = child;
 	_destroyGameObjectsIndex++;
@@ -250,11 +253,11 @@ void GameObject::DetatchChild(int index)
 void GameObject::DetatchChild(GameObject & child)
 {
 	unsigned int selectedIndex = FindChildIndex(child);
+
 	if (selectedIndex != -1) {
 		_childs.erase(_childs.begin() + selectedIndex);
 		child._parent = nullptr;
 	}
-
 }
 
 void GameObject::DetachChildren()
@@ -285,6 +288,7 @@ void GameObject::DrawGameObjectImgUI() {
 
 	//Components inspectors
 	uint size = _components.size();
+
 	for (uint k = 0; k < size; k++)
 	{
 		//Show component inspector data
@@ -311,24 +315,85 @@ void GameObject::DrawComponentImgUI()
 
 void GameObject::AddComponent(Component * component)
 {
-	component->SetGameObject(*this);
-	_components.push_back(component);
+	_components.push_back(nullptr);
+	unsigned int componentsSize = _components.size();
+	_components[componentsSize - 1] = _components[_destroyComponentsIndex];
+
+
+	//Swapping
+	if (_destroyComponentsIndex != _disabledComponentsIndex)
+		_components[_destroyComponentsIndex] = _components[_disabledComponentsIndex];
+
+	_components[_disabledComponentsIndex] = component;
+	_destroyComponentsIndex++;
+	_disabledComponentsIndex++;
+
 }
 
-void GameObject::DestroyComponent(Component * component)
+void GameObject::DestroyComponent(Component & component)
 {
-	unsigned int componentsSize = _components.size();
+	int index = FindComponentIndex(component);
+	if (index != -1) {
+		if (index < _disabledComponentsIndex) {//Destroy an activeObject
+			if (index != (_disabledComponentsIndex - 1))
+				_components[index] = _components[_disabledComponentsIndex - 1];
+
+			if (_disabledComponentsIndex != _destroyComponentsIndex)
+				_components[_disabledComponentsIndex - 1] = _components[_destroyComponentsIndex - 1];
+
+			_disabledComponentsIndex--;
+		}
+		else if (index < _destroyComponentsIndex) {//Destroy an disactiveObject
+			if (index != (_destroyComponentsIndex - 1))
+				_components[index] = _components[_destroyComponentsIndex - 1];
+
+		}
+		_components[_destroyComponentsIndex - 1] = &component;
+		_destroyComponentsIndex--;
+	}
+
+
+}
+
+int GameObject::FindComponentIndex(Component & component)const
+{
 	int selectedIndex = -1;
+	unsigned int componentsSize = _components.size();
 	for (int i = 0; i < componentsSize; i++) {
-		if (_components[i] == component) {
+		if (&component == _components[i]) {
 			selectedIndex = i;
 			break;
 		}
 	}
-	if (selectedIndex != -1) {
-		RELEASE(_components[selectedIndex]);
-		_components.erase(_components.begin() + selectedIndex);
+
+	return selectedIndex;
+}
+
+void GameObject::OnComponentIsEnabled(Component & component)
+{
+	int index = FindComponentIndex(component);
+	if (index != -1) {
+		if (index != _disabledComponentsIndex) {
+			Component *aux = _components[_disabledComponentsIndex];
+			_components[_disabledComponentsIndex] = &component;
+			_components[index] = aux;
+		}
+		_disabledComponentsIndex++;
 	}
+}
+
+void GameObject::OnComponentIsDisabled(Component & component)
+{
+	int index = FindComponentIndex(component);
+	if (index != -1) {
+		if (index != (_disabledComponentsIndex - 1)) {
+			Component *aux = _components[_disabledComponentsIndex - 1];
+			_components[_disabledComponentsIndex - 1] = &component;
+			_components[index] = aux;
+		}
+		_disabledComponentsIndex--;
+	}
+
 }
 
 

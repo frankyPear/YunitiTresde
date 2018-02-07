@@ -1,6 +1,6 @@
 #include "Component.h"
 
-
+#include "GameObject.h"
 
 Component::Component()
 {
@@ -26,11 +26,17 @@ bool Component::IsEnabled() const
 }
 void Component::Enable()
 {
-	if (!_enabled) _enabled = true;
+	if (!_enabled) {
+		_enabled = true;
+		_gameObject->OnComponentIsEnabled(*this);
+	}
 }
 void Component::Disable()
 {
-	if (_enabled) _enabled = false;
+	if (_enabled) {
+		_enabled = false;
+		_gameObject->OnComponentIsDisabled(*this);
+	}
 }
 void Component::SetGameObject(GameObject & gameObject)
 {

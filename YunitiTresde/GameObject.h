@@ -8,13 +8,15 @@
 class GameObject
 {
 public:
-	///Constructor
+
+	//Constructor
 	GameObject();
 
 	//Destructor
 	virtual ~GameObject();
 
 #pragma region Callbacks
+
 	//OnStart callback
 	virtual void OnStart();
 
@@ -101,7 +103,13 @@ public:
 #pragma region Component Methods
 	void AddComponent(Component *component);
 
-	void DestroyComponent(Component *component);
+	void DestroyComponent(Component &component);
+
+	int FindComponentIndex(Component &component)const;
+
+	void OnComponentIsEnabled(Component &component);
+
+	void OnComponentIsDisabled(Component &component);
 
 	//GetComponent per fer a analitzar tema dels tipus
 
@@ -133,9 +141,6 @@ private:
 
 
 	std::vector<Component*> _components;
-
-
-
 
 
 
