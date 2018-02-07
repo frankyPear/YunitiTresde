@@ -1,4 +1,5 @@
 #include "SolidSphere.h"
+#include "Quad.h"
 using namespace std;
 
 SolidSphere::SolidSphere()
@@ -100,4 +101,11 @@ vector<GLubyte> SolidSphere::GetIndices() const
 vector<GLfloat> SolidSphere::GetColors() const
 {
 	return colors;
+}
+
+AABB& SolidSphere::GetSphereBB()
+{
+	Cube c;
+    sphereBB.SetFrom((float3*)c.vertices2, 8);
+	return sphereBB;
 }

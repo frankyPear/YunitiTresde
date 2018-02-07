@@ -3,6 +3,8 @@
 #include "ModuleRenderer.h"
 #include "Application.h"
 
+#include "ComponentMesh.h"
+
 GameObject::GameObject()
 {
 	//Do anything it should
@@ -26,6 +28,13 @@ GameObject::~GameObject()
 
 void GameObject::OnStart()
 {
+	//Seting BB starting values
+	axisBoundingBox_.SetNegativeInfinity();
+	ComponentMesh* cm = (ComponentMesh*)this->GetComponent(MESH);
+if (cm != nullptr)
+{
+	//axisBoundingBox_.Enclose((float3*)cm->GetMeshVertices(), 8);
+}
 }
 
 void GameObject::OnDestroy()
@@ -132,6 +141,7 @@ GameObject*  GameObject::GetChild(int index) const
 
 void GameObject::DetatchChild(int index)
 {
+
 }
 
 void GameObject::DetachChildren()

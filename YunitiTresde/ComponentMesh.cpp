@@ -37,7 +37,7 @@ ComponentMesh::ComponentMesh(Shape shape) {
 			meshtexcoords = cube->GetTexcoords();
 			meshindices = cube->GetIndices();
 			meshcolors = cube->GetColors();
-			break;
+				break;
 	}
 	type = MESH;
 	meshShape = shape;
@@ -127,3 +127,4 @@ bool ComponentMesh::OnEditor() {
 	}
 	return true;
 }
+

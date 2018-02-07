@@ -6,6 +6,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 
+#include "Mathgeolib\include\Geometry\AABB.h"
 
 class GameObject
 {
@@ -88,6 +89,10 @@ public:
 
 	void DrawObjectAndChilds();
 
+	void GetAxisBB();
+
+
+	AABB axisBoundingBox_;
 #pragma endregion
 
 private:
@@ -103,6 +108,7 @@ private:
 
 	std::vector<GameObject*> _childs;
 	GameObject * _parent;
+
 
 #pragma endregion
 

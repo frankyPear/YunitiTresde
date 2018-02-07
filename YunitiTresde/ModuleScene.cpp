@@ -29,7 +29,7 @@ bool ModuleScene::Init()
 {
 	root = new GameObject();
 	GameObject *object1 = new GameObject();
-	ComponentMesh *cm = new ComponentMesh(CUBE);
+	ComponentMesh *cm = new ComponentMesh(SPHERE);
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 	ComponentCamera *camera = new ComponentCamera();
 	object1->AddComponent(cm);
@@ -37,6 +37,18 @@ bool ModuleScene::Init()
 	object1->AddComponent(camera);
 
 	sceneObjects_.push_back(object1);
+
+	//GameObject *object2 = new GameObject();
+	//ComponentMesh *cm2 = new ComponentMesh(CUBE);
+	//ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	//object2->AddComponent(cm2);
+	//object2->AddComponent(ct2);
+	root->AddChild(object1);
+	//object1->AddChild(object2);
+
+	sceneObjects_.push_back(object1);
+	//sceneObjects_.push_back(object2);
+
     
 	actualCamera = App->cam->dummyCamera;
 

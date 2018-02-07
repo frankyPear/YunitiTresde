@@ -4,6 +4,7 @@
 #include "OpenGL.h"
 #include "ModuleTextures.h"
 #include <vector>
+#include "Math.h"
 
 void DrawElementPlane();
 
@@ -20,6 +21,9 @@ public:
 	void DrawElementQuad();
 	void InitCube();
 	void DrawElementQuadTexturized(GLuint textureID);
+	AABB& GetCubeBB();
+	float* GetQuadVertex();
+
 	std::vector<GLfloat>  GetVertices();
 	std::vector<GLfloat>  GetNormals();
 	std::vector<GLfloat>  GetColors();
@@ -39,6 +43,8 @@ public:
 	std::vector<GLfloat> colors;
 	std::vector<GLfloat> texcoords;
 	std::vector<GLubyte> indicesVector;
+
+	AABB cubeBoundingBox;
 
 	GLfloat vertices1[108] =
 	{
@@ -105,7 +111,7 @@ public:
 		0, 1, 0,   0, 1, 1,   0, 0, 1
 	};    // v6-v5-v4
 
-	GLfloat vertices2[72] = {
+	float vertices2[72] = {
 		1, 1, 1,  -1, 1, 1,  -1,-1, 1,   1,-1, 1,   // v0,v1,v2,v3 (front)
 		1, 1, 1,   1,-1, 1,   1,-1,-1,   1, 1,-1,   // v0,v3,v4,v5 (right)
 		1, 1, 1,   1, 1,-1,  -1, 1,-1,  -1, 1, 1,   // v0,v5,v6,v1 (top)
