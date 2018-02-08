@@ -27,10 +27,13 @@ public:
 
 	//Imgui
 	void ShowImguiStatus();
+	void ImGuiMainMenu();
 
 	GameObject* GetRoot();
 	void Hierarchy();
 
+	
+	
 public:
 	bool recalcTree = false;
 	ComponentCamera *actualCamera = nullptr;

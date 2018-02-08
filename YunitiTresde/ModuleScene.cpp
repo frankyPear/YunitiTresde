@@ -72,6 +72,7 @@ void ModuleScene::Hierarchy()
 update_status ModuleScene::PreUpdate(float dt)
 {
 	ShowImguiStatus();
+	ImGuiMainMenu();
 	return UPDATE_CONTINUE;
 }
 
@@ -128,4 +129,16 @@ void ModuleScene::ShowImguiStatus() {
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
 	ImGui::End();
 
+}
+
+void ModuleScene::ImGuiMainMenu()
+{
+	bool text = false;
+	ImGui::BeginMainMenuBar();
+	if (ImGui::MenuItem("New"))
+	{
+		ImGui::Text("Game Object");
+
+	}
+	ImGui::EndMainMenuBar();
 }

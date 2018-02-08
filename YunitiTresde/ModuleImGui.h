@@ -21,6 +21,8 @@ public:
 
 	bool CleanUp();
 	void RenderImGui();
+	void AboutImgui();
+
 public:
 
 	float posx, posy, posz, posw;
