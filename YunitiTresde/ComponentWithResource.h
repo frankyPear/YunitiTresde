@@ -5,15 +5,23 @@ class Resource;
 class ComponentWithResource
 {
 public:
+	//Constructor
 	ComponentWithResource();
+
+	//Destructor
 	virtual ~ComponentWithResource();
 
-	virtual bool SetResource(uid id)=0;
-
+#pragma region Getters
+	virtual const Resource * GetResource()const;
 	virtual uint GetResourceId()const;
 
-	virtual const Resource * GetResource()const;
+#pragma endregion
+
+#pragma region Setters
+	virtual bool SetResource(uid id)=0;
+#pragma endregion
+
 
 protected:
-	uid _resourceId = 0;
+	uid _resourceId = 0;//Resource id
 };

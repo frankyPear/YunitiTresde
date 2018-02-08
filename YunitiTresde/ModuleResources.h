@@ -17,12 +17,14 @@ public:
 
 
 protected:
+#pragma region Callbacks
 	void OnSaveResource(Config &config)const;
 
 	void OnLoadResource(Config *config);
+#pragma endregion
 
 private :
-	std::map<uid, Resource*> _resources;
+	std::map<uid, Resource*> _resources;//Resources indexed by id
 
 };
 
