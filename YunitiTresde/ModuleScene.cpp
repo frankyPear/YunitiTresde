@@ -27,9 +27,8 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init()
 {
-	root = new GameObject();
-	GameObject *object1 = new GameObject();
-	ComponentMesh *cm = new ComponentMesh(SPHERE);
+	
+	/*ComponentMesh *cm = new ComponentMesh(SPHERE);
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 	ComponentCamera *camera = new ComponentCamera();
 	object1->AddComponent(cm);
@@ -38,16 +37,16 @@ bool ModuleScene::Init()
 
 	sceneObjects_.push_back(object1);
 
-	//GameObject *object2 = new GameObject();
-	//ComponentMesh *cm2 = new ComponentMesh(CUBE);
-	//ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	//object2->AddComponent(cm2);
-	//object2->AddComponent(ct2);
+	GameObject *object2 = new GameObject();
+	ComponentMesh *cm2 = new ComponentMesh(CUBE);
+	ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	object2->AddComponent(cm2);
+	object2->AddComponent(ct2);
 	root->AddChild(object1);
-	//object1->AddChild(object2);
+	object1->AddChild(object2);
 
-	sceneObjects_.push_back(object1);
-	//sceneObjects_.push_back(object2);
+	
+	sceneObjects_.push_back(object2);*/
 
     
 	actualCamera = App->cam->dummyCamera;
@@ -146,7 +145,18 @@ void ModuleScene::ImGuiMainMenu()
 					ImGui::OpenPopup("New Game Object");
 				if (ImGui::BeginPopupModal("New Game Object", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 				{
-					ImGui::Text("Hello from Stacked The First\nUsing style.Colors[ImGuiCol_ModalWindowDarkening] for darkening.");
+				
+
+					ImGui::Text("Hey you are creating an object");
+					ImGui::Separator();
+
+					if (ImGui::Button("OK", ImVec2(120, 0)))
+					{ 
+						ImGui::CloseCurrentPopup();
+						CreateGameObject();
+					}
+					ImGui::SameLine();
+					if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
 					ImGui::EndPopup();
 				}
 
@@ -181,3 +191,15 @@ void ModuleScene::ImGuiMainMenu()
 	}
 }
 
+void ModuleScene::CreateGameObject()
+{
+	root = new GameObject();
+	GameObject *object = new GameObject();
+	ComponentMesh *cm = new ComponentMesh(SPHERE);
+	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
+	ComponentCamera *camera = new ComponentCamera();
+	object->AddComponent(cm);
+	object->AddComponent(ct);
+	object->AddComponent(camera);
+	sceneObjects_.push_back(object);
+}

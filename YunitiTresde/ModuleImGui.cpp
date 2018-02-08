@@ -65,7 +65,7 @@ void ModuleImGui::AboutImgui()
 	//Rendering before than that of Module Render, shall we changed?
 	if (show_demo_window)
 	{
-		ImGui::ShowDemoWindow(&show_demo_window);
+		//ImGui::ShowDemoWindow(&show_demo_window);
 	}
 	if (show_about_window)
 	{

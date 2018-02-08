@@ -24,6 +24,8 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
+	//Create
+	void CreateGameObject();
 
 	//Imgui
 	void ShowImguiStatus();
