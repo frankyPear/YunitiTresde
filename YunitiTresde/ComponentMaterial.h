@@ -1,34 +1,39 @@
 #pragma once
 #include "Component.h"
 #include <vector>
-class MaterialResource;
+#include "ComponentWithResource.h"
 
 class ComponentMaterial :
-	public Component
+	public Component,public ComponentWithResource
 {
 public:
 
 	//Constructor
-	ComponentMaterial();
+	ComponentMaterial(GameObject *gameObject);
 
 
 	//Destructor
 	~ComponentMaterial();
 
 #pragma region Setters
-	void SetMaterialResource(std::vector<MaterialResource*> materialResource);
 
+	bool SetResource(uid resourceId)override;
 
 #pragma endregion
 
 
 #pragma Component methods
-	void AddTexture(MaterialResource &materialResource);
+	void AddMaterialResource(unsigned int uid);
 
-	void ClearMaterialResource();
 #pragma endregion
+
+#pragma region Editor methods
+	void OnEditor();
+
+#pragma endregion
+	
 private:
-	std::vector<MaterialResource*> _materialResources;
+	
 
 
 

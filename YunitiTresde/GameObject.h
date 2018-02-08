@@ -17,11 +17,13 @@ public:
 	virtual ~GameObject();
 
 #pragma region Callbacks
+
 	//OnStart callback
 	virtual void OnStart();
 
-	///OnDestroy callback
+	//OnDestroy callback
 	virtual void OnDestroy();
+
 #pragma endregion
 
 #pragma region Life cycle methods

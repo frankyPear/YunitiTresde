@@ -160,6 +160,15 @@
     <ClCompile Include="Quad.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentWithResource.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -422,6 +431,15 @@
     </ClInclude>
     <ClInclude Include="SolidSphere.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentWithResource.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

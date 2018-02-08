@@ -8,6 +8,7 @@ class Component
 {
 public:
 	Component();
+	Component(GameObject *gameObject,Type componentType);
 	Component(Type componentType);
 	~Component();
 	bool IsEnabled() const;

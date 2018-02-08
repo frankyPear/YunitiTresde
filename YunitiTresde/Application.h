@@ -11,9 +11,11 @@ class ModuleWindow;
 class ModuleInput;
 class ModuleImGui;
 class ModuleCamera;
+class ModuleResources;
 class ModuleTextures;
 class ModuleScene;
 class ModuleImGui;
+
 class Application
 {
 public:
@@ -27,7 +29,7 @@ public:
 
 	void StartTimer();
 	void CalculateDt();
-	
+
 public:
 	ModuleRenderer* renderer;
 	ModuleWindow* window;
@@ -36,6 +38,7 @@ public:
 	ModuleCamera* cam;
 	ModuleTextures* textures;
 	ModuleScene* scene;
+	ModuleResources *resources;
 
 	bool switchmap = false;
 private:
