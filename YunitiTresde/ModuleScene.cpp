@@ -93,7 +93,10 @@ update_status ModuleScene::Update(float dt)
 
 update_status ModuleScene::PostUpdate(float dt)
 {
-
+	if (imguiFlag == SDL_SCANCODE_ESCAPE)
+	{
+		return UPDATE_STOP;
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -133,12 +136,48 @@ void ModuleScene::ShowImguiStatus() {
 
 void ModuleScene::ImGuiMainMenu()
 {
-	bool text = false;
-	ImGui::BeginMainMenuBar();
-	if (ImGui::MenuItem("New"))
+	if (ImGui::BeginMainMenuBar())
 	{
-		ImGui::Text("Game Object");
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::BeginMenu("New"))
+			{
+				if (ImGui::Button("Game Object"))
+					ImGui::OpenPopup("New Game Object");
+				if (ImGui::BeginPopupModal("New Game Object", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+				{
+					ImGui::Text("Hello from Stacked The First\nUsing style.Colors[ImGuiCol_ModalWindowDarkening] for darkening.");
+					ImGui::EndPopup();
+				}
 
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Open"))
+			{
+				ImGui::MenuItem("Empty");
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Save"))
+			{
+				ImGui::MenuItem("Empty");
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Load"))
+			{
+				ImGui::MenuItem("Empty");
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::MenuItem("Exit"))
+			{
+				imguiFlag = SDL_SCANCODE_ESCAPE;
+			}
+
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
 	}
-	ImGui::EndMainMenuBar();
 }
+

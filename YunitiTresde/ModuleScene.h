@@ -37,6 +37,7 @@ public:
 public:
 	bool recalcTree = false;
 	ComponentCamera *actualCamera = nullptr;
+	uint imguiFlag = 0;
 
 private:
 	GameObject* root;

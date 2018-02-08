@@ -32,7 +32,7 @@ public:
 	
 
 private:
-
+	
 	bool show_demo_window = true;
 	bool show_about_window = true;
 	const char* license_;
