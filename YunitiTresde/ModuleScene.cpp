@@ -165,21 +165,30 @@ void ModuleScene::ImGuiMainMenu()
 			if (ImGui::BeginMenu("New"))
 			{
 				if (ImGui::Button("Game Object"))
+			
 					ImGui::OpenPopup("New Game Object");
+				
 				if (ImGui::BeginPopupModal("New Game Object", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 				{
 				
-
-					ImGui::Text("Hey you are creating an object");
+					GameObject *object = new GameObject();
+					static bool cm;
+					static bool cam;
+					static float pos[3] = { 0,0,0 };
+					ImGui::Text("Hey there, you are creating an object");
 					ImGui::Separator();
-
-					if (ImGui::Button("OK", ImVec2(120, 0)))
+					ImGui::Text("What components do you want to add to your game object?");
+					if (ImGui::Checkbox("Component mesh", &cm));
+					if (ImGui::Checkbox("Component camera", &cam));
+					if (ImGui::InputFloat3("Position (Comming soon...)", (float*)pos, 2));
+					if (ImGui::Button("Create", ImVec2(120, 0)))
 					{ 
 						ImGui::CloseCurrentPopup();
-						CreateGameObject();
+						CreateGameObject(object, cm, cam);
 					}
 					ImGui::SameLine();
 					if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+					
 					ImGui::EndPopup();
 				}
 
@@ -218,15 +227,27 @@ void ModuleScene::ImGuiMainMenu()
 	}
 }
 
-void ModuleScene::CreateGameObject()
+void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
 {
-	root = new GameObject();
-	GameObject *object = new GameObject();
-	ComponentMesh *cm = new ComponentMesh(SPHERE);
-	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
-	ComponentCamera *camera = new ComponentCamera();
-	object->AddComponent(cm);
-	object->AddComponent(ct);
-	object->AddComponent(camera);
-	sceneObjects_.push_back(object);
+	if (boolcm)
+	{
+		ComponentMesh* CM = new ComponentMesh(CUBE);
+		obj->AddComponent(CM);
+	}
+	if (boolcam)
+	{
+		ComponentCamera* CAM = new ComponentCamera();
+		obj->AddComponent(CAM);
+	}
+	
+	ComponentTransform *ct = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	obj->AddComponent(ct);
+	
+	sceneObjects_.push_back(obj);
+}
+
+bool ModuleScene::SetGameObject(bool boolcm, bool boolcam )
+{
+
+	return boolcm, boolcam;
 }

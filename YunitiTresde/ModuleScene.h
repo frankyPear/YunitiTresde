@@ -25,8 +25,8 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	//Create
-	void CreateGameObject();
-
+	void CreateGameObject(GameObject* obj, bool boolcm = false, bool boolcam=false);
+	bool SetGameObject(bool boolcm=false, bool boolcam=false);
 	//Imgui
 	void ShowImguiStatus();
 	void ImGuiMainMenu();
