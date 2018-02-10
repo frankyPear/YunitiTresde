@@ -16,7 +16,6 @@ public:
 	~CustomQuadTreeNode();
 
 	void SetNodeBox(AABB box);
-	void SetNodeInChild(AABB box, int index);
 	void SetParent(CustomQuadTreeNode* newparent);
 	void InsertInNode(GameObject* newAddition);
 	void EliminateNode(GameObject* toEliminate);

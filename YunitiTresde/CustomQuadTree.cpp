@@ -88,11 +88,6 @@ void CustomQuadTreeNode::SetNodeBox(AABB box)
 	box_ = box;
 }
 
-void CustomQuadTreeNode::SetNodeInChild(AABB box, int index)
-{
-	child_nodes_[index]->box_ = box;
-}
-
 void CustomQuadTreeNode::SetParent(CustomQuadTreeNode* newparent)
 {
 	parent_ = newparent;
@@ -116,10 +111,10 @@ void CustomQuadTreeNode::EliminateNode(GameObject* toEliminate)
 			it = objectsInBox_.erase(it);
 		}
 	}
-	if (!found) {
+	if (!found && !child_nodes_.empty()) {
 		for (int i = 0; i < 4; ++i) 
 		{
-			child_nodes_[i]->EliminateNode(toEliminate);
+			if (child_nodes_[i] != nullptr) child_nodes_[i]->EliminateNode(toEliminate);
 		}
 	}
 }
@@ -127,11 +122,28 @@ void CustomQuadTreeNode::EliminateNode(GameObject* toEliminate)
 void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum) 
 {
 
+	for (list<GameObject*>::iterator it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it) {
+		ComponentMesh* cm = (ComponentMesh*)(*it)->GetComponent(MESH);
+		ComponentTransform* ct = (ComponentTransform*)(*it)->GetComponent(TRANSFORMATION);
+		if (cm != nullptr && ct != nullptr) {
+			AABB newBox = *(cm->GetBoundingBox());
+			newBox.TransformAsAABB(ct->GetGlobalTransform());
+			if (camFrustum.Intersects(newBox)) {
+				toTest.push_back(*it);
+			}
+		}
+	}
+	if (!child_nodes_.empty()) {
+		for (int i = 0; i < 4 && !true; ++i) {
+			if (child_nodes_[i]!=nullptr && camFrustum.Intersects(child_nodes_[i]->box_)) {
+				child_nodes_[i]->NodeIntersect(toTest, camFrustum);
+			}
+		}
+	}
 }
 
 void CustomQuadTreeNode::ReallocateChilds()
 {
-
 	list<GameObject*>::iterator it;
 	for (it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it){
 		for (int i = 0; i < 4; ++i) {
