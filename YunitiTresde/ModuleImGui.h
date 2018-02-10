@@ -21,6 +21,7 @@ public:
 
 	bool CleanUp();
 	void RenderImGui();
+	uint GetImGuiWindowFlags();
 	void AboutImgui();
 
 public:
@@ -30,12 +31,14 @@ public:
 	float upx, upy, upz, upw;
 	int format_, width_, heigth_, mag_, min_, wraps_, wrapt_ = 0;
 	
+	
 
 private:
 	
 	bool show_demo_window = true;
 	bool show_about_window = true;
 	const char* license_;
+	uint imgui_window_flags_ = 0;
 };
 
 

@@ -52,7 +52,7 @@ private:
 
 	Timer saveLoadTimer;
 	std::vector<GameObject*> sceneObjects_;
-
+	
 };
 
 #endif

@@ -18,6 +18,13 @@ ModuleImGui::ModuleImGui()
 		"Everyone is permitted to copy and distribute verbatim copies\n"
 		"of this license document, but changing it is not allowed.";
 
+	//ImGui Window Flags by default:
+	imgui_window_flags_ |= ImGuiWindowFlags_NoMove;
+	imgui_window_flags_ |= ImGuiWindowFlags_NoCollapse;
+	imgui_window_flags_ |= ImGuiWindowFlags_NoResize;
+
+
+
 }
 
 ModuleImGui::~ModuleImGui()
@@ -65,10 +72,12 @@ void ModuleImGui::AboutImgui()
 	//Rendering before than that of Module Render, shall we changed?
 	if (show_demo_window)
 	{
-		//ImGui::ShowDemoWindow(&show_demo_window);
+		ImGui::ShowDemoWindow(&show_demo_window);
 	}
 	if (show_about_window)
 	{
+		ImGui::SetNextWindowPos(ImVec2(App->window->GetWidth()-300, App->window->GetHeight()-300));
+		ImGui::SetNextWindowSize(ImVec2(300, 300));
 		ImGui::Begin("Configuration", &show_about_window);
 		if (ImGui::CollapsingHeader("View Matrix")) {
 			ImGui::Text("POSITION:  [%f][%f][%f]\n", posx, posy, posz);
@@ -192,4 +201,9 @@ void ModuleImGui::AboutImgui()
 		}
 		ImGui::End();
 	}
+}
+
+uint ModuleImGui::GetImGuiWindowFlags()
+{
+	return imgui_window_flags_;
 }

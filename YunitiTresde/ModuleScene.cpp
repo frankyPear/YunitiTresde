@@ -5,7 +5,7 @@
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
-
+#include "ModuleImGui.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 
 
@@ -27,7 +27,7 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init()
 {
-	
+
 	/*ComponentMesh *cm = new ComponentMesh(SPHERE);
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 	ComponentCamera *camera = new ComponentCamera();
@@ -45,10 +45,10 @@ bool ModuleScene::Init()
 	root->AddChild(object1);
 	object1->AddChild(object2);
 
-	
+
 	sceneObjects_.push_back(object2);*/
 
-    
+
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -65,7 +65,26 @@ bool ModuleScene::CleanUp()
 }
 void ModuleScene::Hierarchy()
 {
-	
+	ImGui::SetNextWindowPos(ImVec2(0, 20));
+	ImGui::SetNextWindowSize(ImVec2(300, 680));
+	ImGui::Begin("Hierarchy", 0, App->imgui->GetImGuiWindowFlags());
+	for (int i = 0; i < sceneObjects_.size(); i++)
+	{
+		if (ImGui::TreeNode((void*)(intptr_t)i, "Game Object %d", i+1))
+		{
+			for (int i = 0; i < sceneObjects_[i]->GetChilds().size(); i++)
+			{
+				if (ImGui::TreeNode((void*)(intptr_t)i, "Child %d", i+1));
+			 }
+		ImGui::TreePop();
+		}
+	}
+	//for gameobjects<GameObject*> [ALL]
+	//Create Combo 
+		//For each gameobject check components 
+		//for each component add text into hierarchy
+
+	ImGui::End();
 }
 
 update_status ModuleScene::PreUpdate(float dt)
@@ -86,6 +105,9 @@ update_status ModuleScene::Update(float dt)
 			camera->Update();
 		}
 	}
+
+	//IMGUI
+	Hierarchy();
 	
 	return UPDATE_CONTINUE;
 }
@@ -100,7 +122,8 @@ update_status ModuleScene::PostUpdate(float dt)
 }
 
 void ModuleScene::ShowImguiStatus() {
-
+	ImGui::SetNextWindowPos(ImVec2(App->window->GetWidth()-300, 20));
+	ImGui::SetNextWindowSize(ImVec2(300, 500));
 	ImGui::Begin("Scene Manager");
 	if (ImGui::CollapsingHeader("GameObjects"))
 	{
@@ -186,6 +209,10 @@ void ModuleScene::ImGuiMainMenu()
 			}
 
 			ImGui::EndMenu();
+		}
+		if (ImGui::MenuItem("Options"))
+		{
+
 		}
 		ImGui::EndMainMenuBar();
 	}
