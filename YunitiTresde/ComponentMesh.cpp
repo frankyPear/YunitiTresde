@@ -128,3 +128,15 @@ bool ComponentMesh::OnEditor() {
 	return true;
 }
 
+AABB* ComponentMesh::GetBoundingBox() const {
+	AABB* res = nullptr;
+	switch (meshShape) {
+	case CUBE:
+		res = &cube->GetCubeBB();
+		break;
+	case SPHERE:
+		res = &sphere->GetSphereBB();
+		break;
+	}
+	return res;
+}

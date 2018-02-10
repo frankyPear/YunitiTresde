@@ -4,6 +4,7 @@
 #include "Quad.h"
 #include "OpenGL.h"
 #include <vector>
+#include "Mathgeolib\include\Geometry\AABB.h"
 
 enum Shape {CUBE,SPHERE};
 
@@ -28,7 +29,7 @@ public:
 	std::vector<GLfloat> GetMeshTexcoords() const;
 	std::vector<GLubyte> GetMeshIndices() const;
 	std::vector<GLfloat> GetMeshColors() const;
-
+	AABB* GetBoundingBox() const;
 
 public:
 	Shape meshShape;

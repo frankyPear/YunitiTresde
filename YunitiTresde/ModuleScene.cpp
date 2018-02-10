@@ -29,14 +29,36 @@ bool ModuleScene::Init()
 {
 	root = new GameObject();
 	GameObject *object1 = new GameObject();
-	ComponentMesh *cm = new ComponentMesh(SPHERE);
-	ComponentTransform *ct = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
+	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
+	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 	ComponentCamera *camera = new ComponentCamera();
-	object1->AddComponent(cm);
-	object1->AddComponent(ct);
+	object1->AddComponent(cm1);
+	object1->AddComponent(ct1);
 	object1->AddComponent(camera);
 
-	sceneObjects_.push_back(object1);
+	GameObject *object2 = new GameObject();
+	ComponentMesh *cm2 = new ComponentMesh(CUBE);
+	ComponentTransform *ct2 = new ComponentTransform(float3(10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	object2->AddComponent(cm2);
+	object2->AddComponent(ct2);
+
+	GameObject *object3 = new GameObject();
+	ComponentMesh *cm3 = new ComponentMesh(CUBE);
+	ComponentTransform *ct3 = new ComponentTransform(float3(-10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	object3->AddComponent(cm3);
+	object3->AddComponent(ct3);
+	
+	GameObject *object4 = new GameObject();
+	ComponentMesh *cm4 = new ComponentMesh(CUBE);
+	ComponentTransform *ct4 = new ComponentTransform(float3(10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	object4->AddComponent(cm4);
+	object4->AddComponent(ct4); 
+
+	GameObject *object5 = new GameObject();
+	ComponentMesh *cm5 = new ComponentMesh(CUBE);
+	ComponentTransform *ct5 = new ComponentTransform(float3(-10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	object5->AddComponent(cm5);
+	object5->AddComponent(ct5);
 
 	//GameObject *object2 = new GameObject();
 	//ComponentMesh *cm2 = new ComponentMesh(CUBE);
@@ -44,10 +66,18 @@ bool ModuleScene::Init()
 	//object2->AddComponent(cm2);
 	//object2->AddComponent(ct2);
 	root->AddChild(object1);
+	root->AddChild(object2);
+	root->AddChild(object3);
+	root->AddChild(object4);
+	root->AddChild(object5);
+
 	//object1->AddChild(object2);
 
 	sceneObjects_.push_back(object1);
-	//sceneObjects_.push_back(object2);
+	sceneObjects_.push_back(object2);
+	sceneObjects_.push_back(object3);
+	sceneObjects_.push_back(object4);
+	sceneObjects_.push_back(object5);
 
     
 	actualCamera = App->cam->dummyCamera;
@@ -78,16 +108,24 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
+	ComponentCamera *thecamera = (ComponentCamera*)sceneObjects_[0]->GetComponent(CAMERA);
+	if (thecamera != nullptr) thecamera->Update();
+	ComponentMesh * cmorig = (ComponentMesh*)sceneObjects_[0]->GetComponent(MESH);
 	for (int i = 0; i < sceneObjects_.size(); i++)
 	{
-		sceneObjects_[i]->DrawObjectAndChilds();
-		ComponentCamera *camera = (ComponentCamera*)sceneObjects_[i]->GetComponent(CAMERA);
-		if (camera != nullptr)
-		{
-			camera->Update();
+		ComponentMesh * cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+
+		if (cmorig == cm) {
+			sceneObjects_[i]->DrawObjectAndChilds();
 		}
-	}
-	
+		else {
+			AABB box = *cm->GetBoundingBox();
+			ComponentTransform *ct = (ComponentTransform*) cm->LinkedTo()->GetComponent(TRANSFORMATION);
+			box.Translate(ct->GetPosition());
+			bool inter = thecamera->GetFrustum()->Intersects(box);
+			if (inter) 	sceneObjects_[i]->DrawObjectAndChilds();			
+		}
+	}	
 	return UPDATE_CONTINUE;
 }
 
