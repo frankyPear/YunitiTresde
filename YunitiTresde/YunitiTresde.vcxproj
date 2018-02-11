@@ -128,6 +128,7 @@
     <ClInclude Include="ComponentMesh.h" />
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="ComponentWithResource.h" />
+    <ClInclude Include="CustomQuadTree.h" />
     <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp" />
     <ClInclude Include="DevIL\include\IL\devil_internal_exports.h" />
     <ClInclude Include="DevIL\include\IL\il.h" />
@@ -220,6 +221,8 @@
     <ClCompile Include="ComponentMesh.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="ComponentWithResource.cpp" />
+    <ClCompile Include="CustomQuadTree.cpp" />
+
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="imgui-1.53\imgui.cpp" />
     <ClCompile Include="imgui-1.53\imgui_demo.cpp" />

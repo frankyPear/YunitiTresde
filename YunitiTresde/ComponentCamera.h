@@ -37,6 +37,7 @@ public:
 	void DrawFrustum();
 	void NormalizeUp();
 	void NormalizeFront();
+	bool CheckAABBIntersection(AABB box);
 
 private:
 	Frustum frustum_;

@@ -57,4 +57,5 @@ typedef unsigned long long uid;
 #define IMAGE2	"../Resources/sonic.jpg"
 #define IMAGE3	"../Resources/residentevil.jpg"
 #define IMAGE4	"../Resources/mario.bmp"
+
 #endif //__GLOBALS_H__
