@@ -30,9 +30,9 @@ public:
 	//Imgui
 	void ShowImguiStatus();
 	void ImGuiMainMenu();
-
-	GameObject* GetRoot();
 	void Hierarchy();
+	GameObject* GetRoot();
+	
 
 	
 	
