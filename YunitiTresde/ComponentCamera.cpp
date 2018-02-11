@@ -11,7 +11,7 @@ ComponentCamera::ComponentCamera()
 	frustum_.front = (float3(0.0f, 0.0f, -1.0f));
 	frustum_.up = float3(0.0f, 1.0f, 0.0f);
 	frustum_.nearPlaneDistance = 0.5f;
-	frustum_.farPlaneDistance = 50.0f;
+	frustum_.farPlaneDistance = 30.0f;
 	frustum_.verticalFov = DegToRad(60.0f);
 	frustum_.horizontalFov = DegToRad(36.0f);
 	drawFrustumEnabled_ = true;
@@ -177,3 +177,4 @@ void ComponentCamera::DrawFrustum()
 	glColor3f(1.0f, 1.0f, 1.0f);
 
 }
+

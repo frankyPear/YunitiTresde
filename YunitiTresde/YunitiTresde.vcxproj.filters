@@ -163,6 +163,9 @@
     <ClCompile Include="ComponentCamera.cpp">
       <Filter>CoreClasses</Filter>
     </ClCompile>
+    <ClCompile Include="CustomQuadTree.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -428,6 +431,9 @@
     </ClInclude>
     <ClInclude Include="ComponentCamera.h">
       <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomQuadTree.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@
 ModuleCamera::ModuleCamera()
 {
 	dummyCamera = new ComponentCamera();
-	dummyCamera->SetPlaneDistances(0.5f,1000.0f);
+	dummyCamera->SetPlaneDistances(0.5f,100.0f);
 }
 
 ModuleCamera::~ModuleCamera()
