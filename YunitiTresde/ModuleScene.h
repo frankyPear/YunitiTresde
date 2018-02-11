@@ -24,6 +24,8 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
+	//Create
+	void CreateGameObject(GameObject* obj, bool boolcm = false, bool boolcam=false);
 
 	//Imgui
 	void ShowImguiStatus();
@@ -37,6 +39,7 @@ public:
 public:
 	bool recalcTree = false;
 	ComponentCamera *actualCamera = nullptr;
+	uint imguiFlag = 0;
 
 private:
 	GameObject* root;
@@ -49,7 +52,7 @@ private:
 
 	Timer saveLoadTimer;
 	std::vector<GameObject*> sceneObjects_;
-
+	
 };
 
 #endif
