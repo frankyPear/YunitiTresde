@@ -63,29 +63,6 @@ bool ModuleScene::CleanUp()
 {
 	return true;
 }
-void ModuleScene::Hierarchy()
-{
-	ImGui::SetNextWindowPos(ImVec2(0, 20));
-	ImGui::SetNextWindowSize(ImVec2(300, 680));
-	ImGui::Begin("Hierarchy", 0, App->imgui->GetImGuiWindowFlags());
-	for (int i = 0; i < sceneObjects_.size(); i++)
-	{
-		if (ImGui::TreeNode((void*)(intptr_t)i, "Game Object %d", i+1))
-		{
-			for (int i = 0; i < sceneObjects_[i]->GetChilds().size(); i++)
-			{
-				if (ImGui::TreeNode((void*)(intptr_t)i, "Child %d", i+1));
-			 }
-		ImGui::TreePop();
-		}
-	}
-	//for gameobjects<GameObject*> [ALL]
-	//Create Combo 
-		//For each gameobject check components 
-		//for each component add text into hierarchy
-
-	ImGui::End();
-}
 
 update_status ModuleScene::PreUpdate(float dt)
 {
@@ -121,6 +98,32 @@ update_status ModuleScene::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+void ModuleScene::Hierarchy()
+{
+	ImGui::SetNextWindowPos(ImVec2(0, 20));
+	ImGui::SetNextWindowSize(ImVec2(300, 680));
+	ImGui::Begin("Hierarchy", 0, App->imgui->GetImGuiWindowFlags());
+	static bool selected = false;
+	for (int i = 0; i < sceneObjects_.size(); i++)
+	{
+	//	std::vector<static bool> selected;
+		std::string  c = "Game Object " + std::to_string(i + 1);
+		
+		if (ImGui::Selectable((c.c_str()), &selected))
+		{
+			for (int j = 0; j < sceneObjects_.size(); j++)
+			{
+				sceneObjects_[j]->isSelected = false;
+			}
+			sceneObjects_[i]->isSelected = true;
+		}
+		//temporal, NEED FIXING		
+		selected = false;
+	}
+
+	ImGui::End();
+}
+
 void ModuleScene::ShowImguiStatus() {
 	ImGui::SetNextWindowPos(ImVec2(App->window->GetWidth()-300, 20));
 	ImGui::SetNextWindowSize(ImVec2(300, 500));
@@ -129,20 +132,20 @@ void ModuleScene::ShowImguiStatus() {
 	{
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
-			ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-			if (ct != nullptr)
+			if (sceneObjects_[i]->isSelected)
 			{
-				ct->OnEditor();
-				ct->Update();
+				ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+				if (ct != nullptr)
+				{
+					ct->OnEditor();
+					ct->Update();
 
-			}
-		}
-		for (int i = 0; i < sceneObjects_.size(); i++)
-		{
-			ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-			if (cm != nullptr)
-			{
-				cm->OnEditor();
+				}
+				ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+				if (cm != nullptr)
+				{
+					cm->OnEditor();
+				}
 			}
 		}
 	}
@@ -174,7 +177,7 @@ void ModuleScene::ImGuiMainMenu()
 					GameObject *object = new GameObject();
 					static bool cm;
 					static bool cam;
-					static float pos[3] = { 0,0,0 };
+					float pos[3] = {0,0,0};
 					ImGui::Text("Hey there, you are creating an object");
 					ImGui::Separator();
 					ImGui::Text("What components do you want to add to your game object?");
@@ -246,8 +249,11 @@ void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
 	sceneObjects_.push_back(obj);
 }
 
-bool ModuleScene::SetGameObject(bool boolcm, bool boolcam )
+/*	if (ImGui::TreeNode((void*)(intptr_t)i, "Game Object %d", i + 1))
 {
-
-	return boolcm, boolcam;
+for (int i = 0; i < sceneObjects_[i]->GetChilds().size(); i++)
+{
+if (ImGui::TreeNode((void*)(intptr_t)i, "Child %d", i + 1));
 }
+ImGui::TreePop();
+}*/
