@@ -138,25 +138,7 @@ void ComponentTransform::OnEditor()
 {
 	if (ImGui::TreeNode("Transform"))
 	{
-		ImGui::Text("Position:");
-		ImGui::Text("X: %.2f", _position.x);
-		ImGui::SameLine();
-		ImGui::Text("Y: %.2f", _position.y);
-		ImGui::SameLine();
-		ImGui::Text("Z: %.2f", _position.z);
-		ImGui::Text("Scale");
-		ImGui::Text("X: %.2f", _scale.x);
-		ImGui::SameLine();
-		ImGui::Text("Y: %.2f", _scale.y);
-		ImGui::SameLine();
-		ImGui::Text("Z: %.2f", _scale.y);
-		ImGui::Text("Rotation");
-		ImGui::Text("X: %.2f", _rotationEulerAngles.x);
-		ImGui::SameLine();
-		ImGui::Text("Y: %.2f", _rotationEulerAngles.y);
-		ImGui::SameLine();
-		ImGui::Text("Z: %.2f", _rotationEulerAngles.z);
-
+	
 		ImGui::Text("Position:");
 		if (ImGui::DragFloat3("X", &_position.x, 0.05f, NULL, NULL, "%.2f"))
 		{
