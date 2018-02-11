@@ -34,6 +34,7 @@ bool ModuleScene::Init()
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 
 	ComponentCamera *camera = new ComponentCamera();
+
 	object1->AddComponent(cm1);
 	object1->AddComponent(ct1);
 	object1->AddComponent(camera);
@@ -41,27 +42,35 @@ bool ModuleScene::Init()
 	GameObject *object2 = new GameObject();
 	ComponentMesh *cm2 = new ComponentMesh(CUBE);
 	ComponentTransform *ct2 = new ComponentTransform(float3(10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentMaterial *material2 = new ComponentMaterial(object2);
 	object2->AddComponent(cm2);
 	object2->AddComponent(ct2);
+	object2->AddComponent(material2);
+
 
 	GameObject *object3 = new GameObject();
 	ComponentMesh *cm3 = new ComponentMesh(CUBE);
 	ComponentTransform *ct3 = new ComponentTransform(float3(-10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentMaterial *material3 = new ComponentMaterial(object3);
 	object3->AddComponent(cm3);
 	object3->AddComponent(ct3);
+	object3->AddComponent(material3);
 	
 	GameObject *object4 = new GameObject();
 	ComponentMesh *cm4 = new ComponentMesh(CUBE);
 	ComponentTransform *ct4 = new ComponentTransform(float3(10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentMaterial *material4 = new ComponentMaterial(object4);
 	object4->AddComponent(cm4);
-	object4->AddComponent(ct4); 
+	object4->AddComponent(ct4);
+	object4->AddComponent(material4);
 
 	GameObject *object5 = new GameObject();
 	ComponentMesh *cm5 = new ComponentMesh(CUBE);
 	ComponentTransform *ct5 = new ComponentTransform(float3(-10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentMaterial *material5 = new ComponentMaterial(object5);
 	object5->AddComponent(cm5);
 	object5->AddComponent(ct5);
-
+	object5->AddComponent(material5);
 
 	root->AddChild(object1);
 	root->AddChild(object2);
@@ -171,6 +180,7 @@ void ModuleScene::ShowImguiStatus() {
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
 			if (sceneObjects_[i]->isSelected)
+
 			{
 				ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 				if (ct != nullptr)
@@ -179,12 +189,20 @@ void ModuleScene::ShowImguiStatus() {
 					ct->Update();
 
 				}
+
 				ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
 				if (cm != nullptr)
 				{
 					cm->OnEditor();
 				}
+
+				ComponentMaterial *cmat = (ComponentMaterial*)sceneObjects_[i]->GetComponent(MATERIAL);
+				if (cmat != nullptr)
+				{
+					cmat->OnEditor();
+				}
 			}
+
 		}
 	}
 	if (ImGui::CollapsingHeader("Settings"))
@@ -215,12 +233,14 @@ void ModuleScene::ImGuiMainMenu()
 					GameObject *object = new GameObject();
 					static bool cm;
 					static bool cam;
+					static bool cmaterial;
 					float pos[3] = {0,0,0};
 					ImGui::Text("Hey there, you are creating an object");
 					ImGui::Separator();
 					ImGui::Text("What components do you want to add to your game object?");
 					if (ImGui::Checkbox("Component mesh", &cm));
 					if (ImGui::Checkbox("Component camera", &cam));
+					if (ImGui::Checkbox("Component material", &cmaterial));
 					if (ImGui::InputFloat3("Position (Comming soon...)", (float*)pos, 2));
 					if (ImGui::Button("Create", ImVec2(120, 0)))
 					{ 
@@ -283,7 +303,10 @@ void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
 	
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	obj->AddComponent(ct);
-	
+
+	ComponentMaterial *cmat = new ComponentMaterial(obj);
+	obj->AddComponent(cmat);
+
 	sceneObjects_.push_back(obj);
 }
 

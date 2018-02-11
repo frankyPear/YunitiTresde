@@ -163,6 +163,15 @@
     <ClCompile Include="ComponentCamera.cpp">
       <Filter>CoreClasses</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentWithResource.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>CoreClasses</Filter>
+    </ClCompile>
     <ClCompile Include="CustomQuadTree.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -430,6 +439,15 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ComponentCamera.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentWithResource.h">
+      <Filter>CoreClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
       <Filter>CoreClasses</Filter>
     </ClInclude>
     <ClInclude Include="CustomQuadTree.h">

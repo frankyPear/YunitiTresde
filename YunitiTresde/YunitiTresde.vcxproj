@@ -127,6 +127,7 @@
     <ClInclude Include="ComponentMaterial.h" />
     <ClInclude Include="ComponentMesh.h" />
     <ClInclude Include="ComponentTransform.h" />
+    <ClInclude Include="ComponentWithResource.h" />
     <ClInclude Include="CustomQuadTree.h" />
     <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp" />
     <ClInclude Include="DevIL\include\IL\devil_internal_exports.h" />
@@ -201,12 +202,14 @@
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRenderer.h" />
+    <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleTimerManager.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="Quad.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="SolidSphere.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
@@ -217,7 +220,9 @@
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentMesh.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
+    <ClCompile Include="ComponentWithResource.cpp" />
     <ClCompile Include="CustomQuadTree.cpp" />
+
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="imgui-1.53\imgui.cpp" />
     <ClCompile Include="imgui-1.53\imgui_demo.cpp" />
@@ -259,11 +264,13 @@
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer.cpp" />
+    <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTimeManager.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="SolidSphere.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>

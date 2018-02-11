@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleImGui.h"
 #include "ModuleTextures.h"
+#include "ModuleRenderer.h"
 #include "DevIL\include\IL\il.h"
 #include "DevIL\include\IL\ilu.h"
 #include "DevIL\include\IL\ilut.h"
@@ -122,6 +123,9 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 			ilGetInteger(IL_IMAGE_FORMAT),
 			GL_UNSIGNED_BYTE, ilGetData()
 		);
+		App->renderer->width_ = ilGetInteger(IL_IMAGE_WIDTH);
+		App->renderer->heigth_ = ilGetInteger(IL_IMAGE_HEIGHT);
+		App->renderer->fileNameImage = (char*)fileName;
 	}
 	else {
 		ILenum error = ilGetError();

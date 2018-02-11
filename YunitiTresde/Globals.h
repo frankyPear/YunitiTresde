@@ -20,7 +20,7 @@ enum update_status
 
 // Useful typedefs ---------
 typedef unsigned int uint;
-
+typedef unsigned long long uid;
 // Deletes a buffer
 #define RELEASE( x ) \
     {									  \
