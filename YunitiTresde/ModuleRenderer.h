@@ -50,7 +50,8 @@ public:
 	void SetAmbientLightning();
 	void SetIdImage(int texID_);
 	void Draw(GameObject *obj);
-
+	int format_, width_, heigth_, mag_, min_, wraps_, wrapt_ = 0;
+	char* fileNameImage;
 	
 
 private:
@@ -75,6 +76,7 @@ private:
 	float ambientGreen_ = 0.5f;
 	GLuint loadedTexId_;
 	int intTex = -1;
+
 	
 };
 

@@ -273,6 +273,7 @@ void ModuleRenderer::Draw(GameObject *obj) {
 	assert(obj != nullptr);
 	ComponentTransform* ct = (ComponentTransform *)obj->GetComponent(TRANSFORMATION);
 	ComponentMesh* cm = (ComponentMesh *)obj->GetComponent(MESH);
+	ComponentMaterial* cmat = (ComponentMaterial *)obj->GetComponent(MATERIAL);
 	float3 corners[8];
 
 	glPushMatrix();
