@@ -140,41 +140,69 @@ void ComponentCamera::DrawFrustum()
 	float3 CornerVertex[8];
 	frustum_.GetCornerPoints(CornerVertex);
 	//glPushMatrix();
-	glColor3f(1.0f,1.0f,0.0f);
-	glBegin(GL_QUADS);
-		//front
-		glVertex3fv((GLfloat*)&CornerVertex[0]);
-		glVertex3fv((GLfloat*)&CornerVertex[2]);
-		glVertex3fv((GLfloat*)&CornerVertex[6]);
-		glVertex3fv((GLfloat*)&CornerVertex[4]);
-		//back
-		glVertex3fv((GLfloat*)&CornerVertex[1]);
-		glVertex3fv((GLfloat*)&CornerVertex[5]);
-		glVertex3fv((GLfloat*)&CornerVertex[7]);
-		glVertex3fv((GLfloat*)&CornerVertex[3]);
-		//left
-		glVertex3fv((GLfloat*)&CornerVertex[0]);
-		glVertex3fv((GLfloat*)&CornerVertex[1]);
-		glVertex3fv((GLfloat*)&CornerVertex[3]);
-		glVertex3fv((GLfloat*)&CornerVertex[2]);
-		//right
-		glVertex3fv((GLfloat*)&CornerVertex[4]);
-		glVertex3fv((GLfloat*)&CornerVertex[6]);
-		glVertex3fv((GLfloat*)&CornerVertex[7]);
-		glVertex3fv((GLfloat*)&CornerVertex[5]);
-		//top
-		glVertex3fv((GLfloat*)&CornerVertex[2]);
-		glVertex3fv((GLfloat*)&CornerVertex[3]);
-		glVertex3fv((GLfloat*)&CornerVertex[7]);
-		glVertex3fv((GLfloat*)&CornerVertex[6]);
-		//bottom
+	glLineWidth((GLfloat)3.0f);
+	glColor3f(0.0f,1.0f,0.0f);
+	/*
+						11
+	(3)---------------------------------------(7)
+	|   \                                  /  |
+	|      \                            /     |
+	|       7 \                      / 6      |
+	|            \        3      /            |
+	|             (2)----------(6)            |
+	|              |            |             |10
+12	|            4 |            |2            |
+	|              |            |             |
+	|             (0)-----------(4)           |
+	|            /        1        \          |
+	|       8 /                      \ 5      |
+	|     /                            \      |
+	|  /                                  \   |
+	(1)--------------------------------------(5)
+						9
+	  */
+	glBegin(GL_LINES);
+		//1		
 		glVertex3fv((GLfloat*)&CornerVertex[0]);
 		glVertex3fv((GLfloat*)&CornerVertex[4]);
+		//2	
+		glVertex3fv((GLfloat*)&CornerVertex[4]);
+		glVertex3fv((GLfloat*)&CornerVertex[6]);
+		//3		
+		glVertex3fv((GLfloat*)&CornerVertex[2]);
+		glVertex3fv((GLfloat*)&CornerVertex[6]);
+		//4		
+		glVertex3fv((GLfloat*)&CornerVertex[0]);
+		glVertex3fv((GLfloat*)&CornerVertex[2]);
+		//5		
+		glVertex3fv((GLfloat*)&CornerVertex[4]);
 		glVertex3fv((GLfloat*)&CornerVertex[5]);
+		//6		
+		glVertex3fv((GLfloat*)&CornerVertex[6]);
+		glVertex3fv((GLfloat*)&CornerVertex[7]);
+		//7		
+		glVertex3fv((GLfloat*)&CornerVertex[2]);
+		glVertex3fv((GLfloat*)&CornerVertex[3]);
+		//8		
+		glVertex3fv((GLfloat*)&CornerVertex[0]);
 		glVertex3fv((GLfloat*)&CornerVertex[1]);
+		//9		
+		glVertex3fv((GLfloat*)&CornerVertex[1]);
+		glVertex3fv((GLfloat*)&CornerVertex[5]);
+		//10		
+		glVertex3fv((GLfloat*)&CornerVertex[5]);
+		glVertex3fv((GLfloat*)&CornerVertex[7]);
+		//11		
+		glVertex3fv((GLfloat*)&CornerVertex[7]);
+		glVertex3fv((GLfloat*)&CornerVertex[3]);
+		//12		
+		glVertex3fv((GLfloat*)&CornerVertex[1]);
+		glVertex3fv((GLfloat*)&CornerVertex[3]);
+
 	glEnd();
 	//glPopMatrix();
 	glColor3f(1.0f, 1.0f, 1.0f);
+	glLineWidth((GLfloat)1.0f);
 
 }
 
