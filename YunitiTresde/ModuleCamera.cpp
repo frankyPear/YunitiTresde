@@ -8,7 +8,7 @@
 ModuleCamera::ModuleCamera()
 {
 	dummyCamera = new ComponentCamera();
-	dummyCamera->SetPlaneDistances(0.5f,100.0f);
+	dummyCamera->SetPlaneDistances(0.5f, 100.0f);
 }
 
 ModuleCamera::~ModuleCamera()
@@ -19,7 +19,7 @@ ModuleCamera::~ModuleCamera()
 bool ModuleCamera::Init()
 {
 	bool ret = true;
-	
+
 	return ret;
 }
 
@@ -41,7 +41,7 @@ void ModuleCamera::Orbit(float motionX, float motionY)
 	float3 point = _lookingAt;
 
 	// fake point should be a ray colliding with something
-	if (!_isLooking )
+	if (!_isLooking)
 	{
 		LineSegment picking = dummyCamera->frustum_.UnProjectLineSegment(0.f, 0.f);
 		float distance;
@@ -92,6 +92,32 @@ void ModuleCamera::Zoom(float zoom)
 
 }
 
+void ModuleCamera::LookAt(float motionX, float motionY)
+{
+
+	_isLooking = false;
+	if (motionX != 0.f)
+	{
+		Quat q = Quat::RotateY(motionX);
+		dummyCamera->frustum_.front = q.Mul(dummyCamera->frustum_.front).Normalized();
+		// would not need this is we were rotating in the local Y, but that is too disorienting
+		dummyCamera->frustum_.up = q.Mul(dummyCamera->frustum_.up).Normalized();
+	}
+
+	if (motionY != 0.f)
+	{
+		Quat q = Quat::RotateAxisAngle(dummyCamera->frustum_.WorldRight(), motionY);
+
+		float3 new_up = q.Mul(dummyCamera->frustum_.up).Normalized();
+
+		if (new_up.y > 0.0f)
+		{
+			dummyCamera->frustum_.up = new_up;
+			dummyCamera->frustum_.front = q.Mul(dummyCamera->frustum_.front).Normalized();
+		}
+	}
+}
+
 void ModuleCamera::CenterOn(const float3 & position, float distance)
 {
 	float3 v = dummyCamera->frustum_.front.Neg();
@@ -102,7 +128,7 @@ void ModuleCamera::CenterOn(const float3 & position, float distance)
 
 update_status ModuleCamera::PreUpdate(float dt)
 {
-	
+
 	return UPDATE_CONTINUE;
 }
 
@@ -116,20 +142,20 @@ update_status ModuleCamera::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition().Add(float3(0.0f, camSpeed_, 0.0f)));
 
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition().Add(float3(0.0f, -camSpeed_, 0.0f)));
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition() + dummyCamera->GetFront().Add(float3(0.0f, 0.0f, camSpeed_)));
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition() - dummyCamera->GetFront().Add(float3(0.0f, 0.0f, camSpeed_)));
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition() - dummyCamera->GetWorldRight().Add(float3(camSpeed_, 0.0f, 0.0f)));
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition() + dummyCamera->GetWorldRight().Add(float3(camSpeed_, 0.0f, 0.0f)));
-	
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) 
+
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
 		quatOffset = quatOffset.Mul(Quat::RotateAxisAngle(dummyCamera->GetWorldRight(), camSpeed_));
 	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
 		quatOffset = quatOffset.Mul(Quat::RotateAxisAngle(dummyCamera->GetWorldRight(), -camSpeed_));
 	}
@@ -142,9 +168,19 @@ update_status ModuleCamera::Update(float dt)
 		quatOffset = quatOffset.Mul(Quat::RotateY(-camSpeed_));
 	}
 
+	const iPoint &mouseMotion = App->input->GetMouseMotion();
+	float dx = (float)-mouseMotion.x * _rotationSpeed * dt;
+	float dy = (float)-mouseMotion.y * _rotationSpeed * dt;
+
+
+	LookAt(dx, dy);
+
+
+
+
 	int mouseWheel = App->input->GetMouseWheel();
 
-	if (mouseWheel!=0) 
+	if (mouseWheel != 0)
 		Zoom(mouseWheel*_zoomSpeed*dt);
 
 
