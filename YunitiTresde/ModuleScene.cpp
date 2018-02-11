@@ -8,13 +8,14 @@
 
 #include "Mathgeolib\include\MathGeoLib.h"
 
-
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
 #include "ModuleCamera.h"
+
+using namespace std;
 
 ModuleScene::ModuleScene()
 {
@@ -31,10 +32,8 @@ bool ModuleScene::Init()
 	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
-	ComponentCamera *camera = new ComponentCamera();
 	object1->AddComponent(cm1);
 	object1->AddComponent(ct1);
-	object1->AddComponent(camera);
 
 	GameObject *object2 = new GameObject();
 	ComponentMesh *cm2 = new ComponentMesh(CUBE);
@@ -87,6 +86,14 @@ bool ModuleScene::Init()
 
 bool ModuleScene::Start()
 {
+	limits = AABB();
+	limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+	limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
+	quadtree = new CustomQuadTree();
+	quadtree->Create(limits);
+	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
+
 	return true;
 }
 
@@ -108,23 +115,17 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
-	ComponentCamera *thecamera = (ComponentCamera*)sceneObjects_[0]->GetComponent(CAMERA);
-	if (thecamera != nullptr) thecamera->Update();
-	ComponentMesh * cmorig = (ComponentMesh*)sceneObjects_[0]->GetComponent(MESH);
-	for (int i = 0; i < sceneObjects_.size(); i++)
+	if (recreateQuadTree) {
+		quadtree->Clear();
+		limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+		limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
+		quadtree->Create(limits);
+		for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+	}
+	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
+	for (int i = 0; i < objectToDraw_.size(); i++)
 	{
-		ComponentMesh * cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-
-		if (cmorig == cm) {
-			sceneObjects_[i]->DrawObjectAndChilds();
-		}
-		else {
-			AABB box = *cm->GetBoundingBox();
-			ComponentTransform *ct = (ComponentTransform*) cm->LinkedTo()->GetComponent(TRANSFORMATION);
-			box.Translate(ct->GetPosition());
-			bool inter = thecamera->GetFrustum()->Intersects(box);
-			if (inter) 	sceneObjects_[i]->DrawObjectAndChilds();			
-		}
+		objectToDraw_[i]->DrawObjectAndChilds();
 	}	
 	return UPDATE_CONTINUE;
 }

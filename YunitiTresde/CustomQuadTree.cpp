@@ -13,7 +13,7 @@ CustomQuadTree::~CustomQuadTree()
 
 }
 
-void CustomQuadTree::Create(AABB limits)
+void CustomQuadTree::Create(AABB& limits)
 {
 	root_ = new CustomQuadTreeNode(limits, nullptr);
 }
@@ -33,7 +33,7 @@ void CustomQuadTree::Insert(GameObject *newAddition)
 			AABB newBox = *(cm->GetBoundingBox());
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
 			if (root_ == nullptr) {
-				root_ = new CustomQuadTreeNode(newBox, root_);
+				root_ = new CustomQuadTreeNode(newBox, nullptr);
 			}
 			else {
 				if (root_->box_.Contains(newBox)) root_->InsertInNode(newAddition);
@@ -54,9 +54,7 @@ void CustomQuadTree::Remove(GameObject *toRemove)
 		if (cm != nullptr && ct != nullptr) {
 			AABB newBox = *(cm->GetBoundingBox());
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
-			if (root_ != nullptr) {
-				if (root_->box_.Contains(newBox)) root_->EliminateNode(toRemove);
-			}
+			if (root_->box_.Contains(newBox)) root_->EliminateNode(toRemove);
 		}
 	}	
 }
@@ -119,28 +117,19 @@ void CustomQuadTreeNode::EliminateNode(GameObject* toEliminate)
 	}
 }
 
-void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum) 
+void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum)
 {
-
-	for (list<GameObject*>::iterator it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it) {
-		ComponentMesh* cm = (ComponentMesh*)(*it)->GetComponent(MESH);
-		ComponentTransform* ct = (ComponentTransform*)(*it)->GetComponent(TRANSFORMATION);
-		if (cm != nullptr && ct != nullptr) {
-			AABB newBox = *(cm->GetBoundingBox());
-			newBox.TransformAsAABB(ct->GetGlobalTransform());
-			if (camFrustum.Intersects(newBox)) {
-				toTest.push_back(*it);
-			}
-		}
+	if (camFrustum.Intersects(box_)) {
+		for (list<GameObject*>::iterator it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it)
+			toTest.push_back(*it);		
 	}
 	if (!child_nodes_.empty()) {
 		for (int i = 0; i < 4 && !true; ++i) {
-			if (child_nodes_[i]!=nullptr && camFrustum.Intersects(child_nodes_[i]->box_)) {
-				child_nodes_[i]->NodeIntersect(toTest, camFrustum);
-			}
+			child_nodes_[i]->NodeIntersect(toTest, camFrustum);
 		}
 	}
 }
+
 
 void CustomQuadTreeNode::ReallocateChilds()
 {
@@ -162,8 +151,8 @@ void CustomQuadTreeNode::ReallocateChilds()
 void CustomQuadTreeNode::DivideBox() 
 {
 	float3 maxPoints = this->box_.maxPoint;
-	float3 minPoints = this->box_.maxPoint;
-	float3 boxSizeOffset = (this->box_.Size()) / 2.0f;
+	float3 minPoints = this->box_.minPoint;
+	float3 boxSizeOffset = this->box_.HalfSize();
 	AABB subBox;
 	
 	subBox.maxPoint = float3(maxPoints.x - boxSizeOffset.x, maxPoints.y, maxPoints.z - boxSizeOffset.z);

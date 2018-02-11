@@ -36,7 +36,7 @@ public:
 	CustomQuadTree();
 	~CustomQuadTree();
 
-	void Create(AABB limits);
+	void Create(AABB& limits);
 	void Clear();
 	void Insert(GameObject *newAddition);
 	void Remove(GameObject *toRemove);

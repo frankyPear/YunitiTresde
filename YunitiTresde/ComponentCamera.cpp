@@ -13,7 +13,7 @@ ComponentCamera::ComponentCamera()
 	frustum_.nearPlaneDistance = 0.5f;
 	frustum_.farPlaneDistance = 30.0f;
 	frustum_.verticalFov = DegToRad(60.0f);
-	frustum_.horizontalFov = DegToRad(36.0f);
+	frustum_.horizontalFov = DegToRad(80.0f);
 	drawFrustumEnabled_ = true;
 	frustrumCulling_ = false;
 	type = CAMERA;

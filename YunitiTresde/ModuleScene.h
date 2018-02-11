@@ -3,7 +3,10 @@
 
 #include "Module.h"
 #include "ComponentCamera.h"
+#include "CustomQuadTree.h"
 #include <vector>
+
+#define BOX_SIZE 20.0f
 
 class GameObject;
 class Mesh;
@@ -35,13 +38,14 @@ public:
 	
 	
 public:
-	bool recalcTree = false;
+	bool recreateQuadTree = false;
 	ComponentCamera *actualCamera = nullptr;
 
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;
-	Quadtree* tree = nullptr;
+	CustomQuadTree* quadtree = nullptr;
+	AABB limits;
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
@@ -49,6 +53,7 @@ private:
 
 	Timer saveLoadTimer;
 	std::vector<GameObject*> sceneObjects_;
+	std::vector<GameObject*> objectToDraw_;
 
 };
 
