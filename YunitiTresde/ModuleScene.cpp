@@ -108,19 +108,33 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
-	if (recreateQuadTree) {
-		quadtree->Clear();
-		limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-		limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
-		quadtree->Create(limits);
-		for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+	if (accelerateFrustumCulling) {
+		if (recreateQuadTree) {
+			quadtree->Clear();
+			limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+			limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
+			quadtree->Create(limits);
+			for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+		}
+		quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
+		for (int i = 0; i < objectToDraw_.size(); i++)
+		{
+			objectToDraw_[i]->DrawObjectAndChilds();
+		}
+		objectToDraw_.clear();
 	}
-	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
-	for (int i = 0; i < objectToDraw_.size(); i++)
-	{
-		objectToDraw_[i]->DrawObjectAndChilds();
-	}	
-	objectToDraw_.clear();
+	else {
+		for (int i = 0; i < sceneObjects_.size(); i++)
+		{
+			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+			if (cm != nullptr && ct != nullptr) {
+				AABB newBox = *(cm->GetBoundingBox());
+				newBox.TransformAsAABB(ct->GetGlobalTransform());
+				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
+			}
+		}
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -174,4 +188,9 @@ void ModuleScene::ImGuiMainMenu()
 
 	}
 	ImGui::EndMainMenuBar();
+}
+
+void ModuleScene::ToggleFrustumAcceleration()
+{
+	accelerateFrustumCulling != accelerateFrustumCulling;
 }

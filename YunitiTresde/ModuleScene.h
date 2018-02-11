@@ -34,7 +34,7 @@ public:
 
 	GameObject* GetRoot();
 	void Hierarchy();
-
+	void ToggleFrustumAcceleration();
 	
 	
 public:
@@ -49,6 +49,7 @@ private:
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
+	bool accelerateFrustumCulling = true;
 	std::string loadPath;
 
 	Timer saveLoadTimer;
