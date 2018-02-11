@@ -43,13 +43,6 @@ void ComponentMaterial::AddMaterialResource(unsigned int uid)
 }
 
 
-
-void ComponentMaterial::Destroy()
-{
-
-}
-
-
 void ComponentMaterial::OnEditor()
 {
 	static const char* selected_item_ = NULL;
@@ -72,6 +65,12 @@ void ComponentMaterial::OnEditor()
 				}
 				ImGui::EndCombo();
 			}
+		}
+		if (ImGui::CollapsingHeader("Texture")) {
+			ImGui::Text("WIDTH: ");// %d", width_);
+			ImGui::Text("HEIGTH:");// %d", heigth_);
+			ImGui::Text("File: ");//%s", selected_item_);
+			ImGui::Text("FORMAT: ");//%d", format_);
 		}
 		if (ImGui::Button("Reset"))
 		{

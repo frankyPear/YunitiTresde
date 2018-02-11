@@ -122,6 +122,7 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 			ilGetInteger(IL_IMAGE_FORMAT),
 			GL_UNSIGNED_BYTE, ilGetData()
 		);
+		
 	}
 	else {
 		ILenum error = ilGetError();
