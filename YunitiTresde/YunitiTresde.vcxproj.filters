@@ -453,6 +453,9 @@
     <ClInclude Include="CustomQuadTree.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Brofiler\include\Brofiler.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -513,5 +516,6 @@
     <Library Include="DevIL\lib\x86\Release\ILU.lib">
       <Filter>Tools\DevIL\Libs</Filter>
     </Library>
+    <Library Include="Brofiler\libx86\ProfilerCore32.lib" />
   </ItemGroup>
 </Project>
