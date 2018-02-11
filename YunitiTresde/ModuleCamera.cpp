@@ -171,7 +171,7 @@ update_status ModuleCamera::Update(float dt)
 	const iPoint &mouseMotion = App->input->GetMouseMotion();
 	float dx = (float)-mouseMotion.x * _rotationSpeed * dt;
 	float dy = (float)-mouseMotion.y * _rotationSpeed * dt;
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouseMotion.x != 0 || mouseMotion.y != 0)) {
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT && (mouseMotion.x != 0 || mouseMotion.y != 0)) {
 
 		LookAt(dx, dy);
 
