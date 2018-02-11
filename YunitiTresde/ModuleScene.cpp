@@ -100,6 +100,11 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
+
+	//TODO: THIS NEEDS TO BE CHANGED
+	//ALL CAMERAS SHOULD DRAW THE FRUSTUM
+	//SHALL WE EXTRACT A BRANCH FROM DEVELOP WITH THIS DEMO TO SHOW RICARD?
+
 	ComponentCamera *thecamera = (ComponentCamera*)sceneObjects_[0]->GetComponent(CAMERA);
 	if (thecamera != nullptr) thecamera->Update();
 	ComponentMesh * cmorig = (ComponentMesh*)sceneObjects_[0]->GetComponent(MESH);
