@@ -120,21 +120,23 @@ void CustomQuadTreeNode::EliminateNode(GameObject* toEliminate)
 void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum)
 {
 	if (camFrustum.Intersects(box_)) {
-		for (list<GameObject*>::iterator it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it)
-			toTest.push_back(*it);		
-	}
-	if (!child_nodes_.empty()) {
-		for (int i = 0; i < 4 && !true; ++i) {
-			child_nodes_[i]->NodeIntersect(toTest, camFrustum);
+		list<GameObject*>::iterator it;
+		for (it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it)
+			toTest.push_back(*it);	
+		if (!child_nodes_.empty()) {
+			for (int i = 0; i < 4; ++i) {
+				child_nodes_[i]->NodeIntersect(toTest, camFrustum);
+			}
 		}
 	}
+
 }
 
 
 void CustomQuadTreeNode::ReallocateChilds()
 {
 	list<GameObject*>::iterator it;
-	for (it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it){
+	for (it = objectsInBox_.begin(); it != objectsInBox_.end();){
 		for (int i = 0; i < 4; ++i) {
 			ComponentMesh* cm = (ComponentMesh*)(*it)->GetComponent(MESH);
 			ComponentTransform* ct = (ComponentTransform*)(*it)->GetComponent(TRANSFORMATION);

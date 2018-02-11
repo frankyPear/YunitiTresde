@@ -127,6 +127,7 @@ update_status ModuleScene::Update(float dt)
 	{
 		objectToDraw_[i]->DrawObjectAndChilds();
 	}	
+	objectToDraw_.clear();
 	return UPDATE_CONTINUE;
 }
 
