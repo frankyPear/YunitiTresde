@@ -64,6 +64,12 @@ void CustomQuadTree::Intersect(std::vector<GameObject*>& toTest, const Frustum& 
 	if (root_ != nullptr) root_->NodeIntersect( toTest, camFrustum);
 }
 
+void CustomQuadTree::DrawBox()
+{
+	if (root_ != nullptr) root_->DrawNodeBox();
+}
+
+
 //----------------------------- NODE FUNCTIONS ---------------------------------
 
 CustomQuadTreeNode::CustomQuadTreeNode()
@@ -183,4 +189,56 @@ void CustomQuadTreeNode::DivideBox()
 	subBox.maxPoint = float3(maxPoints.x, maxPoints.y, maxPoints.z);
 	subBox.minPoint = float3(minPoints.x + boxSizeOffset.x, minPoints.y, minPoints.z + boxSizeOffset.z);
 	child_nodes_.push_back(new CustomQuadTreeNode(subBox, this));
+}
+
+void CustomQuadTreeNode::DrawNodeBox()
+{
+	float3 CornerVertex[8];
+	box_.GetCornerPoints(CornerVertex);
+	glLineWidth((GLfloat)3.0f);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glBegin(GL_LINES);
+	//1		
+	glVertex3fv((GLfloat*)&CornerVertex[0]);
+	glVertex3fv((GLfloat*)&CornerVertex[4]);
+	//2	
+	glVertex3fv((GLfloat*)&CornerVertex[4]);
+	glVertex3fv((GLfloat*)&CornerVertex[6]);
+	//3		
+	glVertex3fv((GLfloat*)&CornerVertex[2]);
+	glVertex3fv((GLfloat*)&CornerVertex[6]);
+	//4		
+	glVertex3fv((GLfloat*)&CornerVertex[0]);
+	glVertex3fv((GLfloat*)&CornerVertex[2]);
+	//5		
+	glVertex3fv((GLfloat*)&CornerVertex[4]);
+	glVertex3fv((GLfloat*)&CornerVertex[5]);
+	//6		
+	glVertex3fv((GLfloat*)&CornerVertex[6]);
+	glVertex3fv((GLfloat*)&CornerVertex[7]);
+	//7		
+	glVertex3fv((GLfloat*)&CornerVertex[2]);
+	glVertex3fv((GLfloat*)&CornerVertex[3]);
+	//8		
+	glVertex3fv((GLfloat*)&CornerVertex[0]);
+	glVertex3fv((GLfloat*)&CornerVertex[1]);
+	//9		
+	glVertex3fv((GLfloat*)&CornerVertex[1]);
+	glVertex3fv((GLfloat*)&CornerVertex[5]);
+	//10		
+	glVertex3fv((GLfloat*)&CornerVertex[5]);
+	glVertex3fv((GLfloat*)&CornerVertex[7]);
+	//11		
+	glVertex3fv((GLfloat*)&CornerVertex[7]);
+	glVertex3fv((GLfloat*)&CornerVertex[3]);
+	//12		
+	glVertex3fv((GLfloat*)&CornerVertex[1]);
+	glVertex3fv((GLfloat*)&CornerVertex[3]);
+	glEnd();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glLineWidth((GLfloat)1.0f);
+	if (!child_nodes_.empty())
+	{
+		for (int i = 0; i < 4; ++i) child_nodes_[i]->DrawNodeBox();
+	}
 }

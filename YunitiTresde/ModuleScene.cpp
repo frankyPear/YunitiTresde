@@ -121,6 +121,7 @@ update_status ModuleScene::Update(float dt)
 		{
 			objectToDraw_[i]->DrawObjectAndChilds();
 		}
+		quadtree->DrawBox();
 		objectToDraw_.clear();
 	}
 	else {
