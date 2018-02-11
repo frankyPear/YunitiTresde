@@ -36,18 +36,18 @@ bool ModuleScene::Init()
 	object1->AddComponent(ct);
 	object1->AddComponent(camera);
 
-	sceneObjects_.push_back(object1);
+	//sceneObjects_.push_back(object1);
 
-	//GameObject *object2 = new GameObject();
-	//ComponentMesh *cm2 = new ComponentMesh(CUBE);
-	//ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	//object2->AddComponent(cm2);
-	//object2->AddComponent(ct2);
+	GameObject *object2 = new GameObject();
+	ComponentMesh *cm2 = new ComponentMesh(CUBE);
+	ComponentTransform *ct2 = new ComponentTransform(float3(3.0f, 3.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	object2->AddComponent(cm2);
+	object2->AddComponent(ct2);
 	root->AddChild(object1);
-	//object1->AddChild(object2);
+	object1->AddChild(object2);
 
 	sceneObjects_.push_back(object1);
-	//sceneObjects_.push_back(object2);
+	sceneObjects_.push_back(object2);
 
     
 	actualCamera = App->cam->dummyCamera;
@@ -105,20 +105,21 @@ void ModuleScene::ShowImguiStatus() {
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
 			ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+			ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+			ComponentMaterial *cmat = (ComponentMaterial*)sceneObjects_[i]->GetComponent(MATERIAL);
 			if (ct != nullptr)
 			{
 				ct->OnEditor();
 				ct->Update();
-
 			}
-		}
-		for (int i = 0; i < sceneObjects_.size(); i++)
-		{
-			ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
 			if (cm != nullptr)
 			{
 				cm->OnEditor();
 			}
+			//if (cmat != nullptr)
+			//{
+			//	cmat->OnEditor();
+			//}
 		}
 	}
 	if (ImGui::CollapsingHeader("Settings"))
