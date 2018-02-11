@@ -10,14 +10,15 @@ class ComponentMaterial :
 public:
 
 	//Constructor
+
 	ComponentMaterial(GameObject *gameObject);
 
 	//Destructor
 	~ComponentMaterial();
 
-	//bool SetResource(uid resourceId)override;
-	//
-	//void AddMaterialResource(unsigned int uid);
+	bool SetResource(uid resourceId)override;
+	
+	void AddMaterialResource(unsigned int uid);
 
 
 	void OnEditor();
