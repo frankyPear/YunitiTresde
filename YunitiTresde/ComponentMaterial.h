@@ -21,6 +21,8 @@ public:
 	void AddMaterialResource(unsigned int uid);
 
 
+	void Destroy();
+
 	void OnEditor();
 
 

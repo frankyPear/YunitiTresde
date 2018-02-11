@@ -42,6 +42,14 @@ void ComponentMaterial::AddMaterialResource(unsigned int uid)
 
 }
 
+
+
+void ComponentMaterial::Destroy()
+{
+
+}
+
+
 void ComponentMaterial::OnEditor()
 {
 	static const char* selected_item_ = NULL;
@@ -64,6 +72,15 @@ void ComponentMaterial::OnEditor()
 				}
 				ImGui::EndCombo();
 			}
+		}
+		if (ImGui::Button("Reset"))
+		{
+			App->textures->DeleteImage(0);
+			App->textures->DeleteImage(1);
+			App->textures->DeleteImage(2);
+			App->textures->DeleteImage(3);
+			App->textures->DeleteImage(4);
+			App->renderer->SetIdImage(-1);
 		}
 		//ImGui::TreePop();
 	//}
