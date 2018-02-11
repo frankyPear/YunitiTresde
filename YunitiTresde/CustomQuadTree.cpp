@@ -96,6 +96,7 @@ void  CustomQuadTreeNode::InsertInNode(GameObject *toInsert)
 	if (objectsInBox_.size() < MAX_OBJECTS_IN_NODE || box_.Size().x < MINIMUM_BOX_SIZE) objectsInBox_.push_back(toInsert);
 	else {
 		if (child_nodes_.empty()) DivideBox();
+		objectsInBox_.push_back(toInsert);
 		ReallocateChilds();
 	}
 }
