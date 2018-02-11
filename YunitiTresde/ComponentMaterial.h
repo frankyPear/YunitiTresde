@@ -21,8 +21,7 @@ public:
 	void AddMaterialResource(unsigned int uid);
 
 	void OnEditor();
-
-
+	
 private:
 
 };

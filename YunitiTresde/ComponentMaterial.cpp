@@ -46,9 +46,8 @@ void ComponentMaterial::AddMaterialResource(unsigned int uid)
 void ComponentMaterial::OnEditor()
 {
 	static const char* selected_item_ = NULL;
-	//if (ImGui::TreeNode("Material")) {
+	//if (ImGui::TreeNodeEx("Material")) {
 		ImGui::LabelText("", "Select Texture: ");
-
 		{
 			const char* textures_[] = { IMAGE1, IMAGE2, IMAGE3, IMAGE4 };
 
@@ -66,14 +65,14 @@ void ComponentMaterial::OnEditor()
 				ImGui::EndCombo();
 			}
 		}
-		if (ImGui::CollapsingHeader("Texture")) {
-			ImGui::Text("WIDTH: ");// %d", width_);
-			ImGui::Text("HEIGTH:");// %d", heigth_);
-			ImGui::Text("File: ");//%s", selected_item_);
-			ImGui::Text("FORMAT: ");//%d", format_);
-		}
+		ImGui::Text("WIDTH: %d", App->renderer->width_);
+		ImGui::Text("HEIGTH: %d", App->renderer->heigth_);
+		ImGui::Text("File: %s", selected_item_);
 		if (ImGui::Button("Reset"))
 		{
+			App->renderer->width_ = 0;
+			App->renderer->heigth_ = 0;
+			App->textures->loadImage(" ");
 			App->textures->DeleteImage(0);
 			App->textures->DeleteImage(1);
 			App->textures->DeleteImage(2);

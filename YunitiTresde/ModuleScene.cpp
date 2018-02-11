@@ -189,11 +189,13 @@ void ModuleScene::ShowImguiStatus() {
 					ct->Update();
 
 				}
+
 				ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
 				if (cm != nullptr)
 				{
 					cm->OnEditor();
 				}
+
 				ComponentMaterial *cmat = (ComponentMaterial*)sceneObjects_[i]->GetComponent(MATERIAL);
 				if (cmat != nullptr)
 				{
@@ -231,12 +233,14 @@ void ModuleScene::ImGuiMainMenu()
 					GameObject *object = new GameObject();
 					static bool cm;
 					static bool cam;
+					static bool cmaterial;
 					float pos[3] = {0,0,0};
 					ImGui::Text("Hey there, you are creating an object");
 					ImGui::Separator();
 					ImGui::Text("What components do you want to add to your game object?");
 					if (ImGui::Checkbox("Component mesh", &cm));
 					if (ImGui::Checkbox("Component camera", &cam));
+					if (ImGui::Checkbox("Component material", &cmaterial));
 					if (ImGui::InputFloat3("Position (Comming soon...)", (float*)pos, 2));
 					if (ImGui::Button("Create", ImVec2(120, 0)))
 					{ 
@@ -299,7 +303,10 @@ void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
 	
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	obj->AddComponent(ct);
-	
+
+	ComponentMaterial *cmat = new ComponentMaterial(obj);
+	obj->AddComponent(cmat);
+
 	sceneObjects_.push_back(obj);
 }
 
