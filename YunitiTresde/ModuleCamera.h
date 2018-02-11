@@ -38,7 +38,7 @@ private:
 
 	float3 _lookingAt;
 	float camSpeed_;
-	float _rotationSpeed = 15;
+	float _rotationSpeed = 1;
 	float _zoomSpeed=15;
 	float aspectRatio_;
 };
