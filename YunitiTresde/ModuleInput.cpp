@@ -46,6 +46,7 @@ update_status ModuleInput::PreUpdate(float dt)
 	static SDL_Event event;
 
 	mouse_motion = { 0, 0 };
+	_mouseWheel = 0;
 	memset(windowEvents, false, WE_COUNT * sizeof(bool));
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
