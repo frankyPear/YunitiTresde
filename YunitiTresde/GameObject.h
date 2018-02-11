@@ -94,6 +94,9 @@ public:
 
 	AABB axisBoundingBox_;
 #pragma endregion
+public:
+	//to be changed to private //shall be static?
+ bool isSelected = false;
 
 private:
 	unsigned int _id;
