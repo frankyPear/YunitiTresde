@@ -40,7 +40,8 @@ public:
 	bool recalcTree = false;
 	ComponentCamera *actualCamera = nullptr;
 	uint imguiFlag = 0;
-
+	uint imguiCollisionTest = 0;
+	uint imguiCollisionTestQuadtree = 0;
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;

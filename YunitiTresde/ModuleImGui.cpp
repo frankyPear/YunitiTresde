@@ -8,7 +8,7 @@
 #include "ModuleImGui.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
-
+#include "ModuleScene.h"
 
 ModuleImGui::ModuleImGui()
 {
@@ -114,6 +114,10 @@ void ModuleImGui::AboutImgui()
 			ImGui::Text("File: %s", selected_item_);
 			ImGui::Text("FORMAT: %d", format_);
 		}
+		ImGui::Text("CPUs: %i (Cache: %iKB)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+		ImGui::Text("System RAM: %iGB", SDL_GetSystemRAM() / 1000);
+		ImGui::Text("CollissionwithQuadTree: %d", App->scene->imguiCollisionTestQuadtree++);
+		ImGui::Text("CollissionwithoutQuadTree: %d", App->scene->imguiCollisionTest++);
 
 
 		if (ImGui::CollapsingHeader("Camera"))

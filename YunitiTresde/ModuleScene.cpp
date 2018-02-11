@@ -125,7 +125,10 @@ update_status ModuleScene::Update(float dt)
 			ComponentTransform *ct = (ComponentTransform*) cm->LinkedTo()->GetComponent(TRANSFORMATION);
 			box.Translate(ct->GetPosition());
 			bool inter = thecamera->GetFrustum()->Intersects(box);
-			if (inter) 	sceneObjects_[i]->DrawObjectAndChilds();			
+			if (inter) {
+				sceneObjects_[i]->DrawObjectAndChilds();
+				imguiCollisionTest++;
+			}
 		}
 	}	
 

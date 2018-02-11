@@ -1,4 +1,6 @@
 #include "CustomQuadTree.h"
+#include "Application.h"
+#include "ModuleScene.h"
 #include <stack>
 
 using namespace std;
@@ -130,6 +132,7 @@ void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const F
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
 			if (camFrustum.Intersects(newBox)) {
 				toTest.push_back(*it);
+				App->scene->imguiCollisionTestQuadtree++;
 			}
 		}
 	}
@@ -137,6 +140,7 @@ void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const F
 		for (int i = 0; i < 4 && !true; ++i) {
 			if (child_nodes_[i]!=nullptr && camFrustum.Intersects(child_nodes_[i]->box_)) {
 				child_nodes_[i]->NodeIntersect(toTest, camFrustum);
+				App->scene->imguiCollisionTestQuadtree++;
 			}
 		}
 	}
@@ -152,7 +156,10 @@ void CustomQuadTreeNode::ReallocateChilds()
 			if (cm != nullptr && ct != nullptr) {
 				AABB newBox = *(cm->GetBoundingBox());
 				newBox.TransformAsAABB(ct->GetGlobalTransform());
-				if (child_nodes_[i]->box_.Intersects(newBox)) child_nodes_[i]->InsertInNode(*it);
+				if (child_nodes_[i]->box_.Intersects(newBox)) {
+					child_nodes_[i]->InsertInNode(*it);
+					App->scene->imguiCollisionTestQuadtree++;
+				}
 			}
 		}
 		it = objectsInBox_.erase(it);

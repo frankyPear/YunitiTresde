@@ -126,6 +126,7 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 		App->renderer->width_ = ilGetInteger(IL_IMAGE_WIDTH);
 		App->renderer->heigth_ = ilGetInteger(IL_IMAGE_HEIGHT);
 		App->renderer->fileNameImage = (char*)fileName;
+		App->renderer->bytes_ = ilGetInteger(IL_IMAGE_BYTES_PER_PIXEL);
 	}
 	else {
 		ILenum error = ilGetError();

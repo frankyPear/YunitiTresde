@@ -50,7 +50,7 @@ public:
 	void SetAmbientLightning();
 	void SetIdImage(int texID_);
 	void Draw(GameObject *obj);
-	int format_, width_, heigth_, mag_, min_, wraps_, wrapt_ = 0;
+	int format_, width_, heigth_, bytes_,mag_, min_, wraps_, wrapt_ = 0;
 	char* fileNameImage;
 	
 
