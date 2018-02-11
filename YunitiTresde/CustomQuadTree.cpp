@@ -121,12 +121,15 @@ void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const F
 {
 	if (camFrustum.Intersects(box_)) {
 		list<GameObject*>::iterator it;
-		for (it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it)
-			toTest.push_back(*it);	
-		if (!child_nodes_.empty()) {
-			for (int i = 0; i < 4; ++i) {
-				child_nodes_[i]->NodeIntersect(toTest, camFrustum);
+		for (it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it) {
+			bool found = false;
+			for (int i = 0; i < toTest.size(); ++i) {
+				if (toTest[i] == *it) found = true;
 			}
+			if (!found) toTest.push_back(*it);
+		}
+		if (!child_nodes_.empty()) {
+			for (int i = 0; i < 4; ++i) child_nodes_[i]->NodeIntersect(toTest, camFrustum);
 		}
 	}
 
@@ -137,16 +140,23 @@ void CustomQuadTreeNode::ReallocateChilds()
 {
 	list<GameObject*>::iterator it;
 	for (it = objectsInBox_.begin(); it != objectsInBox_.end();){
+		bool boxIntersects[4] ;
 		for (int i = 0; i < 4; ++i) {
 			ComponentMesh* cm = (ComponentMesh*)(*it)->GetComponent(MESH);
 			ComponentTransform* ct = (ComponentTransform*)(*it)->GetComponent(TRANSFORMATION);
 			if (cm != nullptr && ct != nullptr) {
 				AABB newBox = *(cm->GetBoundingBox());
 				newBox.TransformAsAABB(ct->GetGlobalTransform());
-				if (child_nodes_[i]->box_.Intersects(newBox)) child_nodes_[i]->InsertInNode(*it);
+				boxIntersects[i] = (child_nodes_[i]->box_.Intersects(newBox));
 			}
 		}
-		it = objectsInBox_.erase(it);
+		if (boxIntersects[0] && boxIntersects[1] && boxIntersects[2] && boxIntersects[3]) ++it;
+		else {
+			for (int i = 0; i < 4; ++i) {
+				if (boxIntersects[i]) child_nodes_[i]->InsertInNode(*it);
+			}
+			it = objectsInBox_.erase(it);
+		}
 	}
 }
 
