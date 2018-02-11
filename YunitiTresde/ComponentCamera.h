@@ -7,6 +7,7 @@
 class ComponentCamera :
 	public Component
 {
+	friend class ModuleCamera;
 public:
 	ComponentCamera();
 	~ComponentCamera();

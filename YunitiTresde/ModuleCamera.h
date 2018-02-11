@@ -23,9 +23,22 @@ public:
 public:
 	ComponentCamera *dummyCamera;
 
+#pragma region Movement methods
+public:
+	void Look(const float3& position);
 private:
+	void Orbit(float motionX, float motionY);
+	void Zoom(float zoom);
 
+	void CenterOn(const float3 &position, float distance);
+
+#pragma endregion
+private:
+	float _isLooking = true;
+
+	float3 _lookingAt;
 	float camSpeed_;
+	float _zoomSpeed=15;
 	float aspectRatio_;
 };
 

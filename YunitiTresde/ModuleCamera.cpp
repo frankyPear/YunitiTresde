@@ -1,5 +1,4 @@
 #include "ModuleCamera.h"
-
 #include "Application.h"
 #include "ModuleInput.h"
 #include "Glew\include\glew.h"
@@ -14,7 +13,7 @@ ModuleCamera::ModuleCamera()
 
 ModuleCamera::~ModuleCamera()
 {
-
+	RELEASE(dummyCamera);
 }
 
 bool ModuleCamera::Init()
@@ -31,6 +30,76 @@ bool ModuleCamera::CleanUp()
 
 	return ret;
 }
+
+void ModuleCamera::Look(const float3 & position)
+{
+	//dummyCamera->
+}
+
+void ModuleCamera::Orbit(float motionX, float motionY)
+{
+	float3 point = _lookingAt;
+
+	// fake point should be a ray colliding with something
+	if (!_isLooking )
+	{
+		LineSegment picking = dummyCamera->frustum_.UnProjectLineSegment(0.f, 0.f);
+		float distance;
+		//GameObject* hit = App->level->CastRay(picking, distance);
+
+		//if (hit != nullptr)
+		//	point = picking.GetPoint(distance);
+		//else
+		//	point = dummyCamera->frustum_.pos + dummyCamera->frustum_.front * 50.0f;
+
+		_isLooking = true;
+		_lookingAt = point;
+	}
+
+	float3 focus = dummyCamera->frustum_.pos - point;
+
+	Quat qy(dummyCamera->frustum_.up, motionX);
+	Quat qx(dummyCamera->frustum_.WorldRight(), motionY);
+
+	focus = qx.Transform(focus);
+	focus = qy.Transform(focus);
+
+	dummyCamera->frustum_.pos = focus + point;
+
+	Look(point);
+}
+
+void ModuleCamera::Zoom(float zoom)
+{
+	if (_isLooking) {
+
+		float dist = _lookingAt.Distance(dummyCamera->frustum_.pos);
+
+		// Slower on closer distances
+		if (dist < 15.0f)
+			zoom *= 0.5f;
+		if (dist < 7.5f)
+			zoom *= 0.25f;
+		if (dist < 1.0f && zoom > 0)
+			zoom = 0;
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		zoom *= 5.0f;
+
+	float3 p = dummyCamera->frustum_.front * zoom;
+	dummyCamera->frustum_.pos += p;
+
+}
+
+void ModuleCamera::CenterOn(const float3 & position, float distance)
+{
+	float3 v = dummyCamera->frustum_.front.Neg();
+	dummyCamera->frustum_.pos = position + (v * distance);
+	_lookingAt = position;
+	_isLooking = true;
+}
+
 update_status ModuleCamera::PreUpdate(float dt)
 {
 	
@@ -41,6 +110,8 @@ update_status ModuleCamera::Update(float dt)
 {
 	Quat quatOffset = Quat::identity;
 	camSpeed_ = 3.0f*dt;
+
+
 
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) dummyCamera->SetPosition(dummyCamera->GetPosition().Add(float3(0.0f, camSpeed_, 0.0f)));
 
@@ -70,6 +141,13 @@ update_status ModuleCamera::Update(float dt)
 	{
 		quatOffset = quatOffset.Mul(Quat::RotateY(-camSpeed_));
 	}
+
+	int mouseWheel = App->input->GetMouseWheel();
+
+	if (mouseWheel!=0) 
+		Zoom(mouseWheel*_zoomSpeed*dt);
+
+
 	dummyCamera->SetUp(quatOffset.Mul(dummyCamera->GetUp()));
 	dummyCamera->NormalizeUp();
 	dummyCamera->SetFront(quatOffset.Mul(dummyCamera->GetFront()));
