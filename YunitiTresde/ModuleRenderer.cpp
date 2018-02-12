@@ -94,6 +94,9 @@ bool ModuleRenderer::Init() {
 	glFogfv(GL_FOG_COLOR, fogColor);
 	glFogf(GL_FOG_DENSITY, fogDensity_);
 	glHint(GL_FOG_HINT, GL_NICEST);
+	//Set default ambient lightning
+	GLfloat vec4[4] = { 0.5f,0.5f,0.5f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, vec4);
 	//-----
 
 	//Set the camera 
