@@ -9,6 +9,7 @@ class Component
 public:
 	Component();
 	Component(Type componentType);
+	Component(GameObject * gameObject, Type componentType);
 	~Component();
 	bool IsEnabled() const;
 	void Enable();

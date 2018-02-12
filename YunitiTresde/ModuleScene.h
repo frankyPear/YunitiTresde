@@ -31,10 +31,11 @@ public:
 	//Imgui
 	void ShowImguiStatus();
 	void ImGuiMainMenu();
-
-	GameObject* GetRoot();
 	void Hierarchy();
 	void ToggleFrustumAcceleration();
+
+	GameObject* GetRoot();
+	
 	
 	
 public:

@@ -50,5 +50,10 @@ public:
 	GLint actualWrapMode = GL_CLAMP;
 	GLint actualFilterMode = GL_LINEAR;
 
+	GLfloat* width;
+	GLfloat* heigth;
+	GLfloat* selected_item;
+	GLfloat* format;
+
 };
 

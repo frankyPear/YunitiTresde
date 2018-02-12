@@ -32,33 +32,43 @@ bool ModuleScene::Init()
 	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
+
 	object1->AddComponent(cm1);
 	object1->AddComponent(ct1);
 
 	GameObject *object2 = new GameObject();
 	ComponentMesh *cm2 = new ComponentMesh(CUBE);
 	ComponentTransform *ct2 = new ComponentTransform(float3(10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentMaterial *material2 = new ComponentMaterial(object2);
 	object2->AddComponent(cm2);
 	object2->AddComponent(ct2);
+	object2->AddComponent(material2);
+
 
 	GameObject *object3 = new GameObject();
 	ComponentMesh *cm3 = new ComponentMesh(CUBE);
 	ComponentTransform *ct3 = new ComponentTransform(float3(-10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentMaterial *material3 = new ComponentMaterial(object3);
 	object3->AddComponent(cm3);
 	object3->AddComponent(ct3);
+	object3->AddComponent(material3);
 	
 	GameObject *object4 = new GameObject();
 	ComponentMesh *cm4 = new ComponentMesh(CUBE);
 	ComponentTransform *ct4 = new ComponentTransform(float3(10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentMaterial *material4 = new ComponentMaterial(object4);
 	object4->AddComponent(cm4);
-	object4->AddComponent(ct4); 
+	object4->AddComponent(ct4);
+	object4->AddComponent(material4);
 
 	GameObject *object5 = new GameObject();
 	ComponentMesh *cm5 = new ComponentMesh(CUBE);
 	ComponentTransform *ct5 = new ComponentTransform(float3(-10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentMaterial *material5 = new ComponentMaterial(object5);
 	object5->AddComponent(cm5);
 	object5->AddComponent(ct5);
-
+	object5->AddComponent(material5);
+//TODO: Check this Root-> childs, bug with the inspector
 	root->AddChild(object1);
 	root->AddChild(object2);
 	root->AddChild(object3);
@@ -108,6 +118,7 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
+
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
 			quadtree->Clear();
@@ -115,6 +126,7 @@ update_status ModuleScene::Update(float dt)
 			limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
 			quadtree->Create(limits);
 			for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+
 		}
 		quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 		for (int i = 0; i < objectToDraw_.size(); i++)
@@ -124,7 +136,8 @@ update_status ModuleScene::Update(float dt)
 		quadtree->DrawBox();
 		objectToDraw_.clear();
 	}
-	else {
+	else 
+  {
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
 			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
@@ -134,7 +147,19 @@ update_status ModuleScene::Update(float dt)
 				newBox.TransformAsAABB(ct->GetGlobalTransform());
 				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
 			}
-		}
+    }
+
+	//IMGUI
+Hierarchy();
+    
+return UPDATE_CONTINUE;
+}
+
+update_status ModuleScene::PostUpdate(float dt)
+{
+	if (imguiFlag == SDL_SCANCODE_ESCAPE)
+	{
+		return UPDATE_STOP;
 	}
 	return UPDATE_CONTINUE;
 }
@@ -145,31 +170,35 @@ update_status ModuleScene::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleScene::ShowImguiStatus() {
-
+void ModuleScene::ShowImguiStatus()
+{
 	ImGui::Begin("Scene Manager");
 	if (ImGui::CollapsingHeader("GameObjects"))
 	{
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
-			ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-			if (ct != nullptr)
-			{
-				ct->OnEditor();
-				ct->Update();
-
-			}
-		}
-		for (int i = 0; i < sceneObjects_.size(); i++)
-		{
-			ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-			if (cm != nullptr)
-			{
+			if (sceneObjects_[i]->isSelected)
+      {
+		  	ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+		  	if (ct != nullptr)
+			  {
+				  ct->OnEditor();
+				  ct->Update();
+			  }
+			  ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+		  	if (cm != nullptr)
+			  {
 				cm->OnEditor();
+				}
+				ComponentMaterial *cmat = (ComponentMaterial*)sceneObjects_[i]->GetComponent(MATERIAL);
+				if (cmat != nullptr)
+				{
+					cmat->OnEditor();
+				}
 			}
 		}
-	}
-	if (ImGui::CollapsingHeader("Settings"))
+	
+  if (ImGui::CollapsingHeader("Settings"))
 	{
 		App->window->WindowImGui();
 		App->renderer->ConfigurationManager();
@@ -185,10 +214,91 @@ void ModuleScene::ImGuiMainMenu()
 	ImGui::BeginMainMenuBar();
 	if (ImGui::MenuItem("New"))
 	{
-		ImGui::Text("Game Object");
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::BeginMenu("New"))
+			{
+				if (ImGui::Button("Game Object"))
+			
+					ImGui::OpenPopup("New Game Object");
+				
+				if (ImGui::BeginPopupModal("New Game Object", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+				{
+				
+					GameObject *object = new GameObject();
+					static bool cm;
+					static bool cam;
+					static bool cmaterial;
+					float pos[3] = {0,0,0};
+					ImGui::Text("Hey there, you are creating an object");
+					ImGui::Separator();
+					ImGui::Text("What components do you want to add to your game object?");
+					if (ImGui::Checkbox("Component mesh", &cm));
+					if (ImGui::Checkbox("Component camera", &cam));
+					if (ImGui::Checkbox("Component material", &cmaterial));
+					if (ImGui::InputFloat3("Position (Comming soon...)", (float*)pos, 2));
+					if (ImGui::Button("Create", ImVec2(120, 0)))
+					{ 
+						ImGui::CloseCurrentPopup();
+						CreateGameObject(object, cm, cam);
+					}
+					ImGui::SameLine();
+					if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+					
+					ImGui::EndPopup();
+				}
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Open"))
+			{
+				ImGui::MenuItem("Empty");
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Save"))
+			{
+				ImGui::MenuItem("Empty");
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Load"))
+			{
+				ImGui::MenuItem("Empty");
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::MenuItem("Exit"))
+			{
+				imguiFlag = SDL_SCANCODE_ESCAPE;
+			}
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::MenuItem("Options"))
+		{
+
+		}
+		ImGui::EndMainMenuBar();
+	}
+}
+
 
 	}
-	ImGui::EndMainMenuBar();
+
+	if (boolcam)
+	{
+		ComponentCamera* CAM = new ComponentCamera();
+		obj->AddComponent(CAM);
+	}
+	
+	ComponentTransform *ct = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	obj->AddComponent(ct);
+
+	ComponentMaterial *cmat = new ComponentMaterial(obj);
+	obj->AddComponent(cmat);
+
+	sceneObjects_.push_back(obj);
 }
 
 void ModuleScene::ToggleFrustumAcceleration()

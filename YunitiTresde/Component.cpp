@@ -1,7 +1,5 @@
 #include "Component.h"
 
-
-
 Component::Component()
 {
 }
@@ -9,6 +7,9 @@ Component::Component()
 Component::Component(Type componentType) : type(componentType),  enabled(true), to_be_destroyed(false)
 {
 }
+Component::Component(GameObject * gameObject, Type componentType) : type(componentType), enabled(true), to_be_destroyed(false), linked_to(false)
+{}
+
 
 
 Component::~Component()
