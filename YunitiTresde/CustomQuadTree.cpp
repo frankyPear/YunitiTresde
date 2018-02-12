@@ -1,6 +1,7 @@
 #include "CustomQuadTree.h"
 #include "Application.h"
 #include "ModuleScene.h"
+#include "Brofiler\include\Brofiler.h"
 #include <stack>
 
 using namespace std;
@@ -123,7 +124,7 @@ void CustomQuadTreeNode::EliminateNode(GameObject* toEliminate)
 
 void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum) 
 {
-
+	BROFILER_CATEGORY("NodeInterSect", Profiler::Color::Red);
 	for (list<GameObject*>::iterator it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it) {
 		ComponentMesh* cm = (ComponentMesh*)(*it)->GetComponent(MESH);
 		ComponentTransform* ct = (ComponentTransform*)(*it)->GetComponent(TRANSFORMATION);

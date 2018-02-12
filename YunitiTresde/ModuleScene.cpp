@@ -8,6 +8,7 @@
 #include "ModuleImGui.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 
+#include "Brofiler/include/Brofiler.h"
 
 #include "GameObject.h"
 #include "ComponentMesh.h"
@@ -109,6 +110,7 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
 	ComponentCamera *thecamera = (ComponentCamera*)sceneObjects_[0]->GetComponent(CAMERA);
 	if (thecamera != nullptr) thecamera->Update();
 	ComponentMesh * cmorig = (ComponentMesh*)sceneObjects_[0]->GetComponent(MESH);
@@ -126,6 +128,7 @@ update_status ModuleScene::Update(float dt)
 			box.Translate(ct->GetPosition());
 			bool inter = thecamera->GetFrustum()->Intersects(box);
 			if (inter) {
+				BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Blue);
 				sceneObjects_[i]->DrawObjectAndChilds();
 				imguiCollisionTest++;
 			}

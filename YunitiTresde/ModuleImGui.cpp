@@ -4,12 +4,13 @@
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
-#include "Brofiler/include/Brofiler.h"
+
 #include "Application.h"
 #include "ModuleImGui.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleScene.h"
+#include "Brofiler/include/Brofiler.h"
 #pragma comment( lib, "Brofiler/libx86/ProfilerCore32.lib")
 
 ModuleImGui::ModuleImGui()
@@ -116,6 +117,7 @@ void ModuleImGui::AboutImgui()
 			ImGui::Text("File: %s", selected_item_);
 			ImGui::Text("FORMAT: %d", format_);
 		}
+		BROFILER_FRAME("ThreadImguiStatus");
 		BROFILER_CATEGORY("CHECK STATUS", Profiler::Color::GreenYellow);
 		ImGui::Text("CPUs: %i (Cache: %iKB)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
 		ImGui::Text("System RAM: %iGB", SDL_GetSystemRAM() / 1000);
