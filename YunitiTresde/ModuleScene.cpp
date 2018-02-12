@@ -132,25 +132,8 @@ update_status ModuleScene::Update(float dt)
 			bool inter = thecamera->GetFrustum()->Intersects(box);
 			if (inter) 	sceneObjects_[i]->DrawObjectAndChilds();			
 		}
-		quadtree->DrawBox();
-		objectToDraw_.clear();
-	}
-	else
-	{
-		for (int i = 0; i < sceneObjects_.size(); i++)
-		{
-			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-			if (cm != nullptr && ct != nullptr)
-      {
-				AABB newBox = *(cm->GetBoundingBox());
-				newBox.TransformAsAABB(ct->GetGlobalTransform());
-				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
-			}
-		}
+	}	
 
-
-	}
 	//IMGUI
 Hierarchy();
 	
@@ -158,7 +141,14 @@ Hierarchy();
 	return UPDATE_CONTINUE;
 }
 
-
+update_status ModuleScene::PostUpdate(float dt)
+{
+	if (imguiFlag == SDL_SCANCODE_ESCAPE)
+	{
+		return UPDATE_STOP;
+	}
+	return UPDATE_CONTINUE;
+}
 
 void ModuleScene::Hierarchy()
 {
@@ -185,7 +175,6 @@ void ModuleScene::Hierarchy()
 
 	ImGui::End();
 }
-
 
 void ModuleScene::ShowImguiStatus() {
 	ImGui::SetNextWindowPos(ImVec2(App->window->GetWidth()-300, 20));
@@ -316,7 +305,7 @@ void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
 		ComponentCamera* CAM = new ComponentCamera();
 		obj->AddComponent(CAM);
 	}
-
+	
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	obj->AddComponent(ct);
 
