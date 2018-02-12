@@ -199,10 +199,9 @@ void Cube::DrawElementQuadTexturized(GLuint textureID)
 
 void DrawElementPlane()
 {
-	float size = 25.0f;
-	float step = 0.5f; // Space between squares
-
-	glDisable(GL_LIGHTING);
+	float size =100.0f;
+	float step = 1.5f; // Space between squares
+	
 
 	glBegin(GL_LINES);
 
@@ -233,8 +232,6 @@ void DrawElementPlane()
 
 	glEnd();
 
-
-	glEnable(GL_LIGHTING);
 	glColor3f(1, 1, 1);
 }
 
