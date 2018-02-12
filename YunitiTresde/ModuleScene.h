@@ -31,6 +31,8 @@ public:
 	void ShowImguiStatus();
 	void ImGuiMainMenu();
 	void Hierarchy();
+	void ToggleFrustumAcceleration();
+	void CreateGameObject(GameObject* obj, bool boolcm, bool boolcam);
 	GameObject* GetRoot();
 	
 
@@ -44,7 +46,13 @@ public:
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;
+
+	CustomQuadTree* quadtree = nullptr;
+	AABB limits;
+	uint imguiFlag;
+
 	Quadtree* tree = nullptr;
+
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
