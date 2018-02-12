@@ -22,6 +22,7 @@ public:
 	void NodeIntersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum);
 	void ReallocateChilds();
 	void DivideBox();
+	void DrawNodeBox();
 
 public:
 	CustomQuadTreeNode* parent_ = nullptr;
@@ -36,11 +37,12 @@ public:
 	CustomQuadTree();
 	~CustomQuadTree();
 
-	void Create(AABB limits);
+	void Create(AABB& limits);
 	void Clear();
 	void Insert(GameObject *newAddition);
 	void Remove(GameObject *toRemove);
 	void Intersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum);
+	void DrawBox();
 
 public:
 	CustomQuadTreeNode* root_ = nullptr;

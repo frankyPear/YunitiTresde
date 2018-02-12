@@ -3,7 +3,10 @@
 
 #include "Module.h"
 #include "ComponentCamera.h"
+#include "CustomQuadTree.h"
 #include <vector>
+
+#define BOX_SIZE 20.0f
 
 class GameObject;
 class Mesh;
@@ -24,35 +27,36 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
-	//Create
-	void CreateGameObject(GameObject* obj, bool boolcm = false, bool boolcam=false);
 
 	//Imgui
 	void ShowImguiStatus();
 	void ImGuiMainMenu();
 	void Hierarchy();
+	void ToggleFrustumAcceleration();
+
 	GameObject* GetRoot();
 	
-
 	
 	
 public:
-	bool recalcTree = false;
+	bool recreateQuadTree = false;
 	ComponentCamera *actualCamera = nullptr;
-	uint imguiFlag = 0;
 
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;
-	Quadtree* tree = nullptr;
+	CustomQuadTree* quadtree = nullptr;
+	AABB limits;
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
+	bool accelerateFrustumCulling = true;
 	std::string loadPath;
 
 	Timer saveLoadTimer;
 	std::vector<GameObject*> sceneObjects_;
-	
+	std::vector<GameObject*> objectToDraw_;
+
 };
 
 #endif
