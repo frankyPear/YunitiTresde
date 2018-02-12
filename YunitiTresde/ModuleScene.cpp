@@ -136,8 +136,8 @@ update_status ModuleScene::Update(float dt)
 		quadtree->DrawBox();
 		objectToDraw_.clear();
 	}
-	else 
-  {
+	else
+	{
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
 			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
@@ -147,22 +147,16 @@ update_status ModuleScene::Update(float dt)
 				newBox.TransformAsAABB(ct->GetGlobalTransform());
 				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
 			}
-    }
+		}
 
+	}
 	//IMGUI
 Hierarchy();
     
 return UPDATE_CONTINUE;
 }
 
-update_status ModuleScene::PostUpdate(float dt)
-{
-	if (imguiFlag == SDL_SCANCODE_ESCAPE)
-	{
-		return UPDATE_STOP;
-	}
-	return UPDATE_CONTINUE;
-}
+
 
 update_status ModuleScene::PostUpdate(float dt)
 {
@@ -172,126 +166,132 @@ update_status ModuleScene::PostUpdate(float dt)
 
 void ModuleScene::ShowImguiStatus()
 {
-	ImGui::Begin("Scene Manager");
-	if (ImGui::CollapsingHeader("GameObjects"))
-	{
-		for (int i = 0; i < sceneObjects_.size(); i++)
-		{
-			if (sceneObjects_[i]->isSelected)
-      {
-		  	ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-		  	if (ct != nullptr)
-			  {
-				  ct->OnEditor();
-				  ct->Update();
-			  }
-			  ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-		  	if (cm != nullptr)
-			  {
-				cm->OnEditor();
-				}
-				ComponentMaterial *cmat = (ComponentMaterial*)sceneObjects_[i]->GetComponent(MATERIAL);
-				if (cmat != nullptr)
-				{
-					cmat->OnEditor();
-				}
-			}
-		}
-	
-  if (ImGui::CollapsingHeader("Settings"))
-	{
-		App->window->WindowImGui();
-		App->renderer->ConfigurationManager();
-	}
-	//TODO: COLOR PICKER FOR AMBIENT LIGHT
-	ImGui::End();
+	//ImGui::Begin("Scene Manager");
+	//if (ImGui::CollapsingHeader("GameObjects"))
+	//{
+	//	for (int i = 0; i < sceneObjects_.size(); i++)
+	//	{
+	//		if (sceneObjects_[i]->isSelected)
+	//		{
+	//			ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+	//			if (ct != nullptr)
+	//			{
+	//				ct->OnEditor();
+	//				ct->Update();
+	//			}
+	//			ComponentMesh *cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+	//			if (cm != nullptr)
+	//			{
+	//				cm->OnEditor();
+	//			}
+	//			ComponentMaterial *cmat = (ComponentMaterial*)sceneObjects_[i]->GetComponent(MATERIAL);
+	//			if (cmat != nullptr)
+	//			{
+	//				cmat->OnEditor();
+	//			}
+	//		}
+	//	}
 
+	//	if (ImGui::CollapsingHeader("Settings"))
+	//	{
+	//		App->window->WindowImGui();
+	//		App->renderer->ConfigurationManager();
+	//	}
+	//	//TODO: COLOR PICKER FOR AMBIENT LIGHT
+	//	ImGui::End();
+
+	//}
 }
 
 void ModuleScene::ImGuiMainMenu()
 {
-	bool text = false;
-	ImGui::BeginMainMenuBar();
-	if (ImGui::MenuItem("New"))
-	{
-		if (ImGui::BeginMenu("File"))
-		{
-			if (ImGui::BeginMenu("New"))
-			{
-				if (ImGui::Button("Game Object"))
-			
-					ImGui::OpenPopup("New Game Object");
-				
-				if (ImGui::BeginPopupModal("New Game Object", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-				{
-				
-					GameObject *object = new GameObject();
-					static bool cm;
-					static bool cam;
-					static bool cmaterial;
-					float pos[3] = {0,0,0};
-					ImGui::Text("Hey there, you are creating an object");
-					ImGui::Separator();
-					ImGui::Text("What components do you want to add to your game object?");
-					if (ImGui::Checkbox("Component mesh", &cm));
-					if (ImGui::Checkbox("Component camera", &cam));
-					if (ImGui::Checkbox("Component material", &cmaterial));
-					if (ImGui::InputFloat3("Position (Comming soon...)", (float*)pos, 2));
-					if (ImGui::Button("Create", ImVec2(120, 0)))
-					{ 
-						ImGui::CloseCurrentPopup();
-						CreateGameObject(object, cm, cam);
-					}
-					ImGui::SameLine();
-					if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-					
-					ImGui::EndPopup();
-				}
+	//bool text = false;
+	//ImGui::BeginMainMenuBar();
+	//if (ImGui::MenuItem("New"))
+	//{
+	//	if (ImGui::BeginMenu("File"))
+	//	{
+	//		if (ImGui::BeginMenu("New"))
+	//		{
+	//			if (ImGui::Button("Game Object"))
+	//		
+	//				ImGui::OpenPopup("New Game Object");
+	//			
+	//			if (ImGui::BeginPopupModal("New Game Object", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+	//			{
+	//			
+	//				GameObject *object = new GameObject();
+	//				static bool cm;
+	//				static bool cam;
+	//				static bool cmaterial;
+	//				float pos[3] = {0,0,0};
+	//				ImGui::Text("Hey there, you are creating an object");
+	//				ImGui::Separator();
+	//				ImGui::Text("What components do you want to add to your game object?");
+	//				if (ImGui::Checkbox("Component mesh", &cm));
+	//				if (ImGui::Checkbox("Component camera", &cam));
+	//				if (ImGui::Checkbox("Component material", &cmaterial));
+	//				if (ImGui::InputFloat3("Position (Comming soon...)", (float*)pos, 2));
+	//				if (ImGui::Button("Create", ImVec2(120, 0)))
+	//				{ 
+	//					ImGui::CloseCurrentPopup();
+	//					CreateGameObject(object, cm, cam);
+	//				}
+	//				ImGui::SameLine();
+	//				if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+	//				
+	//				ImGui::EndPopup();
+	//			}
 
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Open"))
-			{
-				ImGui::MenuItem("Empty");
+	//			ImGui::EndMenu();
+	//		}
+	//		if (ImGui::BeginMenu("Open"))
+	//		{
+	//			ImGui::MenuItem("Empty");
 
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Save"))
-			{
-				ImGui::MenuItem("Empty");
+	//			ImGui::EndMenu();
+	//		}
+	//		if (ImGui::BeginMenu("Save"))
+	//		{
+	//			ImGui::MenuItem("Empty");
 
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Load"))
-			{
-				ImGui::MenuItem("Empty");
+	//			ImGui::EndMenu();
+	//		}
+	//		if (ImGui::BeginMenu("Load"))
+	//		{
+	//			ImGui::MenuItem("Empty");
 
-				ImGui::EndMenu();
-			}
-			if (ImGui::MenuItem("Exit"))
-			{
-				imguiFlag = SDL_SCANCODE_ESCAPE;
-			}
+	//			ImGui::EndMenu();
+	//		}
+	//		if (ImGui::MenuItem("Exit"))
+	//		{
+	//			imguiFlag = SDL_SCANCODE_ESCAPE;
+	//		}
 
-			ImGui::EndMenu();
-		}
-		if (ImGui::MenuItem("Options"))
-		{
+	//		ImGui::EndMenu();
+	//	}
+	//	if (ImGui::MenuItem("Options"))
+	//	{
 
-		}
-		ImGui::EndMainMenuBar();
-	}
+	//	}
+	//	ImGui::EndMainMenuBar();
+	//}
 }
 
 
+void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
+{
+	if (boolcm)
+	{
+		ComponentMesh* CM = new ComponentMesh(CUBE);
+		obj->AddComponent(CM);
 	}
-
 	if (boolcam)
 	{
 		ComponentCamera* CAM = new ComponentCamera();
 		obj->AddComponent(CAM);
 	}
-	
+
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	obj->AddComponent(ct);
 

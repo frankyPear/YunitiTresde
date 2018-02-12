@@ -33,7 +33,7 @@ public:
 	void ImGuiMainMenu();
 	void Hierarchy();
 	void ToggleFrustumAcceleration();
-
+	void CreateGameObject(GameObject* obj, bool boolcm, bool boolcam);
 	GameObject* GetRoot();
 	
 	
@@ -47,7 +47,7 @@ private:
 	GameObject* selected = nullptr;
 	CustomQuadTree* quadtree = nullptr;
 	AABB limits;
-
+	uint imguiFlag;
 	bool wantToSave = false;
 	bool wantToLoad = false;
 	bool accelerateFrustumCulling = true;
