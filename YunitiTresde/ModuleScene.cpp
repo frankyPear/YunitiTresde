@@ -100,6 +100,8 @@ bool ModuleScene::Start()
 	quadtree = new CustomQuadTree();
 	quadtree->Create(limits);
 	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+	
+	//This should be ONLY in the Update?
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 	return true;
 }
