@@ -367,8 +367,9 @@ void ModuleScene::CreateRay(float2 normalizedPoint)
 	Ray ray = Ray(ls);
 	LOG("Entered click and casted ray");
 	std::vector<GameObject*> intersections;
-	std::vector<GameObject*> objectlist = (accelerateFrustumCulling? objectToDraw_: sceneObjects_ );
-
+	std::vector<GameObject*> objectlist;
+	if (accelerateFrustumCulling) quadtree->Intersect(objectlist, *(actualCamera->GetFrustum()));
+	else objectlist = sceneObjects_;
 	// Check AABB's ONLY
 	for (int i = 0; i < objectlist.size(); ++i)
 	{
@@ -377,7 +378,10 @@ void ModuleScene::CreateRay(float2 normalizedPoint)
 		if (cm != nullptr && ct != nullptr) {
 			AABB newBox = *(cm->GetBoundingBox());
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
-			if (ray.Intersects(newBox)) intersections.push_back(objectlist[i]);
+			if (ray.Intersects(newBox)) {
+				intersections.push_back(objectlist[i]);
+				LOG("Ray intersected");
+			}
 		}
 	}
 
