@@ -3,7 +3,7 @@
 #include "ModuleInput.h"
 #include "Glew\include\glew.h"
 #include "Mathgeolib\include\Math\MathAll.h"
-
+#include <iostream>
 
 ModuleCamera::ModuleCamera()
 {
@@ -176,7 +176,14 @@ update_status ModuleCamera::Update(float dt)
 		LookAt(dx, dy);
 
 	}
-
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+		const iPoint &mousePosition = App->input->GetMouseMotion();
+		float2 point = float2( mousePosition.x,SCREEN_HEIGHT - mousePosition.y );
+		dummyCamera->GetFrustum()->ScreenToViewportSpace(point, SCREEN_WIDTH,SCREEN_HEIGHT);
+		LineSegment ls = dummyCamera->GetFrustum()->UnProjectLineSegment(point.x,point.y );
+		Ray ray = Ray(ls);
+		LOG("Entered click and casted ray");
+	}
 
 
 
