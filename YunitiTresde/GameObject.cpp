@@ -216,3 +216,17 @@ void GameObject::DrawObjectAndChilds()
 	App->renderer->Draw(this);
 	for (int i = 0; i < _childs.size(); ++i) _childs[i]->DrawObjectAndChilds();
 }
+
+
+bool GameObject::CheckRayIntersection(Ray r, float &distance)
+{
+	ComponentMesh *cm = (ComponentMesh *)GetComponent(MESH);
+	ComponentTransform* ct = (ComponentTransform*)GetComponent(TRANSFORMATION);
+	if (cm != nullptr && ct != nullptr) {
+		AABB newBox = *(cm->GetBoundingBox());
+		newBox.TransformAsAABB(ct->GetGlobalTransform());
+		r.Transform(ct->GetGlobalTransform());
+		return cm->CheckRayIntersectsMesh(r, distance);
+	}
+	return -1.0f;
+}

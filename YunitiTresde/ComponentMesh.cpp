@@ -140,3 +140,9 @@ AABB* ComponentMesh::GetBoundingBox() const {
 	}
 	return res;
 }
+
+bool ComponentMesh::CheckRayIntersectsMesh(Ray r, float &distance)
+{
+	// Iterate through vector, make TRIANGLE (class in mathgeolib), check each triangle with ray
+	// (coordinates already transformed) return true if intersects and modify distance parameter with the distance.
+}

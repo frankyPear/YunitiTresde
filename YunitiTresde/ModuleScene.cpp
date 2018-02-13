@@ -360,24 +360,31 @@ void ModuleScene::ToggleFrustumAcceleration()
 }
 
 
-void ModuleScene::CreateRay(float2 screenPoint)
+void ModuleScene::CreateRay(float2 normalizedPoint)
 {
-	actualCamera->GetFrustum()->ScreenToViewportSpace(screenPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
-	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(screenPoint.x, screenPoint.y);
+	actualCamera->GetFrustum()->ScreenToViewportSpace(normalizedPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
+	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
 	Ray ray = Ray(ls);
 	LOG("Entered click and casted ray");
 	std::vector<GameObject*> intersections;
 	std::vector<GameObject*> objectlist = (accelerateFrustumCulling? objectToDraw_: sceneObjects_ );
 
-	for (int i = 0; i < sceneObjects_.size(); ++i) 
+	// Check AABB's ONLY
+	for (int i = 0; i < objectlist.size(); ++i)
 	{
-		ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-		ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+		ComponentMesh* cm = (ComponentMesh*)objectlist[i]->GetComponent(MESH);
+		ComponentTransform* ct = (ComponentTransform*)objectlist[i]->GetComponent(TRANSFORMATION);
 		if (cm != nullptr && ct != nullptr) {
 			AABB newBox = *(cm->GetBoundingBox());
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
-			if (ray.Intersects(newBox)) intersections.push_back(sceneObjects_[i]);
+			if (ray.Intersects(newBox)) intersections.push_back(objectlist[i]);
 		}
 	}
 
+	// Check TRIANGLES, this is the one we need implemented.
+	for (int i = 0; i < objectlist.size(); ++i) 
+	{
+			// if (GameObject->CheckRayIntersection)
+		
+	}
 }
