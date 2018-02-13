@@ -94,6 +94,9 @@ bool ModuleRenderer::Init() {
 	glFogfv(GL_FOG_COLOR, fogColor);
 	glFogf(GL_FOG_DENSITY, fogDensity_);
 	glHint(GL_FOG_HINT, GL_NICEST);
+	//Set default ambient lightning
+	GLfloat vec4[4] = { 0.5f,0.5f,0.5f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, vec4);
 	//-----
 
 	//Set the camera 
@@ -316,42 +319,71 @@ void ModuleRenderer::Draw(GameObject *obj) {
 
 				glColor3f(1.0f, .0f, .0f);
 
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glLineWidth((GLfloat)5.0f);
 
-				glBegin(GL_QUADS);
+				glBegin(GL_LINES);
 
 				//TODO: improve this function
+				/*
+				11
+				2------------6
+				7     / |  3       / |   6
+				3------------7   |
+				|   |        |   |10
+				|12 |        |2  |
+				4 |   |     9  |   |
+				|   0------------4
+				| / 8        | /   5
+				1------------5
+				1
+				Near square (1,2,3,4)
+				Diagonals(5,6,7,8)
+				Far square(9,10,11,12)
+				*/
+
+				//1
 				glVertex3fv((GLfloat*)&corners[1]);
 				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[7]);
-				glVertex3fv((GLfloat*)&corners[3]);
-
-				glVertex3fv((GLfloat*)&corners[4]);
-				glVertex3fv((GLfloat*)&corners[0]);
-				glVertex3fv((GLfloat*)&corners[2]);
-				glVertex3fv((GLfloat*)&corners[6]);
-
+				//2
 				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[4]);
-				glVertex3fv((GLfloat*)&corners[6]);
 				glVertex3fv((GLfloat*)&corners[7]);
-
-				glVertex3fv((GLfloat*)&corners[0]);
+				//3
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				//4
 				glVertex3fv((GLfloat*)&corners[1]);
 				glVertex3fv((GLfloat*)&corners[3]);
-				glVertex3fv((GLfloat*)&corners[2]);
-
-				glVertex3fv((GLfloat*)&corners[3]);
+				//5
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				//6
 				glVertex3fv((GLfloat*)&corners[7]);
 				glVertex3fv((GLfloat*)&corners[6]);
+				//7
+				glVertex3fv((GLfloat*)&corners[3]);
 				glVertex3fv((GLfloat*)&corners[2]);
-
+				//8
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[0]);
+				//9
 				glVertex3fv((GLfloat*)&corners[0]);
 				glVertex3fv((GLfloat*)&corners[4]);
-				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[1]);
+				//10
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				//11
+				glVertex3fv((GLfloat*)&corners[2]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				//12
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[2]);
+
+
 
 				glEnd();
+				glLineWidth((GLfloat)1.0f);
+				glColor3f(1.0f, 1.0f, 1.0f);
+
 
 			}
 		//---------------------
@@ -368,42 +400,70 @@ void ModuleRenderer::Draw(GameObject *obj) {
 
 				glColor3f(1.0f, .0f, .0f);
 
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glLineWidth((GLfloat)3.0f);
 
-				glBegin(GL_QUADS);
+				glBegin(GL_LINES);
 
 				//TODO: improve this function
+				/*
+				           11
+				     2------------6
+			 7     / |  3       / |   6
+				 3------------7   |
+				 |   |        |   |10
+				 |12 |        |2  |
+			   4 |   |     9  |   |
+				 |   0------------4
+				 | / 8        | /   5
+				 1------------5 
+						1
+						Near square (1,2,3,4)
+						Diagonals(5,6,7,8)
+						Far square(9,10,11,12)
+				*/
+
+				//1
 				glVertex3fv((GLfloat*)&corners[1]);
 				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[7]);
-				glVertex3fv((GLfloat*)&corners[3]);
-
-				glVertex3fv((GLfloat*)&corners[4]);
-				glVertex3fv((GLfloat*)&corners[0]);
-				glVertex3fv((GLfloat*)&corners[2]);
-				glVertex3fv((GLfloat*)&corners[6]);
-
+				//2
 				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[4]);
-				glVertex3fv((GLfloat*)&corners[6]);
 				glVertex3fv((GLfloat*)&corners[7]);
-
-				glVertex3fv((GLfloat*)&corners[0]);
+				//3
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				//4
 				glVertex3fv((GLfloat*)&corners[1]);
 				glVertex3fv((GLfloat*)&corners[3]);
-				glVertex3fv((GLfloat*)&corners[2]);
-
-				glVertex3fv((GLfloat*)&corners[3]);
+				//5
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				//6
 				glVertex3fv((GLfloat*)&corners[7]);
 				glVertex3fv((GLfloat*)&corners[6]);
+				//7
+				glVertex3fv((GLfloat*)&corners[3]);
 				glVertex3fv((GLfloat*)&corners[2]);
-
+				//8
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[0]);
+				//9
 				glVertex3fv((GLfloat*)&corners[0]);
 				glVertex3fv((GLfloat*)&corners[4]);
-				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[1]);
+				//10
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				//11
+				glVertex3fv((GLfloat*)&corners[2]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				//12
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[2]);
+
+
 
 				glEnd();
+				glLineWidth((GLfloat)1.0f);
+				glColor3f(1.0f, 1.0f, 1.0f);
 
 			}
 

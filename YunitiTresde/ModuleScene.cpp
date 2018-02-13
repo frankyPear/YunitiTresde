@@ -17,6 +17,8 @@
 #include "ComponentCamera.h"
 #include "ModuleCamera.h"
 
+#define BOX_SIZE 20.0f
+
 ModuleScene::ModuleScene()
 {
 }
@@ -93,6 +95,13 @@ bool ModuleScene::Init()
 
 bool ModuleScene::Start()
 {
+	limits = AABB();
+	limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+	limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
+	quadtree = new CustomQuadTree();
+	quadtree->Create(limits);
+	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 	return true;
 }
 
@@ -111,29 +120,35 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-	ComponentCamera *thecamera = (ComponentCamera*)sceneObjects_[0]->GetComponent(CAMERA);
-	if (thecamera != nullptr) thecamera->Update();
-	ComponentMesh * cmorig = (ComponentMesh*)sceneObjects_[0]->GetComponent(MESH);
-	for (int i = 0; i < sceneObjects_.size(); i++)
-	{
-		ComponentMesh * cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
 
-		if (cmorig == cm) {
-			sceneObjects_[i]->DrawObjectAndChilds();
+	if (accelerateFrustumCulling) {
+		if (recreateQuadTree) {
+			quadtree->Clear();
+			limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+			limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
+			quadtree->Create(limits);
+			for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
 		}
-
-		else {
-			AABB box = *cm->GetBoundingBox();
-			ComponentTransform *ct = (ComponentTransform*) cm->LinkedTo()->GetComponent(TRANSFORMATION);
-			box.Translate(ct->GetPosition());
-			bool inter = thecamera->GetFrustum()->Intersects(box);
-			if (inter) {
-				BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Blue);
-				sceneObjects_[i]->DrawObjectAndChilds();
-				imguiCollisionTest++;
+		quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
+		for (int i = 0; i < objectToDraw_.size(); i++)
+		{
+			objectToDraw_[i]->DrawObjectAndChilds();
+		}
+		quadtree->DrawBox();
+		objectToDraw_.clear();
+	}
+	else {
+		for (int i = 0; i < sceneObjects_.size(); i++)
+		{
+			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+			if (cm != nullptr && ct != nullptr) {
+				AABB newBox = *(cm->GetBoundingBox());
+				newBox.TransformAsAABB(ct->GetGlobalTransform());
+				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
 			}
 		}
-	}	
+}
 
 	//IMGUI
 Hierarchy();
@@ -324,3 +339,8 @@ if (ImGui::TreeNode((void*)(intptr_t)i, "Child %d", i + 1));
 }
 ImGui::TreePop();
 }*/
+
+void ModuleScene::ToggleFrustumAcceleration()
+{
+	accelerateFrustumCulling != accelerateFrustumCulling;
+}
