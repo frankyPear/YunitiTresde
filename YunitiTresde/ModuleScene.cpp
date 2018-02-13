@@ -366,4 +366,18 @@ void ModuleScene::CreateRay(float2 screenPoint)
 	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(screenPoint.x, screenPoint.y);
 	Ray ray = Ray(ls);
 	LOG("Entered click and casted ray");
+	std::vector<GameObject*> intersections;
+	std::vector<GameObject*> objectlist = (accelerateFrustumCulling? objectToDraw_: sceneObjects_ );
+
+	for (int i = 0; i < sceneObjects_.size(); ++i) 
+	{
+		ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+		ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+		if (cm != nullptr && ct != nullptr) {
+			AABB newBox = *(cm->GetBoundingBox());
+			newBox.TransformAsAABB(ct->GetGlobalTransform());
+			if (ray.Intersects(newBox)) intersections.push_back(sceneObjects_[i]);
+		}
+	}
+
 }
