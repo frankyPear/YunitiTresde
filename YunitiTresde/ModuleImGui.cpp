@@ -121,8 +121,8 @@ void ModuleImGui::AboutImgui()
 		BROFILER_CATEGORY("CHECK STATUS", Profiler::Color::GreenYellow);
 		ImGui::Text("CPUs: %i (Cache: %iKB)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
 		ImGui::Text("System RAM: %iGB", SDL_GetSystemRAM() / 1000);
-		ImGui::Text("CollissionwithQuadTree: %d", App->scene->imguiCollisionTestQuadtree++);
-		ImGui::Text("CollissionwithoutQuadTree: %d", App->scene->imguiCollisionTest++);
+		//ImGui::Text("CollissionwithQuadTree: %d", App->scene->imguiCollisionTestQuadtree++);
+		//ImGui::Text("CollissionwithoutQuadTree: %d", App->scene->imguiCollisionTest++);
 
 
 		if (ImGui::CollapsingHeader("Camera"))
