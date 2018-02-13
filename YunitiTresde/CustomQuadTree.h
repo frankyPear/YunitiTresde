@@ -7,7 +7,7 @@
 #include <list>
 
 #define MINIMUM_BOX_SIZE 1
-#define MAX_OBJECTS_IN_NODE 4
+#define MAX_OBJECTS_IN_NODE 1
 
 class CustomQuadTreeNode {
 public:

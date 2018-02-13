@@ -35,13 +35,27 @@ bool ModuleScene::Init()
 	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
-
-	ComponentCamera *camera = new ComponentCamera();
-
 	object1->AddComponent(cm1);
 	object1->AddComponent(ct1);
-	object1->AddComponent(camera);
-
+	root->AddChild(object1);
+	sceneObjects_.push_back(object1);
+	float offset = -2.0f;
+	float xoff[16] = {20,20,0,-20,0,-20,-20,20, 0 ,10,-10,0,};
+	float zoff[16] = {20,0,20,-20,-20,0,20,-20, 10, 0, 0,-10};
+  	for (int i = 0; i < 12; ++i) 
+	{
+		GameObject *object = new GameObject();
+		ComponentMesh *cm = new ComponentMesh(CUBE);
+		ComponentTransform *ct = new ComponentTransform(float3(0.0f+xoff[i], 0.0f, 0.0f+zoff[i]), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+		ComponentMaterial *material = new ComponentMaterial(object);
+		object->AddComponent(cm);
+		object->AddComponent(ct);
+		object->AddComponent(material);
+		root->AddChild(object);
+		sceneObjects_.push_back(object);
+		offset += offset;
+	}
+	/*
 	GameObject *object2 = new GameObject();
 	ComponentMesh *cm2 = new ComponentMesh(CUBE);
 	ComponentTransform *ct2 = new ComponentTransform(float3(10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
@@ -74,8 +88,8 @@ bool ModuleScene::Init()
 	object5->AddComponent(cm5);
 	object5->AddComponent(ct5);
 	object5->AddComponent(material5);
-
-	root->AddChild(object1);
+	*/
+	/*root->AddChild(object1);
 	root->AddChild(object2);
 	root->AddChild(object3);
 	root->AddChild(object4);
@@ -85,7 +99,7 @@ bool ModuleScene::Init()
 	sceneObjects_.push_back(object2);
 	sceneObjects_.push_back(object3);
 	sceneObjects_.push_back(object4);
-	sceneObjects_.push_back(object5);
+	sceneObjects_.push_back(object5);*/
 
 
 	actualCamera = App->cam->dummyCamera;
