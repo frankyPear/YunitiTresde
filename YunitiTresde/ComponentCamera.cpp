@@ -1,7 +1,7 @@
 #include "ComponentCamera.h"
 #include "OpenGL.h"
 #include "GameObject.h"
-
+#include "Brofiler\include\Brofiler.h"
 ComponentCamera::ComponentCamera()
 {
 	frustum_ = Frustum();
@@ -31,6 +31,7 @@ bool ComponentCamera::PreUpdate()
 
 bool ComponentCamera::Update()
 {
+	BROFILER_CATEGORY("ModuleCamera Update", Profiler::Color::Azure);
 	ComponentTransform *ct = (ComponentTransform *) linked_to->GetComponent(TRANSFORMATION);
 	if (ct != nullptr) {
 		frustum_.SetWorldMatrix(ct->GetGlobalTransform().Float3x4Part());
