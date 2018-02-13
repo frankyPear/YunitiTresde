@@ -8,6 +8,7 @@
 #include "ModuleImGui.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 
+#include "Brofiler/include/Brofiler.h"
 
 #include "GameObject.h"
 #include "ComponentMesh.h"
@@ -118,6 +119,7 @@ update_status ModuleScene::PreUpdate(float dt)
 
 update_status ModuleScene::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
 
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
@@ -146,7 +148,7 @@ update_status ModuleScene::Update(float dt)
 				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
 			}
 		}
-	}
+}
 
 	//IMGUI
 Hierarchy();

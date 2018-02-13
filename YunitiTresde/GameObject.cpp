@@ -2,7 +2,7 @@
 #include "Globals.h"
 #include "ModuleRenderer.h"
 #include "Application.h"
-
+#include "Brofiler\include\Brofiler.h"
 #include "ComponentMesh.h"
 
 GameObject::GameObject()
@@ -49,6 +49,7 @@ bool GameObject::PreUpdate()
 
 bool GameObject::Update()
 {
+	BROFILER_CATEGORY("ComponentTransform Update", Profiler::Color::Azure);
 	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();) {
 			(*it)->Update();		
 	}

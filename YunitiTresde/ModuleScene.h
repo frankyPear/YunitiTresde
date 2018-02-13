@@ -43,6 +43,8 @@ public:
 	uint imguiFlag = 0;
 	bool recreateQuadTree = false;
 
+	uint imguiCollisionTest = 0;
+	uint imguiCollisionTestQuadtree = 0;
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;

@@ -1,4 +1,7 @@
 #include "CustomQuadTree.h"
+#include "Application.h"
+#include "ModuleScene.h"
+#include "Brofiler\include\Brofiler.h"
 #include <stack>
 
 using namespace std;
@@ -126,7 +129,8 @@ void CustomQuadTreeNode::EliminateNode(GameObject* toEliminate)
 
 void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum)
 {
-	if (camFrustum.Intersects(box_)) {
+    BROFILER_CATEGORY("NodeInterSect", Profiler::Color::Red);
+  	if (camFrustum.Intersects(box_)) {
 		list<GameObject*>::iterator it;
 		for (it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it) {
 			bool found = false;
@@ -136,16 +140,17 @@ void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const F
 			if (!found) toTest.push_back(*it);
 		}
 		if (!child_nodes_.empty()) {
-			for (int i = 0; i < 4; ++i) child_nodes_[i]->NodeIntersect(toTest, camFrustum);
-		}
-	}
+			  for (int i = 0; i < 4; ++i) child_nodes_[i]->NodeIntersect(toTest, camFrustum);
+		  }
+  }
+
 
 }
 
 
 void CustomQuadTreeNode::ReallocateChilds()
 {
-	list<GameObject*>::iterator it;
+  list<GameObject*>::iterator it;
 	for (it = objectsInBox_.begin(); it != objectsInBox_.end();) {
 		bool boxIntersects[4];
 		for (int i = 0; i < 4; ++i) {
@@ -164,7 +169,7 @@ void CustomQuadTreeNode::ReallocateChilds()
 			}
 			it = objectsInBox_.erase(it);
 		}
-	}
+}
 }
 
 void CustomQuadTreeNode::DivideBox()

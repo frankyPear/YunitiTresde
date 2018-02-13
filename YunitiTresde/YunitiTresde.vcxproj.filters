@@ -453,6 +453,9 @@
     <ClInclude Include="CustomQuadTree.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Brofiler\include\Brofiler.h">
+      <Filter>Tools\Brofiler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -485,6 +488,12 @@
     <Filter Include="Tools\DevIL\Libs">
       <UniqueIdentifier>{4036ad05-9031-40a1-b00c-341977550b0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\Brofiler">
+      <UniqueIdentifier>{7bbf2961-314d-4933-bc47-72a4214b3365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Brofiler\lib">
+      <UniqueIdentifier>{b5782891-7807-4d87-8f82-f30dffc4abc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl">
@@ -512,6 +521,9 @@
     </Library>
     <Library Include="DevIL\lib\x86\Release\ILU.lib">
       <Filter>Tools\DevIL\Libs</Filter>
+    </Library>
+    <Library Include="Brofiler\libx86\ProfilerCore32.lib">
+      <Filter>Tools\Brofiler\lib</Filter>
     </Library>
   </ItemGroup>
 </Project>

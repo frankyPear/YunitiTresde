@@ -68,10 +68,12 @@ void ComponentMaterial::OnEditor()
 		ImGui::Text("WIDTH: %d", App->renderer->width_);
 		ImGui::Text("HEIGTH: %d", App->renderer->heigth_);
 		ImGui::Text("File: %s", selected_item_);
+		ImGui::Text("BYTES: %d", App->renderer->bytes_);
 		if (ImGui::Button("Reset"))
 		{
 			App->renderer->width_ = 0;
 			App->renderer->heigth_ = 0;
+			App->renderer->bytes_ = 0;
 			App->textures->loadImage(" ");
 			App->textures->DeleteImage(0);
 			App->textures->DeleteImage(1);
