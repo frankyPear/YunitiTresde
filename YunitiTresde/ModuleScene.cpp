@@ -358,3 +358,12 @@ void ModuleScene::ToggleFrustumAcceleration()
 {
 	accelerateFrustumCulling != accelerateFrustumCulling;
 }
+
+
+void ModuleScene::CreateRay(float2 screenPoint)
+{
+	actualCamera->GetFrustum()->ScreenToViewportSpace(screenPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
+	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(screenPoint.x, screenPoint.y);
+	Ray ray = Ray(ls);
+	LOG("Entered click and casted ray");
+}

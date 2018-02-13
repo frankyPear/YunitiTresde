@@ -35,7 +35,7 @@ public:
 	GameObject* GetRoot();
 	
 	void ToggleFrustumAcceleration();
-	
+	void CreateRay(float2 screenPoint);
 	
 public:
 	bool recalcTree = false;
