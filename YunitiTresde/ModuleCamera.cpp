@@ -179,7 +179,7 @@ update_status ModuleCamera::Update(float dt)
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 		const iPoint &mousePosition = App->input->GetMousePosition();
-		float2 point = float2( mousePosition.x,SCREEN_HEIGHT - mousePosition.y );
+		float2 point = float2( mousePosition.x,mousePosition.y );
 		App->scene->CreateRay(point);
 	}
 

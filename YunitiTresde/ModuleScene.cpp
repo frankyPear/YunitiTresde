@@ -362,10 +362,10 @@ void ModuleScene::ToggleFrustumAcceleration()
 }
 
 
-void ModuleScene::CreateRay(float2 normalizedPoint)
+void ModuleScene::CreateRay(float2 screenPoint)
 {
 	std::map<float, GameObject*> objectsByDistance;
-	actualCamera->GetFrustum()->ScreenToViewportSpace(normalizedPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
+	float2 normalizedPoint = actualCamera->GetFrustum()->ScreenToViewportSpace(screenPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
 	//LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
 	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
 	Ray ray = Ray(ls);
