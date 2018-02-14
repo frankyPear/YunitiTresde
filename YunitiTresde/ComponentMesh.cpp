@@ -145,5 +145,22 @@ bool ComponentMesh::CheckRayIntersectsMesh(Ray r, float &distance)
 {
 	// Iterate through vector, make TRIANGLE (class in mathgeolib), check each triangle with ray
 	// (coordinates already transformed) return true if intersects and modify distance parameter with the distance.
+	float actualDistance, minimalDistance;
+	actualDistance = distance;
+	minimalDistance = distance;
+	bool found = false;
+	for (int i = 0; i < meshindices.size(); i=i*3) {
+		Triangle t = Triangle();
+		t.a = float3 (meshvertices[meshindices[i] * 3], meshvertices[meshindices[i] * 3 + 1], meshvertices[meshindices[i] * 3 + 2]);
+		t.b = float3 (meshvertices[meshindices[i+1] * 3], meshvertices[meshindices[i+1] * 3 + 1], meshvertices[meshindices[i+1] * 3 + 2]);
+		t.c = float3 (meshvertices[meshindices[i+2] * 3], meshvertices[meshindices[i+2] * 3 + 1], meshvertices[meshindices[i+2] * 3 + 2]);
+		float3 *point = nullptr;
+		r.Intersects(t,&actualDistance,point);
+		if (actualDistance < minimalDistance) {
+			minimalDistance = actualDistance;
+			found = true;
+		}
+	}
+	if (found) return true;
 	return false;
 }

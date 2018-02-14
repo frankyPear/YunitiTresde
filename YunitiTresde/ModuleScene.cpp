@@ -17,6 +17,8 @@
 #include "ComponentCamera.h"
 #include "ModuleCamera.h"
 
+#include <map>
+
 #define BOX_SIZE 20.0f
 
 ModuleScene::ModuleScene()
@@ -362,7 +364,9 @@ void ModuleScene::ToggleFrustumAcceleration()
 
 void ModuleScene::CreateRay(float2 normalizedPoint)
 {
+	std::map<float, GameObject*> objectsByDistance;
 	actualCamera->GetFrustum()->ScreenToViewportSpace(normalizedPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
+	//LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
 	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
 	Ray ray = Ray(ls);
 	LOG("Entered click and casted ray");
@@ -370,6 +374,8 @@ void ModuleScene::CreateRay(float2 normalizedPoint)
 	std::vector<GameObject*> objectlist;
 	if (accelerateFrustumCulling) quadtree->Intersect(objectlist, *(actualCamera->GetFrustum()));
 	else objectlist = sceneObjects_;
+	float dist = 25000.0f;
+	std::map<float, GameObject*>::iterator it = objectsByDistance.begin();
 	// Check AABB's ONLY
 	for (int i = 0; i < objectlist.size(); ++i)
 	{
@@ -379,16 +385,12 @@ void ModuleScene::CreateRay(float2 normalizedPoint)
 			AABB newBox = *(cm->GetBoundingBox());
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
 			if (ray.Intersects(newBox)) {
-				intersections.push_back(objectlist[i]);
+				if (objectlist[i]->CheckRayIntersection(ray, dist)) {
+					objectsByDistance.insert(it, std::pair<float,GameObject*>(dist, objectlist[i]));
+				}
 				LOG("Ray intersected");
 			}
 		}
 	}
-
-	// Check TRIANGLES, this is the one we need implemented.
-	for (int i = 0; i < objectlist.size(); ++i) 
-	{
-			// if (GameObject->CheckRayIntersection)
-		
-	}
+	//Get the triangle with the lowest distance, maps are ordered by the key.
 }

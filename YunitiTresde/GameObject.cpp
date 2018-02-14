@@ -225,8 +225,8 @@ bool GameObject::CheckRayIntersection(Ray r, float &distance)
 	if (cm != nullptr && ct != nullptr) {
 		AABB newBox = *(cm->GetBoundingBox());
 		newBox.TransformAsAABB(ct->GetGlobalTransform());
-		r.Transform(ct->GetGlobalTransform());
-		return cm->CheckRayIntersectsMesh(r, distance);
+		r.Transform(ct->GetGlobalTransform().Inverted());
+		if(cm->CheckRayIntersectsMesh(r, distance)) return true;
 	}
-	return -1.0f;
+	return false;
 }
