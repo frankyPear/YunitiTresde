@@ -13,10 +13,10 @@ public:
 	~ModuleWindow();
 
 	SDL_Window* GetWindow() const;
-	int GetHeight();
-	int GetWidth();
-	void SetWindowHeight(int height);
-	void SetWindowWidth(int width);
+	const int& GetHeight() const;
+	const int& GetWidth() const;
+	void SetWindowHeight(const int& height);
+	void SetWindowWidth(const int& width);
 	void WindowImGui();
 	bool Init();
 	bool Start();
