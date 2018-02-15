@@ -25,6 +25,9 @@ public:
 
 	void OnEditor(ComponentTransform* ct);
 
+	void EditTransform(float* TransposedMatrix, float* Position, float* Rotation, float* Scale);
+	void Perspective(float fovyInDegrees, float aspectRatio, float znear, float zfar, float *m16);
+
 #pragma region Getters
 
 	float3 GetPosition()const;
