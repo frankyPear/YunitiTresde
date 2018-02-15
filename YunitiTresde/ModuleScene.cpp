@@ -42,8 +42,8 @@ bool ModuleScene::Init()
 	root->AddChild(object1);
 	sceneObjects_.push_back(object1);
 	float offset = -2.0f;
-	float xoff[16] = {20,20,0,-20,0,-20,-20,20, 0 ,10,-10,0,};
-	float zoff[16] = {20,0,20,-20,-20,0,20,-20, 10, 0, 0,-10};
+	float xoff[16] = {20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0};
+	float zoff[16] = {20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10};
   	for (int i = 0; i < 12; ++i) 
 	{
 		GameObject *object = new GameObject();

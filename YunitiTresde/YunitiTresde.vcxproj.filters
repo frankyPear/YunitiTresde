@@ -175,6 +175,9 @@
     <ClCompile Include="CustomQuadTree.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -455,6 +458,9 @@
     </ClInclude>
     <ClInclude Include="Brofiler\include\Brofiler.h">
       <Filter>Tools\Brofiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
