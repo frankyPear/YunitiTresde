@@ -31,7 +31,7 @@ private:
 	void Zoom(float zoom);
 	void LookAt(float motionX, float motionY);
 	void CenterOn(const float3 &position, float distance);
-
+	GameObject *Pick(float3* hitPoint=nullptr)const;
 #pragma endregion
 private:
 	float _isLooking = true;

@@ -2,7 +2,7 @@
 #include "ModuleScene.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
-
+#include "CustomQuadTree.h"
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
 #include "ModuleImGui.h"
@@ -366,4 +366,67 @@ void ModuleScene::CreateRay(float2 screenPoint)
 	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(screenPoint.x, screenPoint.y);
 	Ray ray = Ray(ls);
 	LOG("Entered click and casted ray");
+}
+
+void ModuleScene::SetSelected(GameObject * selected, bool focus)
+{
+	//A acavar
+	this->selected = selected;
+	if (selected != nullptr && focus == true)
+	{
+		/*float radius = selected->global_bbox.MinimalEnclosingSphere().r;
+		App->camera->CenterOn(selected->GetGlobalPosition(), std::fmaxf(radius, 5.0f) * 3.0f);
+		tree->open_selected = true;*/
+	}
+}
+
+GameObject* ModuleScene::CastRay(const LineSegment & segment, float & dist) const
+{
+	dist = inf;
+	GameObject* candidate = nullptr;
+	RecursiveTestRay(segment, dist, &candidate);
+	return candidate;
+}
+
+void ModuleScene::RecursiveTestRay(const LineSegment & segment, float & dist, GameObject ** best_candidate) const
+{
+	//std::map<float, GameObject*> objects;
+	//quadtree->in;
+
+	//for (map<float, GameObject*>::const_iterator it = objects.begin(); it != objects.end(); ++it)
+	//{
+	//	// Look for meshes, nothing else can be "picked" from the screen
+	//	GameObject* go = it->second;
+	//	vector<Component*> meshes;
+	//	go->FindComponents(Component::Types::Geometry, meshes);
+
+	//	if (meshes.size() > 0)
+	//	{
+	//		const ComponentMesh* cmesh = (const ComponentMesh*)meshes[0];
+	//		const ResourceMesh* mesh = cmesh->deformable ? cmesh->deformable : (ResourceMesh*)cmesh->GetResource();
+
+	//		// test all triangles
+	//		LineSegment segment_local_space(segment);
+	//		segment_local_space.Transform(go->GetGlobalTransformation().Inverted());
+
+	//		Triangle tri;
+	//		for (uint i = 0; i < mesh->num_indices;)
+	//		{
+	//			tri.a.Set(&mesh->vertices[mesh->indices[i++] * 3]);
+	//			tri.b.Set(&mesh->vertices[mesh->indices[i++] * 3]);
+	//			tri.c.Set(&mesh->vertices[mesh->indices[i++] * 3]);
+
+	//			float distance;
+	//			float3 hit_point;
+	//			if (segment_local_space.Intersects(tri, &distance, &hit_point))
+	//			{
+	//				if (distance < dist)
+	//				{
+	//					dist = distance;
+	//					*best_candidate = (GameObject*)go;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 }

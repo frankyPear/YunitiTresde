@@ -26,17 +26,22 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	//Create
-	void CreateGameObject(GameObject* obj, bool boolcm = false, bool boolcam=false);
+	void CreateGameObject(GameObject* obj, bool boolcm = false, bool boolcam = false);
 
 	//Imgui
 	void ShowImguiStatus();
 	void ImGuiMainMenu();
 	void Hierarchy();
 	GameObject* GetRoot();
-	
+
 	void ToggleFrustumAcceleration();
 	void CreateRay(float2 screenPoint);
-	
+
+	void SetSelected(GameObject *selected, bool focus);
+
+	GameObject* CastRay(const LineSegment& segment, float& dist)const;
+private:
+	void RecursiveTestRay(const LineSegment& segment, float& dist, GameObject** best_candidate)const;
 public:
 	bool recalcTree = false;
 	ComponentCamera *actualCamera = nullptr;
@@ -44,10 +49,10 @@ public:
 	bool recreateQuadTree = false;
 
 	uint imguiCollisionTest = 0;
-	uint imguiCollisionTestQuadtree = 0;
+	uint imguiCollisionTestQuadtree = 0;	GameObject* selected = nullptr;
+
 private:
-	GameObject* root;
-	GameObject* selected = nullptr;
+	GameObject * root;
 	CustomQuadTree* quadtree = nullptr;
 	AABB limits;
 

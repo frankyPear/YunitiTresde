@@ -1,5 +1,7 @@
 #include "ModuleCamera.h"
 #include "Application.h"
+#include "ModuleWindow.h"
+#include "ModuleScene.h"
 #include "ModuleInput.h"
 #include "Glew\include\glew.h"
 #include "Mathgeolib\include\Math\MathAll.h"
@@ -127,6 +129,31 @@ void ModuleCamera::CenterOn(const float3 & position, float distance)
 	_isLooking = true;
 }
 
+GameObject * ModuleCamera::Pick(float3 * hitPoint) const
+{
+	// The point (1, 1) corresponds to the top-right corner of the near plane
+	// (-1, -1) is bottom-left
+
+	float width = (float)App->window->GetWidth();
+	float height = (float)App->window->GetHeight();
+
+	iPoint mousePosition=App->input->GetMousePosition();
+
+	float normalized_x = -(1.0f - (float(mousePosition.x) * 2.0f) / width);
+	float normalized_y = 1.0f - (float(mousePosition.y) * 2.0f) / height;
+
+	LineSegment picking = dummyCamera->frustum_.UnProjectLineSegment(normalized_x, normalized_y);
+
+	float distance;
+	
+	GameObject* hit = App->scene->CastRay(picking, distance);
+
+	if (hit != nullptr && hitPoint != nullptr)
+		*hitPoint = picking.GetPoint(distance);
+
+	return hit;
+}
+
 update_status ModuleCamera::PreUpdate(float dt)
 {
 
@@ -190,6 +217,13 @@ update_status ModuleCamera::Update(float dt)
 
 	if (mouseWheel != 0)
 		Zoom(mouseWheel*_zoomSpeed*dt);
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		GameObject* pick = Pick();
+		if (pick != nullptr)
+			App->scene->SetSelected(pick, (App->scene->selected == pick));
+	}
 
 
 	dummyCamera->SetUp(quatOffset.Mul(dummyCamera->GetUp()));
