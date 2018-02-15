@@ -230,3 +230,14 @@ bool GameObject::CheckRayIntersection(Ray r, float &distance)
 	}
 	return false;
 }
+
+
+unsigned int GameObject::GetId()
+{
+	return _id;
+}
+
+void GameObject::SetId(unsigned int newId)
+{
+	_id = newId;
+}

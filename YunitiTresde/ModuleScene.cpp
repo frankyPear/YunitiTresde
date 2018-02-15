@@ -56,6 +56,7 @@ bool ModuleScene::Init()
 		root->AddChild(object);
 		sceneObjects_.push_back(object);
 		offset += offset;
+		object->SetId(i+1);
 	}
 	actualCamera = App->cam->dummyCamera;
 
@@ -342,10 +343,14 @@ void ModuleScene::CreateRay(float2 screenPoint)
 				aux.Transform(ct->GetGlobalTransform().Inverted());
 				if (objectlist[i]->CheckRayIntersection(aux, dist)) {
 					objectsByDistance.insert(it, std::pair<float,GameObject*>(dist, objectlist[i]));
+					LOG("Ray intersected with object %i",objectlist[i]->GetId());
 				}
-				LOG("Ray intersected");
 			}
 		}
+	}
+	if (!objectsByDistance.empty()) {
+		it = objectsByDistance.begin();
+		LOG("Nearest object is %i \n", it->second->GetId());
 	}
 	//Get the triangle with the lowest distance, maps are ordered by the key.
 }
