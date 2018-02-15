@@ -91,6 +91,11 @@ public:
 
 	void GetAxisBB();
 
+	bool CheckRayIntersection(Ray r, float &distance);
+
+	unsigned int GetId();
+
+	void SetId(unsigned int newId);
 
 	AABB axisBoundingBox_;
 #pragma endregion

@@ -17,6 +17,8 @@
 #include "ComponentCamera.h"
 #include "ModuleCamera.h"
 
+#include <map>
+
 #define BOX_SIZE 20.0f
 
 ModuleScene::ModuleScene()
@@ -40,8 +42,8 @@ bool ModuleScene::Init()
 	root->AddChild(object1);
 	sceneObjects_.push_back(object1);
 	float offset = -2.0f;
-	float xoff[16] = {20,20,0,-20,0,-20,-20,20, 0 ,10,-10,0,};
-	float zoff[16] = {20,0,20,-20,-20,0,20,-20, 10, 0, 0,-10};
+	float xoff[16] = {20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0};
+	float zoff[16] = {20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10};
   	for (int i = 0; i < 12; ++i) 
 	{
 		GameObject *object = new GameObject();
@@ -54,54 +56,8 @@ bool ModuleScene::Init()
 		root->AddChild(object);
 		sceneObjects_.push_back(object);
 		offset += offset;
+		object->SetId(i+1);
 	}
-	/*
-	GameObject *object2 = new GameObject();
-	ComponentMesh *cm2 = new ComponentMesh(CUBE);
-	ComponentTransform *ct2 = new ComponentTransform(float3(10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	ComponentMaterial *material2 = new ComponentMaterial(object2);
-	object2->AddComponent(cm2);
-	object2->AddComponent(ct2);
-	object2->AddComponent(material2);
-
-
-	GameObject *object3 = new GameObject();
-	ComponentMesh *cm3 = new ComponentMesh(CUBE);
-	ComponentTransform *ct3 = new ComponentTransform(float3(-10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	ComponentMaterial *material3 = new ComponentMaterial(object3);
-	object3->AddComponent(cm3);
-	object3->AddComponent(ct3);
-	object3->AddComponent(material3);
-	
-	GameObject *object4 = new GameObject();
-	ComponentMesh *cm4 = new ComponentMesh(CUBE);
-	ComponentTransform *ct4 = new ComponentTransform(float3(10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	ComponentMaterial *material4 = new ComponentMaterial(object4);
-	object4->AddComponent(cm4);
-	object4->AddComponent(ct4);
-	object4->AddComponent(material4);
-
-	GameObject *object5 = new GameObject();
-	ComponentMesh *cm5 = new ComponentMesh(CUBE);
-	ComponentTransform *ct5 = new ComponentTransform(float3(-10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	ComponentMaterial *material5 = new ComponentMaterial(object5);
-	object5->AddComponent(cm5);
-	object5->AddComponent(ct5);
-	object5->AddComponent(material5);
-	*/
-	/*root->AddChild(object1);
-	root->AddChild(object2);
-	root->AddChild(object3);
-	root->AddChild(object4);
-	root->AddChild(object5);
-
-	sceneObjects_.push_back(object1);
-	sceneObjects_.push_back(object2);
-	sceneObjects_.push_back(object3);
-	sceneObjects_.push_back(object4);
-	sceneObjects_.push_back(object5);*/
-
-
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -362,8 +318,39 @@ void ModuleScene::ToggleFrustumAcceleration()
 
 void ModuleScene::CreateRay(float2 screenPoint)
 {
-	actualCamera->GetFrustum()->ScreenToViewportSpace(screenPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
-	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(screenPoint.x, screenPoint.y);
+	std::map<float, GameObject*> objectsByDistance;
+	float2 normalizedPoint = actualCamera->GetFrustum()->ScreenToViewportSpace(screenPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
+	//LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
+	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
 	Ray ray = Ray(ls);
 	LOG("Entered click and casted ray");
+	std::vector<GameObject*> intersections;
+	std::vector<GameObject*> objectlist;
+	if (accelerateFrustumCulling) quadtree->Intersect(objectlist, *(actualCamera->GetFrustum()));
+	else objectlist = sceneObjects_;
+	float dist = 25000.0f;
+	std::map<float, GameObject*>::iterator it = objectsByDistance.begin();
+	// Check AABB's ONLY
+	for (int i = 0; i < objectlist.size(); ++i)
+	{
+		ComponentMesh* cm = (ComponentMesh*)objectlist[i]->GetComponent(MESH);
+		ComponentTransform* ct = (ComponentTransform*)objectlist[i]->GetComponent(TRANSFORMATION);
+		if (cm != nullptr && ct != nullptr) {
+			AABB newBox = *(cm->GetBoundingBox());
+			newBox.TransformAsAABB(ct->GetGlobalTransform());
+			if (ray.Intersects(newBox)) {
+				Ray aux = ray;
+				aux.Transform(ct->GetGlobalTransform().Inverted());
+				if (objectlist[i]->CheckRayIntersection(aux, dist)) {
+					objectsByDistance.insert(it, std::pair<float,GameObject*>(dist, objectlist[i]));
+					LOG("Ray intersected with object %i",objectlist[i]->GetId());
+				}
+			}
+		}
+	}
+	if (!objectsByDistance.empty()) {
+		it = objectsByDistance.begin();
+		LOG("Nearest object is %i \n", it->second->GetId());
+	}
+	//Get the triangle with the lowest distance, maps are ordered by the key.
 }
