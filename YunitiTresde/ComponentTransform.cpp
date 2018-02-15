@@ -1,7 +1,12 @@
 #include "ComponentTransform.h"
 #include "GameObject.h"
+#include "Application.h"
+#include "ModuleInput.h"
+#include "ModuleScene.h"
+#include "ModuleCamera.h"
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
+#include "imgui-1.53\ImGuizmo.h"
 #include "Brofiler\include\Brofiler.h"
 
 ComponentTransform::ComponentTransform()
@@ -136,7 +141,7 @@ void ComponentTransform::ForceUpdate()
 	updateTrans = true;
 }
 
-void ComponentTransform::OnEditor()
+void ComponentTransform::OnEditor(ComponentTransform* ct)
 {
 	if (ImGui::TreeNode("Transform"))
 	{
@@ -164,6 +169,51 @@ void ComponentTransform::OnEditor()
 			_rotationEulerAngles = float3::zero;
 			updateTrans = true;
 		}
+		static ImGuizmo::OPERATION GizmoType(ImGuizmo::TRANSLATE);
+		static ImGuizmo::MODE GizmoMode(ImGuizmo::LOCAL);
+
+		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		{
+			GizmoType = ImGuizmo::TRANSLATE;
+			GizmoMode = ImGuizmo::LOCAL;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		{
+			GizmoType = ImGuizmo::ROTATE;
+			GizmoMode = ImGuizmo::LOCAL;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+		{
+			GizmoType = ImGuizmo::SCALE;
+			GizmoMode = ImGuizmo::LOCAL;
+
+		}
+		ImGuizmo::Enable(true);
+		ImGuizmo::BeginFrame();
+
+		ImGuiIO& io = ImGui::GetIO();
+		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+
+		float* TransposedMatrix = ct->GetLocalTransform().Transposed().ptr();
+		float* Position = ct->GetPosition().ptr();
+		float* Rotation = ct->GetQuatRotation().ptr();
+		float* Scale = ct->GetQuatRotation().ptr();
+		ImGuizmo::Manipulate(App->scene->actualCamera->GetViewMatrix(), App->scene->actualCamera->GetProjectionMatrix(), GizmoType, GizmoMode, TransposedMatrix);
+		if (ImGuizmo::IsUsing())
+		{
+			ImGuizmo::DecomposeMatrixToComponents(TransposedMatrix, Position, Rotation, Scale);
+
+			//
+			//						((TransformComponent*)(App->sceneMain->currentObject->components[0]))->updateTranslate();
+			//						((TransformComponent*)(App->sceneMain->currentObject->components[0]))->updateScale();
+			//						((utyTransformComponent*)(App->sceneMain->currentObject->components[0]))->updateRotate();
+		}
+
+
+
+		//ImGuizmo::DrawCube(App->scene->actualCamera->GetViewMatrix(), App->scene->actualCamera->GetProjectionMatrix(), _localTransMatrix);
 		ImGui::TreePop();
 	}
 

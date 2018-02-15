@@ -23,7 +23,7 @@ public:
 
 	bool DisplayImgUINode();
 
-	void OnEditor();
+	void OnEditor(ComponentTransform* ct);
 
 #pragma region Getters
 

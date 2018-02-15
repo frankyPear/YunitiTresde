@@ -2,9 +2,11 @@
 #include "ModuleScene.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
+#include "ModuleInput.h"
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
+#include "imgui-1.53\ImGuizmo.h"
 #include "ModuleImGui.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 
@@ -220,7 +222,11 @@ void ModuleScene::ShowImguiStatus() {
 				ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 				if (ct != nullptr)
 				{
-					ct->OnEditor();
+					ct->OnEditor(ct);
+					ImGuizmo::BeginFrame();
+
+					// debug
+
 					ct->Update();
 
 				}
