@@ -57,53 +57,6 @@ bool ModuleScene::Init()
 		sceneObjects_.push_back(object);
 		offset += offset;
 	}
-	/*
-	GameObject *object2 = new GameObject();
-	ComponentMesh *cm2 = new ComponentMesh(CUBE);
-	ComponentTransform *ct2 = new ComponentTransform(float3(10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	ComponentMaterial *material2 = new ComponentMaterial(object2);
-	object2->AddComponent(cm2);
-	object2->AddComponent(ct2);
-	object2->AddComponent(material2);
-
-
-	GameObject *object3 = new GameObject();
-	ComponentMesh *cm3 = new ComponentMesh(CUBE);
-	ComponentTransform *ct3 = new ComponentTransform(float3(-10.0f, 0.0f, 10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	ComponentMaterial *material3 = new ComponentMaterial(object3);
-	object3->AddComponent(cm3);
-	object3->AddComponent(ct3);
-	object3->AddComponent(material3);
-	
-	GameObject *object4 = new GameObject();
-	ComponentMesh *cm4 = new ComponentMesh(CUBE);
-	ComponentTransform *ct4 = new ComponentTransform(float3(10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	ComponentMaterial *material4 = new ComponentMaterial(object4);
-	object4->AddComponent(cm4);
-	object4->AddComponent(ct4);
-	object4->AddComponent(material4);
-
-	GameObject *object5 = new GameObject();
-	ComponentMesh *cm5 = new ComponentMesh(CUBE);
-	ComponentTransform *ct5 = new ComponentTransform(float3(-10.0f, 0.0f, -10.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	ComponentMaterial *material5 = new ComponentMaterial(object5);
-	object5->AddComponent(cm5);
-	object5->AddComponent(ct5);
-	object5->AddComponent(material5);
-	*/
-	/*root->AddChild(object1);
-	root->AddChild(object2);
-	root->AddChild(object3);
-	root->AddChild(object4);
-	root->AddChild(object5);
-
-	sceneObjects_.push_back(object1);
-	sceneObjects_.push_back(object2);
-	sceneObjects_.push_back(object3);
-	sceneObjects_.push_back(object4);
-	sceneObjects_.push_back(object5);*/
-
-
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -385,7 +338,9 @@ void ModuleScene::CreateRay(float2 screenPoint)
 			AABB newBox = *(cm->GetBoundingBox());
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
 			if (ray.Intersects(newBox)) {
-				if (objectlist[i]->CheckRayIntersection(ray, dist)) {
+				Ray aux = ray;
+				aux.Transform(ct->GetGlobalTransform().Inverted());
+				if (objectlist[i]->CheckRayIntersection(aux, dist)) {
 					objectsByDistance.insert(it, std::pair<float,GameObject*>(dist, objectlist[i]));
 				}
 				LOG("Ray intersected");

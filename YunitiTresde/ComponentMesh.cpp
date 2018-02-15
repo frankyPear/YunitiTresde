@@ -149,7 +149,7 @@ bool ComponentMesh::CheckRayIntersectsMesh(Ray r, float &distance)
 	actualDistance = distance;
 	minimalDistance = distance;
 	bool found = false;
-	for (int i = 0; i < meshindices.size(); i=i*3) {
+	for (int i = 0; i < meshindices.size(); i=i+3) {
 		Triangle t = Triangle();
 		t.a = float3 (meshvertices[meshindices[i] * 3], meshvertices[meshindices[i] * 3 + 1], meshvertices[meshindices[i] * 3 + 2]);
 		t.b = float3 (meshvertices[meshindices[i+1] * 3], meshvertices[meshindices[i+1] * 3 + 1], meshvertices[meshindices[i+1] * 3 + 2]);
