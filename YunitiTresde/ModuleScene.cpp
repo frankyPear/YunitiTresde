@@ -34,7 +34,7 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
-	GameObject *object1 = new GameObject();
+	/*GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 	object1->AddComponent(cm1);
@@ -57,7 +57,8 @@ bool ModuleScene::Init()
 		sceneObjects_.push_back(object);
 		offset += offset;
 		object->SetId(i+1);
-	}
+	}*/
+	m.Load("../Resources/BakerHouse.fbx");
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -90,7 +91,7 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-
+	m.Draw();
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
 			quadtree->Clear();
