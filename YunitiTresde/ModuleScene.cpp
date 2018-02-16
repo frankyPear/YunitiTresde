@@ -171,12 +171,11 @@ void ModuleScene::ShowImguiStatus() {
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
 			if (sceneObjects_[i]->isSelected)
-
 			{
 				ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 				if (ct != nullptr)
 				{
-					ct->OnEditor();
+					ct->OnEditor(sceneObjects_[i]);
 					ct->Update();
 
 				}

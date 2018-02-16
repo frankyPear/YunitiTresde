@@ -23,7 +23,7 @@ public:
 
 	bool DisplayImgUINode();
 
-	void OnEditor();
+	void OnEditor(GameObject* obj);
 
 #pragma region Getters
 

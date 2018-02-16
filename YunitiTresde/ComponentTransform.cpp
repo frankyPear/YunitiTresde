@@ -136,7 +136,7 @@ void ComponentTransform::ForceUpdate()
 	updateTrans = true;
 }
 
-void ComponentTransform::OnEditor()
+void ComponentTransform::OnEditor(GameObject* obj)
 {
 	if (ImGui::TreeNode("Transform"))
 	{
@@ -156,6 +156,7 @@ void ComponentTransform::OnEditor()
 		{
 			updateTrans = true;
 		}
+		ImGui::Separator();
 
 		if (ImGui::Button("Reset"))
 		{
@@ -164,6 +165,20 @@ void ComponentTransform::OnEditor()
 			_rotationEulerAngles = float3::zero;
 			updateTrans = true;
 		}
+		//---
+		uint i = 0;
+		ImGui::SameLine();
+		ImGui::PushID(i = 0);
+		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(i / 7.0f, 0.6f, 0.6f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(i / 7.0f, 0.7f, 0.7f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, 0.8f, 0.8f));
+		if (ImGui::Button("Delete"))
+		{
+			//obj->OnDestroy();
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::PopID();
+
 		ImGui::TreePop();
 	}
 
