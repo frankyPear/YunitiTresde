@@ -178,6 +178,12 @@
     <ClCompile Include="Model.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="imgui-1.53\ImGuizmo.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.53\ImSequencer.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -461,6 +467,12 @@
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.53\ImGuizmo.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.53\ImSequencer.h">
+      <Filter>Tools\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
