@@ -140,19 +140,19 @@
       <Filter>Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentMaterial.cpp">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentMesh.cpp">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="SolidSphere.cpp">
       <Filter>Utils</Filter>
@@ -161,16 +161,13 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="ComponentCamera.cpp">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentWithResource.cpp">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ModuleResources.cpp">
       <Filter>Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource.cpp">
-      <Filter>CoreClasses</Filter>
     </ClCompile>
     <ClCompile Include="CustomQuadTree.cpp">
       <Filter>Utils</Filter>
@@ -189,6 +186,12 @@
     </ClCompile>
     <ClCompile Include="MeshImporter.cpp">
       <Filter>Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -436,34 +439,31 @@
       <Filter>Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentMaterial.h">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentMesh.h">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentTransform.h">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="SolidSphere.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ComponentCamera.h">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentWithResource.h">
-      <Filter>CoreClasses</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ModuleResources.h">
       <Filter>Core Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>CoreClasses</Filter>
     </ClInclude>
     <ClInclude Include="CustomQuadTree.h">
       <Filter>Utils</Filter>
@@ -485,6 +485,12 @@
     </ClInclude>
     <ClInclude Include="MeshImporter.h">
       <Filter>Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -512,9 +518,6 @@
     <Filter Include="Tools\DevIL">
       <UniqueIdentifier>{ba033fd6-e8a6-47ac-a5e4-a63290c6eb20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CoreClasses">
-      <UniqueIdentifier>{5e3035f3-ba3c-4b78-9de0-9c636fddaa98}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tools\DevIL\Libs">
       <UniqueIdentifier>{4036ad05-9031-40a1-b00c-341977550b0f}</UniqueIdentifier>
     </Filter>
@@ -526,6 +529,12 @@
     </Filter>
     <Filter Include="Tools\Importers">
       <UniqueIdentifier>{e9239b5b-2959-41fa-b6d2-04c970c5679e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{6f30d3a3-c155-4be9-836e-6fc1b95e3346}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{5e3035f3-ba3c-4b78-9de0-9c636fddaa98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

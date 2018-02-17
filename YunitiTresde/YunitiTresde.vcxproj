@@ -218,6 +218,7 @@
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="SolidSphere.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
@@ -281,6 +282,7 @@
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceMesh.cpp" />
     <ClCompile Include="SolidSphere.cpp" />
     <ClCompile Include="Importer.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
