@@ -236,14 +236,15 @@ void ComponentTransform::OnEditor(GameObject* obj)
 		}
 		ImGui::PopStyleColor(3);
 		ImGui::PopID();
+		if (obj != nullptr) {
+			ComponentTransform *ct = (ComponentTransform*)obj->GetComponent(TRANSFORMATION);
+			float* TransposedMatrix = ct->GetLocalTransform().Transposed().ptr();
+			float* Position = ct->GetPosition().ptr();
+			float* Rotation = ct->GetQuatRotation().ptr();
+			float* Scale = ct->GetQuatRotation().ptr();
 
-//=======
-//		float* TransposedMatrix = ct->GetLocalTransform().Transposed().ptr();
-//		float* Position = ct->GetPosition().ptr();
-//		float* Rotation = ct->GetQuatRotation().ptr();
-//		float* Scale = ct->GetQuatRotation().ptr();
-
-//		EditTransform(TransposedMatrix, Position, Rotation, Scale);
+			EditTransform(TransposedMatrix, Position, Rotation, Scale);
+		}
 
 		
 //>>>>>>> feature-MousePicking-FP
@@ -251,7 +252,7 @@ void ComponentTransform::OnEditor(GameObject* obj)
 	}
 
 }
-/*void ComponentTransform::EditTransform(float * TransposedMatrix, float * Position, float * Rotation, float * Scale)
+void ComponentTransform::EditTransform(float * TransposedMatrix, float * Position, float * Rotation, float * Scale)
 {
 	MySequence mySequence;
 	mySequence.mFrameCount = 100;
@@ -341,5 +342,5 @@ void ComponentTransform::OnEditor(GameObject* obj)
 	glClearColor(0.45f, 0.4f, 0.4f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	//ImGui::Render();
-}*/
+}
 
