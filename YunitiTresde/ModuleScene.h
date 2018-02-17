@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "ComponentCamera.h"
+#include "Model.h"
 #include "CustomQuadTree.h"
 #include <vector>
 
@@ -35,7 +36,7 @@ public:
 	GameObject* GetRoot();
 	
 	void ToggleFrustumAcceleration();
-	
+	void CreateRay(float2 screenPoint);
 	
 public:
 	bool recalcTree = false;
@@ -53,12 +54,14 @@ private:
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
-	bool accelerateFrustumCulling = true;
+	bool accelerateFrustumCulling = false;
 	std::string loadPath;
 
 	Timer saveLoadTimer;
 	std::vector<GameObject*> sceneObjects_;
 	std::vector<GameObject*> objectToDraw_;
+
+	Model m;
 };
 
 #endif

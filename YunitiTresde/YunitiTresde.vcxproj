@@ -71,6 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ReferencePath>$(ReferencePath)</ReferencePath>
+    <IncludePath>$(SolutionDir)YunitiTresde\assimp\assimp;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)YunitiTresde\assimp\libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -200,6 +202,7 @@
     <ClInclude Include="Mathgeolib\include\Math\sse_mathfun.h" />
     <ClInclude Include="Mathgeolib\include\Math\TransformOps.h" />
     <ClInclude Include="Mathgeolib\include\Time\Clock.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCamera.h" />
     <ClInclude Include="ModuleImGui.h" />
@@ -264,6 +267,7 @@
     <ClCompile Include="Mathgeolib\include\Math\SSEMath.cpp" />
     <ClCompile Include="Mathgeolib\include\Math\TransformOps.cpp" />
     <ClCompile Include="Mathgeolib\include\Time\Clock.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />

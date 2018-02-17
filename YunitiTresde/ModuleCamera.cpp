@@ -3,7 +3,8 @@
 #include "ModuleInput.h"
 #include "Glew\include\glew.h"
 #include "Mathgeolib\include\Math\MathAll.h"
-
+#include <iostream>
+#include "ModuleScene.h"
 
 ModuleCamera::ModuleCamera()
 {
@@ -176,7 +177,11 @@ update_status ModuleCamera::Update(float dt)
 		LookAt(dx, dy);
 
 	}
-
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+		const iPoint &mousePosition = App->input->GetMousePosition();
+		float2 point = float2( mousePosition.x,mousePosition.y );
+		App->scene->CreateRay(point);
+	}
 
 
 

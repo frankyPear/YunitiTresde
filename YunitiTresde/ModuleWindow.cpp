@@ -70,25 +70,26 @@ update_status ModuleWindow::Update(float dt) {
 	return UPDATE_CONTINUE;
 }
 
-int ModuleWindow::GetWidth()
+const int& ModuleWindow::GetWidth() const
+
 {
 	
 	return SDL_GetWindowSurface(window_)->w;
 }
 
-int ModuleWindow::GetHeight()
+const int& ModuleWindow::GetHeight() const
 {
 	return SDL_GetWindowSurface(window_)->h;
 }
 
-void ModuleWindow::SetWindowHeight(int height)
+void ModuleWindow::SetWindowHeight(const int& height)
 {
 	height_ = height;
 	SDL_SetWindowSize(window_, width_, height_);
 	height_ = GetHeight();
 	
 }
-void ModuleWindow::SetWindowWidth(int width)
+void ModuleWindow::SetWindowWidth(const int& width)
 {
 	width_ = width;
 	SDL_SetWindowSize(window_, width_, height_);

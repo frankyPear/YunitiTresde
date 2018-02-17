@@ -30,6 +30,7 @@ public:
 	std::vector<GLubyte> GetMeshIndices() const;
 	std::vector<GLfloat> GetMeshColors() const;
 	AABB* GetBoundingBox() const;
+	bool CheckRayIntersectsMesh(Ray r, float& distance);
 
 public:
 	Shape meshShape;
