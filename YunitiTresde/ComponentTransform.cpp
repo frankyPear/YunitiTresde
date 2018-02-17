@@ -226,7 +226,13 @@ void ComponentTransform::OnEditor(ComponentTransform* ct)
 }
 void ComponentTransform::EditTransform(float * TransposedMatrix, float * Position, float * Rotation, float * Scale)
 {
-
+	MySequence mySequence;
+	mySequence.mFrameCount = 100;
+	mySequence.myItems.push_back(MySequence::MySequenceItem{ 0, 10, 30 });
+	mySequence.myItems.push_back(MySequence::MySequenceItem{ 1, 20, 30 });
+	mySequence.myItems.push_back(MySequence::MySequenceItem{ 3, 12, 60 });
+	mySequence.myItems.push_back(MySequence::MySequenceItem{ 2, 61, 90 });
+	mySequence.myItems.push_back(MySequence::MySequenceItem{ 4, 90, 99 });
 	ImGuizmo::BeginFrame();
 
 	// debug
@@ -287,26 +293,26 @@ void ComponentTransform::EditTransform(float * TransposedMatrix, float * Positio
 	ImGuizmo::Manipulate(App->scene->actualCamera->GetViewMatrix(), App->scene->actualCamera->GetProjectionMatrix(), mCurrentGizmoOperation, mCurrentGizmoMode, TransposedMatrix, NULL, useSnap ? &snap[0] : NULL);
 
 	// let's create the sequencer
-//	static int selectedEntry = -1;
-//	static int firstFrame = 0;
-//	static bool expanded = true;
-//	ImGui::SetNextWindowPos(ImVec2(10, 260));
-//	ImGui::SetNextWindowSize(ImVec2(740, 380));
-//	ImGui::Begin("Sequencer");
-//	ImGui::InputInt("Frame count", &mySequence.mFrameCount);
-	//Sequencer(&mySequence, NULL, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_STARTEND | ImSequencer::SEQUENCER_ADD | ImSequencer::SEQUENCER_DEL | ImSequencer::SEQUENCER_COPYPASTE);
-	// add a UI to edit that particular item
-//	if (selectedEntry != -1)
-//	{
-//		MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
-//		ImGui::Text("I am a %s, please edit me", SequencerItemTypeNames[item.mType]);
-//		// switch (type) ....
-//	}
-//	ImGui::End();
+	static int selectedEntry = -1;
+	static int firstFrame = 0;
+	static bool expanded = true;
+	ImGui::SetNextWindowPos(ImVec2(10, 260));
+	ImGui::SetNextWindowSize(ImVec2(740, 380));
+	ImGui::Begin("Sequencer");
+	ImGui::InputInt("Frame count", &mySequence.mFrameCount);
+	Sequencer(&mySequence, NULL, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_STARTEND | ImSequencer::SEQUENCER_ADD | ImSequencer::SEQUENCER_DEL | ImSequencer::SEQUENCER_COPYPASTE);
+// add a UI to edit that particular item
+	if (selectedEntry != -1)
+	{
+		MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
+		ImGui::Text("I am a %s, please edit me", SequencerItemTypeNames[item.mType]);
+		// switch (type) ....
+	}
+	ImGui::End();
 
-	// render everything
-//	glClearColor(0.45f, 0.4f, 0.4f, 1.f);
-//	glClear(GL_COLOR_BUFFER_BIT);
-//	ImGui::Render();
+// render everything
+	glClearColor(0.45f, 0.4f, 0.4f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	//ImGui::Render();
 }
 
