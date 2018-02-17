@@ -15,7 +15,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update();
+	bool Update(GameObject* obj);
 
 	bool PostUpdate();
 
@@ -23,7 +23,7 @@ public:
 
 	bool DisplayImgUINode();
 
-	void OnEditor();
+	void OnEditor(GameObject* obj);
 
 #pragma region Getters
 
