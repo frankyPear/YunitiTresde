@@ -8,10 +8,6 @@ public:
 	Importer();
 	~Importer();
 
-}
-
-
-
-
+};
 
 #endif // !_IMPORTER_H_

@@ -203,6 +203,7 @@
     <ClInclude Include="Mathgeolib\include\Math\sse_mathfun.h" />
     <ClInclude Include="Mathgeolib\include\Math\TransformOps.h" />
     <ClInclude Include="Mathgeolib\include\Time\Clock.h" />
+    <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCamera.h" />
@@ -282,6 +283,7 @@
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="SolidSphere.cpp" />
     <ClCompile Include="Importer.cpp" />
+    <ClCompile Include="MeshImporter.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>

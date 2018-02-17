@@ -187,6 +187,9 @@
     <ClCompile Include="Importer.cpp">
       <Filter>Tools\Importers</Filter>
     </ClCompile>
+    <ClCompile Include="MeshImporter.cpp">
+      <Filter>Tools\Importers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -478,6 +481,9 @@
       <Filter>Tools\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Importer.h">
+      <Filter>Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshImporter.h">
       <Filter>Tools\Importers</Filter>
     </ClInclude>
   </ItemGroup>
