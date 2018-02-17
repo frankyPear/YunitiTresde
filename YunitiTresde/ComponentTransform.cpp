@@ -84,10 +84,11 @@ bool ComponentTransform::PreUpdate()
 	return true;
 }
 
-bool ComponentTransform::Update()
+bool ComponentTransform::Update(GameObject* obj)
 {
 	BROFILER_CATEGORY("ComponentTransform Update", Profiler::Color::Azure);
-	if (updateTrans) {
+	ComponentTransform* ct = (ComponentTransform*)obj->GetComponent(TRANSFORMATION);
+	if (updateTrans && ct!=nullptr) {
 		UpdateTransform();
 		updateTrans = false;
 	}
@@ -174,7 +175,10 @@ void ComponentTransform::OnEditor(GameObject* obj)
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, 0.8f, 0.8f));
 		if (ImGui::Button("Delete"))
 		{
-			//obj->OnDestroy();
+			obj->OnDestroy();
+			//Not working
+			delete obj;
+			obj = nullptr;
 		}
 		ImGui::PopStyleColor(3);
 		ImGui::PopID();

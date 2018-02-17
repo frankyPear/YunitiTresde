@@ -15,7 +15,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update();
+	bool Update(GameObject* obj);
 
 	bool PostUpdate();
 

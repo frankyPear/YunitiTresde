@@ -146,7 +146,12 @@ void ModuleScene::Hierarchy()
 	{
 	//	std::vector<static bool> selected;
 		std::string  c = "Game Object " + std::to_string(i + 1);
-		
+		//Update vector
+		if (sceneObjects_[i] == nullptr)
+		{
+			sceneObjects_.erase(sceneObjects_.begin()+i);
+		}
+		//---
 		if (ImGui::Selectable((c.c_str()), &selected))
 		{
 			for (int j = 0; j < sceneObjects_.size(); j++)
@@ -176,7 +181,7 @@ void ModuleScene::ShowImguiStatus() {
 				if (ct != nullptr)
 				{
 					ct->OnEditor(sceneObjects_[i]);
-					ct->Update();
+					ct->Update(sceneObjects_[i]);
 
 				}
 
