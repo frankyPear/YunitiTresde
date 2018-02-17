@@ -23,7 +23,10 @@ public:
 
 	bool DisplayImgUINode();
 
-	void OnEditor();
+	void OnEditor(ComponentTransform* ct);
+
+	void EditTransform(float* TransposedMatrix, float* Position, float* Rotation, float* Scale);
+	void Perspective(float fovyInDegrees, float aspectRatio, float znear, float zfar, float *m16);
 
 #pragma region Getters
 
