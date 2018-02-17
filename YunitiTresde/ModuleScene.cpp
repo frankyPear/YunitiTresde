@@ -149,7 +149,12 @@ void ModuleScene::Hierarchy()
 	{
 	//	std::vector<static bool> selected;
 		std::string  c = "Game Object " + std::to_string(i + 1);
-		
+		//Update vector
+		if (sceneObjects_[i] == nullptr)
+		{
+			sceneObjects_.erase(sceneObjects_.begin()+i);
+		}
+		//---
 		if (ImGui::Selectable((c.c_str()), &selected))
 		{
 			for (int j = 0; j < sceneObjects_.size(); j++)
@@ -174,17 +179,21 @@ void ModuleScene::ShowImguiStatus() {
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
 			if (sceneObjects_[i]->isSelected)
-
 			{
 				ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 				if (ct != nullptr)
 				{
-					ct->OnEditor(ct);
-					ImGuizmo::BeginFrame();
+//<<<<<<< develop
+					ct->OnEditor(sceneObjects_[i]);
+					ct->Update(sceneObjects_[i]);
+//=======
+//					ct->OnEditor(ct);
+//					ImGuizmo::BeginFrame();
 
 					// debug
 
-					ct->Update();
+//					ct->Update();
+//>>>>>>> feature-MousePicking-FP
 
 				}
 

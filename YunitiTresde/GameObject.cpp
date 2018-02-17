@@ -14,15 +14,16 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-
-	unsigned int componentsSize = _components.size();
+	//ADDED IN ON DESTROY
+	/*unsigned int componentsSize = _components.size();
 	int *d;
-	
-	for (unsigned int i = 0; i < componentsSize; i++) 
-		RELEASE(_components[i]);
-	
-	_components.clear();
 
+	for (unsigned int i = 0; i < componentsSize; i++)
+		RELEASE(_components[i]);
+
+	_components.clear();*/
+	
+	//---
 	OnDestroy();
 }
 
@@ -39,7 +40,13 @@ if (cm != nullptr)
 
 void GameObject::OnDestroy()
 {
+	unsigned int componentsSize = _components.size();
+	int *d;
 
+	for (unsigned int i = 0; i < componentsSize; i++)
+		RELEASE(_components[i]);
+
+	_components.clear();
 }
 
 bool GameObject::PreUpdate()

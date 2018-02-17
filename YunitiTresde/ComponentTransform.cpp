@@ -132,10 +132,11 @@ bool ComponentTransform::PreUpdate()
 	return true;
 }
 
-bool ComponentTransform::Update()
+bool ComponentTransform::Update(GameObject* obj)
 {
 	BROFILER_CATEGORY("ComponentTransform Update", Profiler::Color::Azure);
-	if (updateTrans) {
+	ComponentTransform* ct = (ComponentTransform*)obj->GetComponent(TRANSFORMATION);
+	if (updateTrans && ct!=nullptr) {
 		UpdateTransform();
 		updateTrans = false;
 	}
@@ -184,7 +185,11 @@ void ComponentTransform::ForceUpdate()
 	updateTrans = true;
 }
 
-void ComponentTransform::OnEditor(ComponentTransform* ct)
+//<<<<<<< develop
+void ComponentTransform::OnEditor(GameObject* obj)
+//=======
+//void ComponentTransform::OnEditor(ComponentTransform* ct)
+//>>>>>>> feature-MousePicking-FP
 {
 	if (ImGui::TreeNode("Transform"))
 	{
@@ -204,6 +209,7 @@ void ComponentTransform::OnEditor(ComponentTransform* ct)
 		{
 			updateTrans = true;
 		}
+		ImGui::Separator();
 
 		if (ImGui::Button("Reset"))
 		{
@@ -212,19 +218,40 @@ void ComponentTransform::OnEditor(ComponentTransform* ct)
 			_rotationEulerAngles = float3::zero;
 			updateTrans = true;
 		}
-		float* TransposedMatrix = ct->GetLocalTransform().Transposed().ptr();
-		float* Position = ct->GetPosition().ptr();
-		float* Rotation = ct->GetQuatRotation().ptr();
-		float* Scale = ct->GetQuatRotation().ptr();
+//<<<<<<< develop
+		//---
+		uint i = 0;
+		ImGui::SameLine();
+		ImGui::PushID(i = 0);
+		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(i / 7.0f, 0.6f, 0.6f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(i / 7.0f, 0.7f, 0.7f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, 0.8f, 0.8f));
+		if (ImGui::Button("Delete Game Object"))
+		{
+			obj->OnDestroy();
+			//Not working---
+			delete obj;
+			obj = nullptr;
+			//--------
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::PopID();
 
-		EditTransform(TransposedMatrix, Position, Rotation, Scale);
+//=======
+//		float* TransposedMatrix = ct->GetLocalTransform().Transposed().ptr();
+//		float* Position = ct->GetPosition().ptr();
+//		float* Rotation = ct->GetQuatRotation().ptr();
+//		float* Scale = ct->GetQuatRotation().ptr();
+
+//		EditTransform(TransposedMatrix, Position, Rotation, Scale);
 
 		
+//>>>>>>> feature-MousePicking-FP
 		ImGui::TreePop();
 	}
 
 }
-void ComponentTransform::EditTransform(float * TransposedMatrix, float * Position, float * Rotation, float * Scale)
+/*void ComponentTransform::EditTransform(float * TransposedMatrix, float * Position, float * Rotation, float * Scale)
 {
 	MySequence mySequence;
 	mySequence.mFrameCount = 100;
@@ -314,5 +341,5 @@ void ComponentTransform::EditTransform(float * TransposedMatrix, float * Positio
 	glClearColor(0.45f, 0.4f, 0.4f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	//ImGui::Render();
-}
+}*/
 
