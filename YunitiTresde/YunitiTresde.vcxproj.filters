@@ -184,6 +184,9 @@
     <ClCompile Include="imgui-1.53\ImSequencer.cpp">
       <Filter>Tools\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="Importer.cpp">
+      <Filter>Tools\Importers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -474,6 +477,9 @@
     <ClInclude Include="imgui-1.53\ImSequencer.h">
       <Filter>Tools\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Importer.h">
+      <Filter>Tools\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -511,6 +517,9 @@
     </Filter>
     <Filter Include="Tools\Brofiler\lib">
       <UniqueIdentifier>{b5782891-7807-4d87-8f82-f30dffc4abc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Importers">
+      <UniqueIdentifier>{e9239b5b-2959-41fa-b6d2-04c970c5679e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
