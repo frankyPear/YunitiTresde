@@ -18,7 +18,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
 #include "ModuleCamera.h"
-
+#include "MeshImporter.h"
 #include <map>
 
 #define BOX_SIZE 20.0f
@@ -63,8 +63,10 @@ bool ModuleScene::Init()
 		sceneObjects_.push_back(object);
 		offset += offset;
 		object->SetId(i+1);
-	}
-	m.Load("../Resources/BakerHouse.fbx");
+
+	}*/
+	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
+
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -97,7 +99,11 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-	//m.Draw();
+
+
+	mesh1->Draw();
+
+
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
 			quadtree->Clear();
