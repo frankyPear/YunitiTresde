@@ -32,10 +32,10 @@ void GameObject::OnStart()
 	//Seting BB starting values
 	axisBoundingBox_.SetNegativeInfinity();
 	ComponentMesh* cm = (ComponentMesh*)this->GetComponent(MESH);
-if (cm != nullptr)
-{
+	if (cm != nullptr)
+	{
 	//axisBoundingBox_.Enclose((float3*)cm->GetMeshVertices(), 8);
-}
+	}
 }
 
 void GameObject::OnDestroy()

@@ -67,6 +67,13 @@ void CustomQuadTree::Intersect(std::vector<GameObject*>& toTest, const Frustum& 
 	if (root_ != nullptr) root_->NodeIntersect(toTest, camFrustum);
 }
 
+void CustomQuadTree::Intersect(std::vector<GameObject*>& toTest, const Ray& ray)
+{
+	if (root_ != nullptr) root_->NodeIntersect(toTest, ray);
+}
+
+
+
 void CustomQuadTree::DrawBox()
 {
 	if (root_ != nullptr) root_->DrawNodeBox();
@@ -141,12 +148,29 @@ void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const F
 		}
 		if (!child_nodes_.empty()) {
 			  for (int i = 0; i < 4; ++i) child_nodes_[i]->NodeIntersect(toTest, camFrustum);
-		  }
-  }
-
-
+	    }
+    }
 }
 
+
+
+void CustomQuadTreeNode::NodeIntersect(std::vector<GameObject*>& toTest, const Ray& ray)
+{
+	if (ray.Intersects(box_)) {
+		list<GameObject*>::iterator it;
+		for (it = objectsInBox_.begin(); it != objectsInBox_.end(); ++it) {
+			bool found = false;
+			for (int i = 0; i < toTest.size(); ++i) {
+				if (toTest[i] == *it) found = true;
+			}
+			if (!found) toTest.push_back(*it);
+		}
+		if (!child_nodes_.empty()) {
+			for (int i = 0; i < 4; ++i) child_nodes_[i]->NodeIntersect(toTest, ray);
+		}
+	}
+
+}
 
 void CustomQuadTreeNode::ReallocateChilds()
 {

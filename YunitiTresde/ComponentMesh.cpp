@@ -29,6 +29,9 @@ ComponentMesh::ComponentMesh(Shape shape) {
 			meshtexcoords = sphere->GetTexcoords();
 			meshindices = sphere->GetIndices();
 			meshcolors = sphere->GetColors();
+			meshBoundingBox = new AABB();
+			meshBoundingBox->SetNegativeInfinity();
+			(*meshBoundingBox).Enclose(sphere->GetSphereBB());
 			break;
 		case CUBE:
 			cube = new Cube();
@@ -37,7 +40,10 @@ ComponentMesh::ComponentMesh(Shape shape) {
 			meshtexcoords = cube->GetTexcoords();
 			meshindices = cube->GetIndices();
 			meshcolors = cube->GetColors();
-				break;
+			meshBoundingBox = new AABB();
+			meshBoundingBox->SetNegativeInfinity();
+			(*meshBoundingBox).Enclose(cube->GetCubeBB());
+			break;
 	}
 	type = MESH;
 	meshShape = shape;
@@ -129,16 +135,7 @@ bool ComponentMesh::OnEditor() {
 }
 
 AABB* ComponentMesh::GetBoundingBox() const {
-	AABB* res = nullptr;
-	switch (meshShape) {
-	case CUBE:
-		res = &cube->GetCubeBB();
-		break;
-	case SPHERE:
-		res = &sphere->GetSphereBB();
-		break;
-	}
-	return res;
+	return meshBoundingBox;
 }
 
 bool ComponentMesh::CheckRayIntersectsMesh(Ray r, float &distance)

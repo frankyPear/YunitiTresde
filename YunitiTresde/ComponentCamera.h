@@ -42,6 +42,7 @@ public:
 
 private:
 	Frustum frustum_;
+
 	float aspectRatio_;
 	bool drawFrustumEnabled_;
 	bool frustrumCulling_;

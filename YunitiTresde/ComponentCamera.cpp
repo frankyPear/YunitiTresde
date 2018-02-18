@@ -2,6 +2,9 @@
 #include "OpenGL.h"
 #include "GameObject.h"
 #include "Brofiler\include\Brofiler.h"
+#include "imgui-1.53\imgui.h"
+#include "imgui-1.53\imgui_impl_sdl_gl3.h"
+
 ComponentCamera::ComponentCamera()
 {
 	frustum_ = Frustum();
@@ -14,7 +17,7 @@ ComponentCamera::ComponentCamera()
 	frustum_.farPlaneDistance = 30.0f;
 	frustum_.verticalFov = DegToRad(60.0f);
 	frustum_.horizontalFov = DegToRad(80.0f);
-	drawFrustumEnabled_ = true;
+	drawFrustumEnabled_ = false;
 	frustrumCulling_ = false;
 	type = CAMERA;
 }
@@ -52,6 +55,43 @@ bool ComponentCamera::Destroy()
 
 bool ComponentCamera::OnEditor()
 {
+	float verticalFOV = RadToDeg(GetFrustum()->verticalFov);
+	float nearDist = GetFrustum()->nearPlaneDistance;
+	float farDist = GetFrustum()->farPlaneDistance;
+	if (ImGui::TreeNodeEx("Component Camera"))
+	{
+		ImGui::Text("FOV:");
+		if (ImGui::DragFloat("Vertical", &verticalFOV, 0.05f, 30, 120, "%.2f"))
+		{
+			SetFOV(verticalFOV);
+			SetAspectRatio();
+		}
+		ImGui::Separator();
+
+		ImGui::Text("Near distance:");
+		if (ImGui::DragFloat("ZNear", &nearDist, 0.05f, 0.1f, 5.0f, "%.2f"))
+		{
+			SetPlaneDistances(nearDist,farDist);
+		}
+		ImGui::Separator();
+
+		ImGui::Text("Far distance: ");
+		if (ImGui::DragFloat("ZFar", &farDist, 0.05f, 10, 1500, "%.2f"))
+		{
+			SetPlaneDistances(nearDist, farDist);
+		}
+		ImGui::Separator();
+
+		if (ImGui::Checkbox("Draw frustum", &drawFrustumEnabled_))
+		{
+
+		}
+		if (ImGui::Button("Delete Component"))
+		{
+			to_be_destroyed = true;
+		}
+		ImGui::TreePop();
+	}
 	return true;
 }
 
