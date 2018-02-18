@@ -61,6 +61,7 @@ bool ModuleScene::Init()
 		object->SetId(i+1);
 	}*/
 	m.Load("../Resources/BakerHouse.fbx");
+	m.LoadTexture("../Resources/Baker_house.png");
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -184,9 +185,15 @@ void ModuleScene::ShowImguiStatus() {
 				if (ct != nullptr)
 				{
 //<<<<<<< develop
+					wantToDelete = false;
 					ct->OnEditor(sceneObjects_[i]);
-					ct->Update(sceneObjects_[i]);
-//=======
+					if (wantToDelete) {
+						sceneObjects_.erase(sceneObjects_.begin() + i);
+					}
+					else {
+						ct->Update(sceneObjects_[i]);
+					}
+						//=======
 //					ct->OnEditor(ct);
 //					ImGuizmo::BeginFrame();
 

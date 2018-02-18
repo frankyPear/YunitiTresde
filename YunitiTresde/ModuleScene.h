@@ -46,6 +46,7 @@ public:
 
 	uint imguiCollisionTest = 0;
 	uint imguiCollisionTestQuadtree = 0;
+	bool wantToDelete = false;
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;
@@ -54,6 +55,7 @@ private:
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
+
 	bool accelerateFrustumCulling = false;
 	std::string loadPath;
 

@@ -229,10 +229,9 @@ void ComponentTransform::OnEditor(GameObject* obj)
 		if (ImGui::Button("Delete Game Object"))
 		{
 			obj->OnDestroy();
-			//Not working---
 			delete obj;
 			obj = nullptr;
-			//--------
+			App->scene->wantToDelete = true;
 		}
 		ImGui::PopStyleColor(3);
 		ImGui::PopID();
