@@ -1,17 +1,13 @@
+/*
+NOT IN USE, IN FUTURE USE INSTEAD OF aiMesh*
+*/
+
 #ifndef _RESOURCEMESH_H_
 #define _RESOURCEMESH_H_
 
 
 #include "Globals.h"
 #include "Resource.h"
-
-static enum BUFFERS
-{
-	VERTEX_BUFFER,
-	TEXCOORD_BUFFER,
-	NORMAL_BUFFER,
-	INDEX_BUFFER
-};
 
 
 class ResourceMesh : public Resource

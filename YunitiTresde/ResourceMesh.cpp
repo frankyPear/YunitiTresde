@@ -1,5 +1,6 @@
-//ResourceMesh file store all the information of the Mesh
-//
+//--------------
+//ResourceMesh file store all the information of the Mesh ** NOT IN USE**
+//------------
 
 #include "ResourceMesh.h"
 

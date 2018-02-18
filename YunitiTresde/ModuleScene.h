@@ -10,6 +10,7 @@
 class GameObject;
 class Mesh;
 class Quadtree;
+class MeshImporter;
 
 class ModuleScene : public Module
 {
@@ -61,7 +62,7 @@ private:
 	std::vector<GameObject*> sceneObjects_;
 	std::vector<GameObject*> objectToDraw_;
 
-	Model m;
+	MeshImporter* mesh1;
 };
 
 #endif
