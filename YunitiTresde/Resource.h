@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include <string>
 
-class Config;
+
 
 class Resource
 {

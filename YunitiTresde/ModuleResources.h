@@ -18,9 +18,9 @@ public:
 
 protected:
 #pragma region Callbacks
-	void OnSaveResource(Config &config)const;
+	//void OnSaveResource(Config &config)const;
 
-	void OnLoadResource(Config *config);
+	//void OnLoadResource(Config *config);
 #pragma endregion
 
 private:

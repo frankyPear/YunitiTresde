@@ -21,11 +21,11 @@ Resource * ModuleResources::Get(uid resourceId)
 	return it != _resources.end() ? it->second : nullptr;
 }
 
-void ModuleResources::OnSaveResource(Config & config) const
-{
-	//config.
-}
+//void ModuleResources::OnSaveResource(Config & config) const
+//{
+//	//config.
+//}
 
-void ModuleResources::OnLoadResource(Config * config)
-{
-}
+//void ModuleResources::OnLoadResource(Config * config)
+//{
+//}
