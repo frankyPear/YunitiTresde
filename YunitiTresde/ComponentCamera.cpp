@@ -55,9 +55,9 @@ bool ComponentCamera::Destroy()
 
 bool ComponentCamera::OnEditor()
 {
-	float verticalFOV = RadToDeg(GetFrustum()->verticalFov);
-	float nearDist = GetFrustum()->nearPlaneDistance;
-	float farDist = GetFrustum()->farPlaneDistance;
+	float verticalFOV = RadToDeg(frustum_.verticalFov);
+	float nearDist = frustum_.nearPlaneDistance;
+	float farDist = frustum_.farPlaneDistance;
 	if (ImGui::TreeNodeEx("Component Camera"))
 	{
 		ImGui::Text("FOV:");
@@ -82,10 +82,7 @@ bool ComponentCamera::OnEditor()
 		}
 		ImGui::Separator();
 
-		if (ImGui::Checkbox("Draw frustum", &drawFrustumEnabled_))
-		{
-
-		}
+		if (ImGui::Checkbox("Draw frustum", &drawFrustumEnabled_));
 		if (ImGui::Button("Delete Component"))
 		{
 			to_be_destroyed = true;
@@ -151,6 +148,12 @@ float3  ComponentCamera::GetUp() const
 {
 	return frustum_.up;
 }
+
+float ComponentCamera::GetFOV() const
+{
+	return RadToDeg(frustum_.verticalFov);
+}
+
 
 void ComponentCamera::SetFront(float3 newFront)
 {

@@ -310,7 +310,7 @@ void ModuleRenderer::Draw(GameObject *obj) {
 		if (checkDebugMode_)
 		{
 			//Draw BB ---------------
-			cm->GetBoundingBox()->TransformAsAABB(ct->GetGlobalTransform());
+			//cm->GetBoundingBox()->TransformAsAABB(ct->GetGlobalTransform());
 			cm->GetBoundingBox()->GetCornerPoints(corners);
 
 

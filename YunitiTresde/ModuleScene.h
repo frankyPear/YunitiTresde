@@ -39,11 +39,10 @@ public:
 	void CreateRay(float2 screenPoint);
 	
 public:
-	bool recalcTree = false;
 	ComponentCamera *actualCamera = nullptr;
 	uint imguiFlag = 0;
 	bool recreateQuadTree = false;
-
+	bool drawQuadTree = false;
 	uint imguiCollisionTest = 0;
 	uint imguiCollisionTestQuadtree = 0;
 private:

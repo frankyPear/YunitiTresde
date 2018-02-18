@@ -34,6 +34,7 @@ public:
 	float3 GetFront() const;
 	float3 GetWorldRight() const;
 	float3 GetUp() const;
+	float GetFOV() const;
 
 	void DrawFrustum();
 	void NormalizeUp();

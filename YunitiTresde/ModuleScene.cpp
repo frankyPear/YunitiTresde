@@ -105,13 +105,14 @@ update_status ModuleScene::Update(float dt)
 			limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
 			quadtree->Create(limits);
 			for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+			recreateQuadTree = false;
 		}
 		quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 		for (int i = 0; i < objectToDraw_.size(); i++)
 		{
 			objectToDraw_[i]->DrawObjectAndChilds();
 		}
-		quadtree->DrawBox();
+		if (drawQuadTree)quadtree->DrawBox();
 		objectToDraw_.clear();
 	}
 	else {
@@ -206,26 +207,41 @@ void ModuleScene::ShowImguiStatus() {
 				{
 					cm->OnEditor();
 				}
-
-				ComponentMaterial *cmat = (ComponentMaterial*)sceneObjects_[i]->GetComponent(MATERIAL);
-				if (cmat != nullptr)
-				{
-					cmat->OnEditor();
-				}
 				ComponentCamera *ccam = (ComponentCamera*)sceneObjects_[i]->GetComponent(CAMERA);
 				if (ccam != nullptr)
 				{
 					ccam->OnEditor();
 					ccam->Update();
 				}
+				ComponentMaterial *cmat = (ComponentMaterial*)sceneObjects_[i]->GetComponent(MATERIAL);
+				if (cmat != nullptr)
+				{
+					cmat->OnEditor();
+				}
+
 			}
 
 		}
 	}
 	if (ImGui::CollapsingHeader("Settings"))
 	{
+		ImGui::Text("Renderer Settings");
+		if (ImGui::Checkbox("Accelerate Frustum Culling", &accelerateFrustumCulling));
+		if (ImGui::Button("Recalculate Quadtree")) 
+		{
+			recreateQuadTree = true;
+		}
+		if (ImGui::Checkbox("Draw Quadtree", &drawQuadTree));
+		float camfov = actualCamera->GetFOV();
+		if (ImGui::DragFloat("FOV", &camfov, 0.05f, 30, 120, "%.2f"))
+		{
+			actualCamera->SetFOV(camfov);
+		}
+		ImGui::Separator();
 		App->window->WindowImGui();
+		ImGui::Separator();
 		App->renderer->ConfigurationManager();
+
 	}
 	//TODO: COLOR PICKER FOR AMBIENT LIGHT
 	ImGui::End();
