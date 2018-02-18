@@ -272,6 +272,7 @@ bool ModuleRenderer::CleanUp() {
 
 	return ret;
 }
+
 void ModuleRenderer::Draw(GameObject *obj) {
 	assert(obj != nullptr);
 	ComponentTransform* ct = (ComponentTransform *)obj->GetComponent(TRANSFORMATION);
@@ -288,7 +289,7 @@ void ModuleRenderer::Draw(GameObject *obj) {
 		vector<GLfloat> vertex = cm->GetMeshVertices();
 		vector<GLubyte> indices = cm->GetMeshIndices();
 		vector<GLfloat> texcoords = cm->GetMeshTexcoords();
-	
+
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
@@ -304,170 +305,86 @@ void ModuleRenderer::Draw(GameObject *obj) {
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
 		}
-
 		Shape s = cm->GetShape();
+
+		if (checkDebugMode_)
+		{
+			//Draw BB ---------------
+			cm->GetBoundingBox()->TransformAsAABB(ct->GetGlobalTransform());
+			cm->GetBoundingBox()->GetCornerPoints(corners);
+
+
+			glColor3f(1.0f, .0f, .0f);
+
+			glLineWidth((GLfloat)3.0f);
+
+			glBegin(GL_LINES);
+
+			//TODO: improve this function
+			/*
+			11
+			2------------6
+			7     / |  3       / |   6
+			3------------7   |
+			|   |        |   |10
+			|12 |        |2  |
+			4 |   |     9  |   |
+			|   0------------4
+			| / 8        | /   5
+			1------------5
+			1
+			Near square (1,2,3,4)
+			Diagonals(5,6,7,8)
+			Far square(9,10,11,12)
+			*/
+
+			//1
+			glVertex3fv((GLfloat*)&corners[1]);
+			glVertex3fv((GLfloat*)&corners[5]);
+			//2
+			glVertex3fv((GLfloat*)&corners[5]);
+			glVertex3fv((GLfloat*)&corners[7]);
+			//3
+			glVertex3fv((GLfloat*)&corners[3]);
+			glVertex3fv((GLfloat*)&corners[7]);
+			//4
+			glVertex3fv((GLfloat*)&corners[1]);
+			glVertex3fv((GLfloat*)&corners[3]);
+			//5
+			glVertex3fv((GLfloat*)&corners[5]);
+			glVertex3fv((GLfloat*)&corners[4]);
+			//6
+			glVertex3fv((GLfloat*)&corners[7]);
+			glVertex3fv((GLfloat*)&corners[6]);
+			//7
+			glVertex3fv((GLfloat*)&corners[3]);
+			glVertex3fv((GLfloat*)&corners[2]);
+			//8
+			glVertex3fv((GLfloat*)&corners[1]);
+			glVertex3fv((GLfloat*)&corners[0]);
+			//9
+			glVertex3fv((GLfloat*)&corners[0]);
+			glVertex3fv((GLfloat*)&corners[4]);
+			//10
+			glVertex3fv((GLfloat*)&corners[4]);
+			glVertex3fv((GLfloat*)&corners[6]);
+			//11
+			glVertex3fv((GLfloat*)&corners[2]);
+			glVertex3fv((GLfloat*)&corners[6]);
+			//12
+			glVertex3fv((GLfloat*)&corners[0]);
+			glVertex3fv((GLfloat*)&corners[2]);
+			glEnd();
+			glLineWidth((GLfloat)1.0f);
+			glColor3f(1.0f, 1.0f, 1.0f);
+
+		}
 		switch (s) {
 		case CUBE:
-	
 			glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
-
-			if (checkDebugMode_)
-			{
-				//Draw BB ---------------
-				obj->axisBoundingBox_.Enclose(cm->cube->GetCubeBB());
-				obj->axisBoundingBox_.GetCornerPoints(corners);
-
-				glColor3f(1.0f, .0f, .0f);
-
-				glLineWidth((GLfloat)5.0f);
-
-				glBegin(GL_LINES);
-
-				//TODO: improve this function
-				/*
-				11
-				2------------6
-				7     / |  3       / |   6
-				3------------7   |
-				|   |        |   |10
-				|12 |        |2  |
-				4 |   |     9  |   |
-				|   0------------4
-				| / 8        | /   5
-				1------------5
-				1
-				Near square (1,2,3,4)
-				Diagonals(5,6,7,8)
-				Far square(9,10,11,12)
-				*/
-
-				//1
-				glVertex3fv((GLfloat*)&corners[1]);
-				glVertex3fv((GLfloat*)&corners[5]);
-				//2
-				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[7]);
-				//3
-				glVertex3fv((GLfloat*)&corners[3]);
-				glVertex3fv((GLfloat*)&corners[7]);
-				//4
-				glVertex3fv((GLfloat*)&corners[1]);
-				glVertex3fv((GLfloat*)&corners[3]);
-				//5
-				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[4]);
-				//6
-				glVertex3fv((GLfloat*)&corners[7]);
-				glVertex3fv((GLfloat*)&corners[6]);
-				//7
-				glVertex3fv((GLfloat*)&corners[3]);
-				glVertex3fv((GLfloat*)&corners[2]);
-				//8
-				glVertex3fv((GLfloat*)&corners[1]);
-				glVertex3fv((GLfloat*)&corners[0]);
-				//9
-				glVertex3fv((GLfloat*)&corners[0]);
-				glVertex3fv((GLfloat*)&corners[4]);
-				//10
-				glVertex3fv((GLfloat*)&corners[4]);
-				glVertex3fv((GLfloat*)&corners[6]);
-				//11
-				glVertex3fv((GLfloat*)&corners[2]);
-				glVertex3fv((GLfloat*)&corners[6]);
-				//12
-				glVertex3fv((GLfloat*)&corners[0]);
-				glVertex3fv((GLfloat*)&corners[2]);
-
-
-
-				glEnd();
-				glLineWidth((GLfloat)1.0f);
-				glColor3f(1.0f, 1.0f, 1.0f);
-
-
-			}
-		//---------------------
-
 			break;
 		case SPHERE:
 			glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
-
-			if (checkDebugMode_)
-			{
-				//Draw BB ---------------
-				obj->axisBoundingBox_.Enclose(cm->sphere->GetSphereBB());
-				obj->axisBoundingBox_.GetCornerPoints(corners);
-
-				glColor3f(1.0f, .0f, .0f);
-
-				glLineWidth((GLfloat)3.0f);
-
-				glBegin(GL_LINES);
-
-				//TODO: improve this function
-				/*
-				           11
-				     2------------6
-			 7     / |  3       / |   6
-				 3------------7   |
-				 |   |        |   |10
-				 |12 |        |2  |
-			   4 |   |     9  |   |
-				 |   0------------4
-				 | / 8        | /   5
-				 1------------5 
-						1
-						Near square (1,2,3,4)
-						Diagonals(5,6,7,8)
-						Far square(9,10,11,12)
-				*/
-
-				//1
-				glVertex3fv((GLfloat*)&corners[1]);
-				glVertex3fv((GLfloat*)&corners[5]);
-				//2
-				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[7]);
-				//3
-				glVertex3fv((GLfloat*)&corners[3]);
-				glVertex3fv((GLfloat*)&corners[7]);
-				//4
-				glVertex3fv((GLfloat*)&corners[1]);
-				glVertex3fv((GLfloat*)&corners[3]);
-				//5
-				glVertex3fv((GLfloat*)&corners[5]);
-				glVertex3fv((GLfloat*)&corners[4]);
-				//6
-				glVertex3fv((GLfloat*)&corners[7]);
-				glVertex3fv((GLfloat*)&corners[6]);
-				//7
-				glVertex3fv((GLfloat*)&corners[3]);
-				glVertex3fv((GLfloat*)&corners[2]);
-				//8
-				glVertex3fv((GLfloat*)&corners[1]);
-				glVertex3fv((GLfloat*)&corners[0]);
-				//9
-				glVertex3fv((GLfloat*)&corners[0]);
-				glVertex3fv((GLfloat*)&corners[4]);
-				//10
-				glVertex3fv((GLfloat*)&corners[4]);
-				glVertex3fv((GLfloat*)&corners[6]);
-				//11
-				glVertex3fv((GLfloat*)&corners[2]);
-				glVertex3fv((GLfloat*)&corners[6]);
-				//12
-				glVertex3fv((GLfloat*)&corners[0]);
-				glVertex3fv((GLfloat*)&corners[2]);
-
-
-
-				glEnd();
-				glLineWidth((GLfloat)1.0f);
-				glColor3f(1.0f, 1.0f, 1.0f);
-
-			}
-
-
 			break;
 		}
 
@@ -475,11 +392,8 @@ void ModuleRenderer::Draw(GameObject *obj) {
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
+
+		glPopMatrix();
 	}
-	
-
-
-	glPopMatrix();
-
 }
 

@@ -36,31 +36,37 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
-	/*GameObject *object1 = new GameObject();
+	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
 	object1->AddComponent(cm1);
 	object1->AddComponent(ct1);
+	object1->SetStatic(true);
 	root->AddChild(object1);
 	sceneObjects_.push_back(object1);
 	float offset = -2.0f;
 	float xoff[16] = {20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0};
 	float zoff[16] = {20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10};
-  	for (int i = 0; i < 12; ++i) 
+  	for (int i = 0; i < 1; ++i) 
 	{
 		GameObject *object = new GameObject();
 		ComponentMesh *cm = new ComponentMesh(CUBE);
 		ComponentTransform *ct = new ComponentTransform(float3(0.0f+xoff[i], 0.0f, 0.0f+zoff[i]), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 		ComponentMaterial *material = new ComponentMaterial(object);
+		ComponentCamera *camera = new ComponentCamera();
 		object->AddComponent(cm);
 		object->AddComponent(ct);
 		object->AddComponent(material);
+		object->AddComponent(camera);
+		object->SetStatic(true);
 		root->AddChild(object);
 		sceneObjects_.push_back(object);
 		offset += offset;
 		object->SetId(i+1);
+
 	}*/
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
+
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -94,7 +100,9 @@ update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
 
+
 	mesh1->Draw();
+
 
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
@@ -209,6 +217,12 @@ void ModuleScene::ShowImguiStatus() {
 				if (cmat != nullptr)
 				{
 					cmat->OnEditor();
+				}
+				ComponentCamera *ccam = (ComponentCamera*)sceneObjects_[i]->GetComponent(CAMERA);
+				if (ccam != nullptr)
+				{
+					ccam->OnEditor();
+					ccam->Update();
 				}
 			}
 
@@ -338,13 +352,12 @@ void ModuleScene::CreateRay(float2 screenPoint)
 {
 	std::map<float, GameObject*> objectsByDistance;
 	float2 normalizedPoint = actualCamera->GetFrustum()->ScreenToViewportSpace(screenPoint, SCREEN_WIDTH, SCREEN_HEIGHT);
-	//LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
 	LineSegment ls = actualCamera->GetFrustum()->UnProjectLineSegment(normalizedPoint.x, normalizedPoint.y);
 	Ray ray = Ray(ls);
 	LOG("Entered click and casted ray");
 	std::vector<GameObject*> intersections;
 	std::vector<GameObject*> objectlist;
-	if (accelerateFrustumCulling) quadtree->Intersect(objectlist, *(actualCamera->GetFrustum()));
+	if (accelerateFrustumCulling) quadtree->Intersect(objectlist, ray);
 	else objectlist = sceneObjects_;
 	float dist = 25000.0f;
 	std::map<float, GameObject*>::iterator it = objectsByDistance.begin();

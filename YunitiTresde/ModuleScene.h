@@ -55,7 +55,7 @@ private:
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
-	bool accelerateFrustumCulling = false;
+	bool accelerateFrustumCulling = true;
 	std::string loadPath;
 
 	Timer saveLoadTimer;

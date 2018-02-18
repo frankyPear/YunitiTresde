@@ -36,7 +36,7 @@ public:
 	Shape meshShape;
 	Cube *cube = nullptr;
 	SolidSphere *sphere = nullptr;
-
+	AABB* meshBoundingBox = nullptr;
 
 	std::vector<GLfloat> meshvertices;
 	std::vector<GLfloat> meshnormals;

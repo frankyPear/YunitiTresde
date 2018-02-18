@@ -20,6 +20,8 @@ public:
 	void InsertInNode(GameObject* newAddition);
 	void EliminateNode(GameObject* toEliminate);
 	void NodeIntersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum);
+	void NodeIntersect(std::vector<GameObject*>& toTest, const Ray& ray);
+
 	void ReallocateChilds();
 	void DivideBox();
 	void DrawNodeBox();
@@ -42,6 +44,8 @@ public:
 	void Insert(GameObject *newAddition);
 	void Remove(GameObject *toRemove);
 	void Intersect(std::vector<GameObject*>& toTest, const Frustum& camFrustum);
+	void Intersect(std::vector<GameObject*>& toTest, const Ray& ray);
+
 	void DrawBox();
 
 public:
