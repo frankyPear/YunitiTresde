@@ -64,7 +64,7 @@ bool ModuleScene::Init()
 		offset += offset;
 		object->SetId(i+1);
 
-	}*/
+	}
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
 
 	actualCamera = App->cam->dummyCamera;
