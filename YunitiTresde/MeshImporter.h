@@ -26,7 +26,7 @@ public:
 
 		unsigned int elementCount;
 
-		MeshEntry(aiMesh* mesh);
+		MeshEntry(aiMesh* mesh, aiMaterial* material);
 		~MeshEntry();
 
 		void Load(aiMesh *mesh);
@@ -34,6 +34,7 @@ public:
 	};
 
 	std::vector<MeshEntry*> meshEntries;
+	std::vector<aiMaterial*> materials;
 
 public:
   	MeshImporter(const char* filePath);

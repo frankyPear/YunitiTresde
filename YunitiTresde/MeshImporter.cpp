@@ -16,7 +16,7 @@
 #pragma comment (lib, "assimp/libraries/assimp-vc140-mt.lib")
 
 
-MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh)
+MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh, aiMaterial* material)
 {
 	vbo[VERTEX_BUFFER] = NULL;
 	vbo[TEXCOORD_BUFFER] = NULL;
@@ -101,7 +101,11 @@ MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh)
 
 		delete[] indices;
 	}
-
+	if (mesh->mMaterialIndex!=-1)
+	{
+		
+		//glGenBuffers(1, )
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -137,14 +141,21 @@ void MeshImporter::MeshEntry::Draw() {
 MeshImporter::MeshImporter(const char *filePath)
 {
 	Assimp::Importer importer;
+	const aiString texturePath;
 	const aiScene *scene = importer.ReadFile(filePath, NULL);
 	if (!scene) {
 		printf("Unable to laod mesh: %s\n", importer.GetErrorString());
 	}
 
-	for (int i = 0; i < scene->mNumMeshes; ++i) {
-		meshEntries.push_back(new MeshImporter::MeshEntry(scene->mMeshes[i]));
+	for (int i = 0; i < scene->mNumMaterials; i++)
+	{
+		materials.push_back(scene->mMaterials[i]);
 	}
+	for (int i = 0; i < scene->mNumMeshes; ++i) {
+		meshEntries.push_back(new MeshImporter::MeshEntry(scene->mMeshes[i], materials[scene->mMeshes[i]->mMaterialIndex]));
+	}
+	
+
 }
 
 MeshImporter::~MeshImporter()
