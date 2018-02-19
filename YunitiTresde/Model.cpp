@@ -32,94 +32,74 @@ void Model::Load(const char* filepath)
 		LOG("SCENE LOADED");
 	}
 }
-GLuint Model::DevilImage(const char* theFileName)
-{
-	ILuint imageID;							
-	GLuint textureID;						
-	ILboolean success;						
-	ILenum error;							
 
-	ilGenImages(1, &imageID); 				
-	ilBindImage(imageID); 					
-	success = ilLoadImage(theFileName); 	
-
-											
-	if (!success)
-	{
-		ilBindImage(0);
-		error = ilGetError();
-		return 0;
-	}
-	ILinfo ImageInfo;
-	iluGetImageInfo(&ImageInfo);
-	if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
-	{
-		iluFlipImage();
-	}
-	success = ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
-
-	if (!success)
-	{
-		error = ilGetError();
-		ilDeleteImages(1, &imageID);
-		ilBindImage(0);
-		return 0;
-	}
-
-	glGenTextures(1, &textureID);
-
-	glBindTexture(GL_TEXTURE_3D, textureID);
-
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	
-	glTexImage2D(GL_TEXTURE_2D,			
-		0,								
-		ilGetInteger(IL_IMAGE_BPP),		
-		ilGetInteger(IL_IMAGE_WIDTH),	
-		ilGetInteger(IL_IMAGE_HEIGHT),	
-		0,								
-		ilGetInteger(IL_IMAGE_FORMAT),	
-		GL_UNSIGNED_BYTE,				
-		ilGetData()						
-	);
-
-	glBindTexture(GL_TEXTURE_3D, GL_NONE);
-
-	ilDeleteImages(1, &imageID);
-	ilBindImage(0);
-
-	return textureID;	
-}
 void Model::LoadTexture(const char* filepath)
 {
+
 	ILboolean success;
 	//char* filesp = "../Resources/BakerHouse.fbx";
 	/* initialization of DevIL */
 	ilInit();
 	iluInit();
 	ilutInit();
-	int rootPathSize = strrchr(filepath, '/') - filepath + 1;
-	numTextureBufferIds = scene->mNumMaterials;
-	textureBufferIds = new unsigned int[numTextureBufferIds];
-	for (unsigned int m = 0; m < scene->mNumMaterials; ++m)
+	//GLuint iglId =ilutGLLoadImage((char*)filepath);
+	for (unsigned int m = 0; m<scene->mNumMaterials; ++m)
 	{
-		aiString aiPath;
-		scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, 0, &aiPath);
-		char* fullPath = new char[rootPathSize + aiPath.length + 1];
-		memcpy_s(fullPath, rootPathSize + aiPath.length + 1, filepath, rootPathSize);
-		memcpy_s(fullPath + rootPathSize, aiPath.length + 1, aiPath.data, aiPath.length);
-		fullPath[rootPathSize + aiPath.length] = '\0';
-		textureIdMap[aiPath.data] = 0;
-		textureBufferIds[m] = DevilImage(fullPath);
-		delete[] fullPath;
+		int texIndex = 0;
+		aiString path = (aiString)filepath;  // filename
+											 //texFound = scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path
+											 //	, &textmap, &uvInd, &blend, &op, mode);
+		aiReturn texFound = scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path);
+		while (texFound == AI_SUCCESS) {
+			GLuint iglId = ilutGLLoadImage((char*)filepath);
+			textureIdMap[path.data] = 0;
+			texIndex++;
+			texFound = scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path);
+		}
+	}
+	int numTextures = textureIdMap.size();
+
+	ILuint* imageIds = new ILuint[numTextures];
+	ilGenImages(numTextures, imageIds);
+
+	GLuint* textureIds = new GLuint[numTextures];
+	glGenTextures(numTextures, textureIds); /* Texture name generation */
+
+	std::map<std::string, GLuint>::iterator itr = textureIdMap.begin();
+	int i = 0;
+	for (; itr != textureIdMap.end(); ++i, ++itr)
+	{
+		//save IL image ID
+		std::string filename = (*itr).first;
+		(*itr).second = textureIds[i];
+
+		ilBindImage(imageIds[i]);
+		ilEnable(IL_ORIGIN_SET);
+		ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+		success = ilLoadImage(filepath);//(ILstring)filename.c_str());
+
+		if (success) {
+
+			ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+
+			glBindTexture(GL_TEXTURE_2D, textureIds[i]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ilGetInteger(IL_IMAGE_WIDTH),
+				ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE,
+				ilGetData());
+		}
+		else
+		{
+			LOG("PROBLEMS WITH THE IMAGE");
+		}
 	}
 
+	ilDeleteImages(numTextures, imageIds);
 
-	GLuint iglId =ilutGLLoadImage((char*)filepath);
+	//Cleanup
+	delete[] imageIds;
+	delete[] textureIds;
 
 	//ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	//
