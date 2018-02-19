@@ -227,6 +227,29 @@ void ModuleScene::ShowImguiStatus() {
 				{
 					cmat->OnEditor();
 				}
+				if (ImGui::CollapsingHeader("Add Component")) {
+					if (ImGui::Button("Component Material", ImVec2(150, 0)))
+					{
+						ComponentMaterial* CM = new ComponentMaterial(sceneObjects_[i]);
+						sceneObjects_[i]->AddComponent(CM);
+						ImGui::CloseCurrentPopup();
+
+					}
+					if (ImGui::Button("Component Mesh", ImVec2(150, 0)))
+					{
+						ComponentMesh* CM = new ComponentMesh(CUBE);
+						sceneObjects_[i]->AddComponent(CM);
+						ImGui::CloseCurrentPopup();
+					}
+					if (ImGui::Button("Component Camera", ImVec2(150, 0)))
+					{
+						ComponentCamera* CM = new ComponentCamera();
+						sceneObjects_[i]->AddComponent(CM);
+
+						ImGui::CloseCurrentPopup();
+					}
+
+				}
 
 			}
 

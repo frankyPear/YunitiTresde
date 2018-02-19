@@ -75,7 +75,6 @@ bool GameObject::PostUpdate()
 			toDestroy->Destroy();
 			delete toDestroy;
 		}
-
 		else {
 			(*it)->PostUpdate();
 			++it;
