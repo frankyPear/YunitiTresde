@@ -22,7 +22,7 @@ GameObject::~GameObject()
 		RELEASE(_components[i]);
 
 	_components.clear();*/
-	
+
 	//---
 	OnDestroy();
 }
@@ -34,14 +34,13 @@ void GameObject::OnStart()
 	ComponentMesh* cm = (ComponentMesh*)this->GetComponent(MESH);
 	if (cm != nullptr)
 	{
-	//axisBoundingBox_.Enclose((float3*)cm->GetMeshVertices(), 8);
+		//axisBoundingBox_.Enclose((float3*)cm->GetMeshVertices(), 8);
 	}
 }
 
 void GameObject::OnDestroy()
 {
 	unsigned int componentsSize = _components.size();
-	int *d;
 
 	for (unsigned int i = 0; i < componentsSize; i++)
 		RELEASE(_components[i]);
@@ -57,10 +56,10 @@ bool GameObject::PreUpdate()
 bool GameObject::Update()
 {
 	BROFILER_CATEGORY("ComponentTransform Update", Profiler::Color::Azure);
-	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();) {
-			(*it)->Update();		
+	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();++it) {
+		(*it)->Update();
 	}
-	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end();) {
+	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end();++it) {
 		(*it)->Update();
 	}
 	return true;
@@ -71,17 +70,18 @@ bool GameObject::PostUpdate()
 
 	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();) {
 		if ((*it)->to_be_destroyed) {
-			(*it)->Destroy();
-			delete *it;
-			*it = nullptr;
+			Component *toDestroy = *it;
 			it = _components.erase(it);
+			toDestroy->Destroy();
+			delete toDestroy;
 		}
 
 		else {
 			(*it)->PostUpdate();
+			++it;
 		}
 	}
-	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end();) {
+	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end();++it) {
 		(*it)->PostUpdate();
 	}
 	return true;
@@ -183,19 +183,10 @@ void GameObject::AddComponent(Component * component)
 
 void GameObject::DestroyComponent(Component * component)
 {
-	unsigned int componentsSize = _components.size();
-	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();){
-		if ((*it)->to_be_destroyed) {
-			(*it)->Destroy();
-
-			delete *it;
-			*it = nullptr;
-		}
-
-	}
+	component->to_be_destroyed = true;
 }
 
-Component* GameObject::GetComponent(Type t) 
+Component* GameObject::GetComponent(Type t)
 {
 	for (int i = 0; i < _components.size(); ++i)
 	{
@@ -206,11 +197,11 @@ Component* GameObject::GetComponent(Type t)
 	return nullptr;
 }
 
-void GameObject::ChildrenTransformUpdate() 
+void GameObject::ChildrenTransformUpdate()
 {
 	for (int i = 0; i < _childs.size(); ++i)
 	{
-		ComponentTransform *childTransform = (ComponentTransform*) _childs[i]->GetComponent(TRANSFORMATION);
+		ComponentTransform *childTransform = (ComponentTransform*)_childs[i]->GetComponent(TRANSFORMATION);
 		if (childTransform != nullptr) {
 			childTransform->UpdateTransform();
 			_childs[i]->ChildrenTransformUpdate();
@@ -218,7 +209,7 @@ void GameObject::ChildrenTransformUpdate()
 	}
 }
 
-void GameObject::DrawObjectAndChilds() 
+void GameObject::DrawObjectAndChilds()
 {
 	App->renderer->Draw(this);
 	for (int i = 0; i < _childs.size(); ++i) _childs[i]->DrawObjectAndChilds();
@@ -233,7 +224,7 @@ bool GameObject::CheckRayIntersection(Ray r, float &distance)
 		AABB newBox = *(cm->GetBoundingBox());
 		newBox.TransformAsAABB(ct->GetGlobalTransform());
 		r.Transform(ct->GetGlobalTransform().Inverted());
-		if(cm->CheckRayIntersectsMesh(r, distance)) return true;
+		if (cm->CheckRayIntersectsMesh(r, distance)) return true;
 	}
 	return false;
 }

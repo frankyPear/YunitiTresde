@@ -38,20 +38,20 @@ bool ModuleScene::Init()
 	root = new GameObject();
 	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
-	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f,0.0f,0.0f), float3(1.0f,1.0f,1.0f), Quat::identity);
+	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	object1->AddComponent(cm1);
 	object1->AddComponent(ct1);
 	object1->SetStatic(true);
 	root->AddChild(object1);
 	sceneObjects_.push_back(object1);
 	float offset = -2.0f;
-	float xoff[16] = {20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0};
-	float zoff[16] = {20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10};
-  	for (int i = 0; i < 1; ++i) 
+	float xoff[16] = { 20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0 };
+	float zoff[16] = { 20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10 };
+	for (int i = 0; i < 1; ++i)
 	{
 		GameObject *object = new GameObject();
 		ComponentMesh *cm = new ComponentMesh(CUBE);
-		ComponentTransform *ct = new ComponentTransform(float3(0.0f+xoff[i], 0.0f, 0.0f+zoff[i]), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+		ComponentTransform *ct = new ComponentTransform(float3(0.0f + xoff[i], 0.0f, 0.0f + zoff[i]), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 		ComponentMaterial *material = new ComponentMaterial(object);
 		ComponentCamera *camera = new ComponentCamera();
 		object->AddComponent(cm);
@@ -62,7 +62,7 @@ bool ModuleScene::Init()
 		root->AddChild(object);
 		sceneObjects_.push_back(object);
 		offset += offset;
-		object->SetId(i+1);
+		object->SetId(i + 1);
 
 	}
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
@@ -132,17 +132,20 @@ update_status ModuleScene::Update(float dt)
 				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
 			}
 		}
-}
-
+	}
+	if (root != nullptr)
+		root->Update();
 	//IMGUI
-Hierarchy();
-	
+	Hierarchy();
+
 
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleScene::PostUpdate(float dt)
 {
+	if (root != nullptr)
+		root->PostUpdate();
 	if (imguiFlag == SDL_SCANCODE_ESCAPE)
 	{
 		return UPDATE_STOP;
@@ -158,12 +161,12 @@ void ModuleScene::Hierarchy()
 	static bool selected = false;
 	for (int i = 0; i < sceneObjects_.size(); i++)
 	{
-	//	std::vector<static bool> selected;
+		//	std::vector<static bool> selected;
 		std::string  c = "Game Object " + std::to_string(i + 1);
 		//Update vector
 		if (sceneObjects_[i] == nullptr)
 		{
-			sceneObjects_.erase(sceneObjects_.begin()+i);
+			sceneObjects_.erase(sceneObjects_.begin() + i);
 		}
 		//---
 		if (ImGui::Selectable((c.c_str()), &selected))
@@ -182,7 +185,7 @@ void ModuleScene::Hierarchy()
 }
 
 void ModuleScene::ShowImguiStatus() {
-	ImGui::SetNextWindowPos(ImVec2(App->window->GetWidth()-300, 20));
+	ImGui::SetNextWindowPos(ImVec2(App->window->GetWidth() - 300, 20));
 	ImGui::SetNextWindowSize(ImVec2(300, 500));
 	ImGui::Begin("Scene Manager");
 	if (ImGui::CollapsingHeader("GameObjects"))
@@ -194,17 +197,17 @@ void ModuleScene::ShowImguiStatus() {
 				ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 				if (ct != nullptr)
 				{
-//<<<<<<< develop
+					//<<<<<<< develop
 					ct->OnEditor(sceneObjects_[i]);
 					ct->Update(sceneObjects_[i]);
-//=======
-//					ct->OnEditor(ct);
-//					ImGuizmo::BeginFrame();
+					//=======
+					//					ct->OnEditor(ct);
+					//					ImGuizmo::BeginFrame();
 
-					// debug
+										// debug
 
-//					ct->Update();
-//>>>>>>> feature-MousePicking-FP
+					//					ct->Update();
+					//>>>>>>> feature-MousePicking-FP
 
 				}
 
@@ -233,7 +236,7 @@ void ModuleScene::ShowImguiStatus() {
 	{
 		ImGui::Text("Renderer Settings");
 		if (ImGui::Checkbox("Accelerate Frustum Culling", &accelerateFrustumCulling));
-		if (ImGui::Button("Recalculate Quadtree")) 
+		if (ImGui::Button("Recalculate Quadtree"))
 		{
 			recreateQuadTree = true;
 		}
@@ -263,17 +266,17 @@ void ModuleScene::ImGuiMainMenu()
 			if (ImGui::BeginMenu("New"))
 			{
 				if (ImGui::Button("Game Object"))
-			
+
 					ImGui::OpenPopup("New Game Object");
-				
+
 				if (ImGui::BeginPopupModal("New Game Object", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 				{
-				
+
 					GameObject *object = new GameObject();
 					static bool cm;
 					static bool cam;
 					static bool cmaterial;
-					float pos[3] = {0,0,0};
+					float pos[3] = { 0,0,0 };
 					ImGui::Text("Hey there, you are creating an object");
 					ImGui::Separator();
 					ImGui::Text("What components do you want to add to your game object?");
@@ -282,13 +285,13 @@ void ModuleScene::ImGuiMainMenu()
 					if (ImGui::Checkbox("Component material", &cmaterial));
 					if (ImGui::InputFloat3("Position (Comming soon...)", (float*)pos, 2));
 					if (ImGui::Button("Create", ImVec2(120, 0)))
-					{ 
+					{
 						ImGui::CloseCurrentPopup();
 						CreateGameObject(object, cm, cam);
 					}
 					ImGui::SameLine();
 					if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-					
+
 					ImGui::EndPopup();
 				}
 
@@ -339,7 +342,7 @@ void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
 		ComponentCamera* CAM = new ComponentCamera();
 		obj->AddComponent(CAM);
 	}
-	
+
 	ComponentTransform *ct = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	obj->AddComponent(ct);
 
@@ -389,8 +392,8 @@ void ModuleScene::CreateRay(float2 screenPoint)
 				Ray aux = ray;
 				aux.Transform(ct->GetGlobalTransform().Inverted());
 				if (objectlist[i]->CheckRayIntersection(aux, dist)) {
-					objectsByDistance.insert(it, std::pair<float,GameObject*>(dist, objectlist[i]));
-					LOG("Ray intersected with object %i",objectlist[i]->GetId());
+					objectsByDistance.insert(it, std::pair<float, GameObject*>(dist, objectlist[i]));
+					LOG("Ray intersected with object %i", objectlist[i]->GetId());
 				}
 			}
 		}

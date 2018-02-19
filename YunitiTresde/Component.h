@@ -39,11 +39,11 @@ public:
 	}
 
 public:
-	bool to_be_destroyed;
+	bool to_be_destroyed=false;
 
 
 protected:
-	GameObject * linked_to;
+	GameObject * linked_to=nullptr;
 	Type type;
 	bool enabled;
 

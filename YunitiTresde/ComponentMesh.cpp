@@ -1,6 +1,7 @@
 #include "ComponentMesh.h"
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
+#include "GameObject.h"
 using namespace std;
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
