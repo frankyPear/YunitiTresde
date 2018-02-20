@@ -26,49 +26,49 @@ ComponentTransform::ComponentTransform(float3 position, float3 scale, Quat rotat
 ComponentTransform::~ComponentTransform()
 {
 }
-static const char* SequencerItemTypeNames[] = { "Camera","Music", "ScreenEffect", "FadeIn", "Animation" };
-struct MySequence : public ImSequencer::SequenceInterface
-{
-	// interface with sequencer
-
-	virtual int GetFrameCount() const { return mFrameCount; }
-	virtual int GetItemCount() const { return (int)myItems.size(); }
-
-	virtual int GetItemTypeCount() const { return sizeof(SequencerItemTypeNames) / sizeof(char*); }
-	virtual const char *GetItemTypeName(int typeIndex) const { return SequencerItemTypeNames[typeIndex]; }
-	virtual const char *GetItemLabel(int index) const
-	{
-		static char tmps[512];
-		sprintf_s(tmps, "[%02d] %s", index, SequencerItemTypeNames[myItems[index].mType]);
-		return tmps;
-	}
-
-	virtual void Get(int index, int** start, int** end, int *type, unsigned int *color)
-	{
-		MySequenceItem &item = myItems[index];
-		if (color)
-			*color = 0xFFAA8080; // same color for everyone, return color based on type
-		if (start)
-			*start = &item.mFrameStart;
-		if (end)
-			*end = &item.mFrameEnd;
-		if (type)
-			*type = item.mType;
-	}
-	virtual void Add(int type) { myItems.push_back(MySequenceItem{ type, 0, 10 }); };
-	virtual void Del(int index) { myItems.erase(myItems.begin() + index); }
-	virtual void Duplicate(int index) { myItems.push_back(myItems[index]); }
-
-	// my datas
-	MySequence() : mFrameCount(0) {}
-	int mFrameCount;
-	struct MySequenceItem
-	{
-		int mType;
-		int mFrameStart, mFrameEnd;
-	};
-	std::vector<MySequenceItem> myItems;
-};
+//static const char* SequencerItemTypeNames[] = { "Camera","Music", "ScreenEffect", "FadeIn", "Animation" };
+//struct MySequence : public ImSequencer::SequenceInterface
+//{
+//	// interface with sequencer
+//
+//	virtual int GetFrameCount() const { return mFrameCount; }
+//	virtual int GetItemCount() const { return (int)myItems.size(); }
+//
+//	virtual int GetItemTypeCount() const { return sizeof(SequencerItemTypeNames) / sizeof(char*); }
+//	virtual const char *GetItemTypeName(int typeIndex) const { return SequencerItemTypeNames[typeIndex]; }
+//	virtual const char *GetItemLabel(int index) const
+//	{
+//		static char tmps[512];
+//		sprintf_s(tmps, "[%02d] %s", index, SequencerItemTypeNames[myItems[index].mType]);
+//		return tmps;
+//	}
+//
+//	virtual void Get(int index, int** start, int** end, int *type, unsigned int *color)
+//	{
+//		MySequenceItem &item = myItems[index];
+//		if (color)
+//			*color = 0xFFAA8080; // same color for everyone, return color based on type
+//		if (start)
+//			*start = &item.mFrameStart;
+//		if (end)
+//			*end = &item.mFrameEnd;
+//		if (type)
+//			*type = item.mType;
+//	}
+//	virtual void Add(int type) { myItems.push_back(MySequenceItem{ type, 0, 10 }); };
+//	virtual void Del(int index) { myItems.erase(myItems.begin() + index); }
+//	virtual void Duplicate(int index) { myItems.push_back(myItems[index]); }
+//
+//	// my datas
+//	MySequence() : mFrameCount(0) {}
+//	int mFrameCount;
+//	struct MySequenceItem
+//	{
+//		int mType;
+//		int mFrameStart, mFrameEnd;
+//	};
+//	std::vector<MySequenceItem> myItems;
+//};
 math::float3 ComponentTransform::GetPosition() const
 {
 	return _position;
@@ -253,13 +253,13 @@ void ComponentTransform::OnEditor(GameObject* obj)
 }
 void ComponentTransform::EditTransform(float * TransposedMatrix, float * Position, float * Rotation, float * Scale)
 {
-	MySequence mySequence;
-	mySequence.mFrameCount = 100;
-	mySequence.myItems.push_back(MySequence::MySequenceItem{ 0, 10, 30 });
-	mySequence.myItems.push_back(MySequence::MySequenceItem{ 1, 20, 30 });
-	mySequence.myItems.push_back(MySequence::MySequenceItem{ 3, 12, 60 });
-	mySequence.myItems.push_back(MySequence::MySequenceItem{ 2, 61, 90 });
-	mySequence.myItems.push_back(MySequence::MySequenceItem{ 4, 90, 99 });
+	//MySequence mySequence;
+	//mySequence.mFrameCount = 100;
+	//mySequence.myItems.push_back(MySequence::MySequenceItem{ 0, 10, 30 });
+	//mySequence.myItems.push_back(MySequence::MySequenceItem{ 1, 20, 30 });
+	//mySequence.myItems.push_back(MySequence::MySequenceItem{ 3, 12, 60 });
+	//mySequence.myItems.push_back(MySequence::MySequenceItem{ 2, 61, 90 });
+	//mySequence.myItems.push_back(MySequence::MySequenceItem{ 4, 90, 99 });
 	ImGuizmo::BeginFrame();
 
 	// debug
@@ -325,17 +325,17 @@ void ComponentTransform::EditTransform(float * TransposedMatrix, float * Positio
 	static bool expanded = true;
 	ImGui::SetNextWindowPos(ImVec2(10, 260));
 	ImGui::SetNextWindowSize(ImVec2(740, 380));
-	ImGui::Begin("Sequencer");
-	ImGui::InputInt("Frame count", &mySequence.mFrameCount);
-	Sequencer(&mySequence, NULL, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_STARTEND | ImSequencer::SEQUENCER_ADD | ImSequencer::SEQUENCER_DEL | ImSequencer::SEQUENCER_COPYPASTE);
-// add a UI to edit that particular item
-	if (selectedEntry != -1)
-	{
-		MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
-		ImGui::Text("I am a %s, please edit me", SequencerItemTypeNames[item.mType]);
-		// switch (type) ....
-	}
-	ImGui::End();
+	//ImGui::Begin("Sequencer");
+	//ImGui::InputInt("Frame count", &mySequence.mFrameCount);
+	//Sequencer(&mySequence, NULL, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_STARTEND | ImSequencer::SEQUENCER_ADD | ImSequencer::SEQUENCER_DEL | ImSequencer::SEQUENCER_COPYPASTE);
+// a//dd a UI to edit that particular item
+	//if (selectedEntry != -1)
+	//{
+	//	MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
+	//	ImGui::Text("I am a %s, please edit me", SequencerItemTypeNames[item.mType]);
+	//	// switch (type) ....
+	//}
+	//ImGui::End();
 
 // render everything
 	glClearColor(0.45f, 0.4f, 0.4f, 1.f);

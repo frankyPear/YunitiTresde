@@ -69,10 +69,10 @@ bool ModuleScene::Init()
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
 
 //=======
-		object->SetId(i+1);
+//		object->SetId(i+1);
 //	}*/
 	//m.Load("../Resources/BakerHouse.fbx");
-	m.LoadTexture("../Resources/Baker_house.png");
+	//m.LoadTexture("../Resources/Baker_house.png");
 //>>>>>>> feature-MousePicking-FP
 	actualCamera = App->cam->dummyCamera;
 
