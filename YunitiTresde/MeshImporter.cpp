@@ -8,7 +8,6 @@
 
 #include "ModuleFileSystem.h"
 */
-
 #include "Glew\include\glew.h"
 #include "DevIL\include\IL\il.h"
 #include "DevIL\include\IL\ilu.h"
@@ -109,11 +108,13 @@ MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh, aiMaterial* material)
 	}
 	if (material->GetTextureCount(aiTextureType_DIFFUSE)>0)
 	{
-		aiString* texturePath = new aiString("..\Resources\Baker_House.png");
+		aiString* texturePath = new aiString("../Resources/Baker_House.png");
 		
 		if (material->GetTexture(aiTextureType_DIFFUSE, 0, texturePath) == AI_SUCCESS)
-		{
-			LOG("DONE");
+		{	
+			
+			glGenTextures(1, &(GLuint)mesh->mMaterialIndex);
+			glBindTexture(GL_TEXTURE_2D, (GLuint)mesh->mMaterialIndex);
 		}
 	}
 
@@ -145,7 +146,6 @@ MeshImporter::MeshEntry::~MeshEntry() {
 
 void MeshImporter::MeshEntry::Draw() {
 	glBindVertexArray(vao);
-	glBindTexture(GL_TEXTURE_2D, 0);
 	glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, NULL);
 	glBindVertexArray(0);
 }
