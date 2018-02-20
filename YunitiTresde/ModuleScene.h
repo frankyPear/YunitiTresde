@@ -46,6 +46,7 @@ public:
 	bool drawQuadTree = false;
 	uint imguiCollisionTest = 0;
 	uint imguiCollisionTestQuadtree = 0;
+	bool wantToDelete = false;
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;
@@ -54,7 +55,9 @@ private:
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
+
 	bool accelerateFrustumCulling = true;
+
 	std::string loadPath;
 
 	Timer saveLoadTimer;

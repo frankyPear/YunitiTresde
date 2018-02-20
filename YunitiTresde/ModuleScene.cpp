@@ -62,11 +62,18 @@ bool ModuleScene::Init()
 		root->AddChild(object);
 		sceneObjects_.push_back(object);
 		offset += offset;
+//<<<<<<< develop
 		object->SetId(i + 1);
 
 	}
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
 
+//=======
+		object->SetId(i+1);
+//	}*/
+	//m.Load("../Resources/BakerHouse.fbx");
+	m.LoadTexture("../Resources/Baker_house.png");
+//>>>>>>> feature-MousePicking-FP
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -197,9 +204,9 @@ void ModuleScene::ShowImguiStatus() {
 				ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 				if (ct != nullptr)
 				{
-					//<<<<<<< develop
-					ct->OnEditor(sceneObjects_[i]);
-					ct->Update(sceneObjects_[i]);
+
+					//ct->OnEditor(sceneObjects_[i]);
+					//ct->Update(sceneObjects_[i]);
 					//=======
 					//					ct->OnEditor(ct);
 					//					ImGuizmo::BeginFrame();
@@ -208,6 +215,17 @@ void ModuleScene::ShowImguiStatus() {
 
 					//					ct->Update();
 					//>>>>>>> feature-MousePicking-FP
+
+					wantToDelete = false;
+					ct->OnEditor(sceneObjects_[i]);
+					if (wantToDelete) {
+						//if (i == 0 /*&& sceneObjects_.size() == 1*/) sceneObjects_.erase(sceneObjects_.begin());
+						//else 
+						sceneObjects_.erase(sceneObjects_.begin() + i);
+					}
+					else {
+						ct->Update(sceneObjects_[i]);
+					}
 
 				}
 
