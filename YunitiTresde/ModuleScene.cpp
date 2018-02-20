@@ -184,23 +184,18 @@ void ModuleScene::ShowImguiStatus() {
 				ComponentTransform *ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 				if (ct != nullptr)
 				{
-//<<<<<<< develop
+
 					wantToDelete = false;
 					ct->OnEditor(sceneObjects_[i]);
 					if (wantToDelete) {
+						//if (i == 0 /*&& sceneObjects_.size() == 1*/) sceneObjects_.erase(sceneObjects_.begin());
+						//else 
 						sceneObjects_.erase(sceneObjects_.begin() + i);
 					}
 					else {
 						ct->Update(sceneObjects_[i]);
 					}
-						//=======
-//					ct->OnEditor(ct);
-//					ImGuizmo::BeginFrame();
 
-					// debug
-
-//					ct->Update();
-//>>>>>>> feature-MousePicking-FP
 
 				}
 

@@ -42,6 +42,10 @@ void Model::LoadTexture(const char* filepath)
 	ilInit();
 	iluInit();
 	ilutInit();
+
+	aiString path;
+
+	//newMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path);
 	//GLuint iglId =ilutGLLoadImage((char*)filepath);
 	for (unsigned int m = 0; m<scene->mNumMaterials; ++m)
 	{
@@ -51,7 +55,7 @@ void Model::LoadTexture(const char* filepath)
 											 //	, &textmap, &uvInd, &blend, &op, mode);
 		aiReturn texFound = scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path);
 		while (texFound == AI_SUCCESS) {
-			GLuint iglId = ilutGLLoadImage((char*)filepath);
+			//GLuint iglId = ilutGLLoadImage((char*)filepath);
 			textureIdMap[path.data] = 0;
 			texIndex++;
 			texFound = scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path);
@@ -63,7 +67,7 @@ void Model::LoadTexture(const char* filepath)
 	ilGenImages(numTextures, imageIds);
 
 	GLuint* textureIds = new GLuint[numTextures];
-	glGenTextures(numTextures, textureIds); /* Texture name generation */
+	glGenTextures(numTextures, textureIds); 
 
 	std::map<std::string, GLuint>::iterator itr = textureIdMap.begin();
 	int i = 0;
@@ -96,62 +100,10 @@ void Model::LoadTexture(const char* filepath)
 	}
 
 	ilDeleteImages(numTextures, imageIds);
-
+	ilBindImage(0);
 	//Cleanup
 	delete[] imageIds;
 	delete[] textureIds;
-
-	//ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-	//
-	//glBindTexture(GL_TEXTURE_3D, textureBufferIds[0]);//(GLuint)textureBufferIds[i]);// textureIds[i]);
-	//glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//glTexImage2D(GL_TEXTURE_3D, 0, GL_RGBA, ilGetInteger(IL_IMAGE_WIDTH),
-	//	ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
-
-	//int numTextures = textureIdMap.size();
-	//
-	//ILuint* imageIds = new ILuint[numTextures];
-	//ilGenImages(numTextures, imageIds);
-	//
-	//GLuint* textureIds = new GLuint[numTextures];
-	//glGenTextures(numTextures, textureIds); 
-	
-	//std::map<std::string, GLuint>::iterator itr = textureIdMap.begin();
-	//int i = 0;
-	//for (; itr != textureIdMap.end(); ++i, ++itr)
-	//{
-	////save IL image ID
-	//	std::string filename = (*itr).first;  
-	//	(*itr).second = textureIds[i];    
-	//
-	//	ilBindImage(imageIds[i]); 
-	//	ilEnable(IL_ORIGIN_SET);
-	//	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
-	//	success = ilLoadImage(filepath);//(ILstring)filename.c_str());
-	//
-	//	if (success) {
-	//
-	//		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-	//
-	//		glBindTexture(GL_TEXTURE_2D, iglId);//(GLuint)textureBufferIds[i]);// textureIds[i]);
-	//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ilGetInteger(IL_IMAGE_WIDTH),
-	//			ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE,
-	//			ilGetData());
-	//	}
-	//	else
-	//	{
-	//		LOG("ERROR LOADING TEXTURE");
-	//	}
-	//}
-	//
-	//ilDeleteImages(numTextures, imageIds);
-	
-	//Cleanup
-	//delete[] imageIds;
-	//delete[] textureIds;
 
 }
 
