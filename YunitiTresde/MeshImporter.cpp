@@ -10,6 +10,9 @@
 */
 
 #include "Glew\include\glew.h"
+#include "DevIL\include\IL\il.h"
+#include "ModuleTextures.h"
+#include "Application.h"
 //EVALUATE INCLUDES
 
 
@@ -101,10 +104,36 @@ MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh, aiMaterial* material)
 
 		delete[] indices;
 	}
-	if (mesh->mMaterialIndex!=-1)
+	if (material->GetTextureCount(aiTextureType_DIFFUSE)>0)
 	{
+		aiString* texturePath = new aiString("..\Resources\Baker_House.png");
 		
-		//glGenBuffers(1, )
+		if (material->GetTexture(aiTextureType_DIFFUSE, 0, texturePath) == AI_SUCCESS)
+		{
+			ILuint imageID;				// Create an image ID as a ULuint
+			GLuint textureID;			// Create a texture ID as a GLuint
+			ilInit();			// Create a flag to keep track of the IL error state
+			ilGenImages(1, &imageID); 		// Generate the image ID
+			ilBindImage(imageID); 			// Bind the image
+			ilLoadImage("..\Resources\Baker_House.png"); 	// Load the image file
+
+			glGenTextures(1, &textureID);
+			glBindTexture(GL_TEXTURE_2D, textureID);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+			/*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
+			glTexImage2D(GL_TEXTURE_2D, 				// Type of texture
+				0,				// Pyramid level (for mip-mapping) - 0 is the top level
+				ilGetInteger(IL_IMAGE_FORMAT),	// Internal pixel format to use. Can be a generic type like GL_RGB or GL_RGBA, or a sized type
+				ilGetInteger(IL_IMAGE_WIDTH),	// Image width
+				ilGetInteger(IL_IMAGE_HEIGHT),	// Image height
+				0,				// Border width in pixels (can either be 1 or 0)
+				ilGetInteger(IL_IMAGE_FORMAT),	// Format of image pixel data
+				GL_UNSIGNED_BYTE,		// Image data type
+				ilGetData());
+		}
+		
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -141,7 +170,7 @@ void MeshImporter::MeshEntry::Draw() {
 MeshImporter::MeshImporter(const char *filePath)
 {
 	Assimp::Importer importer;
-	const aiString texturePath;
+	 //empty
 	const aiScene *scene = importer.ReadFile(filePath, NULL);
 	if (!scene) {
 		printf("Unable to laod mesh: %s\n", importer.GetErrorString());
