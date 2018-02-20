@@ -11,13 +11,16 @@
 
 #include "Glew\include\glew.h"
 #include "DevIL\include\IL\il.h"
-#include "ModuleTextures.h"
+#include "DevIL\include\IL\ilu.h"
+#include "DevIL\include\IL\ilut.h"
 #include "Application.h"
 //EVALUATE INCLUDES
 
 
 #pragma comment (lib, "assimp/libraries/assimp-vc140-mt.lib")
-
+#pragma comment (lib, "DevIL/lib/x86/Release/DevIL.lib")
+#pragma comment (lib, "DevIL/lib/x86/Release/ILU.lib")
+#pragma comment (lib, "DevIL/lib/x86/Release/ILUT.lib")
 
 MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh, aiMaterial* material)
 {
@@ -110,34 +113,13 @@ MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh, aiMaterial* material)
 		
 		if (material->GetTexture(aiTextureType_DIFFUSE, 0, texturePath) == AI_SUCCESS)
 		{
-			ILuint imageID;				// Create an image ID as a ULuint
-			GLuint textureID;			// Create a texture ID as a GLuint
-			ilInit();			// Create a flag to keep track of the IL error state
-			ilGenImages(1, &imageID); 		// Generate the image ID
-			ilBindImage(imageID); 			// Bind the image
-			ilLoadImage("..\Resources\Baker_House.png"); 	// Load the image file
-
-			glGenTextures(1, &textureID);
-			glBindTexture(GL_TEXTURE_2D, textureID);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-			/*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
-			glTexImage2D(GL_TEXTURE_2D, 				// Type of texture
-				0,				// Pyramid level (for mip-mapping) - 0 is the top level
-				ilGetInteger(IL_IMAGE_FORMAT),	// Internal pixel format to use. Can be a generic type like GL_RGB or GL_RGBA, or a sized type
-				ilGetInteger(IL_IMAGE_WIDTH),	// Image width
-				ilGetInteger(IL_IMAGE_HEIGHT),	// Image height
-				0,				// Border width in pixels (can either be 1 or 0)
-				ilGetInteger(IL_IMAGE_FORMAT),	// Format of image pixel data
-				GL_UNSIGNED_BYTE,		// Image data type
-				ilGetData());
+			LOG("DONE");
 		}
-		
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	
 }
 
 
@@ -163,12 +145,18 @@ MeshImporter::MeshEntry::~MeshEntry() {
 
 void MeshImporter::MeshEntry::Draw() {
 	glBindVertexArray(vao);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, NULL);
 	glBindVertexArray(0);
 }
 
 MeshImporter::MeshImporter(const char *filePath)
 {
+
+	ilInit();
+	iluInit();
+	ilutInit();
+
 	Assimp::Importer importer;
 	 //empty
 	const aiScene *scene = importer.ReadFile(filePath, NULL);

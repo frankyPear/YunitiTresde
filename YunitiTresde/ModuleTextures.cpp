@@ -14,6 +14,10 @@ using namespace std;
 
 ModuleTextures::ModuleTextures()
 {
+	ilInit();
+	iluInit();
+	ilutInit();
+	
 }
 
 ModuleTextures::~ModuleTextures()
@@ -85,7 +89,7 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 	ILuint ImageName; // The image name to return.
 	ilGenImages(1, &ImageName); // Grab a new image name.
 	ilBindImage(ImageName);
-	ilInit();
+
 	ILboolean operationSuccess = ilLoadImage(fileName);
 	if (operationSuccess) {
 		ILinfo ImageInfo;
