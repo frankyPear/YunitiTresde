@@ -61,23 +61,23 @@ void ModuleTextures::DrawCheckers()
 	}
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &texId);
-	glBindTexture(GL_TEXTURE_2D, texId);
+	//glGenTextures(1, &texId);
+	//glBindTexture(GL_TEXTURE_2D, texId);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glBindTexture(GL_TEXTURE_2D, texId);
-	glTexCoordPointer(2, GL_TEXTURE_COORD_ARRAY, 0, indices);
+	//glBindTexture(GL_TEXTURE_2D, texId);
+	//glTexCoordPointer(2, GL_TEXTURE_COORD_ARRAY, 0, indices);
 
 
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 }
@@ -107,9 +107,9 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 		}
 
 		// Generate texture ID
-		glGenTextures(1, &textureID);
+		//glGenTextures(1, &textureID);
 		// Bind id to texture.
-		glBindTexture(GL_TEXTURE_2D, textureID);
+	//	glBindTexture(GL_TEXTURE_2D, textureID);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, actualWrapMode);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, actualWrapMode);
@@ -138,7 +138,7 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 		return -1;
 	}
 	ilDeleteImages(1, &ImageName);
-	return textureID;
+	return 2;
 }
 
 void  ModuleTextures::DeleteImage(uint imageID) {

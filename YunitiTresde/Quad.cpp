@@ -181,12 +181,12 @@ void Cube::DrawElementQuadTexturized(GLuint textureID)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
-	glEnable(GL_TEXTURE_2D);
+	//glEnable(GL_TEXTURE_2D);
 	glBindBuffer(GL_ARRAY_BUFFER, texID);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	//glBindTexture(GL_TEXTURE_2D, textureID);
 
 	glPushMatrix();
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
@@ -194,7 +194,7 @@ void Cube::DrawElementQuadTexturized(GLuint textureID)
 
 	glDisableClientState(GL_TEXTURE_2D_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void DrawElementPlane()
@@ -202,9 +202,8 @@ void DrawElementPlane()
 	float size =100.0f;
 	float step = 1.5f; // Space between squares
 	
-
+	glBindTexture(GL_TEXTURE_2D,0);
 	glBegin(GL_LINES);
-
 	glColor3f(1.5f, 1.5f, 1.5f);
 	for (float i = step; i <= size; i += step)
 	{

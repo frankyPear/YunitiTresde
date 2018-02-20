@@ -12,6 +12,8 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 
+class MeshImporter;
+
 class Color 
 {
 
@@ -77,7 +79,7 @@ private:
 	GLuint loadedTexId_;
 	int intTex = -1;
 
-	
+	MeshImporter* mesh1;
 };
 
 #endif // !_RENDER_

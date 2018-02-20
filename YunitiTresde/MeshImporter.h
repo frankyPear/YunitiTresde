@@ -23,12 +23,13 @@ public:
 		};
 		GLuint vao;
 		GLuint vbo[4];
+		GLuint id;
 
 		unsigned int elementCount;
 
 		MeshEntry(aiMesh* mesh, aiMaterial* material);
 		~MeshEntry();
-
+		
 		void Load(aiMesh *mesh);
 		void Draw();
 	};

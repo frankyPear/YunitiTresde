@@ -73,9 +73,9 @@ void SolidSphere::Draw(GLfloat x, GLfloat y, GLfloat z)
 	glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
 	glPopMatrix();
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 vector<GLfloat> SolidSphere::GetVertices() const

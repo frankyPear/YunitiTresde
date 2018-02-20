@@ -11,6 +11,7 @@
 #include "OpenGL.h"
 #include "Quad.h"
 #include <vector>
+#include "MeshImporter.h"
 using namespace std;
 
 
@@ -85,7 +86,7 @@ bool ModuleRenderer::Init() {
 	toggleCullFace(checkCullFace_);
 	toggleLightning(checkLightning_);
 	toggleColorMaterial(checkColorMaterial_);
-	toggleTexture2D(checkTexture2D_);
+	//toggleTexture2D(checkTexture2D_);
 	checkFog_ = false;
 	//FOG Config //NEED OPTIMIZATION
 	glFogi(GL_FOG_MODE, GL_EXP2);
@@ -103,8 +104,8 @@ bool ModuleRenderer::Init() {
 	//glOrtho(-5, 5, -5, 5, -5, 5);
 	//Implement gluLookAt in a ImGUI
 	//gluLookAt(1.0, 0.0, -3.0, 0.0, 5.0, 0.0, 0.0, 1.0, 0.0);
-		
-
+	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
+	
 	return ret;
 }
 //Perhaps better to use bool?
@@ -220,30 +221,31 @@ update_status ModuleRenderer::PreUpdate(float dt)
 	//Init Modelview Matrix
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->scene->actualCamera->GetViewMatrix());
+	DrawElementPlane();
 
-	switch (intTex)
-	{
-	case 0:
-		loadedTexId_ = App->textures->loadImage(IMAGE1);
-		intTex = -1;
-		break;
-	case 1:
-		loadedTexId_ = App->textures->loadImage(IMAGE2);
-		intTex = -1;
-		break;
-	case 2:
-		loadedTexId_ = App->textures->loadImage(IMAGE3);
-		intTex = -1;
-		break;
-	case 3:
-		loadedTexId_ = App->textures->loadImage(IMAGE4);
-		intTex = -1;
-		break;
-	default:
-		App->textures->DeleteImage(loadedTexId_);
-		App->renderer->SetIdImage(-1);
-		break;
-	}
+	//switch (intTex)
+	//{
+	//case 0:
+	//	loadedTexId_ = App->textures->loadImage(IMAGE1);
+	//	intTex = -1;
+	//	break;
+	//case 1:
+	//	loadedTexId_ = App->textures->loadImage(IMAGE2);
+	//	intTex = -1;
+	//	break;
+	//case 2:
+	//	loadedTexId_ = App->textures->loadImage(IMAGE3);
+	//	intTex = -1;
+	//	break;
+	//case 3:
+	//	loadedTexId_ = App->textures->loadImage(IMAGE4);
+	//	intTex = -1;
+	//	break;
+	//default:
+	//	App->textures->DeleteImage(loadedTexId_);
+	//	App->renderer->SetIdImage(-1);
+	//	break;
+	//}
 
 	return UPDATE_CONTINUE;
 }
@@ -254,8 +256,10 @@ update_status ModuleRenderer::Update(float dt)
 update_status ModuleRenderer::PostUpdate(float dt)
 {
 
+
+
 	
-	DrawElementPlane();
+  	mesh1->Draw();
 	//DrawElementQuadTexturized(loadedTexId_);;
 
 	App->imgui->RenderImGui();
@@ -379,20 +383,20 @@ void ModuleRenderer::Draw(GameObject *obj) {
 			glColor3f(1.0f, 1.0f, 1.0f);
 
 		}
-		switch (s) {
-		case CUBE:
+		switch (s) 
+		{
+			case CUBE:
 			glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
 			break;
-		case SPHERE:
+			case SPHERE:
 			glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
 			break;
 		}
-
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
-
+		glDisableClientState(GL_VERTEX_ARRAY);
+		
 		glPopMatrix();
 	}
 }
