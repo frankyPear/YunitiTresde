@@ -38,6 +38,8 @@ public:
 	
 	void ToggleFrustumAcceleration();
 	void CreateRay(float2 screenPoint);
+
+	void LoadScene(const char* path);
 	
 public:
 	ComponentCamera *actualCamera = nullptr;
@@ -64,7 +66,10 @@ private:
 	std::vector<GameObject*> sceneObjects_;
 	std::vector<GameObject*> objectToDraw_;
 
+	Model *m;
 	MeshImporter* mesh1;
+	Assimp::Importer importer;
+
 };
 
 #endif

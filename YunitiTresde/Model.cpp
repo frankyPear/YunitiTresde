@@ -98,12 +98,11 @@ void Model::LoadTexture(const char* filepath)
 			LOG("PROBLEMS WITH THE IMAGE");
 		}
 	}
-
 	ilDeleteImages(numTextures, imageIds);
 	ilBindImage(0);
 	//Cleanup
-	delete[] imageIds;
-	delete[] textureIds;
+	//delete[] imageIds;
+	//delete[] textureIds;
 
 }
 

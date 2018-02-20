@@ -1,13 +1,26 @@
 #pragma once
 #include "Module.h"
 #include "OpenGL.h"
-
+#include <map>
+#include <string>
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
 #pragma comment (lib, "SDL/libx86/SDL2main.lib")
 #pragma comment (lib, "opengl32.lib")
 #pragma comment (lib, "glu32.lib")
+
+
+struct loadedTex
+{
+	GLuint texId;
+	uint numberOfReferences;
+	loadedTex();
+	loadedTex(GLuint id);
+	~loadedTex();
+	
+};
+
 
 class ModuleTextures :
 	public Module
@@ -26,6 +39,13 @@ public:
 
 	void setWrapMode(int mode);
 	void setFilterMode(int filter);
+
+	GLuint GetTexture(const char* path);
+	void RemoveTexture(const char* path);
+
+	int GetNumberOfTextures();
+	int GetNumberOfReferences(const char* path);
+	int GetTexId(const char* path);
 
 public:
 
@@ -55,5 +75,10 @@ public:
 	GLfloat* selected_item;
 	GLfloat* format;
 
+	std::map<std::string, loadedTex> loadedTextures;
+
+private:
+
+	
 };
 

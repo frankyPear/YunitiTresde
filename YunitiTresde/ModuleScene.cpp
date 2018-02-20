@@ -21,6 +21,14 @@
 #include "MeshImporter.h"
 #include <map>
 
+#include "assimp\assimp\cimport.h"
+#include "assimp\assimp\postprocess.h"
+#include "assimp\assimp\scene.h"
+#include "assimp\assimp\Importer.hpp"
+#include "assimp\assimp\postprocess.h"
+
+#pragma comment (lib, "assimp/libraries/assimp-vc140-mt.lib")
+
 #define BOX_SIZE 20.0f
 
 ModuleScene::ModuleScene()
@@ -36,7 +44,7 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
-	GameObject *object1 = new GameObject();
+	/*GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	object1->AddComponent(cm1);
@@ -62,18 +70,14 @@ bool ModuleScene::Init()
 		root->AddChild(object);
 		sceneObjects_.push_back(object);
 		offset += offset;
-//<<<<<<< develop
 		object->SetId(i + 1);
 
-	}
+	}*/
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
 
-//=======
-//		object->SetId(i+1);
-//	}*/
-	//m.Load("../Resources/BakerHouse.fbx");
-	//m.LoadTexture("../Resources/Baker_house.png");
-//>>>>>>> feature-MousePicking-FP
+	m = new Model();
+	m->Load("../Resources/BakerHouse.fbx");
+	m->LoadTexture("../Resources/Baker_house.png");
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -444,4 +448,25 @@ void ModuleScene::CreateRay(float2 screenPoint)
 		LOG("Nearest object is %i \n", it->second->GetId());
 	}
 	//Get the triangle with the lowest distance, maps are ordered by the key.
+}
+
+void ModuleScene::LoadScene(const char* filepath)
+{
+	const aiScene *scene = importer.ReadFile(filepath,
+		aiProcess_CalcTangentSpace |
+		aiProcess_Triangulate |
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_SortByPType);
+	if (!scene)
+	{
+		LOG("ERROR LOADING SCENE");
+	}
+	else {
+		LOG("SCENE LOADED");
+
+		for (int i = 0; i < scene->mRootNode->mNumChildren; ++i) {
+			
+		
+		}
+	}
 }

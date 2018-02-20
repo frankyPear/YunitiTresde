@@ -121,7 +121,7 @@ private:
 #pragma endregion
 
 	std::vector<Component*> _components;
-
+	std::vector<ComponentMesh*> _meshes;
 
 
 
