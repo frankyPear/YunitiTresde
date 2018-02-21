@@ -239,3 +239,8 @@ void GameObject::SetId(unsigned int newId)
 {
 	_id = newId;
 }
+
+std::vector<ComponentMesh*> GameObject::GetMeshes() const
+{
+	return _meshes;
+}

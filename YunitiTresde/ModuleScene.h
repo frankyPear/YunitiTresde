@@ -66,6 +66,9 @@ private:
 	std::vector<GameObject*> sceneObjects_;
 	std::vector<GameObject*> objectToDraw_;
 
+	std::vector<aiMesh*> meshVector;
+	std::vector<aiMaterial*> materialVector;
+
 	Model *m;
 	MeshImporter* mesh1;
 	Assimp::Importer importer;

@@ -44,7 +44,7 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
-	/*GameObject *object1 = new GameObject();
+	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	object1->AddComponent(cm1);
@@ -72,7 +72,7 @@ bool ModuleScene::Init()
 		offset += offset;
 		object->SetId(i + 1);
 
-	}*/
+	}
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
 
 	m = new Model();

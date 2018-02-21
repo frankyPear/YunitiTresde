@@ -3,6 +3,7 @@
 #include "SolidSphere.h"
 #include "Quad.h"
 #include "OpenGL.h"
+#include "ResourceMesh.h"
 #include <vector>
 #include "Mathgeolib\include\Geometry\AABB.h"
 
@@ -37,6 +38,7 @@ public:
 	Cube *cube = nullptr;
 	SolidSphere *sphere = nullptr;
 	AABB* meshBoundingBox = nullptr;
+	ResourceMesh *modelMesh = nullptr;
 
 	std::vector<GLfloat> meshvertices;
 	std::vector<GLfloat> meshnormals;

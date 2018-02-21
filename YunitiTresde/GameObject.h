@@ -97,7 +97,9 @@ public:
 
 	void SetId(unsigned int newId);
 
-	AABB axisBoundingBox_;
+
+	std::vector<ComponentMesh*> GetMeshes() const;
+
 #pragma endregion
 public:
 	//to be changed to private //shall be static?
@@ -111,6 +113,9 @@ private:
 	bool _isStatic = false;
 
 	std::string _name = "Default name";
+
+	AABB axisBoundingBox_;
+
 
 #pragma region Hierarchy attributes
 
