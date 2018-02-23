@@ -276,124 +276,127 @@ bool ModuleRenderer::CleanUp() {
 void ModuleRenderer::Draw(GameObject *obj) {
 	assert(obj != nullptr);
 	ComponentTransform* ct = (ComponentTransform *)obj->GetComponent(TRANSFORMATION);
-	ComponentMesh* cm = (ComponentMesh *)obj->GetComponent(MESH);
+	//ComponentMesh* cm = (ComponentMesh *)obj->GetComponent(MESH);
+	vector<ComponentMesh*> GOmeshes = obj->GetMeshes();
 	ComponentMaterial* cmat = (ComponentMaterial *)obj->GetComponent(MATERIAL);
 	float3 corners[8];
 
 	glPushMatrix();
 	if (ct != nullptr)	glMultMatrixf(ct->GetGlobalTransform().Transposed().ptr());
-	if (cm != nullptr) {
-		glEnable(GL_LIGHTING);
-		vector<GLfloat> colors = cm->GetMeshColors();
-		vector<GLfloat> normal = cm->GetMeshNormals();
-		vector<GLfloat> vertex = cm->GetMeshVertices();
-		vector<GLubyte> indices = cm->GetMeshIndices();
-		vector<GLfloat> texcoords = cm->GetMeshTexcoords();
+	for (int i = 0; i < GOmeshes.size(); ++i) {
+		ComponentMesh *cm = GOmeshes[i];
+		if (cm != nullptr) {
+			glEnable(GL_LIGHTING);
+			vector<GLfloat> colors = cm->GetMeshColors();
+			vector<GLfloat> normal = cm->GetMeshNormals();
+			vector<GLfloat> vertex = cm->GetMeshVertices();
+			vector<GLubyte> indices = cm->GetMeshIndices();
+			vector<GLfloat> texcoords = cm->GetMeshTexcoords();
 
 
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
-		if (normal.size() > 0) {
-			glEnableClientState(GL_NORMAL_ARRAY);
-			glNormalPointer(GL_FLOAT, 0, &normal[0]);
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
+			if (normal.size() > 0) {
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glNormalPointer(GL_FLOAT, 0, &normal[0]);
+			}
+			if (colors.size() > 0) {
+				glEnableClientState(GL_COLOR_ARRAY);
+				glColorPointer(3, GL_FLOAT, 0, &colors[0]);
+			}
+			if (texcoords.size() > 0) {
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
+			}
+			Shape s = cm->GetShape();
+
+			if (checkDebugMode_)
+			{
+				//Draw BB ---------------
+				//cm->GetBoundingBox()->TransformAsAABB(ct->GetGlobalTransform());
+				cm->GetBoundingBox()->GetCornerPoints(corners);
+
+
+				glColor3f(1.0f, .0f, .0f);
+
+				glLineWidth((GLfloat)3.0f);
+
+				glBegin(GL_LINES);
+
+				//TODO: improve this function
+				/*
+				11
+				2------------6
+				7     / |  3       / |   6
+				3------------7   |
+				|   |        |   |10
+				|12 |        |2  |
+				4 |   |     9  |   |
+				|   0------------4
+				| / 8        | /   5
+				1------------5
+				1
+				Near square (1,2,3,4)
+				Diagonals(5,6,7,8)
+				Far square(9,10,11,12)
+				*/
+
+				//1
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[5]);
+				//2
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				//3
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[7]);
+				//4
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[3]);
+				//5
+				glVertex3fv((GLfloat*)&corners[5]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				//6
+				glVertex3fv((GLfloat*)&corners[7]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				//7
+				glVertex3fv((GLfloat*)&corners[3]);
+				glVertex3fv((GLfloat*)&corners[2]);
+				//8
+				glVertex3fv((GLfloat*)&corners[1]);
+				glVertex3fv((GLfloat*)&corners[0]);
+				//9
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[4]);
+				//10
+				glVertex3fv((GLfloat*)&corners[4]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				//11
+				glVertex3fv((GLfloat*)&corners[2]);
+				glVertex3fv((GLfloat*)&corners[6]);
+				//12
+				glVertex3fv((GLfloat*)&corners[0]);
+				glVertex3fv((GLfloat*)&corners[2]);
+				glEnd();
+				glLineWidth((GLfloat)1.0f);
+				glColor3f(1.0f, 1.0f, 1.0f);
+
+			}
+			switch (s) {
+			case CUBE:
+				glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
+				break;
+			case SPHERE:
+				glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
+				break;
+			}
+
+			glDisableClientState(GL_VERTEX_ARRAY);
+			glDisableClientState(GL_COLOR_ARRAY);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+			glDisableClientState(GL_NORMAL_ARRAY);
+
+			glPopMatrix();
 		}
-		if (colors.size() > 0) {
-			glEnableClientState(GL_COLOR_ARRAY);
-			glColorPointer(3, GL_FLOAT, 0, &colors[0]);
-		}
-		if (texcoords.size() > 0) {
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
-		}
-		Shape s = cm->GetShape();
-
-		if (checkDebugMode_)
-		{
-			//Draw BB ---------------
-			//cm->GetBoundingBox()->TransformAsAABB(ct->GetGlobalTransform());
-			cm->GetBoundingBox()->GetCornerPoints(corners);
-
-
-			glColor3f(1.0f, .0f, .0f);
-
-			glLineWidth((GLfloat)3.0f);
-
-			glBegin(GL_LINES);
-
-			//TODO: improve this function
-			/*
-			11
-			2------------6
-			7     / |  3       / |   6
-			3------------7   |
-			|   |        |   |10
-			|12 |        |2  |
-			4 |   |     9  |   |
-			|   0------------4
-			| / 8        | /   5
-			1------------5
-			1
-			Near square (1,2,3,4)
-			Diagonals(5,6,7,8)
-			Far square(9,10,11,12)
-			*/
-
-			//1
-			glVertex3fv((GLfloat*)&corners[1]);
-			glVertex3fv((GLfloat*)&corners[5]);
-			//2
-			glVertex3fv((GLfloat*)&corners[5]);
-			glVertex3fv((GLfloat*)&corners[7]);
-			//3
-			glVertex3fv((GLfloat*)&corners[3]);
-			glVertex3fv((GLfloat*)&corners[7]);
-			//4
-			glVertex3fv((GLfloat*)&corners[1]);
-			glVertex3fv((GLfloat*)&corners[3]);
-			//5
-			glVertex3fv((GLfloat*)&corners[5]);
-			glVertex3fv((GLfloat*)&corners[4]);
-			//6
-			glVertex3fv((GLfloat*)&corners[7]);
-			glVertex3fv((GLfloat*)&corners[6]);
-			//7
-			glVertex3fv((GLfloat*)&corners[3]);
-			glVertex3fv((GLfloat*)&corners[2]);
-			//8
-			glVertex3fv((GLfloat*)&corners[1]);
-			glVertex3fv((GLfloat*)&corners[0]);
-			//9
-			glVertex3fv((GLfloat*)&corners[0]);
-			glVertex3fv((GLfloat*)&corners[4]);
-			//10
-			glVertex3fv((GLfloat*)&corners[4]);
-			glVertex3fv((GLfloat*)&corners[6]);
-			//11
-			glVertex3fv((GLfloat*)&corners[2]);
-			glVertex3fv((GLfloat*)&corners[6]);
-			//12
-			glVertex3fv((GLfloat*)&corners[0]);
-			glVertex3fv((GLfloat*)&corners[2]);
-			glEnd();
-			glLineWidth((GLfloat)1.0f);
-			glColor3f(1.0f, 1.0f, 1.0f);
-
-		}
-		switch (s) {
-		case CUBE:
-			glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
-			break;
-		case SPHERE:
-			glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_BYTE, &indices[0]);
-			break;
-		}
-
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_NORMAL_ARRAY);
-
-		glPopMatrix();
 	}
 }
-

@@ -178,6 +178,7 @@ void GameObject::AddComponent(Component * component)
 {
 	_components.push_back(component);
 	component->SetLinkedTo(this);
+	if (component->GetType() == MESH)	_meshes.push_back((ComponentMesh*)component);
 }
 
 void GameObject::DestroyComponent(Component * component)
@@ -237,4 +238,9 @@ unsigned int GameObject::GetId()
 void GameObject::SetId(unsigned int newId)
 {
 	_id = newId;
+}
+
+std::vector<ComponentMesh*> GameObject::GetMeshes()
+{
+	return _meshes;
 }
