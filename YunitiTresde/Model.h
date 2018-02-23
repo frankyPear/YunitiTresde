@@ -7,7 +7,6 @@
 #include "assimp\assimp\postprocess.h"
 #include "assimp\assimp\scene.h"
 #include "assimp\assimp\Importer.hpp"
-#include "assimp\assimp\postprocess.h"
 #include "Globals.h"
 
 class Model

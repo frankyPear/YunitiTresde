@@ -5,6 +5,11 @@
 #include "ComponentCamera.h"
 #include "Model.h"
 #include "CustomQuadTree.h"
+#include "assimp\assimp\cimport.h"
+#include "assimp\assimp\postprocess.h"
+#include "assimp\assimp\scene.h"
+#include "assimp\assimp\Importer.hpp"
+
 #include <vector>
 
 class GameObject;
@@ -38,7 +43,10 @@ public:
 	
 	void ToggleFrustumAcceleration();
 	void CreateRay(float2 screenPoint);
-	
+
+	void LoadScene(const char* filepath);
+	void GenerateScene();
+
 public:
 	ComponentCamera *actualCamera = nullptr;
 	uint imguiFlag = 0;
@@ -52,11 +60,14 @@ private:
 	GameObject* selected = nullptr;
 	CustomQuadTree* quadtree = nullptr;
 	AABB limits;
+	const aiScene* scene = nullptr;
+	Assimp::Importer importer;
+
 
 	bool wantToSave = false;
 	bool wantToLoad = false;
 
-	bool accelerateFrustumCulling = true;
+	bool accelerateFrustumCulling = false;
 
 	std::string loadPath;
 
@@ -64,6 +75,8 @@ private:
 	std::vector<GameObject*> sceneObjects_;
 	std::vector<GameObject*> objectToDraw_;
 
+	std::vector<aiMesh*> meshes;
+	std::vector<aiMaterial*> materials;
 	MeshImporter* mesh1;
 };
 

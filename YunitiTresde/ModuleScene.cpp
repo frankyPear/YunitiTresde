@@ -20,6 +20,7 @@
 #include "ModuleCamera.h"
 #include "MeshImporter.h"
 #include <map>
+#include <queue>
 
 #define BOX_SIZE 20.0f
 
@@ -36,7 +37,7 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
-	GameObject *object1 = new GameObject();
+	/*GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	object1->AddComponent(cm1);
@@ -65,9 +66,10 @@ bool ModuleScene::Init()
 //<<<<<<< develop
 		object->SetId(i + 1);
 
-	}
-	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
-
+	}*/
+	//mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
+	LoadScene("../Resources/street/Street.obj");
+	GenerateScene();
 //=======
 //		object->SetId(i+1);
 //	}*/
@@ -108,7 +110,7 @@ update_status ModuleScene::Update(float dt)
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
 
 
-	mesh1->Draw();
+	//mesh1->Draw();
 
 
 	if (accelerateFrustumCulling) {
@@ -133,7 +135,7 @@ update_status ModuleScene::Update(float dt)
 		{
 			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
 			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-			if (cm != nullptr && ct != nullptr) {
+			if (cm != nullptr && cm->meshShape != RESOURCE && ct != nullptr) {
 				AABB newBox = *(cm->GetBoundingBox());
 				newBox.TransformAsAABB(ct->GetGlobalTransform());
 				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
@@ -426,7 +428,7 @@ void ModuleScene::CreateRay(float2 screenPoint)
 	{
 		ComponentMesh* cm = (ComponentMesh*)objectlist[i]->GetComponent(MESH);
 		ComponentTransform* ct = (ComponentTransform*)objectlist[i]->GetComponent(TRANSFORMATION);
-		if (cm != nullptr && ct != nullptr) {
+		if (cm != nullptr && cm->meshShape != RESOURCE && ct != nullptr) {
 			AABB newBox = *(cm->GetBoundingBox());
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
 			if (ray.Intersects(newBox)) {
@@ -444,4 +446,90 @@ void ModuleScene::CreateRay(float2 screenPoint)
 		LOG("Nearest object is %i \n", it->second->GetId());
 	}
 	//Get the triangle with the lowest distance, maps are ordered by the key.
+}
+
+
+void ModuleScene::LoadScene(const char* filepath)
+{
+	scene = importer.ReadFile(filepath,
+		aiProcess_CalcTangentSpace |
+		aiProcess_Triangulate |
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_SortByPType);
+	if (!scene)
+	{
+		LOG("ERROR LOADING SCENE");
+	}
+	else {
+		LOG("SCENE LOADED");
+		
+	}
+}
+
+
+// Iterative version
+void ModuleScene::GenerateScene() 
+{
+	std::queue<std::pair<GameObject *,aiNode*> > nodesToVisit;
+	for (int i = 0; i < scene->mNumMeshes; ++i)
+	{
+		aiMesh *sceneMesh = scene->mMeshes[i];
+		meshes.push_back(sceneMesh);
+	}
+	GameObject *sceneRoot = new GameObject();
+	sceneRoot->SetStatic(true);
+	sceneObjects_.push_back(sceneRoot);
+	sceneRoot->SetId(sceneObjects_.size());
+	for (int j = 0; j< scene->mRootNode->mNumChildren; ++j)
+	{
+		std::pair<GameObject *, aiNode* > toInsert;
+		toInsert.first = sceneRoot;
+		toInsert.second = scene->mRootNode->mChildren[j];
+		nodesToVisit.push(toInsert);
+	}
+	//iterate over queue adding children of the nodes we visit.
+	while (!nodesToVisit.empty())
+	{
+		GameObject * parent = nodesToVisit.front().first;
+		aiNode* toVisit = nodesToVisit.front().second;
+		nodesToVisit.pop();
+		
+		GameObject *sceneObject = new GameObject();
+		for (int m = 0; m < toVisit->mNumMeshes; ++m) {
+			ComponentMesh *cm = new ComponentMesh(RESOURCE);
+			cm->SetMeshIndex(toVisit->mMeshes[m]);
+			// Falta añadir las bounding box
+			sceneObject->AddComponent(cm);
+		}
+
+		aiVector3D posParent;
+		aiQuaternion rotParent;
+		aiVector3D scaleParent;
+		toVisit->mParent->mTransformation.Decompose(scaleParent, rotParent, posParent);
+		aiVector3D pos;
+		aiQuaternion rot;
+		aiVector3D scale;
+		toVisit->mTransformation.Decompose(scale, rot, pos);
+		pos += posParent;
+		rot = rot * rotParent;
+		scale += scaleParent;
+
+		ComponentTransform *ct = new ComponentTransform(float3(pos.x, pos.y, pos.z), float3(scale.x, scale.y, scale.z), Quat::Quat(rot.x, rot.y, rot.z, rot.w));
+		sceneObject->AddComponent(ct);
+		parent->AddChild(sceneObject);
+			
+		sceneObject->SetStatic(true);
+		sceneObjects_.push_back(sceneObject);
+		sceneObject->SetId(sceneObjects_.size());
+		for (int l = 0; l < toVisit->mNumChildren; ++l)
+		{
+			//Push it
+			std::pair<GameObject *, aiNode* > toInsert;
+			toInsert.first = sceneObject;
+			toInsert.second = toVisit->mChildren[l];
+			nodesToVisit.push(toInsert);
+		}
+		
+	}
+	int a = 1;
 }

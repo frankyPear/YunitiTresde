@@ -43,6 +43,8 @@ public:
 
 	float4x4 GetLocalTransform() const;
 
+	void SetGlobalTransform(float4x4 newTransform);
+
 #pragma endregion
 
 

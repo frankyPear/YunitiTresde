@@ -45,6 +45,9 @@ ComponentMesh::ComponentMesh(Shape shape) {
 			meshBoundingBox->SetNegativeInfinity();
 			(*meshBoundingBox).Enclose(cube->GetCubeBB());
 			break;
+		case RESOURCE:
+			resourceIndex = 0;
+			break;
 	}
 	type = MESH;
 	meshShape = shape;
@@ -160,5 +163,16 @@ bool ComponentMesh::CheckRayIntersectsMesh(Ray r, float &distance)
 		}
 	}
 	if (found) return true;
+	return false;
+}
+
+// Returns true if the mesh was of the RESOURCE type and the index was set, false otherwise.
+bool ComponentMesh::SetMeshIndex(uint newIndex)
+{
+	if (meshShape == RESOURCE)
+	{
+		resourceIndex = newIndex;
+		return true;
+	}
 	return false;
 }
