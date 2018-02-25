@@ -67,6 +67,8 @@ public:
 	GLuint vbo[4];
 	GLuint vao;
 	unsigned int elementCount;
+	std::vector<aiMesh*> meshes;
+	std::vector<GLuint> vaos;
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;
@@ -87,10 +89,10 @@ private:
 	std::vector<GameObject*> sceneObjects_;
 	std::vector<GameObject*> objectToDraw_;
 
-	std::vector<aiMesh*> meshes;
+
 	std::vector<aiMaterial*> materials;
 	MeshImporter* mesh1;
-	//std::vector<MeshEntry*> meshEntries;
+
 };
 
 #endif

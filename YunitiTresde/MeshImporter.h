@@ -40,6 +40,9 @@ public:
 	~MeshImporter();
 
 	void Draw();
+	//SceneGraph - Release 25/02
+	void meshEntryArrays(aiMesh * mesh);
+	void DrawMeshHierarchy();
 };
 
 #endif // !_MESHIMPORTER_H_
