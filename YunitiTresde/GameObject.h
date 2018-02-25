@@ -97,6 +97,8 @@ public:
 
 	void SetId(unsigned int newId);
 
+	std::vector<ComponentMesh*> GetMeshes();
+
 	AABB axisBoundingBox_;
 #pragma endregion
 public:
@@ -121,7 +123,7 @@ private:
 #pragma endregion
 
 	std::vector<Component*> _components;
-
+	std::vector<ComponentMesh*> _meshes;
 
 
 

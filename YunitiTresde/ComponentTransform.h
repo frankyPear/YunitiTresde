@@ -27,6 +27,8 @@ public:
 
 	void EditTransform(float* TransposedMatrix, float* Position, float* Rotation, float* Scale);
 
+	void SetGlobalTransform(float4x4 newTransform);
+
 #pragma region Getters
 
 	float3 GetPosition()const;

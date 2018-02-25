@@ -185,3 +185,73 @@ void ModuleTextures::setFilterMode(int filter) {
 		break;
 	}
 }
+
+
+
+GLuint ModuleTextures::GetTexture(const char* path)
+{
+	map<string, loadedTex>::iterator it = loadedTextures.begin();
+	it = loadedTextures.find(path);
+	GLuint res = -1;
+	if (it != loadedTextures.end())
+	{
+		++(*it).second.numberOfReferences;
+		res = (*it).second.texId;
+	}
+	else
+	{
+		GLuint id = loadImage(path);
+		if (id != -1) {
+			loadedTextures[path] = loadedTex(id);
+			res = id;
+		}
+	}
+	return res;
+}
+
+void ModuleTextures::RemoveTexture(const char* path)
+{
+	map<string, loadedTex>::iterator it = loadedTextures.begin();
+	it = loadedTextures.find(path);
+	if (it != loadedTextures.end()) {
+		--(*it).second.numberOfReferences;
+		if ((*it).second.numberOfReferences <= 0)
+		{
+			loadedTextures.erase(it);
+		}
+	}
+}
+
+int ModuleTextures::GetNumberOfTextures()
+{
+	return loadedTextures.size();
+}
+
+int  ModuleTextures::GetNumberOfReferences(const char* path)
+{
+	map<string, loadedTex>::iterator it = loadedTextures.begin();
+	it = loadedTextures.find(path);
+	if (it != loadedTextures.end()) {
+		return (*it).second.numberOfReferences;
+	}
+	else return -1;
+}
+
+//--------------------------------------- loadedTex methods ----------------------------
+
+loadedTex::loadedTex()
+{
+	texId = -1;
+	numberOfReferences = 0;
+}
+
+loadedTex::loadedTex(GLuint id)
+{
+	texId = id;
+	numberOfReferences = 1;
+}
+
+
+loadedTex::~loadedTex()
+{
+}

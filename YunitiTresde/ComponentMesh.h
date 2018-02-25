@@ -6,7 +6,7 @@
 #include <vector>
 #include "Mathgeolib\include\Geometry\AABB.h"
 
-enum Shape {CUBE,SPHERE};
+enum Shape {CUBE,SPHERE,RESOURCE};
 
 class ComponentMesh :
 	public Component
@@ -32,11 +32,14 @@ public:
 	AABB* GetBoundingBox() const;
 	bool CheckRayIntersectsMesh(Ray r, float& distance);
 
+	bool SetMeshIndex(uint newIndex);
+
 public:
 	Shape meshShape;
 	Cube *cube = nullptr;
 	SolidSphere *sphere = nullptr;
 	AABB* meshBoundingBox = nullptr;
+	uint resourceIndex;
 
 	std::vector<GLfloat> meshvertices;
 	std::vector<GLfloat> meshnormals;
