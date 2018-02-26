@@ -44,7 +44,7 @@ bool ModuleScene::Init()
 
 
 	root = new GameObject();
-	LoadScene("../Resources/street/Street.obj");
+	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
 	GenerateScene();
 	actualCamera = App->cam->dummyCamera;
 
@@ -453,7 +453,7 @@ void ModuleScene::LoadScene(const char* filepath)
 		
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &textureFile) == aiReturn_SUCCESS)
 		{
-			std::string name = "../Resources/street/" + (std::string)textureFile.data;
+			std::string name = "../Resources/ArmyPilot/" + (std::string)textureFile.data;
 			id.push_back(model->loadTextureDirect(name.c_str()));
 		}
 		else 
