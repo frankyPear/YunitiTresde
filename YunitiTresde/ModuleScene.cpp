@@ -39,8 +39,9 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
-	LoadScene("../Resources/street/Street.obj");
-	GenerateScene();
+	//LoadScene("../Resources/street/Street.obj");
+	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
+	RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation);
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -73,11 +74,12 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-	MeshImporter* mi = nullptr;
+	/*MeshImporter* mi = nullptr;
 	for (int i = 0; i < meshes.size(); ++i) {
 		mi->DrawMeshHierarchy();
 		//Draw();
-	}
+	}*/
+	DrawHierarchy();
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
 			quadtree->Clear();
@@ -434,33 +436,30 @@ void ModuleScene::LoadScene(const char* filepath)
 }
 
 
-// Iterative version
-void ModuleScene::GenerateScene()
-{
-	std::queue<std::pair<GameObject *, aiNode*> > nodesToVisit;
-	for (int i = 0; i < scene->mNumMeshes; ++i)
-	{
-		aiMesh *sceneMesh = scene->mMeshes[i];
-		meshes.push_back(sceneMesh);
-	}
-	GameObject *sceneRoot = new GameObject();
-	sceneRoot->SetStatic(true);
-	sceneObjects_.push_back(sceneRoot);
-	sceneRoot->SetId(sceneObjects_.size());
-	for (int j = 0; j< scene->mRootNode->mNumChildren; ++j)
-	{
-		std::pair<GameObject *, aiNode* > toInsert;
-		toInsert.first = sceneRoot;
-		toInsert.second = scene->mRootNode->mChildren[j];
-		nodesToVisit.push(toInsert);
-	}
-	//iterate over queue adding children of the nodes we visit.
-	while (!nodesToVisit.empty())
-	{
-		GameObject * parent = nodesToVisit.front().first;
-		aiNode* toVisit = nodesToVisit.front().second;
-		nodesToVisit.pop();
 
+void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, const aiMatrix4x4 &transformation)
+{
+	if (parent == nullptr) 
+	{
+		MeshImporter* mi = nullptr;
+		for (int i = 0; i < scene->mNumMeshes; ++i)
+		{
+			aiMesh *sceneMesh = scene->mMeshes[i];
+			meshes.push_back(sceneMesh);
+			mi->meshEntryArrays(meshes[i]);
+
+		}
+		GameObject *sceneRoot = new GameObject();
+		sceneRoot->SetStatic(true);
+		sceneObjects_.push_back(sceneRoot);
+		sceneRoot->SetId(sceneObjects_.size());
+		for (int j = 0; j< scene->mRootNode->mNumChildren; ++j)
+		{
+			RecursiveSceneGeneration(scene->mRootNode->mChildren[j], sceneRoot, scene->mRootNode->mTransformation);
+		}
+	}
+	else 
+	{
 		GameObject *sceneObject = new GameObject();
 		for (int m = 0; m < toVisit->mNumMeshes; ++m) {
 			ComponentMesh *cm = new ComponentMesh(RESOURCE);
@@ -469,39 +468,47 @@ void ModuleScene::GenerateScene()
 			sceneObject->AddComponent(cm);
 
 		}
-
-		aiVector3D posParent;
-		aiQuaternion rotParent;
-		aiVector3D scaleParent;
-		toVisit->mParent->mTransformation.Decompose(scaleParent, rotParent, posParent);
+		aiMatrix4x4 childTransform =   transformation * toVisit->mTransformation;
 		aiVector3D pos;
 		aiQuaternion rot;
 		aiVector3D scale;
-		toVisit->mTransformation.Decompose(scale, rot, pos);
-		pos += posParent;
-		rot = rot * rotParent;
-		scale += scaleParent;
-
+		childTransform.Decompose(scale, rot, pos);
 		ComponentTransform *ct = new ComponentTransform(float3(pos.x, pos.y, pos.z), float3(scale.x, scale.y, scale.z), Quat::Quat(rot.x, rot.y, rot.z, rot.w));
 		sceneObject->AddComponent(ct);
 		parent->AddChild(sceneObject);
-
 		sceneObject->SetStatic(true);
 		sceneObjects_.push_back(sceneObject);
 		sceneObject->SetId(sceneObjects_.size());
 		for (int l = 0; l < toVisit->mNumChildren; ++l)
 		{
-			//Push it
-			std::pair<GameObject *, aiNode* > toInsert;
-			toInsert.first = sceneObject;
-			toInsert.second = toVisit->mChildren[l];
-			nodesToVisit.push(toInsert);
+			RecursiveSceneGeneration(toVisit->mChildren[l], sceneObject, childTransform);
 		}
+	}
+}
 
+void ModuleScene::DrawHierarchy() 
+{
+	glLineWidth((GLfloat)3.0f);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	for (int i = 0; i < sceneObjects_.size(); ++i)
+	{
+		glBegin(GL_LINES);
+
+		GameObject *parent = sceneObjects_[i]->GetParent();
+		if (parent != nullptr) {
+			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+			ComponentTransform* parentCT = (ComponentTransform*)parent->GetComponent(TRANSFORMATION);
+			if (ct != nullptr && parentCT != nullptr)
+			{
+				float3 posNode = ct->GetGlobalPosition();
+				float3 posParent = parentCT->GetGlobalPosition();
+				
+				glVertex3f(posParent.x, posParent.y, posParent.z);
+				glVertex3f(posNode.x, posNode.y, posNode.z);
+			}
+		}
+		glEnd();
 	}
-	MeshImporter* mi = nullptr;
-	for (int i = 0; i < meshes.size(); ++i) {
-		mi->meshEntryArrays(meshes[i]);
-	}
-	int a = 1;
+	glLineWidth((GLfloat)1.0f);
+	glColor3f(1.0f, 1.0f, 1.0f);
 }

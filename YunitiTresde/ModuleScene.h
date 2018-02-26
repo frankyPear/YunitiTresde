@@ -50,7 +50,10 @@ public:
 	void CreateRay(float2 screenPoint);
 
 	void LoadScene(const char* filepath);
-	void GenerateScene();
+
+	void RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent ,const aiMatrix4x4 &transformation );
+
+	void DrawHierarchy();
 
 	void meshEntry(aiMesh * mesh);
 
