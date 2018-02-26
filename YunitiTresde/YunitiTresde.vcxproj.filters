@@ -193,6 +193,7 @@
     <ClCompile Include="ResourceMesh.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -492,6 +493,7 @@
     <ClInclude Include="ResourceMesh.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">

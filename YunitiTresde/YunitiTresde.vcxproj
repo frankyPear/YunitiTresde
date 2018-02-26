@@ -206,6 +206,7 @@
     <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Module.h" />
+    <ClInclude Include="ModuleAnimation.h" />
     <ClInclude Include="ModuleCamera.h" />
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleInput.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="Mathgeolib\include\Math\TransformOps.cpp" />
     <ClCompile Include="Mathgeolib\include\Time\Clock.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModuleAnimation.cpp" />
     <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
