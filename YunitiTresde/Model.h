@@ -21,7 +21,8 @@ public:
 	GLuint DevilImage(const char * theFileName);
 	void LoadTexture(const char * filepath);
 	void Clear();
-	void Draw();
+	void Draw(uint id, aiMesh * mesh);
+	uint loadTextureDirect(const char* filepath);
 
 public:
 

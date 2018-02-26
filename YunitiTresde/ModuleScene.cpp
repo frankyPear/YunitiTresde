@@ -21,13 +21,17 @@
 #include "MeshImporter.h"
 #include <map>
 #include <queue>
+#include "Model.h"
+#include <string>
 
 #define BOX_SIZE 20.0f
+
 
 class MeshImporter;
 
 ModuleScene::ModuleScene()
 {
+	
 }
 
 ModuleScene::~ModuleScene()
@@ -38,16 +42,25 @@ ModuleScene::~ModuleScene()
 bool ModuleScene::Init()
 {
 
+
 	root = new GameObject();
 	LoadScene("../Resources/street/Street.obj");
 	GenerateScene();
 	actualCamera = App->cam->dummyCamera;
+
 
 	return true;
 }
 
 bool ModuleScene::Start()
 {
+
+	
+	
+	
+
+	
+
 	limits = AABB();
 	limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
 	limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
@@ -56,6 +69,9 @@ bool ModuleScene::Start()
 	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 	return true;
+
+
+
 }
 
 bool ModuleScene::CleanUp()
@@ -75,8 +91,8 @@ update_status ModuleScene::Update(float dt)
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
 	MeshImporter* mi = nullptr;
 	for (int i = 0; i < meshes.size(); ++i) {
-		mi->DrawMeshHierarchy();
-		//Draw();
+		//mi->DrawMeshHierarchy();
+		model->Draw(id[meshes[i]->mMaterialIndex], meshes[i]);
 	}
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
@@ -430,7 +446,19 @@ void ModuleScene::LoadScene(const char* filepath)
 		LOG("SCENE LOADED");
 
 	}
-
+	for (unsigned i = 0; i < scene->mNumMaterials; ++i)
+	{
+		aiString textureFile;
+	
+		
+		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &textureFile) == aiReturn_SUCCESS)
+		{
+			std::string name = "../Resources/street/" + (std::string)textureFile.data;
+			id.push_back(model->loadTextureDirect(name.c_str()));
+		}
+		else 
+			id.push_back(0); 
+	}
 }
 
 
@@ -500,8 +528,8 @@ void ModuleScene::GenerateScene()
 
 	}
 	MeshImporter* mi = nullptr;
-	for (int i = 0; i < meshes.size(); ++i) {
-		mi->meshEntryArrays(meshes[i]);
-	}
-	int a = 1;
+	//for (int i = 0; i < meshes.size(); ++i) {
+	//	mi->meshEntryArrays(meshes[i]);
+	//}
+	//int a = 1;
 }

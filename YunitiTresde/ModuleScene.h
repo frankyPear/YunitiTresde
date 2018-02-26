@@ -16,6 +16,7 @@ class GameObject;
 class Mesh;
 class Quadtree;
 class MeshImporter;
+class Model;
 
 class ModuleScene : public Module
 {
@@ -92,7 +93,8 @@ private:
 
 	std::vector<aiMaterial*> materials;
 	MeshImporter* mesh1;
-
+	Model* model;
+	std::vector<uint> id;
 };
 
 #endif
