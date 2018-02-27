@@ -39,6 +39,8 @@ public:
 	void ToggleFrustumAcceleration();
 	void CreateRay(float2 screenPoint);
 	
+	void OnSceneObjectIsDestroyed(GameObject *t);
+
 public:
 	ComponentCamera *actualCamera = nullptr;
 	uint imguiFlag = 0;

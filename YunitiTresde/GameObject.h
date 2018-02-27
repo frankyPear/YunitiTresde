@@ -35,6 +35,8 @@ public:
 	///PostUpdate
 	virtual bool PostUpdate();
 
+	void Destroy();
+
 #pragma endregion
 
 #pragma region Getters
@@ -68,6 +70,8 @@ public:
 	GameObject* GetChild(int index)const;
 
 	void DetatchChild(int index);
+
+	void DetatchChild(GameObject *gameObject);
 
 	void DetachChildren();
 
@@ -111,6 +115,8 @@ private:
 	bool _isActive = true;
 
 	bool _isStatic = false;
+
+	bool _toBeDestroyed = false;
 
 	std::string _name = "Default name";
 

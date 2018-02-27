@@ -62,18 +62,18 @@ bool ModuleScene::Init()
 		root->AddChild(object);
 		sceneObjects_.push_back(object);
 		offset += offset;
-//<<<<<<< develop
+		//<<<<<<< develop
 		object->SetId(i + 1);
 
 	}
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
 
-//=======
-//		object->SetId(i+1);
-//	}*/
-	//m.Load("../Resources/BakerHouse.fbx");
-	//m.LoadTexture("../Resources/Baker_house.png");
-//>>>>>>> feature-MousePicking-FP
+	//=======
+	//		object->SetId(i+1);
+	//	}*/
+		//m.Load("../Resources/BakerHouse.fbx");
+		//m.LoadTexture("../Resources/Baker_house.png");
+	//>>>>>>> feature-MousePicking-FP
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -106,11 +106,7 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-
-
 	mesh1->Draw();
-
-
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
 			quadtree->Clear();
@@ -246,8 +242,7 @@ void ModuleScene::ShowImguiStatus() {
 					cmat->OnEditor();
 				}
 				if (ImGui::CollapsingHeader("Add Component")) {
-
-					if (sceneObjects_[i]->GetComponent(Type::MATERIAL)==nullptr && ImGui::Button("Component Material", ImVec2(150, 0)))
+					if (sceneObjects_[i]->GetComponent(Type::MATERIAL) == nullptr && ImGui::Button("Component Material", ImVec2(150, 0)))
 					{
 						ComponentMaterial* CM = new ComponentMaterial(sceneObjects_[i]);
 						sceneObjects_[i]->AddComponent(CM);
@@ -264,7 +259,6 @@ void ModuleScene::ShowImguiStatus() {
 					{
 						ComponentCamera* CM = new ComponentCamera();
 						sceneObjects_[i]->AddComponent(CM);
-
 						ImGui::CloseCurrentPopup();
 					}
 
@@ -391,6 +385,7 @@ void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
 	ComponentMaterial *cmat = new ComponentMaterial(obj);
 	obj->AddComponent(cmat);
 
+	root->AddChild(obj);
 	sceneObjects_.push_back(obj);
 }
 
@@ -445,4 +440,15 @@ void ModuleScene::CreateRay(float2 screenPoint)
 		LOG("Nearest object is %i \n", it->second->GetId());
 	}
 	//Get the triangle with the lowest distance, maps are ordered by the key.
+}
+
+void ModuleScene::OnSceneObjectIsDestroyed(GameObject * t)
+{
+	for (std::vector<GameObject*>::iterator it = sceneObjects_.begin(); it != sceneObjects_.end(); ++it) {
+		if ((*it) == t) {
+			sceneObjects_.erase(it);
+			break;
+		}
+	}
+
 }

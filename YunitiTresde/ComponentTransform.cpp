@@ -228,10 +228,11 @@ void ComponentTransform::OnEditor(GameObject* obj)
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, 0.8f, 0.8f));
 		if (ImGui::Button("Delete Game Object"))
 		{
-			obj->OnDestroy();
+			obj->Destroy();
+			/*obj->OnDestroy();
 			delete obj;
 			obj = nullptr;
-			App->scene->wantToDelete = true;
+			App->scene->wantToDelete = true;*/
 		}
 		ImGui::PopStyleColor(3);
 		ImGui::PopID();
