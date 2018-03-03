@@ -4,18 +4,24 @@ class ResourceAudio :
 	public Resource
 {
 
-	enum AudioFormat {STREAM,SAMPLE};
+	
 
 public:
+	enum AudioFormat { STREAM, SAMPLE };
+
 	ResourceAudio(uid id, Type t);
 	~ResourceAudio();
 
 	AudioFormat GetAudioFormat() const;
 	uint GetResourceAudioId() const;
-	void SetAudioFormat();
+	const char* GetFilePath() const;
+	void SetAudioFormat(AudioFormat af);
+	void SetResourceAudioId(uint newID);
+	void SetFilePath(const char *path);
 
 public:
 	uint resourceAudioId;
 	AudioFormat audioformat;
+	const char* filepath;
 };
 
