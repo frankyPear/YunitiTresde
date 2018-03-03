@@ -25,6 +25,7 @@ public:
 
 	bool ImportAudioSource(const char*path);
 	bool LoadResourceAudio(ResourceAudio *ra);
+	void AudioUpdate();
 
 	float GetMusicVolume() const;
 	float GetFXVolume() const;

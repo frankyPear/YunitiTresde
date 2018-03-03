@@ -22,11 +22,7 @@ bool ModuleAudio::Init()
 {
 	bool success = BASS_Init(-1, 44100, BASS_DEVICE_3D, 0, nullptr);
 	if (!success) LOG("Couldn't initialize bass")
-	else 
-	{
-		
-	}
-	return true;
+	return success;
 }
 
 bool ModuleAudio::Clear()
