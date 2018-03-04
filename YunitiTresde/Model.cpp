@@ -137,7 +137,6 @@ void Model::Draw(uint id, aiMesh* mesh) // vector de textures + vector de meshes
 	{
 			for (unsigned i = 0; i < mesh->mNumFaces; ++i)
 			{ 
-			
 				glBindTexture(GL_TEXTURE_2D, id);
 				
 				glBegin(GL_TRIANGLES);
