@@ -1,7 +1,8 @@
 #include "ComponentAudioSource.h"
-
-
-
+#include "Application.h"
+#include "ModuleResources.h"
+#include "ResourceAudio.h"
+#include "ModuleAudio.h"
 ComponentAudioSource::ComponentAudioSource()
 {
 }
@@ -24,6 +25,32 @@ ComponentAudioSource::State ComponentAudioSource::GetState() const
 void ComponentAudioSource::SetState(State s)
 {
 	actualState = s;
+}
+
+
+
+bool ComponentAudioSource::SetResource(uid id)
+{
+	bool r = false;
+
+	if (actualState != State::UNLOADED)
+		Unload();
+
+	if (_resourceId != 0 && _resourceId!=id)
+	{
+		Resource* res = App->resources->Get(id);
+		if (res != nullptr && res->GetType() == Resource::texture)
+		{
+			if (res->LoadToMemory())
+			{
+				_resourceId = id;
+				actualState = State::STOPPED;
+				r = true;
+			}
+		}
+	}
+
+	return r;
 }
 
 bool ComponentAudioSource::IsPlaying() const
@@ -71,4 +98,14 @@ bool ComponentAudioSource::Stop()
 	actualState == State::PLAYING ? ret = false : ret = true;
 	if (ret) actualState = State::TO_STOP;
 	return ret;
+}
+
+void ComponentAudioSource::Unload()
+{
+	const ResourceAudio* res = (const ResourceAudio*)GetResource();
+	if (res != nullptr && res->resourceAudioId != 0)
+	{
+		App->audio->Unload(res->resourceAudioId);
+		actualState = State::UNLOADED;
+	}
 }

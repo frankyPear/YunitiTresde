@@ -32,6 +32,19 @@ bool ModuleAudio::Clear()
 	return true;
 }
 
+void ModuleAudio::Unload(unsigned long int id)
+{
+	if (id != 0)
+	{
+		BASS_CHANNELINFO info;
+		BASS_ChannelGetInfo(id, &info);
+		if (info.filename != nullptr)
+			BASS_SampleFree(id);
+		else
+			BASS_StreamFree(id);
+	}
+}
+
 update_status ModuleAudio::Update()
 {
 	return UPDATE_CONTINUE;

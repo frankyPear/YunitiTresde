@@ -21,6 +21,7 @@ public:
 	bool Start();
 	bool Init();
 	bool Clear();
+	void Unload(unsigned long int id);
 	update_status Update();
 
 	bool ImportAudioSource(const char*path);
