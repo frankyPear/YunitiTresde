@@ -44,7 +44,8 @@ bool ModuleScene::Init()
 
 
 	root = new GameObject();
-	LoadScene("../Resources/street/Street.obj");
+	//LoadScene("../Resources/street/Street.obj");
+	LoadScene("../Resources/ArmyPilot/ArmyPilot/ArmyPilot.dae");
 	GenerateScene();
 	actualCamera = App->cam->dummyCamera;
 
@@ -453,7 +454,7 @@ void ModuleScene::LoadScene(const char* filepath)
 		
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &textureFile) == aiReturn_SUCCESS)
 		{
-			std::string name = "../Resources/street/" + (std::string)textureFile.data;
+			std::string name = "..Resources/ArmyPilot/ArmyPilot/Tex/" + (std::string)textureFile.data;
 			id.push_back(model->loadTextureDirect(name.c_str()));
 		}
 		else 
@@ -528,8 +529,8 @@ void ModuleScene::GenerateScene()
 
 	}
 	MeshImporter* mi = nullptr;
-	//for (int i = 0; i < meshes.size(); ++i) {
-	//	mi->meshEntryArrays(meshes[i]);
-	//}
-	//int a = 1;
+	for (int i = 0; i < meshes.size(); ++i) {
+		mi->meshEntryArrays(meshes[i]);
+	}
+	int a = 1;
 }
