@@ -9,7 +9,7 @@
 
 struct LessString {
 	bool operator() (const aiString& a, aiString& b) const {
-		return a.C_Str < b.C_Str;
+		return a.C_Str() < b.C_Str();
 	}
 };
 
@@ -38,6 +38,13 @@ struct AnimInstance
 	AnimInstance *nextAnim = nullptr;
 	uint blend_duration = 0;
 	uint blend_time = 0;
+};
+struct AnimArrayChannel
+{
+	double animDuration = 0;
+	aiString nodeName = aiString("default-name");
+	aiVectorKey* arrayAnimationPos = nullptr;
+	aiQuatKey* arrayAnimationRot = nullptr;
 };
 
 class ModuleAnimation :
@@ -71,6 +78,9 @@ public:
 	
 public:
 	uint AnimId;
-
+	const aiScene* scene = nullptr;
+	Assimp::Importer importer;
+	std::vector<AnimArrayChannel*> animNodes_;
+	//std::vector<GameObject*> objectToDraw_;
 };
 
