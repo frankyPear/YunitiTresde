@@ -2,6 +2,8 @@
 #include "ComponentAudioListener.h"
 #include "ComponentAudioSource.h"
 #include "ResourceAudio.h"
+#include "GameObject.h"
+#include "ComponentTransform.h"
 
 using namespace std;
 
@@ -132,6 +134,22 @@ bool ModuleAudio::LoadResourceAudio(ResourceAudio *ra)
 	return ret;
 }
 
+void ModuleAudio::AudioListenerUpdate()
+{
+	if (listener != nullptr) {
+		BASS_Set3DFactors(listener->GetDistance(), listener->GetRoll_off(), listener->GetDoppler());
+		ComponentTransform *ct = (ComponentTransform *)listener->LinkedTo()->GetComponent(TRANSFORMATION);
+		if (ct != nullptr) {
+			BASS_Set3DPosition((BASS_3DVECTOR*) &ct->GetGlobalPosition(), nullptr, (BASS_3DVECTOR*)&ct->GetGlobalTransform().WorldZ(), (BASS_3DVECTOR*)&ct->GetGlobalTransform().WorldY());
+		}
+	}
+}
+
+void ModuleAudio::AudioSourceUpdate(ComponentAudioSource *as)
+{
+
+}
+
 float ModuleAudio::GetMusicVolume() const
 {
 	return music_volume;
@@ -147,6 +165,12 @@ float ModuleAudio::GetMasterVolume() const
 	return master_volume;
 }
 
+ComponentAudioListener* ModuleAudio::GetAudioListener()
+{
+	return listener;
+}
+
+
 void ModuleAudio::SetMusicVolume(float volume)
 {
 	music_volume = volume;
@@ -160,4 +184,10 @@ void ModuleAudio::SetFXVolume(float volume)
 void ModuleAudio::SetMasterVolume(float volume)
 {
 	master_volume = volume;
+}
+
+void ModuleAudio::SetAudioListener(ComponentAudioListener *listenerNew)
+{
+	listener = listenerNew;
+
 }
