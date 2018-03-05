@@ -43,8 +43,8 @@ struct AnimArrayChannel
 {
 	double animDuration = 0;
 	aiString nodeName = aiString("default-name");
-	aiVectorKey* arrayAnimationPos = nullptr;
-	aiQuatKey* arrayAnimationRot = nullptr;
+	aiVectorKey* arrayAnimationPos=nullptr;
+	aiQuatKey* arrayAnimationRot  =nullptr;
 };
 
 class ModuleAnimation :
