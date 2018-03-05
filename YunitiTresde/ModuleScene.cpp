@@ -3,6 +3,8 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
+#include "ModuleAudio.h"
+
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
@@ -17,6 +19,8 @@
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "ComponentAudioSource.h"
+#include "ComponentAudioListener.h"
 #include "ModuleCamera.h"
 #include "MeshImporter.h"
 #include <map>
@@ -102,6 +106,8 @@ update_status ModuleScene::Update(float dt)
 		{
 			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
 			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+			//ComponentAudioListener* cal= (ComponentAudioListener*)sceneObjects_[i]->GetComponent(AUDIOLISTENER);
+			//ComponentAudioSource* cas  = (ComponentAudioSource*)  sceneObjects_[i]->GetComponent(AUDIOSOURCE);
 			if (cm != nullptr && cm->meshShape != RESOURCE && ct != nullptr) {
 				AABB newBox = *(cm->GetBoundingBox());
 				newBox.TransformAsAABB(ct->GetGlobalTransform());

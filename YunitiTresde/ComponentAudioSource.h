@@ -7,8 +7,9 @@ class ComponentAudioSource :
 {
 public:
 
-	enum State {UNLOADED,PLAYING,PAUSED,STOPPED,TO_PLAY,TO_PAUSE,TO_RESUME,TO_STOP, UNINITIALIZED};
-
+	enum State {UNLOADED,PLAYING,PAUSED,STOPPED, WAITING_TO_PLAY, TO_PLAY, WAITING_TO_PAUSE,TO_PAUSE, 
+		WAITING_TO_UNPAUSE,TO_RESUME,TO_STOP,UNINITIALIZED};
+	
 	ComponentAudioSource();
 	~ComponentAudioSource();
 
@@ -32,6 +33,20 @@ public:
 
 private:
 	State actualState=State::UNLOADED;
+
+public:
+
+	float maxDistance = 0.f;
+	float minDistance = 0.f;
+
+	float fadeOut = 1.0f;
+	float fadeIn = 1.0f;
+
+	int angleConeIn = 360;
+	int angleConeOut = 360;
+	float VolumeConeOut = 0.f;
+	
+	
 
 };
 
