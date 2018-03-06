@@ -3,8 +3,16 @@
 #include "ModuleResources.h"
 #include "ResourceAudio.h"
 #include "ModuleAudio.h"
+
 ComponentAudioSource::ComponentAudioSource()
 {
+}
+
+ComponentAudioSource::ComponentAudioSource(float distmin, float distmax, float fadeout, float fadein, int angleconein, int angleconeout, float outVol):
+	minDistance(distmin), maxDistance(distmax), fadeOut(fadeout), fadeIn(fadeIn), angleConeIn(angleconein), angleConeOut(angleconeout), VolumeConeOut(outVol),
+	actualState(UNINITIALIZED)
+{
+
 }
 
 
@@ -27,7 +35,10 @@ void ComponentAudioSource::SetState(State s)
 	actualState = s;
 }
 
-
+ResourceAudio* ComponentAudioSource::GetAudioSource() const
+{
+	return rs;
+}
 
 bool ComponentAudioSource::SetResource(uid id)
 {

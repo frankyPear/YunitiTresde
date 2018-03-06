@@ -18,9 +18,10 @@ public:
 	void SetAudioFormat(AudioFormat af);
 	void SetResourceAudioId(uint newID);
 	void SetFilePath(const char *path);
+	bool LoadInMemory();
 
 public:
-	uint resourceAudioId;
+	uint resourceAudioId = 0;
 	AudioFormat audioformat;
 	const char* filepath;
 };

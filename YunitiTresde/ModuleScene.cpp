@@ -47,7 +47,15 @@ bool ModuleScene::Init()
 	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
 	RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation);
 	actualCamera = App->cam->dummyCamera;
-
+	GameObject *object1 = new GameObject();
+	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
+	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentAudioListener *al = new ComponentAudioListener();
+	object1->AddComponent(cm1);
+	object1->AddComponent(ct1);
+	object1->SetStatic(true);
+	root->AddChild(object1);
+	sceneObjects_.push_back(object1);
 	return true;
 }
 

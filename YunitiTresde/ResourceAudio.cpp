@@ -42,3 +42,9 @@ void ResourceAudio::SetFilePath(const char *path)
 {
 	filepath = path;
 }
+
+
+bool ResourceAudio::LoadInMemory()
+{
+	return true;
+}

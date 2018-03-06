@@ -104,6 +104,7 @@ bool ModuleAudio::ImportAudioSource(const char*path)
 
 bool ModuleAudio::LoadResourceAudio(ResourceAudio *ra)
 {
+	if (ra == nullptr) return false;
 	bool ret = false;
 	uint audioID = 0;
 
@@ -162,7 +163,62 @@ void ModuleAudio::AudioListenerUpdate()
 
 void ModuleAudio::AudioSourceUpdate(ComponentAudioSource *as)
 {
-	
+	if (as == nullptr) return;
+	ResourceAudio *audioResource = as->GetAudioSource();
+	if (audioResource != nullptr) {
+		uint id = (uint)audioResource->GetId();
+		switch (as->GetState())
+		{
+			case ComponentAudioSource::State::PLAYING:
+			{
+				GameObject* linked = as->LinkedTo();
+				if (linked == nullptr) return;
+				ComponentTransform* ct = (ComponentTransform *)linked->GetComponent(TRANSFORMATION);
+				if (ct == nullptr) return;
+				BASS_ChannelSet3DAttributes(id, BASS_3DMODE_NORMAL, as->minDistance, as->maxDistance, as->angleConeIn, as->angleConeOut, as->VolumeConeOut);
+				BASS_ChannelSet3DPosition(id, (BASS_3DVECTOR*)&ct->GetGlobalPosition(), (BASS_3DVECTOR*)&ct->GetGlobalTransform().WorldZ(), nullptr);
+				break;
+			}
+			case ComponentAudioSource::State::TO_PLAY:
+			{
+				if (!BASS_ChannelPlay(id, FALSE)) LOG("Error on playing BASS, with channel %d", id)
+				else
+				{
+					as->SetState(ComponentAudioSource::State::PLAYING);
+				}
+				break;
+				
+			}
+			case ComponentAudioSource::State::TO_PAUSE:
+			{
+				if (!BASS_ChannelPause(id)) LOG("Error on pausing BASS, with channel %d", id)
+				else
+				{
+					as->SetState(ComponentAudioSource::State::PAUSED);
+				}
+				break;
+			}
+			case ComponentAudioSource::State::TO_RESUME:
+			{
+				if (!BASS_ChannelPlay(id, FALSE)) LOG("Error on resuming BASS, with channel %d", id)
+				else
+				{
+					as->SetState(ComponentAudioSource::State::PLAYING);
+				}
+				break;
+			}
+			case ComponentAudioSource::State::TO_STOP:
+			{
+				if (!BASS_ChannelStop(id)) LOG("Error on stopping BASS, with channel %d", id)
+				else
+				{
+					BASS_ChannelSlideAttribute(id, BASS_ATTRIB_VOL, 0.0f, DWORD(as->fadeOut * 1000.0f));
+					as->SetState(ComponentAudioSource::State::STOPPED);
+				}
+				break;
+			}
+		}
+	}
 }
 
 float ModuleAudio::GetMusicVolume() const
@@ -184,7 +240,6 @@ ComponentAudioListener* ModuleAudio::GetAudioListener()
 {
 	return listener;
 }
-
 
 void ModuleAudio::SetMusicVolume(float volume)
 {
