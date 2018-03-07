@@ -7,6 +7,8 @@
 #include <map>
 #include <vector>
 
+typedef uint AnimInstanceID;
+
 struct LessString {
 	bool operator() (const aiString& a, aiString& b) const {
 		return a.C_Str() < b.C_Str();
@@ -24,7 +26,7 @@ struct NodeAnim
 
 struct Anim
 {
-	NodeAnim *channelArray= nullptr;
+	std::vector<NodeAnim *>channelArray;
 	uint numChannels = 0;
 	uint animDuration = 0;
 };
@@ -39,20 +41,14 @@ struct AnimInstance
 	uint blend_duration = 0;
 	uint blend_time = 0;
 };
-struct AnimArrayChannel
-{
-	double animDuration = 0;
-	aiString nodeName = aiString("default-name");
-	aiVectorKey* arrayAnimationPos=nullptr;
-	aiQuatKey* arrayAnimationRot  =nullptr;
-};
+
 
 class ModuleAnimation :
 	public Module
 {
 	typedef std::map<aiString, Anim*, LessString> AnimMap;
 	typedef std::vector<AnimInstance*> InstanceList;
-	typedef std::vector<uint> HoleList;
+	typedef std::vector<AnimInstanceID> HoleList;
 
 	AnimMap animations;
 	InstanceList instances;
@@ -80,7 +76,6 @@ public:
 	uint AnimId;
 	const aiScene* scene = nullptr;
 	Assimp::Importer importer;
-	std::vector<AnimArrayChannel*> animNodes_;
 	//std::vector<GameObject*> objectToDraw_;
 };
 

@@ -66,22 +66,28 @@ void ModuleAnimation::Load(aiString name, const char* filepath)
 		LOG("SCENE LOADED");
 	}
 	for (int i = 0; i < scene->mNumAnimations; i++) {
-		AnimArrayChannel* anim = new AnimArrayChannel();
-		aiAnimation *sceneAnim = scene->mAnimations[i];
-		anim->animDuration = (scene->mAnimations[i])->mDuration;
-		for (int j = 0; j < (scene->mAnimations[i])->mNumChannels; j++) {
-			anim->nodeName = (scene->mAnimations[i])->mChannels[j]->mNodeName;
-			anim->arrayAnimationPos = scene->mAnimations[i]->mChannels[j]->mPositionKeys;
-			anim->arrayAnimationRot = scene->mAnimations[i]->mChannels[j]->mRotationKeys;
-			animNodes_.push_back(anim);
-			//for (int k = 0; k < ((scene->mAnimations[i])->mChannels[j])->mNumPositionKeys;k++) {
-			//	for (int l = 0; l < ((scene->mAnimations[i])->mChannels[j])->mNumRotationKeys; l++) {
-			//		anim->arrayAnimationPos = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k];// mPositionKeys;
-			//		anim->arrayAnimationRot = scene->mAnimations[i]->mChannels[j]->mRotationKeys[l];
-			//		animNodes_.push_back(anim);
-			//	}
-			//}
+		AnimInstance *instance = new AnimInstance;
+		if (i > 0) {
+			AnimInstance *previous = instances[instances.size() - 1];
+			previous->nextAnim = instance;
 		}
+		Anim* animation = new Anim;
+		aiAnimation *sceneAnim = scene->mAnimations[i];
+		animation->animDuration = sceneAnim->mDuration;
+		animation->numChannels = sceneAnim->mNumChannels;
+		for (int j = 0; j < sceneAnim->mNumChannels; j++) {
+			aiNodeAnim* ainodeanim = sceneAnim->mChannels[j];
+			NodeAnim* node = new NodeAnim;
+			node->animNodeName = ainodeanim->mNodeName;
+			node->numPositions = ainodeanim->mNumPositionKeys;
+			node->numRotations = ainodeanim->mNumRotationKeys;
+			node->positionArray = &ainodeanim->mPositionKeys->mValue;
+			node->rotationArray = &ainodeanim->mRotationKeys->mValue;
+			animation->channelArray.push_back(node);
+		}
+		instance->animation = animation;
+		instance->loop = false;
+		instances.push_back(instance);
 	}
 }
 
