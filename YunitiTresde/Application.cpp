@@ -25,8 +25,8 @@ Application::Application()
 	imgui = new ModuleImGui();
 	cam = new ModuleCamera();
 	textures = new ModuleTextures();
-	scene = new ModuleScene();
 	anim = new ModuleAnimation();
+	scene = new ModuleScene();
 
 	modules.push_back(input);
 	modules.push_back(window);
@@ -34,8 +34,8 @@ Application::Application()
 	modules.push_back(imgui);
 	modules.push_back(cam);
 	modules.push_back(textures);
-	modules.push_back(scene);
 	modules.push_back(anim);
+	modules.push_back(scene);
 
 }
 

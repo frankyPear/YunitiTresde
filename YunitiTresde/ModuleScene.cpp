@@ -3,6 +3,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
+#include "ModuleAnimation.h"
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
@@ -56,6 +57,7 @@ bool ModuleScene::Start()
 	quadtree->Create(limits);
 	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
+	App->anim->Play("Idle");
 	return true;
 }
 
@@ -79,6 +81,17 @@ update_status ModuleScene::Update(float dt)
 		mi->DrawMeshHierarchy();
 		//Draw();
 	}*/
+	for (int z = 0; z < sceneObjects_.size(); ++z) 
+	{
+		ComponentTransform* ct = (ComponentTransform*)sceneObjects_[z]->GetComponent(TRANSFORMATION);
+		if (ct != nullptr) {
+			float3 componentPos = ct->GetGlobalPosition();
+			float3 componentRot = ct->GetQuatRotation().ToEulerXYZ();
+			aiVector3D pos = aiVector3D(componentPos.x, componentPos.y, componentPos.z);
+			aiQuaternion rot = aiQuaternion(componentRot.x, componentRot.y, componentRot.z);
+			App->anim->GetTransform(App->anim->AnimId, sceneObjects_[z]->GetName().c_str(),pos,rot);
+		}
+	}
 	DrawHierarchy();
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
@@ -450,6 +463,7 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 
 		}
 		GameObject *sceneRoot = new GameObject();
+		sceneRoot->SetName("root");
 		sceneRoot->SetStatic(true);
 		sceneObjects_.push_back(sceneRoot);
 		sceneRoot->SetId(sceneObjects_.size());
@@ -476,6 +490,7 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 		ComponentTransform *ct = new ComponentTransform(float3(pos.x, pos.y, pos.z), float3(scale.x, scale.y, scale.z), Quat::Quat(rot.x, rot.y, rot.z, rot.w));
 		sceneObject->AddComponent(ct);
 		parent->AddChild(sceneObject);
+		sceneObject->SetName(toVisit->mName.C_Str());
 		sceneObject->SetStatic(true);
 		sceneObjects_.push_back(sceneObject);
 		sceneObject->SetId(sceneObjects_.size());

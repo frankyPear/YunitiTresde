@@ -10,7 +10,7 @@
 typedef uint AnimInstanceID;
 
 struct LessString {
-	bool operator() (const aiString& a, aiString& b) const {
+	bool operator() (const aiString& a, const aiString& b) const {
 		return a.C_Str() < b.C_Str();
 	}
 };
@@ -34,7 +34,7 @@ struct Anim
 struct AnimInstance 
 {
 	Anim *animation = nullptr;
-	uint time = 0;
+	float time = 0;
 	bool loop = false;
 
 	AnimInstance *nextAnim = nullptr;
@@ -69,11 +69,15 @@ public:
 	uint Play(const char* name);
 	void Stop(uint id);
 	void BlendTo(uint id, const char* name, uint blend_time);
-
 	bool GetTransform(uint animId, const char* channel, aiVector3D& position, aiQuaternion& rotation);
-	
+	void UpdateInstanceTime(float time);
+
+	aiVector3D Vector3DInterpolation(const aiVector3D & firstQuat, const aiVector3D & secondQuat, float lambda) const;
+	aiQuaternion InteropQuaternion(const aiQuaternion & firstQuat, const aiQuaternion & secondQuat, float lambda) const;
+
+
 public:
-	uint AnimId;
+	int AnimId = -1;
 	const aiScene* scene = nullptr;
 	Assimp::Importer importer;
 	//std::vector<GameObject*> objectToDraw_;
