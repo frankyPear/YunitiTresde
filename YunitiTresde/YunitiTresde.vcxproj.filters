@@ -196,6 +196,9 @@
     <ClCompile Include="ModuleUI.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Component2DTransform.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -499,6 +502,9 @@
       <Filter>Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="stb\include\stb_truetype.h" />
+    <ClInclude Include="Component2DTransform.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
