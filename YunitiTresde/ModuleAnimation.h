@@ -34,8 +34,8 @@ struct Anim
 struct AnimInstance 
 {
 	Anim *animation = nullptr;
-	float time = 0;
-	bool loop = false;
+	float time = 0.0f;
+	bool loop = true;
 
 	AnimInstance *nextAnim = nullptr;
 	uint blend_duration = 0;

@@ -1,5 +1,5 @@
 #include "ModuleAnimation.h"
-
+#include <assert.h>
 
 
 ModuleAnimation::ModuleAnimation()
@@ -54,11 +54,11 @@ update_status ModuleAnimation::PostUpdate(float dt)
 
 void ModuleAnimation::Load(aiString name, const char* filepath)
 {
-	scene = importer.ReadFile(filepath,
-		aiProcess_CalcTangentSpace |
+	scene = importer.ReadFile(filepath, 0
+		/*aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType);
+		aiProcess_SortByPType*/);
 	if (!scene)
 	{
 		LOG("ERROR LOADING SCENE");
@@ -74,12 +74,23 @@ void ModuleAnimation::Load(aiString name, const char* filepath)
 		animation->numChannels = sceneAnim->mNumChannels;
 		for (int j = 0; j < sceneAnim->mNumChannels; j++) {
 			aiNodeAnim* ainodeanim = sceneAnim->mChannels[j];
-			NodeAnim* node = new NodeAnim;
+			NodeAnim* node = new NodeAnim();
 			node->animNodeName = ainodeanim->mNodeName;
 			node->numPositions = ainodeanim->mNumPositionKeys;
 			node->numRotations = ainodeanim->mNumRotationKeys;
-			node->positionArray = &ainodeanim->mPositionKeys->mValue;
-			node->rotationArray = &ainodeanim->mRotationKeys->mValue;
+			node->positionArray = new aiVector3D[node->numPositions];
+			node->rotationArray = new aiQuaternion[node->numRotations];
+			for (int k = 0; k < node->numPositions; ++k) {
+				node->positionArray[k].x = ainodeanim->mPositionKeys[k].mValue.x ;
+				node->positionArray[k].y = ainodeanim->mPositionKeys[k].mValue.y;
+				node->positionArray[k].z = ainodeanim->mPositionKeys[k].mValue.z;
+
+				node->rotationArray[k].x = ainodeanim->mRotationKeys[k].mValue.x;
+				node->rotationArray[k].y = ainodeanim->mRotationKeys[k].mValue.y;
+				node->rotationArray[k].z = ainodeanim->mRotationKeys[k].mValue.z;
+				node->rotationArray[k].w = ainodeanim->mRotationKeys[k].mValue.w;
+
+			}
 			animation->channelArray.push_back(node);
 
 		}
@@ -91,23 +102,25 @@ void ModuleAnimation::Load(aiString name, const char* filepath)
 bool ModuleAnimation::GetTransform(uint animId, const char* channel, aiVector3D& position, aiQuaternion& rotation)
 {
 	if (!instances.empty()) {
+		
 		bool ret = false;
 		AnimInstance *instance = instances[animId];
 		Anim* animation = instance->animation;
 		NodeAnim * node = nullptr;
-		for (int i = 0; i < animation->numChannels; ++i)
+		for (int i = 0; i < animation->numChannels && !ret; ++i)
 		{
 			node = animation->channelArray[i];
-			if (node->animNodeName.C_Str() == channel)
+			if (strcmp( node->animNodeName.C_Str(), channel) == 0)
 			{
-				Vector3DInterpolation(position, node->positionArray[0], 0.5f);
-				InteropQuaternion(rotation, node->rotationArray[0], 0.5f);
 				ret = true;
 			}
 		}
 		if (!ret) LOG("Error channel not found")
 		else
 		{
+			//position = node->positionArray[252];
+			//rotation = node->rotationArray[252];
+			//return true;
 			uint animationDuration = animation->animDuration;
 			uint instanceTime = instance->time;
 			uint posCount = node->numPositions;
@@ -123,24 +136,31 @@ bool ModuleAnimation::GetTransform(uint animId, const char* channel, aiVector3D&
 					instanceTime = animationDuration;
 				}
 			}
-			float posKey = float(instanceTime * posCount - 1) / animationDuration;
-			float rotKey = float(instanceTime * rotCount - 1) / animationDuration;
+
+			assert(instanceTime <= animationDuration);
+
+			float posKey = float( instanceTime * (posCount - 1) ) / animationDuration;
+			float rotKey = float( instanceTime * (rotCount - 1) ) / animationDuration;
 			uint actualPos = uint(posKey);
 			uint actualRot = uint(rotKey);
-
+			assert(actualPos >= 0 && actualPos < posCount);
+			assert(actualRot >= 0 && actualRot < posCount);
 			float posKeyNext = float(actualPos + 1) / posCount;
 			float rotKeyNext = float(actualRot + 1) / rotCount;
 
 			uint targetPos = uint(posKeyNext);
 			uint targetRot = uint(rotKeyNext);
-
+			assert(targetPos >= 0 && targetPos < posCount);
+			assert(targetRot >= 0 && targetRot < posCount);
 			float posLambda = posKey - actualPos;
-			float rotLambda = rotKey - actualRot;
-			aiVector3D& interpPos = Vector3DInterpolation(node->positionArray[actualPos], node->positionArray[targetPos], posLambda);
-			aiQuaternion& interpRot = InteropQuaternion(node->rotationArray[actualRot], node->rotationArray[targetRot], rotLambda);
+			float rotLambda = rotKey - actualRot;    
+			position = node->positionArray[actualPos];
+			rotation = node->rotationArray[actualPos];
+			//aiVector3D& interpPos = Vector3DInterpolation(node->positionArray[actualPos], node->positionArray[targetPos], posLambda);
+			//aiQuaternion& interpRot = InteropQuaternion(node->rotationArray[actualRot], node->rotationArray[targetRot], rotLambda);
 
-			return ret;
 		}
+		return ret;
 	}
 }
 
@@ -194,6 +214,6 @@ void ModuleAnimation::UpdateInstanceTime(float time)
 {
 	for (int i = 0; i < instances.size(); ++i)
 	{
-		instances[i]->time += time;
+		instances[i]->time += (time)*32;
 	}
 }

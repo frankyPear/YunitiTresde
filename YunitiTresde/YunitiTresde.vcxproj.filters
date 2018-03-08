@@ -196,6 +196,9 @@
     <ClCompile Include="ModuleAnimation.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentAnim.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -497,6 +500,9 @@
     </ClInclude>
     <ClInclude Include="ModuleAnimation.h">
       <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentAnim.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

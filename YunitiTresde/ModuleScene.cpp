@@ -83,13 +83,19 @@ update_status ModuleScene::Update(float dt)
 	}*/
 	for (int z = 0; z < sceneObjects_.size(); ++z) 
 	{
-		ComponentTransform* ct = (ComponentTransform*)sceneObjects_[z]->GetComponent(TRANSFORMATION);
-		if (ct != nullptr) {
-			float3 componentPos = ct->GetGlobalPosition();
-			float3 componentRot = ct->GetQuatRotation().ToEulerXYZ();
-			aiVector3D pos = aiVector3D(componentPos.x, componentPos.y, componentPos.z);
-			aiQuaternion rot = aiQuaternion(componentRot.x, componentRot.y, componentRot.z);
-			App->anim->GetTransform(App->anim->AnimId, sceneObjects_[z]->GetName().c_str(),pos,rot);
+		if (sceneObjects_[z]->GetParent() != nullptr) {
+			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[z]->GetComponent(TRANSFORMATION);
+			ComponentTransform* ctparent = (ComponentTransform*)sceneObjects_[z]->GetParent()->GetComponent(TRANSFORMATION);
+			if (ct != nullptr && ctparent != nullptr) {
+				float3 componentPos = ct->GetGlobalPosition();
+				float3 componentRot = ct->GetQuatRotation().ToEulerXYZ();
+				aiVector3D pos = aiVector3D(componentPos.x, componentPos.y, componentPos.z);
+				aiQuaternion rot = aiQuaternion(componentRot.x, componentRot.y, componentRot.z);
+				if (App->anim->GetTransform(App->anim->AnimId, sceneObjects_[z]->GetName().c_str(), pos, rot)) {
+					float4x4 trans = float4x4(Quat::Quat(rot.x, rot.y, rot.z, rot.w), float3(pos.x, pos.y, pos.z));
+					ct->SetGlobalTransform(ctparent->GetGlobalTransform()* trans);
+				}
+			}
 		}
 	}
 	DrawHierarchy();
@@ -463,7 +469,7 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 
 		}
 		GameObject *sceneRoot = new GameObject();
-		sceneRoot->SetName("root");
+		sceneRoot->SetName(scene->mRootNode->mName.C_Str());
 		sceneRoot->SetStatic(true);
 		sceneObjects_.push_back(sceneRoot);
 		sceneRoot->SetId(sceneObjects_.size());
