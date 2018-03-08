@@ -10,8 +10,8 @@
 typedef uint AnimInstanceID;
 
 struct LessString {
-	bool operator() (const aiString& a, const aiString& b) const {
-		return a.C_Str() < b.C_Str();
+	bool operator() (const char* a, const char* b) const {
+		return strcmp(a,b);
 	}
 };
 
@@ -46,7 +46,7 @@ struct AnimInstance
 class ModuleAnimation :
 	public Module
 {
-	typedef std::map<aiString, Anim*, LessString> AnimMap;
+	typedef std::map<const char*, Anim*, LessString> AnimMap;
 	typedef std::vector<AnimInstance*> InstanceList;
 	typedef std::vector<AnimInstanceID> HoleList;
 

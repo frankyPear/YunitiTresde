@@ -43,7 +43,7 @@ update_status ModuleAnimation::PreUpdate(float dt)
 
 update_status ModuleAnimation::Update(float dt)
 {
-	
+	UpdateInstanceTime(dt);
 	return UPDATE_CONTINUE;
 }
 
@@ -83,7 +83,7 @@ void ModuleAnimation::Load(aiString name, const char* filepath)
 			animation->channelArray.push_back(node);
 
 		}
-		aiString  name = sceneAnim->mName;
+		const char*  name = sceneAnim->mName.C_Str();
 		animations[name] = animation;
 	}
 }
@@ -94,9 +94,10 @@ bool ModuleAnimation::GetTransform(uint animId, const char* channel, aiVector3D&
 		bool ret = false;
 		AnimInstance *instance = instances[animId];
 		Anim* animation = instance->animation;
+		NodeAnim * node = nullptr;
 		for (int i = 0; i < animation->numChannels; ++i)
 		{
-			NodeAnim * node = animation->channelArray[i];
+			node = animation->channelArray[i];
 			if (node->animNodeName.C_Str() == channel)
 			{
 				Vector3DInterpolation(position, node->positionArray[0], 0.5f);
@@ -104,9 +105,42 @@ bool ModuleAnimation::GetTransform(uint animId, const char* channel, aiVector3D&
 				ret = true;
 			}
 		}
-		if (!ret) LOG("Error canal no encontrado")
-		else LOG("Canal encontrado")
+		if (!ret) LOG("Error channel not found")
+		else
+		{
+			uint animationDuration = animation->animDuration;
+			uint instanceTime = instance->time;
+			uint posCount = node->numPositions;
+			uint rotCount = node->numRotations;
+			if (instanceTime > animationDuration)
+			{
+				if (instance->loop)
+				{
+					instance->time -= animation->animDuration;
+					instanceTime = instance->time;
+				}
+				else {
+					instanceTime = animationDuration;
+				}
+			}
+			float posKey = float(instanceTime * posCount - 1) / animationDuration;
+			float rotKey = float(instanceTime * rotCount - 1) / animationDuration;
+			uint actualPos = uint(posKey);
+			uint actualRot = uint(rotKey);
+
+			float posKeyNext = float(actualPos + 1) / posCount;
+			float rotKeyNext = float(actualRot + 1) / rotCount;
+
+			uint targetPos = uint(posKeyNext);
+			uint targetRot = uint(rotKeyNext);
+
+			float posLambda = posKey - actualPos;
+			float rotLambda = rotKey - actualRot;
+			aiVector3D& interpPos = Vector3DInterpolation(node->positionArray[actualPos], node->positionArray[targetPos], posLambda);
+			aiQuaternion& interpRot = InteropQuaternion(node->rotationArray[actualRot], node->rotationArray[targetRot], rotLambda);
+
 			return ret;
+		}
 	}
 }
 
@@ -114,8 +148,8 @@ uint ModuleAnimation::Play(const char* name)
 {
 	AnimInstance *instance = new AnimInstance;
 	aiString channelname = aiString(name);
-	std::map<aiString, Anim*, LessString>::iterator it = animations.begin();
-	it = animations.find(channelname);
+	std::map<const char*, Anim*, LessString>::iterator it = animations.begin();
+	it = animations.find(name);
 	if (it != animations.end()) {
 		Anim* anim = it->second;
 		instance->animation = anim;
@@ -152,10 +186,7 @@ aiQuaternion ModuleAnimation::InteropQuaternion(const aiQuaternion & firstQuat, 
 		quatInterpolated.w = firstQuat.w*(1.0f - lambda) + secondQuat.w*-lambda;
 
 	}
-
 	quatInterpolated.Normalize();
-
-
 	return quatInterpolated;
 }
 
