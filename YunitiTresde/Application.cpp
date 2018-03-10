@@ -7,6 +7,7 @@
 #include "ModuleTextures.h"
 #include "ModuleScene.h"
 #include "ModuleImGui.h"
+#include "ModuleUI.h"
 //Included mathgeolib
 #include "Mathgeolib\include\MathBuildConfig.h"
 #include "Mathgeolib\include\MathGeoLib.h"
@@ -25,7 +26,7 @@ Application::Application()
 	cam = new ModuleCamera();
 	textures = new ModuleTextures();
 	scene = new ModuleScene();
-	
+	ui = new ModuleUI();
 
 	modules.push_back(input);
 	modules.push_back(window);
@@ -34,7 +35,7 @@ Application::Application()
 	modules.push_back(cam);
 	modules.push_back(textures);
 	modules.push_back(scene);
-
+	modules.push_back(ui);
 
 }
 

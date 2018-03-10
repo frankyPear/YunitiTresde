@@ -15,6 +15,8 @@ class ModuleTextures;
 class ModuleScene;
 class ModuleImGui;
 class ModuleResources;
+class ModuleUI;
+
 class Application
 {
 public:
@@ -38,6 +40,7 @@ public:
 	ModuleTextures* textures;
 	ModuleScene* scene;
 	ModuleResources *resources;
+	ModuleUI* ui;
 	bool switchmap = false;
 private:
 	Timer ms_timer_;

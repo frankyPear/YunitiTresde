@@ -199,6 +199,12 @@
     <ClCompile Include="Component2DTransform.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentLabel.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentButton.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -503,6 +509,12 @@
     </ClInclude>
     <ClInclude Include="stb\include\stb_truetype.h" />
     <ClInclude Include="Component2DTransform.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentLabel.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentButton.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
