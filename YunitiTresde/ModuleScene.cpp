@@ -40,8 +40,8 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
-	LoadScene("../Resources/street/Street.obj");
-	//LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
+	//LoadScene("../Resources/street/Street.obj");
+	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
 	RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation);
 	actualCamera = App->cam->dummyCamera;
 
@@ -79,7 +79,7 @@ update_status ModuleScene::Update(float dt)
 	
 	MeshImporter *mi = nullptr;
 	for (int i = 0; i < meshes.size(); ++i) {
-		mi->DrawMeshHierarchy();
+		model->Draw(id[meshes[i]->mMaterialIndex], meshes[i]);
 	}
 
 	if (accelerateFrustumCulling) {
@@ -453,7 +453,19 @@ void ModuleScene::LoadScene(const char* filepath)
 	}
 	else {
 		LOG("SCENE LOADED");
+		for (unsigned i = 0; i < scene->mNumMaterials; ++i)
+		{
+			aiString textureFile;
 
+
+			if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &textureFile) == aiReturn_SUCCESS)
+			{
+				std::string name = "..Resources/ArmyPilot/ArmyPilot/Tex/" + (std::string)textureFile.data;
+				id.push_back(model->loadTextureDirect(name.c_str()));
+			}
+			else
+				id.push_back(0);
+		}
 	}
 
 }
@@ -469,8 +481,6 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 		{
 			aiMesh *sceneMesh = scene->mMeshes[i];
 			meshes.push_back(sceneMesh);
-			mi->meshEntryArrays(meshes[i]);
-
 		}
 		GameObject *sceneRoot = new GameObject();
 		sceneRoot->SetName(scene->mRootNode->mName.C_Str());

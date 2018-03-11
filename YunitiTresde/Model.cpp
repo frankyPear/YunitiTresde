@@ -10,7 +10,11 @@
 
 Model::Model()
 {
+	ilInit();
+	iluInit();
+	ilutInit();
 }
+
 
 
 Model::~Model()
@@ -31,6 +35,7 @@ void Model::Load(const char* filepath)
 	else {
 		LOG("SCENE LOADED");
 	}
+
 }
 
 void Model::LoadTexture(const char* filepath)
@@ -67,7 +72,7 @@ void Model::LoadTexture(const char* filepath)
 	ilGenImages(numTextures, imageIds);
 
 	GLuint* textureIds = new GLuint[numTextures];
-	glGenTextures(numTextures, textureIds); 
+	glGenTextures(numTextures, textureIds);
 
 	std::map<std::string, GLuint>::iterator itr = textureIdMap.begin();
 	int i = 0;
@@ -107,37 +112,47 @@ void Model::LoadTexture(const char* filepath)
 
 }
 
+uint Model::loadTextureDirect(const char* filepath)
+{
+	uint id = -1;
+	ilInit();
+	iluInit();
+	ilutInit();
 
+
+	id = ilutGLLoadImage((char*)filepath);
+
+	return id;
+}
 
 void Model::Clear()
 {
 
 }
 
-void Model::Draw()
+
+void Model::Draw(uint id, aiMesh* mesh) // vector de textures + vector de meshes
 {
-	if (scene != nullptr)
+	if (mesh != nullptr)
 	{
-		const int iVertexTotalSize = sizeof(aiVector3D) * 2 + sizeof(aiVector2D);
-		int iTotalVertices = 0;
-		for (int i = 0; i < scene->mNumMeshes; ++i)
+		for (unsigned i = 0; i < mesh->mNumFaces; ++i)
 		{
-			aiMesh* mesh = scene->mMeshes[i];
-			int iMeshFaces = mesh->mNumFaces;
-			meshmaterialsindices.push_back(mesh->mMaterialIndex);
+			glBindTexture(GL_TEXTURE_2D, id);
+
 			glBegin(GL_TRIANGLES);
-			glColor3f(1.0f, 1.0f, 1.0f);
-			for (int j = 0; j < iMeshFaces; ++j)
+			for (unsigned j = 0; j < mesh->mFaces[i].mNumIndices; ++j)
 			{
-				const aiFace& face = mesh->mFaces[j];
-				for (int k = 0; k < 3; ++k) {
-					GLfloat x = mesh->mVertices[face.mIndices[k]].x;
-					GLfloat y = mesh->mVertices[face.mIndices[k]].y;
-					GLfloat z = mesh->mVertices[face.mIndices[k]].z;
-					glVertex3f(x, y, z);
+				int index = mesh->mFaces[i].mIndices[j];
+
+				if (mesh->HasTextureCoords(0))
+				{
+					glTexCoord2f(mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y);
 				}
+				glVertex3fv(&mesh->mVertices[index].x);
 			}
 			glEnd();
+			glBindTexture(GL_TEXTURE_2D, 0);
+
 		}
 	}
 }

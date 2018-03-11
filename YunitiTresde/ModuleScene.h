@@ -95,6 +95,8 @@ private:
 
 	std::vector<aiMaterial*> materials;
 	MeshImporter* mesh1;
+	Model* model;
+	std::vector<uint> id;
 
 };
 

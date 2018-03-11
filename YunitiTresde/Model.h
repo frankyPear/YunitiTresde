@@ -13,6 +13,23 @@
 class Model
 {
 public:
+
+	struct Weight
+	{
+		uint vertex = 0;
+		float weight = 0.0f;
+	};
+
+
+	struct Bone
+	{
+		const char* name;
+		Weight* weights = nullptr;
+		uint num_weights = 0;
+		aiMatrix4x4 bind;
+	};
+
+
 	Model();
 	~Model();
 
@@ -21,7 +38,8 @@ public:
 	GLuint DevilImage(const char * theFileName);
 	void LoadTexture(const char * filepath);
 	void Clear();
-	void Draw();
+	void Draw(uint id, aiMesh * mesh);
+	uint loadTextureDirect(const char* filepath);
 
 public:
 
@@ -33,8 +51,13 @@ public:
 	std::vector<GLubyte> meshindices;
 	std::vector<GLubyte> meshmaterialsindices;
 	std::vector<GLfloat> meshcolors;
+	std::vector<Bone*> bones;
 	GLuint numTextureBufferIds = 0;
 	GLuint* textureBufferIds = nullptr;
 	std::map<std::string, GLuint> textureIdMap;
 };
+
+
+
+
 
