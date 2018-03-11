@@ -1,12 +1,12 @@
 #include "ComponentButton.h"
-
+#include "Component2D.h"
 //ComponentButton::ComponentButton(GameObject * gameObject)
 //{
 //}
 
-ComponentButton::ComponentButton(int x, int y, int sizex, int sizey, bool visible)
+ComponentButton::ComponentButton(GameObject* obj, int x, int y, int h, int w)
 {
-
+	
 }
 
 ComponentButton::~ComponentButton()

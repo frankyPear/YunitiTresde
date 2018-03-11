@@ -6,7 +6,7 @@
 #include "ModuleRenderer.h"
 
 
-ComponentLabel::ComponentLabel(GameObject * gameObject)
+ComponentLabel::ComponentLabel(GameObject* obj, int x, int y, int sizex, int sizey)
 {
 }
 

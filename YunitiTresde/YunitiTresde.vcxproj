@@ -126,9 +126,11 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Brofiler\include\Brofiler.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Component2D.h" />
     <ClInclude Include="Component2DTransform.h" />
     <ClInclude Include="ComponentButton.h" />
     <ClInclude Include="ComponentCamera.h" />
+    <ClInclude Include="ComponentInput2D.h" />
     <ClInclude Include="ComponentLabel.h" />
     <ClInclude Include="ComponentMaterial.h" />
     <ClInclude Include="ComponentMesh.h" />
@@ -231,9 +233,11 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Component2D.cpp" />
     <ClCompile Include="Component2DTransform.cpp" />
     <ClCompile Include="ComponentButton.cpp" />
     <ClCompile Include="ComponentCamera.cpp" />
+    <ClCompile Include="ComponentInput2D.cpp" />
     <ClCompile Include="ComponentLabel.cpp" />
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentMesh.cpp" />

@@ -2,19 +2,17 @@
 #include "Component.h"
 #include <vector>
 #include "OpenGL.h"
-#include "SDL\include\SDL.h"
 
-class ComponentButton :
+class ComponentInput2D :
 	public Component
 {
 public:
 
 	//Constructor
 
-	ComponentButton(GameObject* obj,int x, int y, int sizex, int sizey);
-
+	ComponentInput2D(GameObject* obj, int x, int y, int sizex, int sizey);
 	//Destructor
-	~ComponentButton();
+	~ComponentInput2D();
 
 	void SetHover_Focus(unsigned int uid);
 
@@ -26,8 +24,12 @@ public:
 
 	void SetSpriteSwap(unsigned int uid);
 
-public:
-	SDL_Rect rect;
-	bool visible;
+	void SetColour(unsigned int uid);
+
+	void SetSize(unsigned int uid);
+
+	void SetFont(unsigned int uid);
+
+private:
 
 };

@@ -17,9 +17,10 @@
 using namespace std;
 using namespace experimental::filesystem;
 
+
 ModuleUI::ModuleUI()
 {
-	ComponentButton* cb = new ComponentButton(250,250,0,0,true);
+	/*ComponentButton* cb = new ComponentButton(250,250,0,0);*/
 }
 
 ModuleUI::~ModuleUI()
@@ -33,57 +34,75 @@ bool ModuleUI::Init()
 
 bool ModuleUI::Start()
 {
+	//TTF_Font* gFont = NULL;
+	////Open the font
+	//gFont = TTF_OpenFont("../Resources/wow/Fonts/SKURRI.ttf", 28);
+	//if (gFont == NULL)
+	//{
+	//	printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
+	//	return false;
+	//}
+	//else
+	//{
+	//	//Render text
+	//	SDL_Color textColor = { 0, 0, 0 };
+	//	//if (!gTextTexture.loadFromRenderedText("The quick brown fox jumps over the lazy dog", textColor))
+	//	//{
+	//	//	printf("Failed to render text texture!\n");
+	//	//	return false;
+	//	//}
+	//}
 
 
-	Load("../Resources/wow/Fonts/SKURRI.ttf");
-	const std::string& fontBuffer = Get("../Resources/wow/Fonts/ SKURRI.ttf");
+	//Load("../Resources/wow/Fonts/SKURRI.ttf");
+	//const std::string& fontBuffer = Get("../Resources/wow/Fonts/SKURRI.ttf");
 
-	stbtt_fontinfo info;
-	stbtt_InitFont(&info, (const unsigned char*)fontBuffer.c_str(), 0);
+	//stbtt_fontinfo info;
+	//stbtt_InitFont(&info, (const unsigned char*)fontBuffer.c_str(), 0);
 
-	int b_w = 512; /* bitmap width */
-	int b_h = 128; /* bitmap height */
-	float l_h = 64.0f; /* line height */
+	//int b_w = 512; /* bitmap width */
+	//int b_h = 128; /* bitmap height */
+	//float l_h = 64.0f; /* line height */
 
-					   /* create a bitmap for the phrase */
-	unsigned char* bitmap = (unsigned char*)malloc(b_w * b_h);
+	//				   /* create a bitmap for the phrase */
+	//unsigned char* bitmap = (unsigned char*)malloc(b_w * b_h);
 
-	/* calculate font scaling */
-	float scale = stbtt_ScaleForPixelHeight(&info, l_h);
+	///* calculate font scaling */
+	//float scale = stbtt_ScaleForPixelHeight(&info, l_h);
 
-	char* word = "Login";
+	//char* word = "Login";
 
-	int x = 0;
+	//int x = 0;
 
-	int ascent, descent, lineGap;
-	stbtt_GetFontVMetrics(&info, &ascent, &descent, &lineGap);
+	//int ascent, descent, lineGap;
+	//stbtt_GetFontVMetrics(&info, &ascent, &descent, &lineGap);
 
-	ascent *= (int)scale;
-	descent *= (int)scale;
+	//ascent *= (int)scale;
+	//descent *= (int)scale;
 
-	for (size_t i = 0; i < strlen(word); ++i)
-	{
-		/* get bounding box for character (may be offset to account for chars that dip above or below the line */
-		int c_x1, c_y1, c_x2, c_y2;
-		stbtt_GetCodepointBitmapBox(&info, word[i], scale, scale, &c_x1, &c_y1, &c_x2, &c_y2);
+	//for (size_t i = 0; i < strlen(word); ++i)
+	//{
+	//	/* get bounding box for character (may be offset to account for chars that dip above or below the line */
+	//	int c_x1, c_y1, c_x2, c_y2;
+	//	stbtt_GetCodepointBitmapBox(&info, word[i], scale, scale, &c_x1, &c_y1, &c_x2, &c_y2);
 
-		/* compute y (different characters have different heights */
-		int y = ascent + c_y1;
+	//	/* compute y (different characters have different heights */
+	//	int y = ascent + c_y1;
 
-		/* render character (stride and offset is important here) */
-		int byteOffset = x + (y  * b_w);
-		stbtt_MakeCodepointBitmap(&info, bitmap + byteOffset, c_x2 - c_x1, c_y2 - c_y1, b_w, scale, scale, word[i]);
+	//	/* render character (stride and offset is important here) */
+	//	int byteOffset = x + (y  * b_w);
+	//	stbtt_MakeCodepointBitmap(&info, bitmap + byteOffset, c_x2 - c_x1, c_y2 - c_y1, b_w, scale, scale, word[i]);
 
-		/* how wide is this character */
-		int ax;
-		stbtt_GetCodepointHMetrics(&info, word[i], &ax, 0);
-		x += ax * (int)scale;
+	//	/* how wide is this character */
+	//	int ax;
+	//	stbtt_GetCodepointHMetrics(&info, word[i], &ax, 0);
+	//	x += ax * (int)scale;
 
-		/* add kerning */
-		int kern;
-		kern = stbtt_GetCodepointKernAdvance(&info, word[i], word[i + 1]);
-		x += kern * (int)scale;
-	}
+	//	/* add kerning */
+	//	int kern;
+	//	kern = stbtt_GetCodepointKernAdvance(&info, word[i], word[i + 1]);
+	//	x += kern * (int)scale;
+	//}
 
 	// RELEASE(fontBuffer);
 	// free(fontBuffer);
@@ -114,24 +133,24 @@ bool ModuleUI::CleanUp()
 }
 void ModuleUI::WowFirstPage() {
 
-	//glBegin(GL_POLYGON);
-	//glVertex2f(0, y1);
-	//glVertex2f(0, y1);
-	//glVertex2f(0, y2);
-	//glVertex2f(0, y2);
-	//glEnd();
-	//glClear(GL_COLOR_BUFFER_BIT);
-	//glColor3f(1.0, 0.0, 0.0);
-	//glBegin(GL_POLYGON);
-	////glVertex2f(0.90, 0.50);
-	////glVertex2f(0.50, 0.90);
-	////glVertex2f(0.10, 0.50);
-	////glVertex2f(0.50, 0.10);
+	/*glBegin(GL_POLYGON);
+	glVertex2f(0, y1);
+	glVertex2f(0, y1);
+	glVertex2f(0, y2);
+	glVertex2f(0, y2);
+	glEnd();*/
+	glClear(GL_COLOR_BUFFER_BIT);
+	glColor3f(1.0, 0.0, 0.0);
+	glBegin(GL_POLYGON);
+	glVertex2f(0.50, 0.50);
+	glVertex2f(-0.50, 0.50);
+	glVertex2f(-0.50, -0.50);
+	glVertex2f(0.50, -0.50);
 	//glVertex2f(50, 90);
 	//glVertex2f(100,90);
 	//glVertex2f(100, 150);
 	//glVertex2f(50, 150);
-	//glEnd();
+	glEnd();
 
 }
 

@@ -205,6 +205,10 @@
     <ClCompile Include="ComponentButton.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentInput2D.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Component2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -518,6 +522,10 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="imgui-1.53\stb_truetype.h" />
+    <ClInclude Include="ComponentInput2D.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Component2D.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">

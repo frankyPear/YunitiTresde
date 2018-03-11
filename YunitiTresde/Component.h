@@ -3,7 +3,7 @@
 class GameObject;
 
 enum Type {TRANSFORMATION,MATERIAL,MESH,CAMERA};
-
+enum CElement2D { LABEL, BUTTON, INPUTTEXT };
 class Component
 {
 public:

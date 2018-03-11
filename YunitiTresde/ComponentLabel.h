@@ -10,7 +10,7 @@ public:
 
 	//Constructor
 
-	ComponentLabel(GameObject *gameObject);
+	ComponentLabel(GameObject* obj, int x, int y, int sizex, int sizey);
 	//Destructor
 	~ComponentLabel();
 
