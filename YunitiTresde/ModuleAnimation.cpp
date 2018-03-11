@@ -54,11 +54,11 @@ update_status ModuleAnimation::PostUpdate(float dt)
 
 void ModuleAnimation::Load(aiString name, const char* filepath)
 {
-	scene = importer.ReadFile(filepath, 0
-		/*aiProcess_CalcTangentSpace |
+	scene = importer.ReadFile(filepath, 
+		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType*/);
+		aiProcess_SortByPType);
 	if (!scene)
 	{
 		LOG("ERROR LOADING SCENE");
@@ -67,7 +67,6 @@ void ModuleAnimation::Load(aiString name, const char* filepath)
 		LOG("SCENE LOADED");
 	}
 	for (int i = 0; i < scene->mNumAnimations; i++) {
-
 		Anim* animation = new Anim;
 		aiAnimation *sceneAnim = scene->mAnimations[i];
 		animation->animDuration = sceneAnim->mDuration;

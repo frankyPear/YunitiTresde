@@ -76,29 +76,10 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-	/*MeshImporter* mi = nullptr;
-	for (int i = 0; i < meshes.size(); ++i) {
-		mi->DrawMeshHierarchy();
-		//Draw();
-	}*/
-	for (int z = 0; z < sceneObjects_.size(); ++z) 
-	{
-		if (sceneObjects_[z]->GetParent() != nullptr) {
-			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[z]->GetComponent(TRANSFORMATION);
-			ComponentTransform* ctparent = (ComponentTransform*)sceneObjects_[z]->GetParent()->GetComponent(TRANSFORMATION);
-			if (ct != nullptr && ctparent != nullptr) {
-				float3 componentPos = ct->GetGlobalPosition();
-				float3 componentRot = ct->GetQuatRotation().ToEulerXYZ();
-				aiVector3D pos = aiVector3D(componentPos.x, componentPos.y, componentPos.z);
-				aiQuaternion rot = aiQuaternion(componentRot.x, componentRot.y, componentRot.z);
-				if (App->anim->GetTransform(App->anim->AnimId, sceneObjects_[z]->GetName().c_str(), pos, rot)) {
-					float4x4 trans = float4x4(Quat::Quat(rot.x, rot.y, rot.z, rot.w), float3(pos.x, pos.y, pos.z));
-					ct->SetGlobalTransform(ctparent->GetGlobalTransform()* trans);
-				}
-			}
-		}
-	}
+	
 	DrawHierarchy();
+
+
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
 			quadtree->Clear();
@@ -119,13 +100,32 @@ update_status ModuleScene::Update(float dt)
 	else {
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
+			if (sceneObjects_[i]->GetParent() != nullptr) {
+				ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+				ComponentTransform* ctparent = (ComponentTransform*)sceneObjects_[i]->GetParent()->GetComponent(TRANSFORMATION);
+				if (ct != nullptr && ctparent != nullptr) {
+					float3 componentPos = ct->GetGlobalPosition();
+					float3 componentRot = ct->GetQuatRotation().ToEulerXYZ();
+					aiVector3D pos = aiVector3D(componentPos.x, componentPos.y, componentPos.z);
+					aiQuaternion rot = aiQuaternion(componentRot.x, componentRot.y, componentRot.z);
+					if (App->anim->GetTransform(App->anim->AnimId, sceneObjects_[i]->GetName().c_str(), pos, rot)) {
+						float4x4 trans = float4x4(Quat::Quat(rot.x, rot.y, rot.z, rot.w), float3(pos.x, pos.y, pos.z));
+						ct->SetGlobalTransform(ctparent->GetGlobalTransform()* trans);
+					}
+				}
+			}
 			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
 			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-			if (cm != nullptr && cm->meshShape != RESOURCE && ct != nullptr) {
-				AABB newBox = *(cm->GetBoundingBox());
-				newBox.TransformAsAABB(ct->GetGlobalTransform());
-				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
+			if (cm != nullptr  && ct != nullptr) {
+				if (cm->meshShape != RESOURCE) 
+				{
+					AABB newBox = *(cm->GetBoundingBox());
+					newBox.TransformAsAABB(ct->GetGlobalTransform());
+					if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
+				}
+
 			}
+			
 		}
 	}
 	if (root != nullptr)
@@ -145,7 +145,7 @@ update_status ModuleScene::PostUpdate(float dt)
 	{
 		return UPDATE_STOP;
 	}
-	
+
 	return UPDATE_CONTINUE;
 }
 
