@@ -40,8 +40,8 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
-	//LoadScene("../Resources/street/Street.obj");
-	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
+	LoadScene("../Resources/street/Street.obj");
+	//LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
 	RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation);
 	actualCamera = App->cam->dummyCamera;
 
@@ -77,8 +77,10 @@ update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
 	
-	DrawHierarchy();
-
+	MeshImporter *mi = nullptr;
+	for (int i = 0; i < meshes.size(); ++i) {
+		mi->DrawMeshHierarchy();
+	}
 
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
@@ -128,6 +130,8 @@ update_status ModuleScene::Update(float dt)
 			
 		}
 	}
+	DrawHierarchy();
+
 	if (root != nullptr)
 		root->Update();
 	//IMGUI
