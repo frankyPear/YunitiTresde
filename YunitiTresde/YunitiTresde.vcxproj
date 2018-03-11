@@ -147,6 +147,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="imgui-1.53\ImGuizmo.h" />
     <ClInclude Include="imgui-1.53\ImSequencer.h" />
+    <ClInclude Include="imgui-1.53\stb_truetype.h" />
     <ClInclude Include="Importer.h" />
     <ClInclude Include="Mathgeolib\include\Algorithm\Random\LCG.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB.h" />

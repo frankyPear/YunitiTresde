@@ -2,6 +2,7 @@
 #include "Component.h"
 #include <vector>
 #include "OpenGL.h"
+#include "SDL\include\SDL.h"
 
 class ComponentButton :
 	public Component
@@ -10,7 +11,7 @@ public:
 
 	//Constructor
 
-	ComponentButton(GameObject *gameObject);
+	ComponentButton(int x, int y,int sizex, int sizey, bool visible);
 
 	//Destructor
 	~ComponentButton();
@@ -25,6 +26,8 @@ public:
 
 	void SetSpriteSwap(unsigned int uid);
 
-private:
+public:
+	SDL_Rect rect;
+	bool visible;
 
 };

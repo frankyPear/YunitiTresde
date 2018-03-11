@@ -35,45 +35,45 @@ ModuleScene::~ModuleScene()
 bool ModuleScene::Init()
 {
 
-	root = new GameObject();
-	GameObject *object1 = new GameObject();
-	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
-	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-	object1->AddComponent(cm1);
-	object1->AddComponent(ct1);
-	object1->SetStatic(true);
-	root->AddChild(object1);
-	sceneObjects_.push_back(object1);
-	float offset = -2.0f;
-	float xoff[16] = { 20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0 };
-	float zoff[16] = { 20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10 };
-	for (int i = 0; i < 1; ++i)
-	{
-		GameObject *object = new GameObject();
-		ComponentMesh *cm = new ComponentMesh(CUBE);
-		ComponentTransform *ct = new ComponentTransform(float3(0.0f + xoff[i], 0.0f, 0.0f + zoff[i]), float3(1.0f, 1.0f, 1.0f), Quat::identity);
-		ComponentMaterial *material = new ComponentMaterial(object);
-		ComponentCamera *camera = new ComponentCamera();
-		object->AddComponent(cm);
-		object->AddComponent(ct);
-		object->AddComponent(material);
-		object->AddComponent(camera);
-		object->SetStatic(true);
-		root->AddChild(object);
-		sceneObjects_.push_back(object);
-		offset += offset;
-		//<<<<<<< develop
-		object->SetId(i + 1);
+	//root = new GameObject();
+	//GameObject *object1 = new GameObject();
+	//ComponentMesh *cm1 = new ComponentMesh(SPHERE);
+	//ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	//object1->AddComponent(cm1);
+	//object1->AddComponent(ct1);
+	//object1->SetStatic(true);
+	//root->AddChild(object1);
+	//sceneObjects_.push_back(object1);
+	//float offset = -2.0f;
+	//float xoff[16] = { 20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0 };
+	//float zoff[16] = { 20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10 };
+	//for (int i = 0; i < 1; ++i)
+	//{
+	//	GameObject *object = new GameObject();
+	//	ComponentMesh *cm = new ComponentMesh(CUBE);
+	//	ComponentTransform *ct = new ComponentTransform(float3(0.0f + xoff[i], 0.0f, 0.0f + zoff[i]), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	//	ComponentMaterial *material = new ComponentMaterial(object);
+	//	ComponentCamera *camera = new ComponentCamera();
+	//	object->AddComponent(cm);
+	//	object->AddComponent(ct);
+	//	object->AddComponent(material);
+	//	object->AddComponent(camera);
+	//	object->SetStatic(true);
+	//	root->AddChild(object);
+	//	sceneObjects_.push_back(object);
+	//	offset += offset;
+	//	//<<<<<<< develop
+	//	object->SetId(i + 1);
 
-	}
-	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
+	//}
+	//mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
 
-	//=======
-	//		object->SetId(i+1);
-	//	}*/
-		//m.Load("../Resources/BakerHouse.fbx");
-		//m.LoadTexture("../Resources/Baker_house.png");
-	//>>>>>>> feature-MousePicking-FP
+	////=======
+	////		object->SetId(i+1);
+	////	}*/
+	//	//m.Load("../Resources/BakerHouse.fbx");
+	//	//m.LoadTexture("../Resources/Baker_house.png");
+	////>>>>>>> feature-MousePicking-FP
 	actualCamera = App->cam->dummyCamera;
 
 	return true;
@@ -81,13 +81,13 @@ bool ModuleScene::Init()
 
 bool ModuleScene::Start()
 {
-	limits = AABB();
-	limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-	limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
-	quadtree = new CustomQuadTree();
-	quadtree->Create(limits);
-	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
-	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
+	//limits = AABB();
+	//limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+	//limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
+	//quadtree = new CustomQuadTree();
+	//quadtree->Create(limits);
+	//for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+	//quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 	return true;
 }
 
@@ -98,48 +98,48 @@ bool ModuleScene::CleanUp()
 
 update_status ModuleScene::PreUpdate(float dt)
 {
-	ShowImguiStatus();
-	ImGuiMainMenu();
+	//ShowImguiStatus();
+	//ImGuiMainMenu();
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleScene::Update(float dt)
 {
-	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-	mesh1->Draw();
-	if (accelerateFrustumCulling) {
-		if (recreateQuadTree) {
-			quadtree->Clear();
-			limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-			limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
-			quadtree->Create(limits);
-			for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
-			recreateQuadTree = false;
-		}
-		quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
-		for (int i = 0; i < objectToDraw_.size(); i++)
-		{
-			objectToDraw_[i]->DrawObjectAndChilds();
-		}
-		if (drawQuadTree)quadtree->DrawBox();
-		objectToDraw_.clear();
-	}
-	else {
-		for (int i = 0; i < sceneObjects_.size(); i++)
-		{
-			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-			if (cm != nullptr && ct != nullptr) {
-				AABB newBox = *(cm->GetBoundingBox());
-				newBox.TransformAsAABB(ct->GetGlobalTransform());
-				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
-			}
-		}
-	}
-	if (root != nullptr)
-		root->Update();
-	//IMGUI
-	Hierarchy();
+	//BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
+	//mesh1->Draw();
+	//if (accelerateFrustumCulling) {
+	//	if (recreateQuadTree) {
+	//		quadtree->Clear();
+	//		limits.maxPoint = float3(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+	//		limits.minPoint = float3(-BOX_SIZE, -BOX_SIZE, -BOX_SIZE);
+	//		quadtree->Create(limits);
+	//		for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
+	//		recreateQuadTree = false;
+	//	}
+	//	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
+	//	for (int i = 0; i < objectToDraw_.size(); i++)
+	//	{
+	//		objectToDraw_[i]->DrawObjectAndChilds();
+	//	}
+	//	if (drawQuadTree)quadtree->DrawBox();
+	//	objectToDraw_.clear();
+	//}
+	//else {
+	//	for (int i = 0; i < sceneObjects_.size(); i++)
+	//	{
+	//		ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
+	//		ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+	//		if (cm != nullptr && ct != nullptr) {
+	//			AABB newBox = *(cm->GetBoundingBox());
+	//			newBox.TransformAsAABB(ct->GetGlobalTransform());
+	//			if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
+	//		}
+	//	}
+	//}
+	//if (root != nullptr)
+	//	root->Update();
+	////IMGUI
+	//Hierarchy();
 
 
 	return UPDATE_CONTINUE;
@@ -413,8 +413,8 @@ void ModuleScene::CreateRay(float2 screenPoint)
 	LOG("Entered click and casted ray");
 	std::vector<GameObject*> intersections;
 	std::vector<GameObject*> objectlist;
-	if (accelerateFrustumCulling) quadtree->Intersect(objectlist, ray);
-	else objectlist = sceneObjects_;
+	//if (accelerateFrustumCulling) quadtree->Intersect(objectlist, ray);
+	//else objectlist = sceneObjects_;
 	float dist = 25000.0f;
 	std::map<float, GameObject*>::iterator it = objectsByDistance.begin();
 	// Check AABB's ONLY

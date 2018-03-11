@@ -196,6 +196,7 @@ update_status ModuleCamera::Update(float dt)
 	dummyCamera->NormalizeUp();
 	dummyCamera->SetFront(quatOffset.Mul(dummyCamera->GetFront()));
 	dummyCamera->NormalizeFront();
+
 	return UPDATE_CONTINUE;
 }
 

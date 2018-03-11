@@ -3,9 +3,9 @@
 
 #include "Module.h"
 #include "Globals.h"
-
-
-
+#include <vector>
+#include <experimental/filesystem>
+#include <map>
 class ModuleUI :
 	public Module
 {
@@ -21,12 +21,14 @@ public:
 
 	bool CleanUp();
 
-public:
-
-
-
+	void WowFirstPage();
 
 private:
+	void Load(const std::experimental::filesystem::path& path);
+
+	const std::string& Get(const std::experimental::filesystem::path& path) const;
+
+	std::map<std::experimental::filesystem::path, std::string> buffers;
 
 
 };

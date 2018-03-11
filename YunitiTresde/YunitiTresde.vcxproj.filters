@@ -517,6 +517,7 @@
     <ClInclude Include="ComponentButton.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="imgui-1.53\stb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">

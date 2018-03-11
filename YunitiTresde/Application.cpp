@@ -28,6 +28,7 @@ Application::Application()
 	scene = new ModuleScene();
 	ui = new ModuleUI();
 
+
 	modules.push_back(input);
 	modules.push_back(window);
 	modules.push_back(renderer);
@@ -36,6 +37,7 @@ Application::Application()
 	modules.push_back(textures);
 	modules.push_back(scene);
 	modules.push_back(ui);
+
 
 }
 
