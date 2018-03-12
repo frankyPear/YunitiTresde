@@ -23,6 +23,7 @@ public:
 
 	void WowFirstPage();
 	void printBackground();
+	void printLogo();
 private:
 	void Load(const std::experimental::filesystem::path& path);
 

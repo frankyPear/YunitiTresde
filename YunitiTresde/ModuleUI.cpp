@@ -153,9 +153,9 @@ bool ModuleUI::CleanUp()
 	return true;
 }
 void ModuleUI::WowFirstPage() {
-
+	glClear(GL_COLOR_BUFFER_BIT);
 	printBackground();
-
+	printLogo();
 }
 
 void ModuleUI::Load(const path& path)
@@ -182,11 +182,10 @@ const string& ModuleUI::Get(const path& path) const
 	return buffers.at(path);
 }
 void ModuleUI::printBackground() {
-	glClear(GL_COLOR_BUFFER_BIT);
+	
 	GLuint vertexID = 0;
 	GLuint texID = 0;
 	float verticesBackground[12] = {
-		//0.50, 0.50,0,  -0.50, 0.50,0,  -0.50,-0.50,0,   0.50,-0.50,0 };   // v0,v1,v2,v3 (front)
 		0.850, 0.650,0,  -0.850, 0.650,0,  -0.850,-0.650,0,   0.850,-0.650,0 };   // v0,v1,v2,v3 (front)
 	GLfloat texCoordsBackground[8] = {
 		1,1,    0,1,    0,0,    1,0 };    // front
@@ -208,6 +207,43 @@ void ModuleUI::printBackground() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture("..\\Resources\\wow\\UI\\login_background.png"));
+
+	glPushMatrix();
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+	glPopMatrix();
+
+	glDisableClientState(GL_TEXTURE_2D_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+//Glues - Logo
+void ModuleUI::printLogo() {
+	//glClear(GL_COLOR_BUFFER_BIT);
+
+	GLuint vertexID = 0;
+	GLuint texID = 0;
+	float verticesBackground[12] = {
+		-0.40, 0.50,0.15,  -0.750, 0.50,0.15,  -0.750,0.30,0.15,   -0.40,0.30,0.15 };   // v0,v1,v2,v3 (front)
+	GLfloat texCoordsBackground[8] = {
+		1,1,    0,1,    0,0,    1,0 };    // front
+	GLubyte indices[6] = {
+		0, 1, 2,   2, 3, 0 };      // front
+
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
+	glVertexPointer(3, GL_FLOAT, 0, verticesBackground);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	glEnable(GL_TEXTURE_2D);
+	glBindBuffer(GL_ARRAY_BUFFER, texID);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture("..\\Resources\\wow\\UI\\COMMON\\Glues-Logo.png"));
 
 	glPushMatrix();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
