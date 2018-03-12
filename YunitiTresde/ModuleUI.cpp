@@ -2,6 +2,8 @@
 #include "OpenGL.h"
 #include "ComponentButton.h"
 #include "ComponentLabel.h"
+#include "Application.h"
+#include "ModuleTextures.h"
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,11 +31,30 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Init()
 {
+	//GLuint vertexID;
+	//GLuint texID;
+
+	//float verticesBackground[8] = {
+	//	0.50, 0.50,  -0.50, 0.50,  -0.50,-0.50,   0.50,-0.50 };   // v0,v1,v2,v3 (front)
+	//GLfloat texCoordsBackground[8] = {
+	//	1,1,    0,1,    0,0,    1,0 };    // front
+	//GLubyte indices[6] = {
+	//	0, 1, 2,   2, 3, 0 };      // front
+	//glGenBuffers(1, &vertexID);
+	//glBindBuffer(GL_ARRAY_BUFFER, vertexID);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(verticesBackground), verticesBackground, GL_STATIC_DRAW);
+
+	//glGenBuffers(1, &texID);
+	//glBindBuffer(GL_ARRAY_BUFFER, texID);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(texCoordsBackground), texCoordsBackground, GL_STATIC_DRAW);
+
+
 	return true;
 }
 
 bool ModuleUI::Start()
 {
+	
 	//TTF_Font* gFont = NULL;
 	////Open the font
 	//gFont = TTF_OpenFont("../Resources/wow/Fonts/SKURRI.ttf", 28);
@@ -133,24 +154,7 @@ bool ModuleUI::CleanUp()
 }
 void ModuleUI::WowFirstPage() {
 
-	/*glBegin(GL_POLYGON);
-	glVertex2f(0, y1);
-	glVertex2f(0, y1);
-	glVertex2f(0, y2);
-	glVertex2f(0, y2);
-	glEnd();*/
-	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0, 0.0, 0.0);
-	glBegin(GL_POLYGON);
-	glVertex2f(0.50, 0.50);
-	glVertex2f(-0.50, 0.50);
-	glVertex2f(-0.50, -0.50);
-	glVertex2f(0.50, -0.50);
-	//glVertex2f(50, 90);
-	//glVertex2f(100,90);
-	//glVertex2f(100, 150);
-	//glVertex2f(50, 150);
-	glEnd();
+	printBackground();
 
 }
 
@@ -176,4 +180,40 @@ void ModuleUI::Load(const path& path)
 const string& ModuleUI::Get(const path& path) const
 {
 	return buffers.at(path);
+}
+void ModuleUI::printBackground() {
+	glClear(GL_COLOR_BUFFER_BIT);
+	GLuint vertexID = 0;
+	GLuint texID = 0;
+	float verticesBackground[12] = {
+		//0.50, 0.50,0,  -0.50, 0.50,0,  -0.50,-0.50,0,   0.50,-0.50,0 };   // v0,v1,v2,v3 (front)
+		0.850, 0.650,0,  -0.850, 0.650,0,  -0.850,-0.650,0,   0.850,-0.650,0 };   // v0,v1,v2,v3 (front)
+	GLfloat texCoordsBackground[8] = {
+		1,1,    0,1,    0,0,    1,0 };    // front
+	GLubyte indices[6] = {
+		0, 1, 2,   2, 3, 0 };      // front
+
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
+	glVertexPointer(3, GL_FLOAT, 0, verticesBackground);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	glEnable(GL_TEXTURE_2D);
+	glBindBuffer(GL_ARRAY_BUFFER, texID);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture("..\\Resources\\wow\\UI\\login_background.png"));
+
+	glPushMatrix();
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+	glPopMatrix();
+
+	glDisableClientState(GL_TEXTURE_2D_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

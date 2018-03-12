@@ -22,7 +22,7 @@ public:
 	bool CleanUp();
 
 	void WowFirstPage();
-
+	void printBackground();
 private:
 	void Load(const std::experimental::filesystem::path& path);
 
