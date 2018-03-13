@@ -15,6 +15,10 @@
 #include "SDL\include\SDL_ttf.h"
 #pragma comment (lib, "SDL/libx86/SDL2.lib")
 #pragma comment (lib, "SDL/libx86/SDL2main.lib")
+#include "Glew\include\glew.h"
+#include "Glew\include\glfw3.h"
+#include "stb\include\fontstash.h"
+#include "stb\include\gl3corefontstash.h"
 
 using namespace std;
 using namespace experimental::filesystem;
@@ -36,11 +40,246 @@ bool ModuleUI::Init()
 
 	return true;
 }
-
+void ModuleUI::dash(float dx, float dy)
+{
+	glBegin(GL_LINES);
+	glColor4ub(0, 0, 0, 128);
+	glVertex2f(dx - 5, dy);
+	glVertex2f(dx - 10, dy);
+	glEnd();
+}
+void ModuleUI::line(float sx, float sy, float ex, float ey)
+{
+	glBegin(GL_LINES);
+	glColor4ub(0, 0, 0, 128);
+	glVertex2f(sx, sy);
+	glVertex2f(ex, ey);
+	glEnd();
+}
+//void ModuleUI::key(GLFWwindow* window, int key, int scancode, int action, int mods)
+//{
+//	(void)scancode;
+//	(void)mods;
+//	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+//		glfwSetWindowShouldClose(window, GL_TRUE);
+//	/*if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+//		debug = !debug;*/
+//}
 bool ModuleUI::Start()
 {
-	//verticesBackground[12] = {
-	//	0.850, 0.650,0,  -0.850, 0.650,0,  -0.850,-0.650,0,   0.850,-0.650,0 };   // v0,v1,v2,v3 (front)
+
+	//int fontSKURRI = 0;
+	//int fontMORPHEUS = 0;
+	//int fontFRIZ = 0;
+	//int fontARIALN = 0;
+	//GLFWwindow* window;
+	//const GLFWvidmode* mode;
+
+	//FONScontext* fs = NULL;
+
+	//if (!glfwInit())
+	//	return -1;
+
+	//mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	//window = glfwCreateWindow(mode->width - 40, mode->height - 80, "Font Stash", NULL, NULL);
+	//if (!window) {
+	//	glfwTerminate();
+	//	return -1;
+	//}
+
+	////glfwSetKeyCallback(window, key);
+	//glfwMakeContextCurrent(window);
+
+	//fs = glfonsCreate(512, 512, FONS_ZERO_TOPLEFT);
+	//if (fs == NULL) {
+	//	printf("Could not create stash.\n");
+	//	return -1;
+	//}
+
+	//fontSKURRI = fonsAddFont(fs, "skurri", "../Resources/wow/Fonts/SKURRI.ttf");
+	//if (fontSKURRI == 0) {
+	//	printf("Could not add font.\n");
+	//	return -1;
+	//}
+	//fontMORPHEUS = fonsAddFont(fs, "morpheus", "../Resources/wow/Fonts/MORPHEUS.ttf");
+	//if (fontMORPHEUS == 0) {
+	//	printf("Could not add font.\n");
+	//	return -1;
+	//}
+	//fontFRIZ = fonsAddFont(fs, "frizqt", "../Resources/wow/Fonts/FRIZQT__.ttf");
+	//if (fontFRIZ == 0) {
+	//	printf("Could not add font.\n");
+	//	return -1;
+	//}
+	//fontARIALN = fonsAddFont(fs, "arial", "../Resources/wow/Fonts/ARIALN.ttf");
+	//if (fontARIALN == 0) {
+	//	printf("Could not add font.\n");
+	//	return -1;
+	//}
+
+	//while (!glfwWindowShouldClose(window))
+	//{
+	//	float sx, sy, dx, dy, lh = 0;
+	//	int width, height;
+	//	unsigned int white, black, brown, blue;
+	//	glfwGetFramebufferSize(window, &width, &height);
+	//	// Update and render
+	//	glViewport(0, 0, width, height);
+	//	glClearColor(0.3f, 0.3f, 0.32f, 1.0f);
+	//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//	glEnable(GL_BLEND);
+	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//	glDisable(GL_TEXTURE_2D);
+	//	glMatrixMode(GL_PROJECTION);
+	//	glLoadIdentity();
+	//	glOrtho(0, width, height, 0, -1, 1);
+
+	//	glMatrixMode(GL_MODELVIEW);
+	//	glLoadIdentity();
+	//	glDisable(GL_DEPTH_TEST);
+	//	glColor4ub(255, 255, 255, 255);
+	//	glEnable(GL_BLEND);
+	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//	glEnable(GL_CULL_FACE);
+
+	//	white = glfonsRGBA(255, 255, 255, 255);
+	//	brown = glfonsRGBA(192, 128, 0, 128);
+	//	blue = glfonsRGBA(0, 192, 255, 255);
+	//	black = glfonsRGBA(0, 0, 0, 255);
+
+	//	sx = 50; sy = 50;
+
+	//	dx = sx; dy = sy;
+
+	//	dash(dx, dy);
+
+	//	fonsClearState(fs);
+
+	//	fonsSetSize(fs, 124.0f);
+	//	fonsSetFont(fs, fontSKURRI);
+	//	fonsVertMetrics(fs, NULL, NULL, &lh);
+	//	dx = sx;
+	//	dy += lh;
+	//	dash(dx, dy);
+
+	//	fonsSetSize(fs, 124.0f);
+	//	fonsSetFont(fs, fontARIALN);
+	//	fonsSetColor(fs, white);
+	//	dx = fonsDrawText(fs, dx, dy, "The quick ", NULL);
+
+	//	fonsSetSize(fs, 48.0f);
+	//	fonsSetFont(fs, fontFRIZ);
+	//	fonsSetColor(fs, brown);
+	//	dx = fonsDrawText(fs, dx, dy, "brown ", NULL);
+
+	//	fonsSetSize(fs, 24.0f);
+	//	fonsSetFont(fs, fontMORPHEUS);
+	//	fonsSetColor(fs, white);
+	//	dx = fonsDrawText(fs, dx, dy, "fox ", NULL);
+
+	//	fonsVertMetrics(fs, NULL, NULL, &lh);
+	//	dx = sx;
+	//	dy += lh*1.2f;
+	//	dash(dx, dy);
+	//	fonsSetFont(fs, fontMORPHEUS);
+	//	dx = fonsDrawText(fs, dx, dy, "Manage Account ", NULL);
+	//	fonsSetFont(fs, fontFRIZ);
+	//	dx = fonsDrawText(fs, dx, dy, "Login ", NULL);
+	//	fonsSetFont(fs, fontARIALN);
+	//	dx = fonsDrawText(fs, dx, dy, "Cinematics.", NULL);
+
+	//	dx = sx;
+	//	dy += lh*1.2f;
+	//	dash(dx, dy);
+	//	fonsSetSize(fs, 12.0f);
+	//	fonsSetFont(fs, fontMORPHEUS);
+	//	fonsSetColor(fs, blue);
+	//	fonsDrawText(fs, dx, dy, "Login.", NULL);
+
+	//	fonsVertMetrics(fs, NULL, NULL, &lh);
+	//	dx = sx;
+	//	dy += lh*1.2f * 2;
+	//	dash(dx, dy);
+	//	fonsSetSize(fs, 18.0f);
+	//	fonsSetFont(fs, fontFRIZ);
+	//	fonsSetColor(fs, white);
+	//	fonsDrawText(fs, dx, dy, "Account.", NULL);
+
+	//	fonsVertMetrics(fs, NULL, NULL, &lh);
+	//	dx = sx;
+	//	dy += lh*1.2f;
+	//	dash(dx, dy);
+	//	fonsSetFont(fs, fontARIALN);
+	//	fonsDrawText(fs, dx, dy, "User", NULL);
+
+	//	// Font alignment
+	//	fonsSetSize(fs, 18.0f);
+	//	fonsSetFont(fs, fontARIALN);
+	//	fonsSetColor(fs, white);
+
+	//	dx = 50; dy = 350;
+	//	line(dx - 10, dy, dx + 250, dy);
+	//	fonsSetAlign(fs, FONS_ALIGN_LEFT | FONS_ALIGN_TOP);
+	//	dx = fonsDrawText(fs, dx, dy, "Top", NULL);
+	//	dx += 10;
+	//	fonsSetAlign(fs, FONS_ALIGN_LEFT | FONS_ALIGN_MIDDLE);
+	//	dx = fonsDrawText(fs, dx, dy, "Middle", NULL);
+	//	dx += 10;
+	//	fonsSetAlign(fs, FONS_ALIGN_LEFT | FONS_ALIGN_BASELINE);
+	//	dx = fonsDrawText(fs, dx, dy, "Baseline", NULL);
+	//	dx += 10;
+	//	fonsSetAlign(fs, FONS_ALIGN_LEFT | FONS_ALIGN_BOTTOM);
+	//	fonsDrawText(fs, dx, dy, "Bottom", NULL);
+
+	//	dx = 150; dy = 400;
+	//	line(dx, dy - 30, dx, dy + 80.0f);
+	//	fonsSetAlign(fs, FONS_ALIGN_LEFT | FONS_ALIGN_BASELINE);
+	//	fonsDrawText(fs, dx, dy, "Left", NULL);
+	//	dy += 30;
+	//	fonsSetAlign(fs, FONS_ALIGN_CENTER | FONS_ALIGN_BASELINE);
+	//	fonsDrawText(fs, dx, dy, "Center", NULL);
+	//	dy += 30;
+	//	fonsSetAlign(fs, FONS_ALIGN_RIGHT | FONS_ALIGN_BASELINE);
+	//	fonsDrawText(fs, dx, dy, "Right", NULL);
+
+	//	// Blur
+	//	dx = 500; dy = 350;
+	//	fonsSetAlign(fs, FONS_ALIGN_LEFT | FONS_ALIGN_BASELINE);
+
+	//	fonsSetSize(fs, 60.0f);
+	//	fonsSetFont(fs, fontMORPHEUS);
+	//	fonsSetColor(fs, white);
+	//	fonsSetSpacing(fs, 5.0f);
+	//	fonsSetBlur(fs, 10.0f);
+	//	fonsDrawText(fs, dx, dy, "Account...", NULL);
+
+	//	dy += 50.0f;
+
+	//	fonsSetSize(fs, 18.0f);
+	//	fonsSetFont(fs, fontARIALN);
+	//	fonsSetColor(fs, black);
+	//	fonsSetSpacing(fs, 0.0f);
+	//	fonsSetBlur(fs, 3.0f);
+	//	fonsDrawText(fs, dx, dy + 2, "login", NULL);
+
+	//	fonsSetColor(fs, white);
+	//	fonsSetBlur(fs, 0);
+	//	fonsDrawText(fs, dx, dy, "login", NULL);
+
+	//	if (debug)
+	//		fonsDrawDebug(fs, 800.0, 50.0);
+
+
+	//	glEnable(GL_DEPTH_TEST);
+
+	//	glfwSwapBuffers(window);
+	//	glfwPollEvents();
+	//}
+
+	//glfonsDelete(fs);
+
+	//glfwTerminate();
+
 	//TTF_Font* gFont = NULL;
 	////Open the font
 	//gFont = TTF_OpenFont("../Resources/wow/Fonts/SKURRI.ttf", 28);

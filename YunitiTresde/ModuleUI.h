@@ -6,6 +6,10 @@
 #include <vector>
 #include <experimental/filesystem>
 #include <map>
+//#include "Glew\include\glfw3.h"
+//#include "stb\include\fontstash.h"
+//#include "stb\include\gl3corefontstash.h"
+
 class ModuleUI :
 	public Module
 {
@@ -15,6 +19,9 @@ public:
 	~ModuleUI();
 
 	bool Init();
+	void dash(float dx, float dy);
+	void line(float sx, float sy, float ex, float ey);
+	//void key(GLFWwindow * window, int key, int scancode, int action, int mods);
 	bool Start();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
@@ -26,6 +33,7 @@ public:
 	void printLogo();
 	void printButton1();
 	void printButton2();
+	int debug = 0;
 private:
 	void Load(const std::experimental::filesystem::path& path);
 
@@ -56,7 +64,7 @@ private:
 
 	std::map<std::experimental::filesystem::path, std::string> buffers;
 
-
+	
 };
 
 
