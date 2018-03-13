@@ -36,8 +36,6 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Init()
 {
-
-
 	return true;
 }
 void ModuleUI::dash(float dx, float dy)
@@ -353,6 +351,8 @@ bool ModuleUI::Start()
 	// RELEASE(fontBuffer);
 	// free(fontBuffer);
 	// free(bitmap);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.0);
 
 	return true;
 }
@@ -389,6 +389,7 @@ void ModuleUI::WowFirstPage() {
 	printElement("..\\Resources\\wow\\UI\\DialogFrame\\UI-DialogBox-Header.png", verticesInputLogin);
 	printElement("..\\Resources\\wow\\UI\\DialogFrame\\UI-DialogBox-Header.png", verticesInputPass);
 
+
 }
 
 void ModuleUI::Load(const path& path)
@@ -423,7 +424,6 @@ void ModuleUI::printElement(const char* path, float* vertices) {
 	GLubyte indices[6] = {
 		0, 1, 2,   2, 3, 0 };      // front
 
-
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -438,7 +438,7 @@ void ModuleUI::printElement(const char* path, float* vertices) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture(path));
-
+	
 	glPushMatrix();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();

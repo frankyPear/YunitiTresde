@@ -23,14 +23,7 @@ public:
 	bool OnEditor();	
 	void getFormat(CElement2D Comp2D, GameObject* obj, int x, int y, int h, int w);
 	static Component2DTransform* getInstance();
-	void SetFOV(float degrees);
-	void SetAspectRatio();
-	void SetPlaneDistances(float zNear, float zFar);
-	void SetPosition(float3 newPos);
-	void SetFront(float3 newFront);
-	void SetUp(float3 newUp);
 
-	
 
 
 

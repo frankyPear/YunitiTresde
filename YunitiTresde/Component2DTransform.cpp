@@ -8,6 +8,7 @@
 #include "ComponentButton.h"
 #include "ComponentInput2D.h"
 #include "Component2D.h"
+
 Component2DTransform::Component2DTransform()
 {
 
@@ -61,33 +62,6 @@ void Component2DTransform::getFormat(CElement2D Comp2D, GameObject * obj, int x,
 		break;
 	}
 
-}
-
-//Component2D* Component2DTransform::getFormat(CElement2D Comp2D, GameObject* parentObject, int x, int y, int h, int w);
-//{
-//
-//
-//	return nullptr;
-//}
-
-void Component2DTransform::SetFOV(float degrees)
-{
-
-}
-
-void Component2DTransform::SetAspectRatio()
-{
-	
-}
-
-void Component2DTransform::SetPlaneDistances(float zNear, float zFar)
-{
-	
-}
-
-void Component2DTransform::SetPosition(float3 newPos)
-{
-	
 }
 
 Component2DTransform * Component2DTransform::getInstance()
