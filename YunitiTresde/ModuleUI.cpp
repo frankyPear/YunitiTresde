@@ -22,6 +22,7 @@ using namespace experimental::filesystem;
 
 ModuleUI::ModuleUI()
 {
+
 	/*ComponentButton* cb = new ComponentButton(250,250,0,0);*/
 }
 
@@ -31,22 +32,6 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Init()
 {
-	//GLuint vertexID;
-	//GLuint texID;
-
-	//float verticesBackground[8] = {
-	//	0.50, 0.50,  -0.50, 0.50,  -0.50,-0.50,   0.50,-0.50 };   // v0,v1,v2,v3 (front)
-	//GLfloat texCoordsBackground[8] = {
-	//	1,1,    0,1,    0,0,    1,0 };    // front
-	//GLubyte indices[6] = {
-	//	0, 1, 2,   2, 3, 0 };      // front
-	//glGenBuffers(1, &vertexID);
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexID);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(verticesBackground), verticesBackground, GL_STATIC_DRAW);
-
-	//glGenBuffers(1, &texID);
-	//glBindBuffer(GL_ARRAY_BUFFER, texID);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(texCoordsBackground), texCoordsBackground, GL_STATIC_DRAW);
 
 
 	return true;
@@ -54,7 +39,8 @@ bool ModuleUI::Init()
 
 bool ModuleUI::Start()
 {
-	
+	//verticesBackground[12] = {
+	//	0.850, 0.650,0,  -0.850, 0.650,0,  -0.850,-0.650,0,   0.850,-0.650,0 };   // v0,v1,v2,v3 (front)
 	//TTF_Font* gFont = NULL;
 	////Open the font
 	//gFont = TTF_OpenFont("../Resources/wow/Fonts/SKURRI.ttf", 28);
@@ -154,8 +140,16 @@ bool ModuleUI::CleanUp()
 }
 void ModuleUI::WowFirstPage() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	printBackground();
-	printLogo();
+	printElement("..\\Resources\\wow\\UI\\login_background.png", verticesBackground);
+	printElement("..\\Resources\\wow\\UI\\COMMON\\Glues-Logo.png", verticeslogo);
+	printElement("..\\Resources\\wow\\UI\\BUTTONS\\UI-DialogBox-Button-Up.png", verticesButtonMA);
+	printElement("..\\Resources\\wow\\UI\\BUTTONS\\UI-DialogBox-Button-Up.png", verticesButtonCS);
+	printElement("..\\Resources\\wow\\UI\\BUTTONS\\UI-DialogBox-Button-Up.png", verticesButtonLogin);
+	printElement("..\\Resources\\wow\\UI\\BUTTONS\\UI-DialogBox-Button-Up.png", verticesButtonCinematics);
+	printElement("..\\Resources\\wow\\UI\\BUTTONS\\UI-DialogBox-Button-Up.png", verticesButtonTerms);
+	printElement("..\\Resources\\wow\\UI\\DialogFrame\\UI-DialogBox-Header.png", verticesInputLogin);
+	printElement("..\\Resources\\wow\\UI\\DialogFrame\\UI-DialogBox-Header.png", verticesInputPass);
+
 }
 
 void ModuleUI::Load(const path& path)
@@ -181,12 +175,10 @@ const string& ModuleUI::Get(const path& path) const
 {
 	return buffers.at(path);
 }
-void ModuleUI::printBackground() {
-	
+void ModuleUI::printElement(const char* path, float* vertices) {
 	GLuint vertexID = 0;
 	GLuint texID = 0;
-	float verticesBackground[12] = {
-		0.850, 0.650,0,  -0.850, 0.650,0,  -0.850,-0.650,0,   0.850,-0.650,0 };   // v0,v1,v2,v3 (front)
+   
 	GLfloat texCoordsBackground[8] = {
 		1,1,    0,1,    0,0,    1,0 };    // front
 	GLubyte indices[6] = {
@@ -197,7 +189,7 @@ void ModuleUI::printBackground() {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
-	glVertexPointer(3, GL_FLOAT, 0, verticesBackground);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -206,7 +198,7 @@ void ModuleUI::printBackground() {
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture("..\\Resources\\wow\\UI\\login_background.png"));
+	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture(path));
 
 	glPushMatrix();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
@@ -217,19 +209,19 @@ void ModuleUI::printBackground() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 //Glues - Logo
-void ModuleUI::printLogo() {
+void ModuleUI::printButton2() {
 	//glClear(GL_COLOR_BUFFER_BIT);
 
 	GLuint vertexID = 0;
 	GLuint texID = 0;
 	float verticesBackground[12] = {
-		-0.40, 0.50,0.15,  -0.750, 0.50,0.15,  -0.750,0.30,0.15,   -0.40,0.30,0.15 };   // v0,v1,v2,v3 (front)
+		-0.45, -0.30,0.15,  -0.650, -0.30,0.15,  -0.650,-0.35,0.15,   -0.45,-0.35,0.15 };   // v0,v1,v2,v3 (front)
 	GLfloat texCoordsBackground[8] = {
 		1,1,    0,1,    0,0,    1,0 };    // front
 	GLubyte indices[6] = {
 		0, 1, 2,   2, 3, 0 };      // front
 
-
+	glEnable(GL_BLEND);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -243,8 +235,8 @@ void ModuleUI::printLogo() {
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture("..\\Resources\\wow\\UI\\COMMON\\Glues-Logo.png"));
-
+	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture("..\\Resources\\wow\\UI\\BUTTONS\\UI-DialogBox-Button-Up.png"));
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPushMatrix();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();
