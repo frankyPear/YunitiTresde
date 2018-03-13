@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "Brofiler\include\Brofiler.h"
 #include "ComponentMesh.h"
+#include "ModuleRNG.h"
 
 GameObject::GameObject()
 {
@@ -31,7 +32,11 @@ void GameObject::OnStart()
 {
 	//Seting BB starting values
 	axisBoundingBox_.SetNegativeInfinity();
+	_id = App->rng->GetRandomNumber();
+
+	// Please explain why is this here or delete it.
 	ComponentMesh* cm = (ComponentMesh*)this->GetComponent(MESH);
+
 	if (cm != nullptr)
 	{
 		//axisBoundingBox_.Enclose((float3*)cm->GetMeshVertices(), 8);

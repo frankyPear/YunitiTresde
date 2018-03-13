@@ -486,7 +486,7 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 		sceneRoot->SetName(scene->mRootNode->mName.C_Str());
 		sceneRoot->SetStatic(true);
 		sceneObjects_.push_back(sceneRoot);
-		sceneRoot->SetId(sceneObjects_.size());
+		//sceneRoot->SetId(sceneObjects_.size());
 		for (int j = 0; j< scene->mRootNode->mNumChildren; ++j)
 		{
 			RecursiveSceneGeneration(scene->mRootNode->mChildren[j], sceneRoot, scene->mRootNode->mTransformation);
@@ -513,7 +513,7 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 		sceneObject->SetName(toVisit->mName.C_Str());
 		sceneObject->SetStatic(true);
 		sceneObjects_.push_back(sceneObject);
-		sceneObject->SetId(sceneObjects_.size());
+		//sceneObject->SetId(sceneObjects_.size());
 		for (int l = 0; l < toVisit->mNumChildren; ++l)
 		{
 			RecursiveSceneGeneration(toVisit->mChildren[l], sceneObject, childTransform);

@@ -11,6 +11,7 @@ ComponentMaterial::ComponentMaterial(GameObject *gameObject) :Component(gameObje
 {
 	//Constructor
 	type = MATERIAL;
+	component_id = App->rng->GetRandomNumber();
 }
 
 

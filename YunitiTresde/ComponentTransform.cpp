@@ -16,6 +16,7 @@ ComponentTransform::ComponentTransform()
 
 ComponentTransform::ComponentTransform(float3 position, float3 scale, Quat rotation) : _position(position), _scale(scale), _quatRotation(rotation)
 {
+	component_id = App->rng->GetRandomNumber();
 	_rotationEulerAngles = rotation.ToEulerXYZ();
 	_rotationEulerAngles = float3(RadToDeg(_rotationEulerAngles.x), RadToDeg(_rotationEulerAngles.y), RadToDeg(_rotationEulerAngles.z));
 	_globalTransMatrix = float4x4::FromTRS( _position, _quatRotation, _scale);

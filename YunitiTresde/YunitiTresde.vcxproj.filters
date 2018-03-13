@@ -199,6 +199,9 @@
     <ClCompile Include="ComponentAnim.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleRNG.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -503,6 +506,9 @@
     </ClInclude>
     <ClInclude Include="ComponentAnim.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleRNG.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

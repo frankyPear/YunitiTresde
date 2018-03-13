@@ -16,6 +16,7 @@ class ModuleScene;
 class ModuleImGui;
 class ModuleResources;
 class ModuleAnimation;
+class ModuleRNG;
 
 class Application
 {
@@ -41,6 +42,7 @@ public:
 	ModuleScene* scene;
 	ModuleResources *resources;
 	ModuleAnimation *anim;
+	ModuleRNG *rng;
 	bool switchmap = false;
 private:
 	Timer ms_timer_;

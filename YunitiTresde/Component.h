@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Application.h"
+#include "ModuleRNG.h"
+#include "Globals.h"
+
 class GameObject;
 
 enum Type {TRANSFORMATION,MATERIAL,MESH,CAMERA};
@@ -46,7 +50,7 @@ protected:
 	GameObject * linked_to=nullptr;
 	Type type;
 	bool enabled;
-
+	int component_id;
 
 };
 

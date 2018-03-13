@@ -22,6 +22,7 @@ ComponentMesh::~ComponentMesh()
 }
 
 ComponentMesh::ComponentMesh(Shape shape) {
+	component_id = App->rng->GetRandomNumber();
 	switch (shape) {
 		case SPHERE:
 			sphere = new SolidSphere(1.0f,15.0f,15.0f);

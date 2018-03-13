@@ -7,6 +7,7 @@ using namespace std;
 
 ComponentAnim::ComponentAnim()
 {
+	component_id = App->rng->GetRandomNumber();
 }
 
 

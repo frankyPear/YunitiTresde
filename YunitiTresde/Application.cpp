@@ -8,6 +8,7 @@
 #include "ModuleScene.h"
 #include "ModuleImGui.h"
 #include "ModuleAnimation.h"
+#include "ModuleRNG.h"
 //Included mathgeolib
 #include "Mathgeolib\include\MathBuildConfig.h"
 #include "Mathgeolib\include\MathGeoLib.h"
@@ -27,6 +28,7 @@ Application::Application()
 	textures = new ModuleTextures();
 	anim = new ModuleAnimation();
 	scene = new ModuleScene();
+	rng = new ModuleRNG();
 
 	modules.push_back(input);
 	modules.push_back(window);
@@ -35,6 +37,7 @@ Application::Application()
 	modules.push_back(cam);
 	modules.push_back(textures);
 	modules.push_back(anim);
+	modules.push_back(rng);
 	modules.push_back(scene);
 
 }
