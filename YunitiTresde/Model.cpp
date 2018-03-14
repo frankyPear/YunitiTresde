@@ -130,6 +130,26 @@ void Model::loadBones( aiMesh *mesh)
 	
 }
 
+void Model::loadVaos(aiMesh * mesh)
+{
+	Texture *text = new Texture();
+	text->vbo[VERTEX_BUFFER] = NULL;
+	text->vbo[TEXCOORD_BUFFER] = NULL;
+	text->vbo[NORMAL_BUFFER] = NULL;
+	text->vbo[INDEX_BUFFER] = NULL;
+	for (int i = 0; i < mesh->mNumBones; ++i) {
+		glGenVertexArrays(1, &text->vao);
+		glBindVertexArray(text->vao);
+		text->element = mesh->mNumFaces * 3;
+		textBind.push_back(text);
+		glBindVertexArray(text->vao);
+		glDrawElements(GL_TRIANGLES, text->element, GL_UNSIGNED_INT, NULL);
+		glBindVertexArray(0);
+	}
+
+	
+}
+
 
 uint Model::loadTextureDirect(const char* filepath)
 {
