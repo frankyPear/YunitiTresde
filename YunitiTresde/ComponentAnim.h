@@ -7,7 +7,8 @@ public:
 	ComponentAnim();
 	~ComponentAnim();
 
-	void SetAnimId(int id, const char* channelName);
+	void SetAnimIdAndName(int id, const char* channelName);
+	void SetAnimId(int id);
 	void ResetAnimId();
 
 	void UpdateAnim();
@@ -15,6 +16,6 @@ public:
 public:
 
 	const char* animName = "";
-	int animInstanceId;
+	int animInstanceId = -1;
 };
 

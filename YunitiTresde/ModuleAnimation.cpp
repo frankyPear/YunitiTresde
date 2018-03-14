@@ -219,13 +219,29 @@ void ModuleAnimation::UpdateInstanceTime(float time)
 
 void ModuleAnimation::RecursiveAnimAssociation(GameObject* root)
 {
-	if (root->GetParent() == nullptr) 
+	std::vector<GameObject*> childs = root->GetChilds();
+	if (childs.size() > 0) 
 	{
 		ComponentAnim *ca = new ComponentAnim();
-		
-	}
-	else 
-	{
-		
+		ca->SetAnimIdAndName(-1 , root->GetName().c_str());
+		for (int i = 0; i < childs.size(); ++i)
+		{
+			RecursiveAnimAssociation(childs[i]);
+		}
 	}
 }
+
+void RecursiveAnimationIDSetting(GameObject* start, int id)
+{
+	ComponentAnim *ca = (ComponentAnim *) start->GetComponent(ANIMATION);
+	if (ca != nullptr)
+	{
+		std::vector<GameObject*> childs = start->GetChilds();
+		ca->SetAnimId(id);
+		for (int i = 0; i < childs.size(); ++i)
+		{
+			RecursiveAnimationIDSetting(childs[i],id);
+		}
+	}
+}
+

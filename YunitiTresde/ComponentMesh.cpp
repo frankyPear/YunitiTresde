@@ -176,3 +176,8 @@ bool ComponentMesh::SetMeshIndex(uint newIndex)
 	}
 	return false;
 }
+
+uint ComponentMesh::GetResourceMeshIndex() const
+{
+	return resourceIndex;
+}

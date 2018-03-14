@@ -79,9 +79,9 @@ update_status ModuleScene::Update(float dt)
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
 	
 	MeshImporter *mi = nullptr;
-	for (int i = 0; i < meshes.size(); ++i) {
+	/*for (int i = 0; i < meshes.size(); ++i) {
 		model->Draw(id[meshes[i]->mMaterialIndex], meshes[i]);
-	}
+	}*/
 
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
@@ -117,18 +117,24 @@ update_status ModuleScene::Update(float dt)
 					}
 				}
 			}
-			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-			if (cm != nullptr  && ct != nullptr) {
-				if (cm->meshShape != RESOURCE) 
-				{
-					AABB newBox = *(cm->GetBoundingBox());
-					newBox.TransformAsAABB(ct->GetGlobalTransform());
-					if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
+			std::vector<ComponentMesh*> GameObjectMeshes = sceneObjects_[i]->GetMeshes();
+			for (int j = 0; j < GameObjectMeshes.size(); ++j) {
+				ComponentMesh* cm = (ComponentMesh*)GameObjectMeshes[j];
+				ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+				if (cm != nullptr  && ct != nullptr) {
+					if (cm->meshShape != RESOURCE)
+					{
+						AABB newBox = *(cm->GetBoundingBox());
+						newBox.TransformAsAABB(ct->GetGlobalTransform());
+						if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
+					}
+					else
+					{
+						uint resID = cm->GetResourceMeshIndex();
+						if (resID != -1) model->Draw(id[meshes[resID]->mMaterialIndex], meshes[resID]);
+					}
 				}
-
 			}
-			
 		}
 	}
 	DrawHierarchy();
@@ -477,7 +483,6 @@ GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* p
 {
 	if (parent == nullptr) 
 	{
-		MeshImporter* mi = nullptr;
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
 			aiMesh *sceneMesh = scene->mMeshes[i];

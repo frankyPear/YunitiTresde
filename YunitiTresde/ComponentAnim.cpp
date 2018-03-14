@@ -15,10 +15,15 @@ ComponentAnim::~ComponentAnim()
 {
 }
 
-void ComponentAnim::SetAnimId(int id, const char* channelName)
+void ComponentAnim::SetAnimIdAndName(int id, const char* channelName)
 {
 	animInstanceId = id;
 	animName = channelName;
+}
+
+void ComponentAnim::SetAnimId(int id)
+{
+	animInstanceId = id;
 }
 
 void ComponentAnim::ResetAnimId()
