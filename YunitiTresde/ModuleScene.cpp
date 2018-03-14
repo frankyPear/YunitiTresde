@@ -42,8 +42,9 @@ bool ModuleScene::Init()
 	root = new GameObject();
 	//LoadScene("../Resources/street/Street.obj");
 	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
-	RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation);
+	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation);
 	actualCamera = App->cam->dummyCamera;
+	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
 
 	return true;
 }
@@ -472,7 +473,7 @@ void ModuleScene::LoadScene(const char* filepath)
 
 
 
-void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, const aiMatrix4x4 &transformation)
+GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, const aiMatrix4x4 &transformation)
 {
 	if (parent == nullptr) 
 	{
@@ -491,6 +492,7 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 		{
 			RecursiveSceneGeneration(scene->mRootNode->mChildren[j], sceneRoot, scene->mRootNode->mTransformation);
 		}
+		return sceneRoot;
 	}
 	else 
 	{
@@ -518,6 +520,7 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 		{
 			RecursiveSceneGeneration(toVisit->mChildren[l], sceneObject, childTransform);
 		}
+		return nullptr;
 	}
 }
 

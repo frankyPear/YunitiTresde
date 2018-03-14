@@ -4,8 +4,10 @@
 #include "assimp\assimp\postprocess.h"
 #include "assimp\assimp\scene.h"
 #include "assimp\assimp\Importer.hpp"
+#include "GameObject.h"
 #include <map>
 #include <vector>
+
 
 typedef uint AnimInstanceID;
 
@@ -71,6 +73,7 @@ public:
 	void BlendTo(uint id, const char* name, uint blend_time);
 	bool GetTransform(uint animId, const char* channel, aiVector3D& position, aiQuaternion& rotation);
 	void UpdateInstanceTime(float time);
+	void RecursiveAnimAssociation(GameObject* root);
 
 	aiVector3D Vector3DInterpolation(const aiVector3D & firstQuat, const aiVector3D & secondQuat, float lambda) const;
 	aiQuaternion InteropQuaternion(const aiQuaternion & firstQuat, const aiQuaternion & secondQuat, float lambda) const;

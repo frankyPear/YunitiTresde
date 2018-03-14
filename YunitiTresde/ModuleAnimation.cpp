@@ -1,4 +1,5 @@
 #include "ModuleAnimation.h"
+#include "ComponentAnim.h"
 #include <assert.h>
 
 
@@ -13,8 +14,6 @@ ModuleAnimation::~ModuleAnimation()
 
 bool ModuleAnimation::Init()
 {
-	aiString animNodeName = aiString("FirstAnimation");
-	Load(animNodeName,"../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
 	return true;
 }
 
@@ -214,5 +213,19 @@ void ModuleAnimation::UpdateInstanceTime(float time)
 	for (int i = 0; i < instances.size(); ++i)
 	{
 		instances[i]->time += (time)*32;
+	}
+}
+
+
+void ModuleAnimation::RecursiveAnimAssociation(GameObject* root)
+{
+	if (root->GetParent() == nullptr) 
+	{
+		ComponentAnim *ca = new ComponentAnim();
+		
+	}
+	else 
+	{
+		
 	}
 }
