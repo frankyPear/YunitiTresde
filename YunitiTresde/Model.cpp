@@ -137,17 +137,13 @@ void Model::loadVaos(aiMesh * mesh)
 	text->vbo[TEXCOORD_BUFFER] = NULL;
 	text->vbo[NORMAL_BUFFER] = NULL;
 	text->vbo[INDEX_BUFFER] = NULL;
-	for (int i = 0; i < mesh->mNumBones; ++i) {
-		glGenVertexArrays(1, &text->vao);
-		glBindVertexArray(text->vao);
-		text->element = mesh->mNumFaces * 3;
-		textBind.push_back(text);
-		glBindVertexArray(text->vao);
-		glDrawElements(GL_TRIANGLES, text->element, GL_UNSIGNED_INT, NULL);
-		glBindVertexArray(0);
-	}
-
-	
+	glGenVertexArrays(1, &text->vao);
+	glBindVertexArray(text->vao);
+	text->element = mesh->mNumFaces * 3;
+	glBindVertexArray(text->vao);
+	glDrawElements(GL_TRIANGLES, text->element, GL_UNSIGNED_INT, NULL);
+	glBindVertexArray(0);
+	textBind.push_back(text);
 }
 
 

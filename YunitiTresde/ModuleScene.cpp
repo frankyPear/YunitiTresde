@@ -492,7 +492,7 @@ GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* p
 			aiMesh *sceneMesh = scene->mMeshes[i];
 			if (scene->mMeshes[i]->HasBones()) {
 				models[modelID]->loadBones(sceneMesh); 
-				/*models[modelID]->loadVaos(sceneMesh);*/
+				models[modelID]->loadVaos(sceneMesh);
 			}
 			meshes.push_back(sceneMesh);
 		}
