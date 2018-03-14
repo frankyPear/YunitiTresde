@@ -51,7 +51,7 @@ public:
 
 	void LoadScene(const char* filepath);
 
-	GameObject*  RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent ,const aiMatrix4x4 &transformation );
+	GameObject*  RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent ,const aiMatrix4x4 &transformation, int modelID );
 
 	void DrawHierarchy();
 
@@ -72,6 +72,7 @@ public:
 	unsigned int elementCount;
 	std::vector<aiMesh*> meshes;
 	std::vector<GLuint> vaos;
+	std::map<int,Model*> models;
 	GameObject *modelObjRoot;
 
 private:
@@ -93,9 +94,10 @@ private:
 	Timer saveLoadTimer;
 	std::vector<GameObject*> sceneObjects_;
 	std::vector<GameObject*> objectToDraw_;
-
-
 	std::vector<aiMaterial*> materials;
+
+
+
 	MeshImporter* mesh1;
 	Model* model;
 	std::vector<uint> id;

@@ -10,9 +10,7 @@
 
 Model::Model()
 {
-	ilInit();
-	iluInit();
-	ilutInit();
+
 }
 
 
@@ -111,6 +109,27 @@ void Model::LoadTexture(const char* filepath)
 	delete[] textureIds;
 
 }
+
+void Model::loadBones( aiMesh *mesh)
+{
+	for (int i = 0; i < mesh->mNumBones; ++i)
+	{
+		Bone *bone = new Bone();
+		aiBone *aibone = mesh->mBones[i];
+		bone->name = aibone->mName.C_Str();
+		bone->bind = aibone->mOffsetMatrix;
+		bone->num_weights = aibone->mNumWeights;
+		Weight* newweights = new Weight[aibone->mNumWeights];
+		for (int j = 0; j < aibone->mNumWeights; ++j)
+		{
+			newweights[j].vertex = aibone->mWeights[j].mVertexId;
+			newweights[j].weight = aibone->mWeights[j].mWeight;
+		}
+		bone->weights = newweights;
+	}
+	
+}
+
 
 uint Model::loadTextureDirect(const char* filepath)
 {

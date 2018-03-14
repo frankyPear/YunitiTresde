@@ -40,6 +40,7 @@ public:
 	void Clear();
 	void Draw(uint id, aiMesh * mesh);
 	uint loadTextureDirect(const char* filepath);
+	void loadBones( aiMesh *mesh);
 
 public:
 

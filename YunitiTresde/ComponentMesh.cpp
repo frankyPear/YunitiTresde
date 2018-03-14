@@ -181,3 +181,8 @@ uint ComponentMesh::GetResourceMeshIndex() const
 {
 	return resourceIndex;
 }
+
+void ComponentMesh::SetModelId(int newModelID)
+{
+	modelID = newModelID;
+}

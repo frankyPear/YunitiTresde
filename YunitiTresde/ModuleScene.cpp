@@ -42,7 +42,10 @@ bool ModuleScene::Init()
 	root = new GameObject();
 	//LoadScene("../Resources/street/Street.obj");
 	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
-	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation);
+	Model *m = new Model();
+	int id = App->rng->GetRandomNumber();
+	models[id] = m;
+	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation, id);
 	actualCamera = App->cam->dummyCamera;
 	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
 
@@ -479,13 +482,15 @@ void ModuleScene::LoadScene(const char* filepath)
 
 
 
-GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, const aiMatrix4x4 &transformation)
+GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, const aiMatrix4x4 &transformation, int modelID)
 {
 	if (parent == nullptr) 
 	{
+		
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
 			aiMesh *sceneMesh = scene->mMeshes[i];
+			if (scene->mMeshes[i]->HasBones) models[modelID]->loadBones(sceneMesh);
 			meshes.push_back(sceneMesh);
 		}
 		GameObject *sceneRoot = new GameObject();
@@ -495,7 +500,7 @@ GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* p
 		//sceneRoot->SetId(sceneObjects_.size());
 		for (int j = 0; j< scene->mRootNode->mNumChildren; ++j)
 		{
-			RecursiveSceneGeneration(scene->mRootNode->mChildren[j], sceneRoot, scene->mRootNode->mTransformation);
+			RecursiveSceneGeneration(scene->mRootNode->mChildren[j], sceneRoot, scene->mRootNode->mTransformation, modelID);
 		}
 		return sceneRoot;
 	}
@@ -505,6 +510,7 @@ GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* p
 		for (int m = 0; m < toVisit->mNumMeshes; ++m) {
 			ComponentMesh *cm = new ComponentMesh(RESOURCE);
 			cm->SetMeshIndex(toVisit->mMeshes[m]);
+			cm->SetModelId(modelID);
 			// Falta añadir las bounding box
 			sceneObject->AddComponent(cm);
 
@@ -523,7 +529,7 @@ GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* p
 		//sceneObject->SetId(sceneObjects_.size());
 		for (int l = 0; l < toVisit->mNumChildren; ++l)
 		{
-			RecursiveSceneGeneration(toVisit->mChildren[l], sceneObject, childTransform);
+			RecursiveSceneGeneration(toVisit->mChildren[l], sceneObject, childTransform,modelID);
 		}
 		return nullptr;
 	}

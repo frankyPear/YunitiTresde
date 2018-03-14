@@ -34,6 +34,7 @@ public:
 	bool CheckRayIntersectsMesh(Ray r, float& distance);
 
 	bool SetMeshIndex(uint newIndex);
+	void SetModelId(int newModelID);
 
 public:
 	Shape meshShape;
@@ -41,6 +42,7 @@ public:
 	SolidSphere *sphere = nullptr;
 	AABB* meshBoundingBox = nullptr;
 	uint resourceIndex = -1;
+	int modelID = -1;
 
 	std::vector<GLfloat> meshvertices;
 	std::vector<GLfloat> meshnormals;
