@@ -8,8 +8,7 @@
 
 ModuleCamera::ModuleCamera()
 {
-	dummyCamera = new ComponentCamera();
-	dummyCamera->SetPlaneDistances(0.5f, 100.0f);
+	
 }
 
 ModuleCamera::~ModuleCamera()
@@ -20,7 +19,8 @@ ModuleCamera::~ModuleCamera()
 bool ModuleCamera::Init()
 {
 	bool ret = true;
-
+	dummyCamera = new ComponentCamera();
+	dummyCamera->SetPlaneDistances(0.5f, 100.0f);
 	return ret;
 }
 

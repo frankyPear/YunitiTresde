@@ -15,7 +15,13 @@ class ModuleTextures;
 class ModuleScene;
 class ModuleImGui;
 class ModuleResources;
+
+class ModuleAnimation;
+class ModuleRNG;
+
+
 class ModuleAudio;
+
 class Application
 {
 public:
@@ -39,7 +45,12 @@ public:
 	ModuleTextures* textures;
 	ModuleScene* scene;
 	ModuleResources *resources;
+
+	ModuleAnimation *anim;
+	ModuleRNG *rng;
+
 	ModuleAudio *audio;
+
 	bool switchmap = false;
 private:
 	Timer ms_timer_;

@@ -34,8 +34,8 @@ MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh)
 		float *vertices = new float[mesh->mNumVertices * 3];
 		for (int i = 0; i < mesh->mNumVertices; ++i) {
 			vertices[i * 3] = mesh->mVertices[i].x;
-			vertices[i * 3 + 1] = mesh->mVertices[i].y;
-			vertices[i * 3 + 2] = mesh->mVertices[i].z;
+			vertices[(i * 3) + 1] = mesh->mVertices[i].y;
+			vertices[(i * 3) + 2] = mesh->mVertices[i].z;
 		}
 
 		glGenBuffers(1,  &vbo[VERTEX_BUFFER]);
@@ -104,6 +104,23 @@ MeshImporter::MeshEntry::MeshEntry(aiMesh* mesh)
 		delete[] indices;
 	}
 
+	if (mesh->HasBones()) {
+		for (int i = 0; i < mesh->mNumBones; ++i)
+		{
+			Bone *bone = new Bone();
+			aiBone *aibone= mesh->mBones[i];
+			bone->name = aibone->mName.C_Str();
+			bone->bind = aibone->mOffsetMatrix;
+			bone->num_weights =  aibone->mNumWeights;
+			Weight* newweights = new Weight[aibone->mNumWeights];
+			for (int j = 0; j < aibone->mNumWeights; ++j)
+			{
+				newweights[j].vertex = aibone->mWeights[j].mVertexId;
+				newweights[j].weight = aibone->mWeights[j].mWeight;
+			}
+			bone->weights = newweights;
+		}
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

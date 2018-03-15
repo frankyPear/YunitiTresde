@@ -32,9 +32,22 @@ public:
 		void Load(aiMesh *mesh);
 		void Draw();
 	};
+	struct Weight
+	{
+		uint vertex = 0;
+		float weight = 0.0f;
+	};
+
+	struct Bone
+	{
+		const char* name;
+		Weight* weights = nullptr;
+		uint num_weights = 0;
+		aiMatrix4x4 bind;
+	};
 
 	std::vector<MeshEntry*> meshEntries;
-
+	std::vector<Bone*> bones;
 public:
   	MeshImporter(const char* filePath);
 	~MeshImporter();

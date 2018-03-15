@@ -20,6 +20,7 @@ ComponentCamera::ComponentCamera()
 	drawFrustumEnabled_ = false;
 	frustrumCulling_ = false;
 	type = CAMERA;
+	component_id = App->rng->GetRandomNumber();
 }
 
 

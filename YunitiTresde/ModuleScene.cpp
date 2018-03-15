@@ -3,7 +3,11 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
+
+#include "ModuleAnimation.h"
+
 #include "ModuleAudio.h"
+
 
 
 #include "imgui-1.53\imgui.h"
@@ -45,9 +49,15 @@ bool ModuleScene::Init()
 	root = new GameObject();
 	//LoadScene("../Resources/street/Street.obj");
 	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
-	RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation);
+	Model *m = new Model();
+	int id = App->rng->GetRandomNumber();
+	models[id] = m;
+	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation, id);
 	actualCamera = App->cam->dummyCamera;
-	GameObject *object1 = new GameObject();
+
+	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
+
+/*	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	ComponentAudioListener *al = new ComponentAudioListener();
@@ -56,7 +66,7 @@ bool ModuleScene::Init()
 	object1->SetStatic(true);
 	root->AddChild(object1);
 	sceneObjects_.push_back(object1);
-/*
+
 	float offset = -2.0f;
 	float xoff[16] = { 20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0 };
 	float zoff[16] = { 20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10 };
@@ -77,6 +87,7 @@ bool ModuleScene::Init()
 		offset += offset;
 		//<<<<<<< develop
 		object->SetId(i + 1);
+
 
 	}
 	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
@@ -102,6 +113,7 @@ bool ModuleScene::Start()
 	quadtree->Create(limits);
 	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
+	App->anim->Play("Idle");
 	return true;
 }
 
@@ -120,6 +132,14 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
+
+	
+//	MeshImporter *mi = nullptr;
+	/*for (int i = 0; i < meshes.size(); ++i) {
+		model->Draw(id[meshes[i]->mMaterialIndex], meshes[i]);
+	}*/
+
+
 //<<<<<<< feature-moduleAudio&Components
 	/*MeshImporter* mi = nullptr;
 	for (int i = 0; i < meshes.size(); ++i) {
@@ -130,6 +150,7 @@ update_status ModuleScene::Update(float dt)
 //=======
 //	mesh1->Draw();
 //>>>>>>> develop
+
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
 			quadtree->Clear();
@@ -150,17 +171,45 @@ update_status ModuleScene::Update(float dt)
 	else {
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
-			ComponentMesh* cm = (ComponentMesh*)sceneObjects_[i]->GetComponent(MESH);
-			ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
-			//ComponentAudioListener* cal= (ComponentAudioListener*)sceneObjects_[i]->GetComponent(AUDIOLISTENER);
-			//ComponentAudioSource* cas  = (ComponentAudioSource*)  sceneObjects_[i]->GetComponent(AUDIOSOURCE);
-			if (cm != nullptr && cm->meshShape != RESOURCE && ct != nullptr) {
-				AABB newBox = *(cm->GetBoundingBox());
-				newBox.TransformAsAABB(ct->GetGlobalTransform());
-				if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
+
+			if (sceneObjects_[i]->GetParent() != nullptr) {
+				ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+				ComponentTransform* ctparent = (ComponentTransform*)sceneObjects_[i]->GetParent()->GetComponent(TRANSFORMATION);
+				if (ct != nullptr && ctparent != nullptr) {
+					float3 componentPos = ct->GetGlobalPosition();
+					float3 componentRot = ct->GetQuatRotation().ToEulerXYZ();
+					aiVector3D pos = aiVector3D(componentPos.x, componentPos.y, componentPos.z);
+					aiQuaternion rot = aiQuaternion(componentRot.x, componentRot.y, componentRot.z);
+					if (App->anim->GetTransform(App->anim->AnimId, sceneObjects_[i]->GetName().c_str(), pos, rot)) {
+						float4x4 trans = float4x4(Quat::Quat(rot.x, rot.y, rot.z, rot.w), float3(pos.x, pos.y, pos.z));
+						ct->SetGlobalTransform(ctparent->GetGlobalTransform()* trans);
+					}
+				}
+			}
+			std::vector<ComponentMesh*> GameObjectMeshes = sceneObjects_[i]->GetMeshes();
+			for (int j = 0; j < GameObjectMeshes.size(); ++j) {
+				ComponentMesh* cm = (ComponentMesh*)GameObjectMeshes[j];
+				ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
+				if (cm != nullptr  && ct != nullptr) {
+					if (cm->meshShape != RESOURCE)
+					{
+						AABB newBox = *(cm->GetBoundingBox());
+						newBox.TransformAsAABB(ct->GetGlobalTransform());
+						if (actualCamera->GetFrustum()->Intersects(newBox)) sceneObjects_[i]->DrawObjectAndChilds();
+					}
+					else
+					{
+						uint resID = cm->GetResourceMeshIndex();
+						if (resID != -1) model->Draw(id[meshes[resID]->mMaterialIndex], meshes[resID]);
+					}
+				}
+
+
 			}
 		}
 	}
+	DrawHierarchy();
+
 	if (root != nullptr)
 		root->Update();
 	//IMGUI
@@ -178,7 +227,7 @@ update_status ModuleScene::PostUpdate(float dt)
 	{
 		return UPDATE_STOP;
 	}
-	
+
 	return UPDATE_CONTINUE;
 }
 
@@ -482,33 +531,49 @@ void ModuleScene::LoadScene(const char* filepath)
 	}
 	else {
 		LOG("SCENE LOADED");
+		for (unsigned i = 0; i < scene->mNumMaterials; ++i)
+		{
+			aiString textureFile;
 
+
+			if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &textureFile) == aiReturn_SUCCESS)
+			{
+				std::string name = "..Resources/ArmyPilot/ArmyPilot/Tex/" + (std::string)textureFile.data;
+				id.push_back(model->loadTextureDirect(name.c_str()));
+			}
+			else
+				id.push_back(0);
+		}
 	}
 
 }
 
 
 
-void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, const aiMatrix4x4 &transformation)
+GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, const aiMatrix4x4 &transformation, int modelID)
 {
 	if (parent == nullptr) 
 	{
-		MeshImporter* mi = nullptr;
+		
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
 			aiMesh *sceneMesh = scene->mMeshes[i];
+			if (scene->mMeshes[i]->HasBones()) {
+				models[modelID]->loadBones(sceneMesh); 
+				models[modelID]->loadVaos(sceneMesh);
+			}
 			meshes.push_back(sceneMesh);
-			mi->meshEntryArrays(meshes[i]);
-
 		}
 		GameObject *sceneRoot = new GameObject();
+		sceneRoot->SetName(scene->mRootNode->mName.C_Str());
 		sceneRoot->SetStatic(true);
 		sceneObjects_.push_back(sceneRoot);
-		sceneRoot->SetId(sceneObjects_.size());
+		//sceneRoot->SetId(sceneObjects_.size());
 		for (int j = 0; j< scene->mRootNode->mNumChildren; ++j)
 		{
-			RecursiveSceneGeneration(scene->mRootNode->mChildren[j], sceneRoot, scene->mRootNode->mTransformation);
+			RecursiveSceneGeneration(scene->mRootNode->mChildren[j], sceneRoot, scene->mRootNode->mTransformation, modelID);
 		}
+		return sceneRoot;
 	}
 	else 
 	{
@@ -516,7 +581,12 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 		for (int m = 0; m < toVisit->mNumMeshes; ++m) {
 			ComponentMesh *cm = new ComponentMesh(RESOURCE);
 			cm->SetMeshIndex(toVisit->mMeshes[m]);
+
+			cm->SetModelId(modelID);
 			// Falta a�adir las bounding box
+
+			// Falta a�adir las bounding box
+
 			sceneObject->AddComponent(cm);
 
 		}
@@ -528,13 +598,15 @@ void ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, c
 		ComponentTransform *ct = new ComponentTransform(float3(pos.x, pos.y, pos.z), float3(scale.x, scale.y, scale.z), Quat::Quat(rot.x, rot.y, rot.z, rot.w));
 		sceneObject->AddComponent(ct);
 		parent->AddChild(sceneObject);
+		sceneObject->SetName(toVisit->mName.C_Str());
 		sceneObject->SetStatic(true);
 		sceneObjects_.push_back(sceneObject);
-		sceneObject->SetId(sceneObjects_.size());
+		//sceneObject->SetId(sceneObjects_.size());
 		for (int l = 0; l < toVisit->mNumChildren; ++l)
 		{
-			RecursiveSceneGeneration(toVisit->mChildren[l], sceneObject, childTransform);
+			RecursiveSceneGeneration(toVisit->mChildren[l], sceneObject, childTransform,modelID);
 		}
+		return nullptr;
 	}
 }
 
