@@ -9,7 +9,7 @@ class Billboard
 public:
 	struct billboard
 	{
-		float3 *vertices;
+		float* vertices;
 		GLuint texID;	
 	};
 
@@ -17,12 +17,13 @@ public:
 	~Billboard();
 	
 	void CreateBillboard(const char* imagepath, const char* name, float3 centerpos, float width, float height);
-	void Draw(billboard b);
+	void Draw(billboard *b);
 	void DrawBillboards();
+	billboard * GetBillboard(const char* name);
 
 public:
-	std::map<const char*, billboard> billboards;
-	std::vector<billboard> scene_billboards;
+	std::map<const char*, billboard*> billboards;
+	std::vector<billboard*> scene_billboards;
 
 };
 

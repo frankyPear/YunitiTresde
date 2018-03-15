@@ -19,13 +19,15 @@ bool ModuleAnimation::Init()
 
 bool ModuleAnimation::Start()
 {
-	if (scene->mAnimations != 0)
-	{
+	if (scene != nullptr) {
+		if (scene->mAnimations != 0)
+		{
 
-	}
-	else
-	{
-		LOG("No Animations to Load");
+		}
+		else
+		{
+			LOG("No Animations to Load");
+		}
 	}
 	return true;
 }

@@ -202,7 +202,21 @@
     <ClCompile Include="ModuleRNG.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Billboard.cpp" />
+    <ClCompile Include="ComponentAudioListener.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentAudioSource.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceAudio.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Billboard.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -511,7 +525,30 @@
     <ClInclude Include="ModuleRNG.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Billboard.h" />
+    <ClInclude Include="Bass\include\bass.h">
+      <Filter>Tools\bass\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Bass\include\bassenc_ogg.h">
+      <Filter>Tools\bass\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Bass\include\bassenc.h">
+      <Filter>Tools\bass\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentAudioListener.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentAudioSource.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceAudio.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Billboard.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -556,6 +593,15 @@
     <Filter Include="Components">
       <UniqueIdentifier>{5e3035f3-ba3c-4b78-9de0-9c636fddaa98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\bass">
+      <UniqueIdentifier>{d7aef5bc-8756-4b3e-acbb-281fd5f0bea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\bass\include">
+      <UniqueIdentifier>{ea64bfba-6b99-494e-aede-ead91c4c5a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\bass\lib">
+      <UniqueIdentifier>{4335f054-b0ac-4524-b2d0-471bc1b6c45b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl">
@@ -573,6 +619,15 @@
     <None Include="Mathgeolib\include\Math\Matrix.inl">
       <Filter>Tools\MathGeoLib\extras</Filter>
     </None>
+    <None Include="Game\bass.dll">
+      <Filter>Tools\bass\lib</Filter>
+    </None>
+    <None Include="Game\bassenc.dll">
+      <Filter>Tools\bass\lib</Filter>
+    </None>
+    <None Include="Game\bassenc_ogg.dll">
+      <Filter>Tools\bass\lib</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="DevIL\lib\x86\Release\DevIL.lib">
@@ -586,6 +641,15 @@
     </Library>
     <Library Include="Brofiler\libx86\ProfilerCore32.lib">
       <Filter>Tools\Brofiler\lib</Filter>
+    </Library>
+    <Library Include="Bass\lib\bass.lib">
+      <Filter>Tools\bass\lib</Filter>
+    </Library>
+    <Library Include="Bass\lib\bassenc.lib">
+      <Filter>Tools\bass\lib</Filter>
+    </Library>
+    <Library Include="Bass\lib\bassenc_ogg.lib">
+      <Filter>Tools\bass\lib</Filter>
     </Library>
   </ItemGroup>
 </Project>
