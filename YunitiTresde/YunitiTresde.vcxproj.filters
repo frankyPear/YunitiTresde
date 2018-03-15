@@ -202,6 +202,7 @@
     <ClCompile Include="ModuleRNG.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Billboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -510,6 +511,7 @@
     <ClInclude Include="ModuleRNG.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Billboard.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">

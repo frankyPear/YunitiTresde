@@ -124,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\Outrun1986-\Point.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Billboard.h" />
     <ClInclude Include="Brofiler\include\Brofiler.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentAnim.h" />
@@ -227,6 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentAnim.cpp" />
     <ClCompile Include="ComponentCamera.cpp" />
