@@ -193,6 +193,7 @@
     <ClCompile Include="ResourceMesh.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+
     <ClCompile Include="ModuleAnimation.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
@@ -202,6 +203,23 @@
     <ClCompile Include="ModuleRNG.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+
+    <ClCompile Include="ComponentAudioListener.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentAudioSource.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAnimation.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceAudio.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -501,6 +519,7 @@
     <ClInclude Include="ResourceMesh.h">
       <Filter>Resources</Filter>
     </ClInclude>
+
     <ClInclude Include="ModuleAnimation.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -510,6 +529,32 @@
     <ClInclude Include="ModuleRNG.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
+
+    <ClInclude Include="ComponentAudioListener.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentAudioSource.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAnimation.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Bass\include\bass.h">
+      <Filter>Tools\Bass</Filter>
+    </ClInclude>
+    <ClInclude Include="Bass\include\bassenc.h">
+      <Filter>Tools\Bass</Filter>
+    </ClInclude>
+    <ClInclude Include="Bass\include\bassenc_ogg.h">
+      <Filter>Tools\Bass</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceAudio.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -554,6 +599,12 @@
     <Filter Include="Components">
       <UniqueIdentifier>{5e3035f3-ba3c-4b78-9de0-9c636fddaa98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\Bass">
+      <UniqueIdentifier>{46feebd6-8911-4b45-969d-9da674145172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Bass\lib">
+      <UniqueIdentifier>{53effa89-2b72-4fc7-91bd-5f17380575d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl">
@@ -584,6 +635,15 @@
     </Library>
     <Library Include="Brofiler\libx86\ProfilerCore32.lib">
       <Filter>Tools\Brofiler\lib</Filter>
+    </Library>
+    <Library Include="Bass\lib\bassenc_ogg.lib">
+      <Filter>Tools\Bass\lib</Filter>
+    </Library>
+    <Library Include="Bass\lib\bass.lib">
+      <Filter>Tools\Bass\lib</Filter>
+    </Library>
+    <Library Include="Bass\lib\bassenc.lib">
+      <Filter>Tools\Bass\lib</Filter>
     </Library>
   </ItemGroup>
 </Project>

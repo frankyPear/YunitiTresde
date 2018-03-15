@@ -35,6 +35,8 @@ public:
 	///PostUpdate
 	virtual bool PostUpdate();
 
+	void Destroy();
+
 #pragma endregion
 
 #pragma region Getters
@@ -68,6 +70,8 @@ public:
 	GameObject* GetChild(int index)const;
 
 	void DetatchChild(int index);
+
+	void DetatchChild(GameObject *gameObject);
 
 	void DetachChildren();
 
@@ -112,6 +116,8 @@ private:
 
 	bool _isStatic = false;
 
+	bool _toBeDestroyed = false;
+
 	std::string _name = "Default name";
 
 #pragma region Hierarchy attributes
@@ -124,6 +130,7 @@ private:
 
 	std::vector<Component*> _components;
 	std::vector<ComponentMesh*> _meshes;
+
 
 
 

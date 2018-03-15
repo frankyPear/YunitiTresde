@@ -49,6 +49,7 @@ public:
 	void ToggleFrustumAcceleration();
 	void CreateRay(float2 screenPoint);
 
+
 	void LoadScene(const char* filepath);
 
 	GameObject*  RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent ,const aiMatrix4x4 &transformation, int modelID );
@@ -58,6 +59,10 @@ public:
 	void meshEntry(aiMesh * mesh);
 
 	void Draw();
+
+	
+	void OnSceneObjectIsDestroyed(GameObject *t);
+
 
 public:
 	ComponentCamera *actualCamera = nullptr;
