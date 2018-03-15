@@ -3,7 +3,12 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleInput.h"
+
 #include "ModuleAnimation.h"
+
+#include "ModuleAudio.h"
+
+
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
@@ -18,6 +23,8 @@
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "ComponentAudioSource.h"
+#include "ComponentAudioListener.h"
 #include "ModuleCamera.h"
 #include "MeshImporter.h"
 #include <map>
@@ -47,8 +54,53 @@ bool ModuleScene::Init()
 	models[id] = m;
 	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation, id);
 	actualCamera = App->cam->dummyCamera;
+
 	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
 
+/*	GameObject *object1 = new GameObject();
+	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
+	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+	ComponentAudioListener *al = new ComponentAudioListener();
+	object1->AddComponent(cm1);
+	object1->AddComponent(ct1);
+	object1->SetStatic(true);
+	root->AddChild(object1);
+	sceneObjects_.push_back(object1);
+
+	float offset = -2.0f;
+	float xoff[16] = { 20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0 };
+	float zoff[16] = { 20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10 };
+	for (int i = 0; i < 1; ++i)
+	{
+		GameObject *object = new GameObject();
+		ComponentMesh *cm = new ComponentMesh(CUBE);
+		ComponentTransform *ct = new ComponentTransform(float3(0.0f + xoff[i], 0.0f, 0.0f + zoff[i]), float3(1.0f, 1.0f, 1.0f), Quat::identity);
+		ComponentMaterial *material = new ComponentMaterial(object);
+		ComponentCamera *camera = new ComponentCamera();
+		object->AddComponent(cm);
+		object->AddComponent(ct);
+		object->AddComponent(material);
+		object->AddComponent(camera);
+		object->SetStatic(true);
+		root->AddChild(object);
+		sceneObjects_.push_back(object);
+		offset += offset;
+		//<<<<<<< develop
+		object->SetId(i + 1);
+
+
+	}
+	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
+
+	//=======
+	//		object->SetId(i+1);
+	//	}
+		//m.Load("../Resources/BakerHouse.fbx");
+		//m.LoadTexture("../Resources/Baker_house.png");
+	//>>>>>>> feature-MousePicking-FP
+	actualCamera = App->cam->dummyCamera;
+
+*/
 	return true;
 }
 
@@ -80,11 +132,24 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
+
 	
-	MeshImporter *mi = nullptr;
+//	MeshImporter *mi = nullptr;
 	/*for (int i = 0; i < meshes.size(); ++i) {
 		model->Draw(id[meshes[i]->mMaterialIndex], meshes[i]);
 	}*/
+
+
+//<<<<<<< feature-moduleAudio&Components
+	/*MeshImporter* mi = nullptr;
+	for (int i = 0; i < meshes.size(); ++i) {
+		mi->DrawMeshHierarchy();
+		//Draw();
+	}*/
+	DrawHierarchy();
+//=======
+//	mesh1->Draw();
+//>>>>>>> develop
 
 	if (accelerateFrustumCulling) {
 		if (recreateQuadTree) {
@@ -106,6 +171,7 @@ update_status ModuleScene::Update(float dt)
 	else {
 		for (int i = 0; i < sceneObjects_.size(); i++)
 		{
+
 			if (sceneObjects_[i]->GetParent() != nullptr) {
 				ComponentTransform* ct = (ComponentTransform*)sceneObjects_[i]->GetComponent(TRANSFORMATION);
 				ComponentTransform* ctparent = (ComponentTransform*)sceneObjects_[i]->GetParent()->GetComponent(TRANSFORMATION);
@@ -137,6 +203,8 @@ update_status ModuleScene::Update(float dt)
 						if (resID != -1) model->Draw(id[meshes[resID]->mMaterialIndex], meshes[resID]);
 					}
 				}
+
+
 			}
 		}
 	}
@@ -249,24 +317,23 @@ void ModuleScene::ShowImguiStatus() {
 					cmat->OnEditor();
 				}
 				if (ImGui::CollapsingHeader("Add Component")) {
-					if (ImGui::Button("Component Material", ImVec2(150, 0)))
+					if (sceneObjects_[i]->GetComponent(Type::MATERIAL) == nullptr && ImGui::Button("Component Material", ImVec2(150, 0)))
 					{
 						ComponentMaterial* CM = new ComponentMaterial(sceneObjects_[i]);
 						sceneObjects_[i]->AddComponent(CM);
 						ImGui::CloseCurrentPopup();
 
 					}
-					if (ImGui::Button("Component Mesh", ImVec2(150, 0)))
+					if (sceneObjects_[i]->GetComponent(Type::MESH) == nullptr && ImGui::Button("Component Mesh", ImVec2(150, 0)))
 					{
 						ComponentMesh* CM = new ComponentMesh(CUBE);
 						sceneObjects_[i]->AddComponent(CM);
 						ImGui::CloseCurrentPopup();
 					}
-					if (ImGui::Button("Component Camera", ImVec2(150, 0)))
+					if (sceneObjects_[i]->GetComponent(Type::CAMERA) == nullptr && ImGui::Button("Component Camera", ImVec2(150, 0)))
 					{
 						ComponentCamera* CM = new ComponentCamera();
 						sceneObjects_[i]->AddComponent(CM);
-
 						ImGui::CloseCurrentPopup();
 					}
 
@@ -393,6 +460,7 @@ void ModuleScene::CreateGameObject(GameObject* obj, bool boolcm, bool boolcam)
 	ComponentMaterial *cmat = new ComponentMaterial(obj);
 	obj->AddComponent(cmat);
 
+	root->AddChild(obj);
 	sceneObjects_.push_back(obj);
 }
 
@@ -513,8 +581,12 @@ GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* p
 		for (int m = 0; m < toVisit->mNumMeshes; ++m) {
 			ComponentMesh *cm = new ComponentMesh(RESOURCE);
 			cm->SetMeshIndex(toVisit->mMeshes[m]);
+
 			cm->SetModelId(modelID);
-			// Falta añadir las bounding box
+			// Falta aï¿½adir las bounding box
+
+			// Falta aï¿½adir las bounding box
+
 			sceneObject->AddComponent(cm);
 
 		}
@@ -564,3 +636,15 @@ void ModuleScene::DrawHierarchy()
 	glLineWidth((GLfloat)1.0f);
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
+
+void ModuleScene::OnSceneObjectIsDestroyed(GameObject * t)
+{
+	for (std::vector<GameObject*>::iterator it = sceneObjects_.begin(); it != sceneObjects_.end(); ++it) {
+		if ((*it) == t) {
+			sceneObjects_.erase(it);
+			break;
+		}
+	}
+
+}
+

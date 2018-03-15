@@ -400,4 +400,3 @@ void ModuleRenderer::Draw(GameObject *obj) {
 		}
 	}
 }
-
