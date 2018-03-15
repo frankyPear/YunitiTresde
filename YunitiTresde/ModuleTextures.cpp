@@ -22,6 +22,8 @@ ModuleTextures::~ModuleTextures()
 
 bool ModuleTextures::Init()
 {
+	ilInit();
+	ilutInit();
 	bool ret = true;
 	return ret;
 }
@@ -79,14 +81,17 @@ void ModuleTextures::DrawCheckers()
 }
 
 
-GLuint ModuleTextures::loadImage(const char* fileName)
+GLuint ModuleTextures::loadImage( char* fileName)
 {
-	GLuint textureID;
+	/*GLuint textureID;
 	ILuint ImageName; // The image name to return.
 	ilGenImages(1, &ImageName); // Grab a new image name.
 	ilBindImage(ImageName);
-	ilInit();
-	ILboolean operationSuccess = ilLoadImage(fileName);
+	ilInit();*/
+	return ilutGLLoadImage(fileName);
+
+	//ilutglload
+	/*ILboolean operationSuccess = ilLoadImage(fileName);
 	if (operationSuccess) {
 		ILinfo ImageInfo;
 		iluGetImageInfo(&ImageInfo);
@@ -136,7 +141,7 @@ GLuint ModuleTextures::loadImage(const char* fileName)
 		return -1;
 	}
 	ilDeleteImages(1, &ImageName);
-	return textureID;
+	return textureID;*/
 }
 
 void  ModuleTextures::DeleteImage(uint imageID) {
@@ -188,7 +193,7 @@ void ModuleTextures::setFilterMode(int filter) {
 
 
 
-GLuint ModuleTextures::GetTexture(const char* path)
+GLuint ModuleTextures::GetTexture( char* path)
 {
 	map<string, loadedTex>::iterator it = loadedTextures.begin();
 	it = loadedTextures.find(path);

@@ -415,7 +415,7 @@ const string& ModuleUI::Get(const path& path) const
 {
 	return buffers.at(path);
 }
-void ModuleUI::printElement(const char* path, float* vertices) {
+void ModuleUI::printElement( char* path, float* vertices) {
 	GLuint vertexID = 0;
 	GLuint texID = 0;
    
@@ -436,7 +436,8 @@ void ModuleUI::printElement(const char* path, float* vertices) {
 	glBindBuffer(GL_ARRAY_BUFFER, texID);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.1f);
 	glBindTexture(GL_TEXTURE_2D, App->textures->GetTexture(path));
 	
 	glPushMatrix();

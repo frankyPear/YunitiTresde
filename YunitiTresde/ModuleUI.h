@@ -39,7 +39,7 @@ private:
 
 	const std::string& Get(const std::experimental::filesystem::path& path) const;
 
-	void printElement(const char * path, float * vertices);
+	void printElement( char * path, float * vertices);
 
 	float verticesBackground[12] = {
 		0.850f, 0.650f,0.f,  -0.850f, 0.650f,0.f,  -0.850f,-0.650f,0.f,   0.850f,-0.650f,0.f };
