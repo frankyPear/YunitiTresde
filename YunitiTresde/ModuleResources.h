@@ -14,7 +14,7 @@ public:
 	~ModuleResources();
 
 	Resource *Get(uid resourceId);
-
+	void AddResource(const char* audioType);
 
 protected:
 #pragma region Callbacks
@@ -25,6 +25,6 @@ protected:
 
 private:
 	std::map<uid, Resource*> _resources;//Resources indexed by id
-
+	uint ResourceCounter = 0;
 };
 

@@ -11,5 +11,5 @@ ResourceMesh::ResourceMesh(uid id, Type type) : Resource(id, mesh)
 
 ResourceMesh::~ResourceMesh()
 {
-
+	
 }

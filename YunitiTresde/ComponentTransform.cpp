@@ -344,3 +344,9 @@ void ComponentTransform::EditTransform(float * TransposedMatrix, float * Positio
 	//ImGui::Render();
 }
 
+void ComponentTransform::SetGlobalTransform(float4x4 newTransform)
+{
+	_globalTransMatrix = newTransform;
+	_localTransMatrix = newTransform;
+}
+

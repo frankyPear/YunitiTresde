@@ -32,7 +32,7 @@ void CustomQuadTree::Insert(GameObject *newAddition)
 	if (newAddition != nullptr) {
 		ComponentMesh* cm = (ComponentMesh*)newAddition->GetComponent(MESH);
 		ComponentTransform* ct = (ComponentTransform*)newAddition->GetComponent(TRANSFORMATION);
-		if (cm != nullptr && ct != nullptr) {
+		if (cm != nullptr && cm->meshShape != RESOURCE && ct != nullptr) {
 			AABB newBox = *(cm->GetBoundingBox());
 			newBox.TransformAsAABB(ct->GetGlobalTransform());
 			if (root_ == nullptr) {
