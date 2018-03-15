@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "ModuleRenderer.h"
 #include "Application.h"
+#include "ModuleScene.h"
 #include "Brofiler\include\Brofiler.h"
 #include "ComponentMesh.h"
 
@@ -24,6 +25,7 @@ GameObject::~GameObject()
 	_components.clear();*/
 
 	//---
+	App->scene->OnSceneObjectIsDestroyed(this);
 	OnDestroy();
 }
 
@@ -67,7 +69,6 @@ bool GameObject::Update()
 
 bool GameObject::PostUpdate()
 {
-
 	for (std::vector<Component*>::iterator it = _components.begin(); it != _components.end();) {
 		if ((*it)->to_be_destroyed) {
 			Component *toDestroy = *it;
@@ -80,10 +81,26 @@ bool GameObject::PostUpdate()
 			++it;
 		}
 	}
-	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end();++it) {
-		(*it)->PostUpdate();
+	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end();) {
+		if ((*it)->_toBeDestroyed) {
+			
+			GameObject *toDestroy = *it;
+			toDestroy->SetParent(nullptr);
+			it = _childs.erase(it);
+			toDestroy->Destroy();
+			delete toDestroy;
+		}
+		else {
+			(*it)->PostUpdate();
+			++it;
+		}
 	}
 	return true;
+}
+
+void GameObject::Destroy()
+{
+	_toBeDestroyed = true;
 }
 
 bool GameObject::GetActive() const
@@ -128,7 +145,12 @@ GameObject* GameObject::GetParent() const
 
 void GameObject::SetParent(GameObject  * parent)
 {
-	_parent = parent;
+	if (parent == nullptr && _parent!=nullptr) 
+		_parent->DetatchChild(this);	
+	else {
+
+
+	}
 }
 
 void GameObject::AddChild(GameObject * child)
@@ -149,6 +171,24 @@ GameObject*  GameObject::GetChild(int index) const
 void GameObject::DetatchChild(int index)
 {
 
+}
+
+void GameObject::DetatchChild(GameObject * gameObject)
+{
+	std::vector<GameObject*>::iterator child=_childs.end();
+	
+	for (std::vector<GameObject*>::iterator it = _childs.begin(); it != _childs.end(); ++it) {
+		if ((*it) == gameObject) {
+			child = it;
+			break;
+		}
+	}
+		
+	if (child !=_childs.end()) 
+		_childs.erase(child);
+	
+
+	gameObject->_parent = nullptr;
 }
 
 void GameObject::DetachChildren()
@@ -178,7 +218,9 @@ void GameObject::AddComponent(Component * component)
 {
 	_components.push_back(component);
 	component->SetLinkedTo(this);
+
 	if (component->GetType() == MESH) _meshes.push_back((ComponentMesh*)component);
+
 }
 
 void GameObject::DestroyComponent(Component * component)
@@ -212,6 +254,7 @@ void GameObject::ChildrenTransformUpdate()
 void GameObject::DrawObjectAndChilds()
 {
 	App->renderer->Draw(this);
+
 	for (int i = 0; i < _childs.size(); ++i) _childs[i]->DrawObjectAndChilds();
 }
 
@@ -243,4 +286,6 @@ void GameObject::SetId(unsigned int newId)
 std::vector<ComponentMesh*> GameObject::GetMeshes()
 {
 	return _meshes;
+
 }
+
