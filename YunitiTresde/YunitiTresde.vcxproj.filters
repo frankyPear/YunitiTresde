@@ -193,7 +193,6 @@
     <ClCompile Include="ResourceMesh.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-
     <ClCompile Include="ModuleAnimation.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
@@ -203,7 +202,6 @@
     <ClCompile Include="ModuleRNG.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
-
     <ClCompile Include="ComponentAudioListener.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -219,7 +217,6 @@
     <ClCompile Include="ResourceAudio.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -432,9 +429,6 @@
     <ClInclude Include="Timer.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTimerManager.h">
-      <Filter>Core Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleTextures.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -519,7 +513,6 @@
     <ClInclude Include="ResourceMesh.h">
       <Filter>Resources</Filter>
     </ClInclude>
-
     <ClInclude Include="ModuleAnimation.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -529,7 +522,6 @@
     <ClInclude Include="ModuleRNG.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-
     <ClInclude Include="ComponentAudioListener.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -554,7 +546,9 @@
     <ClInclude Include="ResourceAudio.h">
       <Filter>Resources</Filter>
     </ClInclude>
-
+    <ClInclude Include="ModuleTimeManager.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">

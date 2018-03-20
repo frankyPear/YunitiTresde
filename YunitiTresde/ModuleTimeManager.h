@@ -1,5 +1,5 @@
-#ifndef _TIMERMANAGER_
-#define _TIMEMANAGER_
+#ifndef __MODULETIMEMANAGER__
+#define __MODULETIMEMANAGER__
 
 #include "Module.h"
 #include "Timer.h"
@@ -12,10 +12,16 @@ public:
 	ModuleTimeManager(bool start_enabled = true);
 	~ModuleTimeManager();
 
+	bool Start();
+	update_status Update();
+	
+
+public:
+	int secondsRealTime;
 
 private:
 
 
 };
 
-#endif // !_TIMERMANAGER_
+#endif // __APPLICATION_CPP__

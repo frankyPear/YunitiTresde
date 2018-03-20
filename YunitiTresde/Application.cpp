@@ -12,7 +12,7 @@
 #include "ModuleRNG.h"
 
 #include "ModuleAudio.h"
-
+#include "ModuleTimeManager.h"
 //Included mathgeolib
 #include "Mathgeolib\include\MathBuildConfig.h"
 #include "Mathgeolib\include\MathGeoLib.h"
@@ -23,7 +23,7 @@ using namespace std;
 Application::Application()
 {
 	// Order matters: they will init/start/pre/update/post in this order
-	
+	timer = new ModuleTimeManager();
 	input = new ModuleInput();
 	window = new ModuleWindow();
 	renderer = new ModuleRenderer();
@@ -37,7 +37,7 @@ Application::Application()
 
 	audio = new ModuleAudio();
 
-
+	modules.push_back(timer);
 	modules.push_back(input);
 	modules.push_back(window);
 	modules.push_back(renderer);
@@ -48,7 +48,7 @@ Application::Application()
 	modules.push_back(anim);
 	modules.push_back(rng);
 	modules.push_back(scene);
-
+	
 }
 
 

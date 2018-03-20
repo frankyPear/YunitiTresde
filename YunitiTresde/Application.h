@@ -19,6 +19,7 @@ class ModuleResources;
 class ModuleAnimation;
 class ModuleRNG;
 
+class ModuleTimeManager;
 
 class ModuleAudio;
 
@@ -50,7 +51,7 @@ public:
 	ModuleRNG *rng;
 
 	ModuleAudio *audio;
-
+	ModuleTimeManager *timer;
 	bool switchmap = false;
 private:
 	Timer ms_timer_;
