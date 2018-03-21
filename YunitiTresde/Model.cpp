@@ -42,9 +42,9 @@ void Model::LoadTexture(const char* filepath)
 	ILboolean success;
 	//char* filesp = "../Resources/BakerHouse.fbx";
 	/* initialization of DevIL */
-	ilInit();
-	iluInit();
-	ilutInit();
+	//ilInit();
+	//iluInit();
+	//ilutInit();
 
 	aiString path;
 

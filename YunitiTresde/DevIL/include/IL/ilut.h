@@ -212,7 +212,7 @@ ILAPI ILboolean     ILAPIENTRY ilutRenderer(ILenum Renderer);
 	ILAPI GLuint	ILAPIENTRY ilutGLBindTexImage();
 	ILAPI GLuint	ILAPIENTRY ilutGLBindMipmaps(void);
 	ILAPI ILboolean	ILAPIENTRY ilutGLBuildMipmaps(void);
-	ILAPI GLuint	ILAPIENTRY ilutGLLoadImage(ILstring FileName);
+	ILAPI GLuint	ILAPIENTRY ilutGLLoadImage(char* FileName);
 	ILAPI ILboolean	ILAPIENTRY ilutGLScreen(void);
 	ILAPI ILboolean	ILAPIENTRY ilutGLScreenie(void);
 	ILAPI ILboolean	ILAPIENTRY ilutGLSaveImage(ILstring FileName, GLuint TexID);

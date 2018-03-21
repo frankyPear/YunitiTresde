@@ -34,13 +34,13 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void DrawCheckers();
-	GLuint loadImage(const char* fileName);
+	GLuint loadImage(char* fileName);
 	void DeleteImage(uint imageID);
 
 	void setWrapMode(int mode);
 	void setFilterMode(int filter);
 
-	GLuint GetTexture(const char* path);
+	GLuint GetTexture(char* path);
 	void RemoveTexture(const char* path);
 
 	int GetNumberOfTextures();

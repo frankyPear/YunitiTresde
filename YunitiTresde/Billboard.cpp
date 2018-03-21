@@ -13,7 +13,7 @@ Billboard::~Billboard()
 {
 }
 
-void Billboard::CreateBillboard(const char* imagepath, const char* name, float3 centerpos, float width, float height)
+void Billboard::CreateBillboard( char* imagepath, const char* name, float3 centerpos, float width, float height)
 {
 	billboard *b = new billboard();
 	b->vertices = new float[12];
@@ -43,7 +43,7 @@ void Billboard::Draw(billboard *b)
 	GLubyte indices[6] = {
 		0, 1, 2,   2, 3, 0 };      // front
 
-
+	glEnable(GL_BLEND);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -58,7 +58,7 @@ void Billboard::Draw(billboard *b)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindTexture(GL_TEXTURE_2D, b->texID);
-
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPushMatrix();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();
@@ -66,6 +66,28 @@ void Billboard::Draw(billboard *b)
 	glDisableClientState(GL_TEXTURE_2D_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//
+	//glBindBuffer(GL_ARRAY_BUFFER, vertexID);
+	//glVertexPointer(3, GL_FLOAT, 0, b->vertices);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//
+	//
+	//glEnable(GL_TEXTURE_2D);
+	//glBindBuffer(GL_ARRAY_BUFFER, texID);
+	//glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//
+	//glBindTexture(GL_TEXTURE_2D, b->texID);
+	//
+	//glPushMatrix();
+	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+	//glPopMatrix();
+	//
+	//glDisableClientState(GL_TEXTURE_2D_ARRAY);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Billboard::DrawBillboards()

@@ -115,7 +115,7 @@ bool ModuleScene::Start()
 	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 	bill = new Billboard();
-	bill->CreateBillboard("../Resources/billboardgrass.png", "grass", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
+	bill->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
 
 
 	//App->anim->Play("Idle");

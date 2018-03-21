@@ -16,7 +16,7 @@ public:
 	Billboard();
 	~Billboard();
 	
-	void CreateBillboard(const char* imagepath, const char* name, float3 centerpos, float width, float height);
+	void CreateBillboard(char* imagepath, const char* name, float3 centerpos, float width, float height);
 	void Draw(billboard *b);
 	void DrawBillboards();
 	billboard * GetBillboard(const char* name);
