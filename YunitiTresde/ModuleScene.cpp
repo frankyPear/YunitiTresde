@@ -47,15 +47,16 @@ bool ModuleScene::Init()
 {
 
 	root = new GameObject();
+	actualCamera = App->cam->dummyCamera;
 	//LoadScene("../Resources/street/Street.obj");
-	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
+	/*LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
 	Model *m = new Model();
 	int id = App->rng->GetRandomNumber();
 	models[id] = m;
 	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation, id);
-	actualCamera = App->cam->dummyCamera;
+	
 
-	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
+	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");*/
 
 /*	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
@@ -113,7 +114,11 @@ bool ModuleScene::Start()
 	quadtree->Create(limits);
 	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
-	App->anim->Play("Idle");
+	bill = new Billboard();
+	bill->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
+
+
+	//App->anim->Play("Idle");
 	return true;
 }
 
@@ -132,7 +137,7 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-
+	bill->Draw(bill->GetBillboard("grass"));
 	
 //	MeshImporter *mi = nullptr;
 	/*for (int i = 0; i < meshes.size(); ++i) {

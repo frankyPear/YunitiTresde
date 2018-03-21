@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <IncludePath>$(SolutionDir)YunitiTresde\Bass\include;$(SolutionDir)YunitiTresde\assimp\assimp;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)YunitiTresde\Bass\lib;$(SolutionDir)YunitiTresde\assimp\libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)YunitiTresde\assimp\assimp;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)YunitiTresde\assimp\libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -127,14 +127,12 @@
     <ClInclude Include="Bass\include\bass.h" />
     <ClInclude Include="Bass\include\bassenc.h" />
     <ClInclude Include="Bass\include\bassenc_ogg.h" />
+    <ClInclude Include="Billboard.h" />
     <ClInclude Include="Brofiler\include\Brofiler.h" />
     <ClInclude Include="Component.h" />
-
     <ClInclude Include="ComponentAnim.h" />
-
     <ClInclude Include="ComponentAudioListener.h" />
     <ClInclude Include="ComponentAudioSource.h" />
-
     <ClInclude Include="ComponentCamera.h" />
     <ClInclude Include="ComponentMaterial.h" />
     <ClInclude Include="ComponentMesh.h" />
@@ -218,6 +216,7 @@
     <ClInclude Include="ModuleAnimation.h" />
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleCamera.h" />
+    <ClInclude Include="ModuleFX.h" />
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRenderer.h" />
@@ -237,13 +236,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="Component.cpp" />
-
     <ClCompile Include="ComponentAnim.cpp" />
-
     <ClCompile Include="ComponentAudioListener.cpp" />
     <ClCompile Include="ComponentAudioSource.cpp" />
-
     <ClCompile Include="ComponentCamera.cpp" />
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentMesh.cpp" />
@@ -293,6 +290,7 @@
     <ClCompile Include="ModuleAnimation.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCamera.cpp" />
+    <ClCompile Include="ModuleFX.cpp" />
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer.cpp" />
@@ -312,6 +310,9 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Game\bass.dll" />
+    <None Include="Game\bassenc.dll" />
+    <None Include="Game\bassenc_ogg.dll" />
     <None Include="Mathgeolib\include\Math\Matrix.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_AVX.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_CPP.inl" />
