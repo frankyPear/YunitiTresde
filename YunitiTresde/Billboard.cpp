@@ -38,6 +38,8 @@ void Billboard::Draw(billboard *b)
 {
 	GLuint vertexID = 0;
 	GLuint texID = 0;
+	float verticesBackground[12] = {
+		0.850f, 0.650f,0.f, -0.850f, 0.650f,0.f, -0.850f,-0.650f,0.f, 0.850f,-0.650f,0.f };
 	GLfloat texCoordsBackground[8] = {
 		1,1,    0,1,    0,0,    1,0 };    // front
 	GLubyte indices[6] = {
@@ -48,7 +50,7 @@ void Billboard::Draw(billboard *b)
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
-	glVertexPointer(3, GL_FLOAT, 0, b->vertices);
+	glVertexPointer(3, GL_FLOAT, 0, verticesBackground);//b->vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -56,6 +58,9 @@ void Billboard::Draw(billboard *b)
 	glBindBuffer(GL_ARRAY_BUFFER, texID);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.1f);
 
 	glBindTexture(GL_TEXTURE_2D, b->texID);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
