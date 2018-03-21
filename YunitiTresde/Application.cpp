@@ -7,7 +7,7 @@
 #include "ModuleTextures.h"
 #include "ModuleScene.h"
 #include "ModuleImGui.h"
-
+#include "ModuleFX.h"
 #include "ModuleAnimation.h"
 #include "ModuleRNG.h"
 
@@ -32,7 +32,7 @@ Application::Application()
 	textures = new ModuleTextures();
 	anim = new ModuleAnimation();
 	scene = new ModuleScene();
-
+	fx = new ModuleFX();
 	rng = new ModuleRNG();
 
 	audio = new ModuleAudio();
