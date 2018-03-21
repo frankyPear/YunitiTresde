@@ -5,7 +5,7 @@
 #include "ModuleInput.h"
 
 #include "ModuleAnimation.h"
-
+#include "ModuleFX.h"
 #include "ModuleAudio.h"
 
 
@@ -115,7 +115,8 @@ bool ModuleScene::Start()
 	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 	bill = new Billboard();
-	bill->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
+	//bill->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f, 0.0f, 0.0f), 2.0f, 2.0f);
+	App->fx->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
 
 
 	//App->anim->Play("Idle");
@@ -137,8 +138,8 @@ update_status ModuleScene::PreUpdate(float dt)
 update_status ModuleScene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateModuleScene", Profiler::Color::Orchid);
-	bill->Draw(bill->GetBillboard("grass"));
-	
+	//bill->DrawBillboards();
+	App->fx->DrawBillboards(*(actualCamera->GetFrustum()));
 //	MeshImporter *mi = nullptr;
 	/*for (int i = 0; i < meshes.size(); ++i) {
 		model->Draw(id[meshes[i]->mMaterialIndex], meshes[i]);

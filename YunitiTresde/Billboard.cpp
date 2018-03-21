@@ -32,6 +32,7 @@ void Billboard::CreateBillboard( char* imagepath, const char* name, float3 cente
 	
 	b->texID = App->textures->GetTexture(imagepath);
 	billboards[name] = b;
+	scene_billboards.push_back(b);
 }
 
 void Billboard::Draw(billboard *b)
