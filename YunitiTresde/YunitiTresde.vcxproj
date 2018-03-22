@@ -136,6 +136,7 @@
     <ClInclude Include="ComponentCamera.h" />
     <ClInclude Include="ComponentMaterial.h" />
     <ClInclude Include="ComponentMesh.h" />
+    <ClInclude Include="ComponentParticles.h" />
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="ComponentWithResource.h" />
     <ClInclude Include="CustomQuadTree.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="ComponentCamera.cpp" />
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentMesh.cpp" />
+    <ClCompile Include="ComponentParticles.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="ComponentWithResource.cpp" />
     <ClCompile Include="CustomQuadTree.cpp" />
