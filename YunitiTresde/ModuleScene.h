@@ -12,6 +12,8 @@
 #include "MeshImporter.h"
 #include <vector>
 
+#include "Billboard.h"
+
 class GameObject;
 class Mesh;
 class Quadtree;
@@ -101,7 +103,7 @@ private:
 	std::vector<GameObject*> objectToDraw_;
 	std::vector<aiMaterial*> materials;
 
-
+	Billboard *bill;
 
 	MeshImporter* mesh1;
 	Model* model;

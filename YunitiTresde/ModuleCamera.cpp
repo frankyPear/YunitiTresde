@@ -21,6 +21,7 @@ bool ModuleCamera::Init()
 	bool ret = true;
 	dummyCamera = new ComponentCamera();
 	dummyCamera->SetPlaneDistances(0.5f, 100.0f);
+	dummyCamera->SetPosition(float3(0.0f,2.0f,5.0f));
 	return ret;
 }
 

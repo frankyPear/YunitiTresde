@@ -15,7 +15,7 @@ class ModuleTextures;
 class ModuleScene;
 class ModuleImGui;
 class ModuleResources;
-
+class ModuleFX;
 class ModuleAnimation;
 class ModuleRNG;
 
@@ -45,7 +45,7 @@ public:
 	ModuleTextures* textures;
 	ModuleScene* scene;
 	ModuleResources *resources;
-
+	ModuleFX *fx;
 	ModuleAnimation *anim;
 	ModuleRNG *rng;
 

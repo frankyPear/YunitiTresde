@@ -42,9 +42,9 @@ void Model::LoadTexture(const char* filepath)
 	ILboolean success;
 	//char* filesp = "../Resources/BakerHouse.fbx";
 	/* initialization of DevIL */
-	ilInit();
-	iluInit();
-	ilutInit();
+	//ilInit();
+	//iluInit();
+	//ilutInit();
 
 	aiString path;
 
@@ -132,7 +132,7 @@ void Model::loadBones( aiMesh *mesh)
 
 void Model::loadVaos(aiMesh * mesh)
 {
-	Texture *text = new Texture();
+	/*Texture *text = new Texture();
 	text->vbo[VERTEX_BUFFER] = NULL;
 	text->vbo[TEXCOORD_BUFFER] = NULL;
 	text->vbo[NORMAL_BUFFER] = NULL;
@@ -143,7 +143,7 @@ void Model::loadVaos(aiMesh * mesh)
 	glBindVertexArray(text->vao);
 	glDrawElements(GL_TRIANGLES, text->element, GL_UNSIGNED_INT, NULL);
 	glBindVertexArray(0);
-	textBind.push_back(text);
+	textBind.push_back(text);*/
 }
 
 
