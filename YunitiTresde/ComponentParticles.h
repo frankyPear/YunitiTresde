@@ -1,5 +1,7 @@
 #pragma once
 #include "Component.h"
+#include "ComponentCamera.h"
+
 #include "Mathgeolib\include\MathGeoLib.h"
 #include "assimp\assimp\cimport.h"
 #include "assimp\assimp\postprocess.h"
@@ -24,7 +26,7 @@ public:
 	~ComponentParticles();
 
 	void Init(unsigned max_particles, const aiVector2D& _emit_size, unsigned _falling_time,
-		float falling_height, const char* texture_file, const aiVector2D& psize);
+		float falling_height,  char* texture_file, const aiVector2D& psize);
 
 	void Clear();
 
@@ -32,9 +34,8 @@ public:
 
 	bool PreUpdate();
 
-	bool Update(GameObject* obj);
 
-//	void UpdateParticle(unsigned elapsed, const ComponentCamera& camera);
+	void UpdateParticle(unsigned elapsed, ComponentCamera& camera);
 
 	bool PostUpdate();
 	
@@ -55,10 +56,13 @@ public:
 	BillboardList billboards;
 
 	aiVector2D emit_area;
+	aiVector2D particle_size;
+	unsigned max_num_particles = 0;
 	unsigned falling_time = 0;
 	unsigned accum_elapsed = 0;
 	float falling_height = 0.0f;
 	unsigned texture = 0;
+	uint particles_frame = 0;
 
 	aiVector3D* vertices = nullptr;
 	aiVector2D* text_coords = nullptr;
