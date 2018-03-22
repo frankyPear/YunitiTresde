@@ -11,6 +11,8 @@ public:
 	{
 		float* vertices;
 		GLuint texID;	
+		float3 centerPoint;
+		float width, height;
 	};
 
 	Billboard();
@@ -20,6 +22,7 @@ public:
 	void Draw(billboard *b);
 	void DrawBillboards();
 	billboard * GetBillboard(const char* name);
+	void ComputeQuad(billboard* b, float *vertex, Frustum& f);
 
 public:
 	std::map<const char*, billboard*> billboards;

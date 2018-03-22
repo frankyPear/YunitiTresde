@@ -1,7 +1,7 @@
 #include "Billboard.h"
 #include "Application.h"
 #include "ModuleTextures.h"
-
+#include "Mathgeolib\include\Geometry\Frustum.h"
 
 
 Billboard::Billboard()
@@ -110,4 +110,23 @@ Billboard::billboard* Billboard::GetBillboard(const char* name)
 		return it->second;
 	}
 	return nullptr;
+}
+
+void Billboard::ComputeQuad(billboard* b, float *vertex, Frustum& f)
+{
+	float3 vectorUp = float3(0.0f, 1.0f, 0.0f);
+	float3 normalVector = f.pos - b->centerPoint;
+	float3 vectorRight = normalVector.Cross(vectorUp);
+	vertex[0] = b->centerPoint.x + vectorRight.x * (b->width / 2.0f);
+	vertex[1] = b->centerPoint.y + vectorRight.y * (b->height / 2.0f);
+	vertex[2] = b->centerPoint.z + vectorRight.z;
+	vertex[3] = b->centerPoint.x - vectorRight.x * (b->width / 2.0f);
+	vertex[4] = b->centerPoint.y + vectorRight.y * (b->height / 2.0f);
+	vertex[5] = b->centerPoint.z + vectorRight.z;
+	vertex[6] = b->centerPoint.x - vectorRight.x * (b->width / 2.0f);
+	vertex[7] = b->centerPoint.y - vectorRight.y * (b->height / 2.0f);
+	vertex[8] = b->centerPoint.z + vectorRight.z;
+	vertex[9] = b->centerPoint.x + vectorRight.x * (b->width / 2.0f);
+	vertex[10] = b->centerPoint.y - vectorRight.y * (b->height / 2.0f);
+	vertex[11] = b->centerPoint.z + vectorRight.z;
 }
