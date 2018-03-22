@@ -84,62 +84,6 @@ void ModuleTextures::DrawCheckers()
 GLuint ModuleTextures::loadImage(char* fileName)
 {
 	return ilutGLLoadImage(fileName);
-	//GLuint textureID;
-	//ILuint ImageName; // The image name to return.
-	//ilGenImages(1, &ImageName); // Grab a new image name.
-	//ilBindImage(ImageName);
-	//ilInit();
-	//ILboolean operationSuccess = ilLoadImage(fileName);
-	//if (operationSuccess) {
-	//	ILinfo ImageInfo;
-	//	iluGetImageInfo(&ImageInfo);
-	//	if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
-	//	{
-	//		iluFlipImage();
-	//	}
-	//	operationSuccess = ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
-	//	if (!operationSuccess)
-	//	{
-	//		ILenum error = ilGetError();
-	//		cout << "error converting: " << error << endl;
-	//		return -1;
-	//	}
-	//
-	//	// Generate texture ID
-	//	glGenTextures(1, &textureID);
-	//	// Bind id to texture.
-	//	glBindTexture(GL_TEXTURE_2D, textureID);
-	//
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, actualWrapMode);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, actualWrapMode);
-	//
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, actualFilterMode);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, actualFilterMode);
-	//
-	//	glGenerateMipmap(GL_TEXTURE_2D);
-	//
-	//	glTexImage2D(GL_TEXTURE_2D, 0,
-	//		ilGetInteger(IL_IMAGE_FORMAT),
-	//		ilGetInteger(IL_IMAGE_WIDTH),
-	//		ilGetInteger(IL_IMAGE_HEIGHT),
-	//		0,
-	//		ilGetInteger(IL_IMAGE_FORMAT),
-	//		GL_UNSIGNED_BYTE, ilGetData()
-	//	);
-	//	App->renderer->width_ = ilGetInteger(IL_IMAGE_WIDTH);
-	//	App->renderer->heigth_ = ilGetInteger(IL_IMAGE_HEIGHT);
-	//	App->renderer->fileNameImage = (char*)fileName;
-	//	App->renderer->bytes_ = ilGetInteger(IL_IMAGE_BYTES_PER_PIXEL);
-	//	DeleteImage(textureID);
-	//	ilBindImage(0);
-	//}
-	//else {
-	//	ILenum error = ilGetError();
-	//	cout << "error loading: " << error << endl;
-	//	return -1;
-	//}
-	//ilDeleteImages(1, &ImageName);
-	//return textureID;
 }
 
 void  ModuleTextures::DeleteImage(uint imageID) {

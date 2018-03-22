@@ -217,7 +217,9 @@
     <ClCompile Include="Billboard.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleFX.cpp" />
+    <ClCompile Include="ModuleFX.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -550,7 +552,9 @@
     <ClInclude Include="Billboard.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleFX.h" />
+    <ClInclude Include="ModuleFX.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
