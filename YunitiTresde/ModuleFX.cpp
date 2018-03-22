@@ -87,28 +87,7 @@ void ModuleFX::Draw(billboard *b, Frustum& f)
 	glDisableClientState(GL_TEXTURE_2D_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	//
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexID);
-	//glVertexPointer(3, GL_FLOAT, 0, b->vertices);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//
-	//
-	//glEnable(GL_TEXTURE_2D);
-	//glBindBuffer(GL_ARRAY_BUFFER, texID);
-	//glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//
-	//glBindTexture(GL_TEXTURE_2D, b->texID);
-	//
-	//glPushMatrix();
-	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
-	//glPopMatrix();
-	//
-	//glDisableClientState(GL_TEXTURE_2D_ARRAY);
-	//glDisableClientState(GL_VERTEX_ARRAY);
-	//glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
 void ModuleFX::DrawBillboards(Frustum& f)
