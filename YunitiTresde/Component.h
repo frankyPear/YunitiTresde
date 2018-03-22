@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "ModuleRNG.h"
 #include "Globals.h"
-
+#include "Config.h"
 class GameObject;
 
 
@@ -23,6 +23,9 @@ public:
 	GameObject* LinkedTo() const;
 	void SetLinkedTo(GameObject *parent);
 	Type GetType() const;
+
+	virtual void OnSave(Config& config)const = 0;
+	virtual void OnLoad(Config * config) = 0;
 	
 	virtual bool PreUpdate() {
 		return true;

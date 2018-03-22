@@ -220,6 +220,10 @@
     <ClCompile Include="ModuleFX.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Config.cpp" />
+    <ClCompile Include="parson.c">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -555,6 +559,11 @@
     <ClInclude Include="ModuleFX.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="parson.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="resource2.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -657,5 +666,8 @@
     <Library Include="Bass\lib\bassenc_ogg.lib">
       <Filter>Tools\bass\lib</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="YunitiTresde1.rc" />
   </ItemGroup>
 </Project>
