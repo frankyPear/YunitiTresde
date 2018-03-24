@@ -13,7 +13,7 @@ class ModuleFX :
 public:
 	struct billboard
 	{
-		float* vertices;
+		
 		GLuint texID;
 		float3 centerPoint;
 		float width, height;
@@ -32,7 +32,7 @@ public:
 	void Draw(billboard *b,  Frustum& f);
 	void DrawBillboards(Frustum& f);
 	billboard * GetBillboard(const char* name);
-	void ComputeQuad(billboard* b,float *vertex, Frustum& f);
+	void ComputeQuad(billboard* b,std::vector<GLfloat>& vertex, Frustum& f);
 
 
 

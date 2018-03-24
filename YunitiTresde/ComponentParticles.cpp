@@ -52,7 +52,8 @@ void ComponentParticles::Draw()
 {
 	particleList::iterator it;
 	for (it = alive.begin(); it != alive.end(); ++it) {
-		particle p = particles.at(*it);
+		particles.at(*it);
+
 	}
 }
 

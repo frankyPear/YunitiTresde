@@ -36,7 +36,6 @@ bool ModuleFX::Clear()
 void ModuleFX::CreateBillboard(char* imagepath, const char* name, float3 centerpos, float width, float height)
 {
 	billboard *b = new billboard();
-	b->vertices = new float[12];
 	b->centerPoint = centerpos;
 	b->texID = App->textures->GetTexture(imagepath);
 	b->width = width;
@@ -56,7 +55,8 @@ void ModuleFX::Draw(billboard *b, Frustum& f)
 	//GLubyte indices[6] = {0, 1, 2,   2, 3, 0 };      // front
 
 	//float verticesBackground[12] = {0.850f, 0.650f,0.f, -0.850f, 0.650f,0.f, -0.850f,-0.650f,0.f, 0.850f,-0.650f,0.f };
-	float *verticesBackground = new float[12];
+	//float *verticesBackground = new float[12];
+	std::vector<GLfloat> verticesBackground;
 	ComputeQuad(b, verticesBackground, f);
 
 	GLubyte indices[6] = {
@@ -66,7 +66,7 @@ void ModuleFX::Draw(billboard *b, Frustum& f)
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
-	glVertexPointer(3, GL_FLOAT, 0, verticesBackground);//b->vertices);
+	glVertexPointer(3, GL_FLOAT, 0, &verticesBackground[0]);//b->vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -81,7 +81,7 @@ void ModuleFX::Draw(billboard *b, Frustum& f)
 	glBindTexture(GL_TEXTURE_2D, b->texID);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPushMatrix();
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
+	glDrawElements(GL_POINTS, 4, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();
 
 	glDisableClientState(GL_TEXTURE_2D_ARRAY);
@@ -127,20 +127,21 @@ ModuleFX::billboard* ModuleFX::GetBillboard(const char* name)
 	return nullptr;
 }
 
-void ModuleFX::ComputeQuad(billboard* b, float *vertex, Frustum& f)
+void ModuleFX::ComputeQuad(billboard* b, std::vector<GLfloat>& vertex, Frustum& f)
 {
-	float3 vectorUp = float3(0.0f,1.0f,0.0f);
-	float3 vectorRight = f.WorldRight().Cross(vectorUp);
-	vertex[0] = b->centerPoint.x+vectorRight.x*b->width;
-	vertex[1] = b->centerPoint.y+vectorRight.y*b->height;
-	vertex[2] = b->centerPoint.z+vectorRight.z;
-	vertex[3] = b->centerPoint.x - vectorRight.x*b->width;
-	vertex[4] = b->centerPoint.y + vectorRight.y*b->height;
-	vertex[5] = b->centerPoint.z + vectorRight.z;
-	vertex[6] = b->centerPoint.x - vectorRight.x*b->width;
-	vertex[7] = b->centerPoint.y - vectorRight.y*b->height;
-	vertex[8] = b->centerPoint.z + vectorRight.z;
-	vertex[9] = b->centerPoint.x + vectorRight.x*b->width;
-	vertex[10] = b->centerPoint.y - vectorRight.y*b->height;
-	vertex[11] = b->centerPoint.z + vectorRight.z;
+	float3 vectorUp = float3(0.0f, 1.0f, 0.0f);
+	float3 normalVector = f.pos - b->centerPoint;
+	float3 vectorRight = normalVector.Cross(vectorUp);
+	vertex.push_back( b->centerPoint.x+vectorRight.x*(b->width / 2.0f));
+	vertex.push_back(b->centerPoint.y+vectorRight.y*(b->height / 2.0f));
+	vertex.push_back(b->centerPoint.z+vectorRight.z);
+	vertex.push_back(b->centerPoint.x - vectorRight.x*(b->width / 2.0f));
+	vertex.push_back(b->centerPoint.y + vectorRight.y*(b->height / 2.0f));
+	vertex.push_back(b->centerPoint.z + vectorRight.z);
+	vertex.push_back(b->centerPoint.x - vectorRight.x*(b->width / 2.0f));
+	vertex.push_back(b->centerPoint.y - vectorRight.y*(b->height / 2.0f));
+	vertex.push_back(b->centerPoint.z + vectorRight.z);
+	vertex.push_back(b->centerPoint.x + vectorRight.x*(b->width / 2.0f));
+	vertex.push_back(b->centerPoint.y - vectorRight.y*(b->height / 2.0f));
+	vertex.push_back(b->centerPoint.z + vectorRight.z);
 }
