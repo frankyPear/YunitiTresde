@@ -116,7 +116,8 @@ bool ModuleScene::Start()
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 	bill = new Billboard();
 	//bill->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f, 0.0f, 0.0f), 2.0f, 2.0f);
-	App->fx->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
+	//App->fx->CreateBillboard("..\\Resources\\billboardgrass.png", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
+	App->fx->CreateGrid("..\\Resources\\billboardgrass.png", float3(0.0f, 0.0f, 0.0f), 2.0f, 2.0f, 5,5);
 
 
 	//App->anim->Play("Idle");
