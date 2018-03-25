@@ -81,7 +81,7 @@ void ModuleFX::Draw(billboard *b, Frustum& f)
 	glBindTexture(GL_TEXTURE_2D, b->texID);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPushMatrix();
-	glDrawElements(GL_POINTS, 4, GL_UNSIGNED_BYTE, indices);
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
 	glPopMatrix();
 
 	glDisableClientState(GL_TEXTURE_2D_ARRAY);
@@ -130,18 +130,22 @@ ModuleFX::billboard* ModuleFX::GetBillboard(const char* name)
 void ModuleFX::ComputeQuad(billboard* b, std::vector<GLfloat>& vertex, Frustum& f)
 {
 	float3 vectorUp = float3(0.0f, 1.0f, 0.0f);
-	float3 normalVector = f.pos - b->centerPoint;
-	float3 vectorRight = normalVector.Cross(vectorUp);
-	vertex.push_back( b->centerPoint.x+vectorRight.x*(b->width / 2.0f));
-	vertex.push_back(b->centerPoint.y+vectorRight.y*(b->height / 2.0f));
-	vertex.push_back(b->centerPoint.z+vectorRight.z);
-	vertex.push_back(b->centerPoint.x - vectorRight.x*(b->width / 2.0f));
-	vertex.push_back(b->centerPoint.y + vectorRight.y*(b->height / 2.0f));
-	vertex.push_back(b->centerPoint.z + vectorRight.z);
-	vertex.push_back(b->centerPoint.x - vectorRight.x*(b->width / 2.0f));
-	vertex.push_back(b->centerPoint.y - vectorRight.y*(b->height / 2.0f));
-	vertex.push_back(b->centerPoint.z + vectorRight.z);
-	vertex.push_back(b->centerPoint.x + vectorRight.x*(b->width / 2.0f));
-	vertex.push_back(b->centerPoint.y - vectorRight.y*(b->height / 2.0f));
-	vertex.push_back(b->centerPoint.z + vectorRight.z);
+	float3 vectorRight = b->centerPoint- f.pos.Cross(vectorUp).Normalized();
+	float3 normalVector = vectorRight.Cross(vectorUp).Normalized();
+	float3 rightUpVertex = b->centerPoint + (vectorRight*b->width / 2) + (vectorUp*b->height / 2);
+	float3 leftUpVertex = b->centerPoint - (vectorRight*b->width / 2) + (vectorUp*b->height / 2);
+	float3 leftDownVertex = b->centerPoint - (vectorRight*b->width / 2) - (vectorUp*b->height / 2);
+	float3 rightDownVertex = b->centerPoint + (vectorRight*b->width / 2) - (vectorUp*b->height / 2);
+	vertex.push_back(rightUpVertex.x);
+	vertex.push_back(rightUpVertex.y);
+	vertex.push_back(rightUpVertex.z);
+	vertex.push_back(leftUpVertex.x);
+	vertex.push_back(leftUpVertex.y);
+	vertex.push_back(leftUpVertex.z);
+	vertex.push_back(leftDownVertex.x);
+	vertex.push_back(leftDownVertex.y);
+	vertex.push_back(leftDownVertex.z);
+	vertex.push_back(rightDownVertex.x);
+	vertex.push_back(rightDownVertex.y);
+	vertex.push_back(rightDownVertex.z);
 }
