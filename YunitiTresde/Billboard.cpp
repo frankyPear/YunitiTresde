@@ -31,7 +31,6 @@ void Billboard::CreateBillboard( char* imagepath, const char* name, float3 cente
 	b->vertices[11] = centerpos.z;
 	
 	b->texID = App->textures->GetTexture(imagepath);
-	billboards[name] = b;
 	scene_billboards.push_back(b);
 }
 
@@ -101,32 +100,27 @@ void Billboard::DrawBillboards()
 	for (int i = 0; i < scene_billboards.size(); ++i) Draw(scene_billboards[i]);
 }
 
-Billboard::billboard* Billboard::GetBillboard(const char* name)
-{
-	std::map<const char*, billboard*>::iterator it = billboards.begin();
-	it = billboards.find("grass");
-	if (it != billboards.end())
-	{
-		return it->second;
-	}
-	return nullptr;
-}
 
-void Billboard::ComputeQuad(billboard* b, float *vertex, Frustum& f)
+
+void Billboard::ComputeQuad(billboard b, std::vector<GLfloat>& vertex, Frustum& f)
 {
 	float3 vectorUp = float3(0.0f, 1.0f, 0.0f);
-	float3 normalVector = f.pos - b->centerPoint;
-	float3 vectorRight = normalVector.Cross(vectorUp);
-	vertex[0] = b->centerPoint.x + vectorRight.x * (b->width / 2.0f);
-	vertex[1] = b->centerPoint.y + vectorRight.y * (b->height / 2.0f);
-	vertex[2] = b->centerPoint.z + vectorRight.z;
-	vertex[3] = b->centerPoint.x - vectorRight.x * (b->width / 2.0f);
-	vertex[4] = b->centerPoint.y + vectorRight.y * (b->height / 2.0f);
-	vertex[5] = b->centerPoint.z + vectorRight.z;
-	vertex[6] = b->centerPoint.x - vectorRight.x * (b->width / 2.0f);
-	vertex[7] = b->centerPoint.y - vectorRight.y * (b->height / 2.0f);
-	vertex[8] = b->centerPoint.z + vectorRight.z;
-	vertex[9] = b->centerPoint.x + vectorRight.x * (b->width / 2.0f);
-	vertex[10] = b->centerPoint.y - vectorRight.y * (b->height / 2.0f);
-	vertex[11] = b->centerPoint.z + vectorRight.z;
+	float3 vectorRight = (b.centerPoint - f.pos).Cross(vectorUp).Normalized();
+	float3 normalVector = vectorRight.Cross(vectorUp).Normalized();
+	float3 rightUpVertex = b.centerPoint + (vectorRight*(b.width / 2)) + (vectorUp*(b.height / 2));
+	float3 leftUpVertex = b.centerPoint - (vectorRight*(b.width / 2)) + (vectorUp*(b.height / 2));
+	float3 leftDownVertex = b.centerPoint - (vectorRight*(b.width / 2)) - (vectorUp*(b.height / 2));
+	float3 rightDownVertex = b.centerPoint + (vectorRight*(b.width / 2)) - (vectorUp*(b.height / 2));
+	vertex.push_back(rightUpVertex.x);
+	vertex.push_back(rightUpVertex.y);
+	vertex.push_back(rightUpVertex.z);
+	vertex.push_back(leftUpVertex.x);
+	vertex.push_back(leftUpVertex.y);
+	vertex.push_back(leftUpVertex.z);
+	vertex.push_back(leftDownVertex.x);
+	vertex.push_back(leftDownVertex.y);
+	vertex.push_back(leftDownVertex.z);
+	vertex.push_back(rightDownVertex.x);
+	vertex.push_back(rightDownVertex.y);
+	vertex.push_back(rightDownVertex.z);
 }
