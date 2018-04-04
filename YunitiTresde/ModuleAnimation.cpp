@@ -1,3 +1,4 @@
+
 #include "ModuleAnimation.h"
 #include "ComponentAnim.h"
 #include <assert.h>
@@ -92,7 +93,6 @@ void ModuleAnimation::Load(aiString name, const char* filepath)
 
 			}
 			animation->channelArray.push_back(node);
-
 		}
 		const char*  name = sceneAnim->mName.C_Str();
 		animations[name] = animation;
@@ -101,8 +101,7 @@ void ModuleAnimation::Load(aiString name, const char* filepath)
 
 bool ModuleAnimation::GetTransform(uint animId, const char* channel, aiVector3D& position, aiQuaternion& rotation)
 {
-	if (!instances.empty()) {
-		
+	if (!instances.empty()) {		
 		bool ret = false;
 		AnimInstance *instance = instances[animId];
 		Anim* animation = instance->animation;
@@ -136,9 +135,7 @@ bool ModuleAnimation::GetTransform(uint animId, const char* channel, aiVector3D&
 					instanceTime = animationDuration;
 				}
 			}
-
 			assert(instanceTime <= animationDuration);
-
 			float posKey = float( instanceTime * (posCount - 1) ) / animationDuration;
 			float rotKey = float( instanceTime * (rotCount - 1) ) / animationDuration;
 			uint actualPos = uint(posKey);

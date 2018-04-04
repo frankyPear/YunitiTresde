@@ -126,6 +126,7 @@ void Model::loadBones( aiMesh *mesh)
 			newweights[j].weight = aibone->mWeights[j].mWeight;
 		}
 		bone->weights = newweights;
+		bones.push_back(bone);
 	}
 	
 }
