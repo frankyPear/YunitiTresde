@@ -223,6 +223,9 @@
     <ClCompile Include="ComponentParticles.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleShader.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -560,6 +563,9 @@
     </ClInclude>
     <ClInclude Include="ComponentParticles.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleShader.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
