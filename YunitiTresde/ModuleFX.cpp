@@ -148,7 +148,7 @@ void ModuleFX::CreateGrid(char* imagepath, float3 initialcenterpos, float width,
 		for (int j = 0; j < columns; ++j)
 		{
 			billboard b = billboard();
-			b.centerPoint = initpos+  float3(offsetX*j, 0.0f,offsetY*i);
+			b.centerPoint = initpos+  float3((offsetX)*j, 0.0f,(offsetY)*i);
 			b.texID = App->textures->GetTexture(imagepath);
 			b.width = width;
 			b.height = height;

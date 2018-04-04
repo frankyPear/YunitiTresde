@@ -19,8 +19,8 @@ public:
 		float width, height;
 	};
 
-	float offsetX = 4.0f;
-	float offsetY = -4.0f;
+	float offsetX = 1.0f;
+	float offsetY = -1.0f;
 
 	std::vector<std::vector<billboard> > grid;
 

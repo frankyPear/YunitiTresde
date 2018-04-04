@@ -117,7 +117,7 @@ bool ModuleScene::Start()
 	bill = new Billboard();
 	//bill->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f, 0.0f, 0.0f), 2.0f, 2.0f);
 	//App->fx->CreateBillboard("..\\Resources\\billboardgrass.png", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
-	App->fx->CreateGrid("..\\Resources\\billboardgrass.png", float3(0.0f, 0.0f, 0.0f), 2.0f, 2.0f, 5,5);
+	App->fx->CreateGrid("..\\Resources\\billboardgrass.png", float3(0.0f, 1.0f, 0.0f), 2.0f, 2.0f, 10,10);
 
 
 	//App->anim->Play("Idle");
