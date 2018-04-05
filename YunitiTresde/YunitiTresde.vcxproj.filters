@@ -220,6 +220,13 @@
     <ClCompile Include="ModuleFX.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentParticles.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleShader.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -553,6 +560,12 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFX.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentParticles.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleShader.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>

@@ -33,19 +33,18 @@ bool ModuleFX::Clear()
 	return true;
 }
 
-void ModuleFX::CreateBillboard(char* imagepath, const char* name, float3 centerpos, float width, float height)
+void ModuleFX::CreateBillboard(char* imagepath, float3 centerpos, float width, float height)
 {
-	billboard *b = new billboard();
-	b->vertices = new float[12];
-	b->centerPoint = centerpos;
-	b->texID = App->textures->GetTexture(imagepath);
-	b->width = width;
-	b->height = height;
+	billboard b = billboard();
+	b.centerPoint = centerpos;
+	b.texID = App->textures->GetTexture(imagepath);
+	b.width = width;
+	b.height = height;
 	scene_billboards.push_back(b);
 
 }
 
-void ModuleFX::Draw(billboard *b, Frustum& f)
+void ModuleFX::Draw(billboard b, Frustum& f)
 {
 	GLuint vertexID = 0;
 	GLuint texID = 0;
@@ -56,7 +55,8 @@ void ModuleFX::Draw(billboard *b, Frustum& f)
 	//GLubyte indices[6] = {0, 1, 2,   2, 3, 0 };      // front
 
 	//float verticesBackground[12] = {0.850f, 0.650f,0.f, -0.850f, 0.650f,0.f, -0.850f,-0.650f,0.f, 0.850f,-0.650f,0.f };
-	float *verticesBackground = new float[12];
+	//float *verticesBackground = new float[12];
+	std::vector<GLfloat> verticesBackground;
 	ComputeQuad(b, verticesBackground, f);
 
 	GLubyte indices[6] = {
@@ -66,7 +66,7 @@ void ModuleFX::Draw(billboard *b, Frustum& f)
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
-	glVertexPointer(3, GL_FLOAT, 0, verticesBackground);//b->vertices);
+	glVertexPointer(3, GL_FLOAT, 0, &verticesBackground[0]);//b->vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -78,7 +78,7 @@ void ModuleFX::Draw(billboard *b, Frustum& f)
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.1f);
 
-	glBindTexture(GL_TEXTURE_2D, b->texID);
+	glBindTexture(GL_TEXTURE_2D, b.texID);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPushMatrix();
 	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
@@ -95,31 +95,44 @@ void ModuleFX::DrawBillboards(Frustum& f)
 	for (int i = 0; i < scene_billboards.size(); ++i) Draw(scene_billboards[i],f);
 }
 
-ModuleFX::billboard* ModuleFX::GetBillboard(const char* name)
+
+void ModuleFX::ComputeQuad(billboard b, std::vector<GLfloat>& vertex, Frustum& f)
 {
-	std::map<const char*, billboard*>::iterator it = billboards.begin();
-	it = billboards.find("grass");
-	if (it != billboards.end())
-	{
-		return it->second;
-	}
-	return nullptr;
+	float3 vectorUp = float3(0.0f, 1.0f, 0.0f);
+	float3 vectorRight = (b.centerPoint- f.pos).Cross(vectorUp).Normalized();
+	float3 normalVector = vectorRight.Cross(vectorUp).Normalized();
+	float3 rightUpVertex = b.centerPoint + (vectorRight*(b.width / 2)) + (vectorUp*(b.height / 2));
+	float3 leftUpVertex = b.centerPoint - (vectorRight*(b.width / 2)) + (vectorUp*(b.height / 2));
+	float3 leftDownVertex = b.centerPoint - (vectorRight*(b.width / 2)) - (vectorUp*(b.height / 2));
+	float3 rightDownVertex = b.centerPoint + (vectorRight*(b.width / 2)) - (vectorUp*(b.height / 2));
+	vertex.push_back(rightUpVertex.x);
+	vertex.push_back(rightUpVertex.y);
+	vertex.push_back(rightUpVertex.z);
+	vertex.push_back(leftUpVertex.x);
+	vertex.push_back(leftUpVertex.y);
+	vertex.push_back(leftUpVertex.z);
+	vertex.push_back(leftDownVertex.x);
+	vertex.push_back(leftDownVertex.y);
+	vertex.push_back(leftDownVertex.z);
+	vertex.push_back(rightDownVertex.x);
+	vertex.push_back(rightDownVertex.y);
+	vertex.push_back(rightDownVertex.z);
 }
 
-void ModuleFX::ComputeQuad(billboard* b, float *vertex, Frustum& f)
+void ModuleFX::CreateGrid(char* imagepath, float3 initialcenterpos, float width, float height, int rows, int columns)
 {
-	float3 vectorUp = float3(0.0f,1.0f,0.0f);
-	float3 vectorRight = f.WorldRight().Cross(vectorUp);
-	vertex[0] = b->centerPoint.x+vectorRight.x*b->width;
-	vertex[1] = b->centerPoint.y+vectorRight.y*b->height;
-	vertex[2] = b->centerPoint.z+vectorRight.z;
-	vertex[3] = b->centerPoint.x - vectorRight.x*b->width;
-	vertex[4] = b->centerPoint.y + vectorRight.y*b->height;
-	vertex[5] = b->centerPoint.z + vectorRight.z;
-	vertex[6] = b->centerPoint.x - vectorRight.x*b->width;
-	vertex[7] = b->centerPoint.y - vectorRight.y*b->height;
-	vertex[8] = b->centerPoint.z + vectorRight.z;
-	vertex[9] = b->centerPoint.x + vectorRight.x*b->width;
-	vertex[10] = b->centerPoint.y - vectorRight.y*b->height;
-	vertex[11] = b->centerPoint.z + vectorRight.z;
+	float3 initpos = initialcenterpos;
+	for (int i = 0; i < rows; ++i) 
+	{
+		for (int j = 0; j < columns; ++j)
+		{
+			billboard b = billboard();
+			b.centerPoint = initpos+  float3((offsetX)*j, 0.0f,(offsetY)*i);
+			b.texID = App->textures->GetTexture(imagepath);
+			b.width = width;
+			b.height = height;
+			scene_billboards.push_back(b);
+		}
+	}
+	
 }

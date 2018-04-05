@@ -48,17 +48,19 @@ bool ModuleScene::Init()
 
 	root = new GameObject();
 	actualCamera = App->cam->dummyCamera;
+
 	//LoadScene("../Resources/street/Street.obj");
+
 	/*LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
 	Model *m = new Model();
 	int id = App->rng->GetRandomNumber();
+	m->Load("../Resources/ArmyPilot/ArmyPilot.dae");
 	models[id] = m;
-	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation, id);
-	
+	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation, id);	
+	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
+	*/
 
-	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");*/
-
-/*	GameObject *object1 = new GameObject();
+	/*GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	ComponentAudioListener *al = new ComponentAudioListener();
@@ -88,18 +90,9 @@ bool ModuleScene::Init()
 		offset += offset;
 		//<<<<<<< develop
 		object->SetId(i + 1);
-
-
 	}
-	mesh1 = new MeshImporter("../Resources/BakerHouse.fbx");
-
-	//=======
-	//		object->SetId(i+1);
-	//	}
 		//m.Load("../Resources/BakerHouse.fbx");
 		//m.LoadTexture("../Resources/Baker_house.png");
-	//>>>>>>> feature-MousePicking-FP
-	actualCamera = App->cam->dummyCamera;
 
 */
 	return true;
@@ -114,9 +107,7 @@ bool ModuleScene::Start()
 	quadtree->Create(limits);
 	for (int i = 0; i < sceneObjects_.size(); ++i) quadtree->Insert(sceneObjects_[i]);
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
-	bill = new Billboard();
-	//bill->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f, 0.0f, 0.0f), 2.0f, 2.0f);
-	App->fx->CreateBillboard("..\\Resources\\billboardgrass.png", "grass", float3(0.0f,0.0f,0.0f),2.0f,2.0f);
+	App->fx->CreateGrid("..\\Resources\\billboardgrass.png", float3(-5.0f, 1.0f, 0.0f), 2.0f, 2.0f, 10,10);
 
 
 	//App->anim->Play("Idle");
@@ -551,7 +542,6 @@ void ModuleScene::LoadScene(const char* filepath)
 				id.push_back(0);
 		}
 	}
-
 }
 
 
@@ -559,15 +549,14 @@ void ModuleScene::LoadScene(const char* filepath)
 GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* parent, const aiMatrix4x4 &transformation, int modelID)
 {
 	if (parent == nullptr) 
-	{
-		
+	{		
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
 			aiMesh *sceneMesh = scene->mMeshes[i];
 			if (scene->mMeshes[i]->HasBones()) {
 				models[modelID]->loadBones(sceneMesh); 
-				models[modelID]->loadVaos(sceneMesh);
 			}
+			models[modelID]->loadVaos(sceneMesh);
 			meshes.push_back(sceneMesh);
 		}
 		GameObject *sceneRoot = new GameObject();

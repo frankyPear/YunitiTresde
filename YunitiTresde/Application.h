@@ -18,7 +18,7 @@ class ModuleResources;
 class ModuleFX;
 class ModuleAnimation;
 class ModuleRNG;
-
+class ModuleShader;
 
 class ModuleAudio;
 
@@ -50,6 +50,7 @@ public:
 	ModuleRNG *rng;
 
 	ModuleAudio *audio;
+	ModuleShader *shader;
 
 	bool switchmap = false;
 private:

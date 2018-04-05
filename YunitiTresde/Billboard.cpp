@@ -1,7 +1,7 @@
 #include "Billboard.h"
 #include "Application.h"
 #include "ModuleTextures.h"
-
+#include "Mathgeolib\include\Geometry\Frustum.h"
 
 
 Billboard::Billboard()
@@ -31,7 +31,6 @@ void Billboard::CreateBillboard( char* imagepath, const char* name, float3 cente
 	b->vertices[11] = centerpos.z;
 	
 	b->texID = App->textures->GetTexture(imagepath);
-	billboards[name] = b;
 	scene_billboards.push_back(b);
 }
 
@@ -101,13 +100,27 @@ void Billboard::DrawBillboards()
 	for (int i = 0; i < scene_billboards.size(); ++i) Draw(scene_billboards[i]);
 }
 
-Billboard::billboard* Billboard::GetBillboard(const char* name)
+
+
+void Billboard::ComputeQuad(billboard b, std::vector<GLfloat>& vertex, Frustum& f)
 {
-	std::map<const char*, billboard*>::iterator it = billboards.begin();
-	it = billboards.find("grass");
-	if (it != billboards.end())
-	{
-		return it->second;
-	}
-	return nullptr;
+	float3 vectorUp = float3(0.0f, 1.0f, 0.0f);
+	float3 vectorRight = (b.centerPoint - f.pos).Cross(vectorUp).Normalized();
+	float3 normalVector = vectorRight.Cross(vectorUp).Normalized();
+	float3 rightUpVertex = b.centerPoint + (vectorRight*(b.width / 2)) + (vectorUp*(b.height / 2));
+	float3 leftUpVertex = b.centerPoint - (vectorRight*(b.width / 2)) + (vectorUp*(b.height / 2));
+	float3 leftDownVertex = b.centerPoint - (vectorRight*(b.width / 2)) - (vectorUp*(b.height / 2));
+	float3 rightDownVertex = b.centerPoint + (vectorRight*(b.width / 2)) - (vectorUp*(b.height / 2));
+	vertex.push_back(rightUpVertex.x);
+	vertex.push_back(rightUpVertex.y);
+	vertex.push_back(rightUpVertex.z);
+	vertex.push_back(leftUpVertex.x);
+	vertex.push_back(leftUpVertex.y);
+	vertex.push_back(leftUpVertex.z);
+	vertex.push_back(leftDownVertex.x);
+	vertex.push_back(leftDownVertex.y);
+	vertex.push_back(leftDownVertex.z);
+	vertex.push_back(rightDownVertex.x);
+	vertex.push_back(rightDownVertex.y);
+	vertex.push_back(rightDownVertex.z);
 }

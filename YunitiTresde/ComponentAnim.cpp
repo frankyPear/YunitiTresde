@@ -38,7 +38,6 @@ void ComponentAnim::UpdateAnim()
 	if (animInstanceId != -1)
 	{
 		queue<GameObject*> visitQueue;
-
 		visitQueue.push(linked_to);
 		while (!visitQueue.empty())
 		{

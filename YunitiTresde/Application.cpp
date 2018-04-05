@@ -12,6 +12,7 @@
 #include "ModuleRNG.h"
 
 #include "ModuleAudio.h"
+#include "ModuleShader.h"
 
 //Included mathgeolib
 #include "Mathgeolib\include\MathBuildConfig.h"
@@ -36,7 +37,7 @@ Application::Application()
 	rng = new ModuleRNG();
 
 	audio = new ModuleAudio();
-
+	shader = new ModuleShader();
 
 	modules.push_back(input);
 	modules.push_back(window);
