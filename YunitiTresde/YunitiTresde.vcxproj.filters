@@ -226,6 +226,7 @@
     <ClCompile Include="ModuleShader.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
