@@ -41,7 +41,6 @@ void ModuleFX::CreateBillboard(char* imagepath, float3 centerpos, float width, f
 	b.width = width;
 	b.height = height;
 	scene_billboards.push_back(b);
-
 }
 
 void ModuleFX::Draw(billboard b, Frustum& f)
@@ -135,4 +134,33 @@ void ModuleFX::CreateGrid(char* imagepath, float3 initialcenterpos, float width,
 		}
 	}
 	
+}
+
+void ModuleFX::DrawParticle(aiVector3D position, int texID, Frustum& f) 
+{
+
+}
+
+
+void ModuleFX::ComputeParticleQuad(float3 centerPoint,float2 size, std::vector<GLfloat>& vertex, Frustum& f) 
+{
+	float3 vectorUp = float3(0.0f, 1.0f, 0.0f);
+	float3 vectorRight = (centerPoint - f.pos).Cross(vectorUp).Normalized();
+	float3 normalVector = vectorRight.Cross(vectorUp).Normalized();
+	float3 rightUpVertex = centerPoint + (vectorRight*(size.x / 2)) + (vectorUp*(size.y / 2));
+	float3 leftUpVertex = centerPoint - (vectorRight*(size.x / 2)) + (vectorUp*(size.y / 2));
+	float3 leftDownVertex = centerPoint - (vectorRight*(size.x / 2)) - (vectorUp*(size.y / 2));
+	float3 rightDownVertex = centerPoint + (vectorRight*(size.x / 2)) - (vectorUp*(size.y / 2));
+	vertex.push_back(rightUpVertex.x);
+	vertex.push_back(rightUpVertex.y);
+	vertex.push_back(rightUpVertex.z);
+	vertex.push_back(leftUpVertex.x);
+	vertex.push_back(leftUpVertex.y);
+	vertex.push_back(leftUpVertex.z);
+	vertex.push_back(leftDownVertex.x);
+	vertex.push_back(leftDownVertex.y);
+	vertex.push_back(leftDownVertex.z);
+	vertex.push_back(rightDownVertex.x);
+	vertex.push_back(rightDownVertex.y);
+	vertex.push_back(rightDownVertex.z);
 }

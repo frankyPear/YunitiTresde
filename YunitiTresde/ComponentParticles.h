@@ -8,7 +8,6 @@
 #include "assimp\assimp\scene.h"
 #include "assimp\assimp\Importer.hpp"
 #include "ModuleFX.h"
-#include "Billboard.h"
 
 class ComponentParticles :
 	public Component
@@ -46,7 +45,7 @@ public:
 	void OnEditor(GameObject* obj);
 
 public:
-	typedef std::vector<Billboard::billboard> BillboardList;
+	typedef std::vector<ModuleFX::billboard> BillboardList;
 	typedef std::vector<particle> particlePool;
 	typedef std::vector<unsigned> particleList;
 

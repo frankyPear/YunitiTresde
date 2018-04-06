@@ -10,7 +10,7 @@
 #include "imgui-1.53\ImGuizmo.h"
 #include "imgui-1.53\ImSequencer.h"
 #include "Brofiler\include\Brofiler.h"
-#include "ModuleFX.h"
+#include "ModuleRNG.h"
 
 
 ComponentParticles::ComponentParticles()
@@ -31,7 +31,8 @@ void ComponentParticles::Init(unsigned _max_particles, const aiVector2D & _emit_
 	texture = App->textures->GetTexture(texture_file);
 	particles_frame = _max_particles / _falling_time;
 	ComponentTransform* t = (ComponentTransform*)linked_to->GetComponent(TRANSFORMATION);
-	if (t != nullptr) {
+	if (t != nullptr) 
+	{
 		aiVector3D pos = aiVector3D(t->GetGlobalPosition().x, t->GetGlobalPosition().y, t->GetGlobalPosition().z);
 		for (int i = 0; i < max_num_particles; ++i)
 		{
@@ -42,6 +43,7 @@ void ComponentParticles::Init(unsigned _max_particles, const aiVector2D & _emit_
 			particles.push_back(p);
 		}
 	}
+	
 }
 
 void ComponentParticles::Clear()
@@ -50,9 +52,10 @@ void ComponentParticles::Clear()
 
 void ComponentParticles::Draw()
 {
-	particleList::iterator it;
-	for (it = alive.begin(); it != alive.end(); ++it) {
-		particles.at(*it);
+
+	for (int i = 0; i < alive.size(); ++i) 
+	{
+		
 
 	}
 }
@@ -67,7 +70,16 @@ bool ComponentParticles::PreUpdate()
 
 void ComponentParticles::UpdateParticle(unsigned elapsed,  ComponentCamera & camera)
 {
-
+	if (elapsed > particles_frame) 
+	{
+		alive.push_back(dead.front());
+		dead.erase(dead.begin());
+	}
+	particleList::iterator it;
+	for (it = alive.begin(); it != alive.end(); ++it) 
+	{
+		
+	}
 }
 
 bool ComponentParticles::PostUpdate()
