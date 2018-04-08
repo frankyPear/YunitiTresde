@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <IncludePath>$(SolutionDir)YunitiTresde\assimp\assimp;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)YunitiTresde\assimp\libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)YunitiTresde\LuaJIT-2.0.5\src;$(SolutionDir)YunitiTresde\assimp\assimp;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)YunitiTresde\LuaJIT-2.0.5\src;$(SolutionDir)YunitiTresde\assimp\libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -153,6 +153,17 @@
     <ClInclude Include="imgui-1.53\ImGuizmo.h" />
     <ClInclude Include="imgui-1.53\ImSequencer.h" />
     <ClInclude Include="Importer.h" />
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_arm.h" />
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_mips.h" />
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_ppc.h" />
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_proto.h" />
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_x86.h" />
+    <ClInclude Include="LuaJIT-2.0.5\src\lauxlib.h" />
+    <ClInclude Include="LuaJIT-2.0.5\src\lua.h" />
+    <ClInclude Include="LuaJIT-2.0.5\src\lua.hpp" />
+    <ClInclude Include="LuaJIT-2.0.5\src\luaconf.h" />
+    <ClInclude Include="LuaJIT-2.0.5\src\luajit.h" />
+    <ClInclude Include="LuaJIT-2.0.5\src\lualib.h" />
     <ClInclude Include="Mathgeolib\include\Algorithm\Random\LCG.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB.h" />
     <ClInclude Include="Mathgeolib\include\Geometry\AABB2D.h" />
@@ -317,6 +328,20 @@
     <None Include="Game\bass.dll" />
     <None Include="Game\bassenc.dll" />
     <None Include="Game\bassenc_ogg.dll" />
+    <None Include="LuaJIT-2.0.5\doc\changes.html" />
+    <None Include="LuaJIT-2.0.5\doc\contact.html" />
+    <None Include="LuaJIT-2.0.5\doc\extensions.html" />
+    <None Include="LuaJIT-2.0.5\doc\ext_c_api.html" />
+    <None Include="LuaJIT-2.0.5\doc\ext_ffi.html" />
+    <None Include="LuaJIT-2.0.5\doc\ext_ffi_api.html" />
+    <None Include="LuaJIT-2.0.5\doc\ext_ffi_semantics.html" />
+    <None Include="LuaJIT-2.0.5\doc\ext_ffi_tutorial.html" />
+    <None Include="LuaJIT-2.0.5\doc\ext_jit.html" />
+    <None Include="LuaJIT-2.0.5\doc\faq.html" />
+    <None Include="LuaJIT-2.0.5\doc\install.html" />
+    <None Include="LuaJIT-2.0.5\doc\luajit.html" />
+    <None Include="LuaJIT-2.0.5\doc\running.html" />
+    <None Include="LuaJIT-2.0.5\doc\status.html" />
     <None Include="Mathgeolib\include\Math\Matrix.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_AVX.inl" />
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_CPP.inl" />
@@ -330,6 +355,7 @@
     <Library Include="DevIL\lib\x86\Release\DevIL.lib" />
     <Library Include="DevIL\lib\x86\Release\ILU.lib" />
     <Library Include="DevIL\lib\x86\Release\ILUT.lib" />
+    <Library Include="LuaJIT-2.0.5\src\lua51.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
