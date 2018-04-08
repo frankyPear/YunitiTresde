@@ -68,19 +68,28 @@ ModuleShader::~ModuleShader()
 }
 
 bool ModuleShader::Init()
-{
-	bool ret = true;
-	return ret;
+{	
+	CompileShader();
+	return true;
 }
 
 bool ModuleShader::Start()
 {
-	bool ret = true;
-	return ret;
+	VertexShaderLoad();
+	FragmentShaderLoad();
+	CreateShaderProgram();
+	ActivateShaderProgram();
+	return true;
 }
 
-update_status ModuleShader::Update()
+update_status ModuleShader::Predate(float dt)
 {
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleShader::Update(float dt)
+{
+
 	return UPDATE_CONTINUE;
 }
 
@@ -240,6 +249,14 @@ bool ModuleShader::ActivateShaderProgram()
 	//TODO: Add LOG
 	bool ret = true;
 	glUseProgram(shaderProgram);
+
+	return ret;
+}
+bool ModuleShader::DeactivateShaderProgram()
+{
+	//TODO: Add LOG
+	bool ret = true;
+	glDeleteProgram(shaderProgram);
 
 	return ret;
 }

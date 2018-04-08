@@ -45,11 +45,13 @@ Application::Application()
 	modules.push_back(imgui);
 	modules.push_back(cam);
 	modules.push_back(audio);
+	modules.push_back(shader);
 	modules.push_back(textures);
 	modules.push_back(anim);
 	modules.push_back(rng);
 	modules.push_back(fx);
 	modules.push_back(scene);
+
 
 }
 
