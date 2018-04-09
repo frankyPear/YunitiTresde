@@ -11,7 +11,7 @@ public:
 	~ModuleShader();
 	bool Init();
 	bool Start();
-	update_status Predate(float dt);
+	update_status Preupdate(float dt);
 	update_status Update(float dt);
 	bool CleanUp();
 

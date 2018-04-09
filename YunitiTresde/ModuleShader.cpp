@@ -82,7 +82,7 @@ bool ModuleShader::Start()
 	return true;
 }
 
-update_status ModuleShader::Predate(float dt)
+update_status ModuleShader::Preupdate(float dt)
 {
 	return UPDATE_CONTINUE;
 }
