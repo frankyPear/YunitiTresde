@@ -14,6 +14,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 	int GetRandomNumber();
+	float GetRandomNumberFloat();
+	float GetRandomNumberRangeFloat(float min, float max);
 
 public:
 	LCG lcg;

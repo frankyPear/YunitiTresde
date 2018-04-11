@@ -136,13 +136,44 @@ void ModuleFX::CreateGrid(char* imagepath, float3 initialcenterpos, float width,
 	
 }
 
-void ModuleFX::DrawParticle(aiVector3D position, int texID, Frustum& f) 
+void ModuleFX::DrawParticle(aiVector3D position, aiVector2D size, int texID, Frustum& f)
 {
+	GLuint vertexID = 0;
+	GLfloat texCoordsBackground[8] = {1,1,    0,1,    0,0,    1,0 };  
+	std::vector<GLfloat> verticesBackground;
+	ComputeParticleQuad(float3(position.x, position.y, position.z), size ,verticesBackground, f);
+	GLubyte indices[6] = {
+		0, 1, 2, 3 };      // front
+	glEnable(GL_BLEND);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+	glBindBuffer(GL_ARRAY_BUFFER, vertexID);
+	glVertexPointer(3, GL_FLOAT, 0, &verticesBackground[0]);//b->vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	glEnable(GL_TEXTURE_2D);
+	glBindBuffer(GL_ARRAY_BUFFER, texID);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoordsBackground);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.1f);
+
+	glBindTexture(GL_TEXTURE_2D, texID);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glPushMatrix();
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
+	glPopMatrix();
+
+	glDisableClientState(GL_TEXTURE_2D_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 
-void ModuleFX::ComputeParticleQuad(float3 centerPoint,float2 size, std::vector<GLfloat>& vertex, Frustum& f) 
+void ModuleFX::ComputeParticleQuad(float3 centerPoint, aiVector2D size, std::vector<GLfloat>& vertex, Frustum& f)
 {
 	float3 vectorUp = float3(0.0f, 1.0f, 0.0f);
 	float3 vectorRight = (centerPoint - f.pos).Cross(vectorUp).Normalized();

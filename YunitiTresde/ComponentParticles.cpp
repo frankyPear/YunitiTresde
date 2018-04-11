@@ -11,7 +11,7 @@
 #include "imgui-1.53\ImSequencer.h"
 #include "Brofiler\include\Brofiler.h"
 #include "ModuleRNG.h"
-
+#include "Math.h"
 
 ComponentParticles::ComponentParticles()
 {
@@ -52,10 +52,10 @@ void ComponentParticles::Clear()
 
 void ComponentParticles::Draw()
 {
-
-	for (int i = 0; i < alive.size(); ++i) 
+	particleList::iterator it;
+	for (it = alive.begin(); it != alive.end(); ++it) 
 	{
-		
+		App->fx->DrawParticle(particles[*it].position, particle_size, texture, *App->cam->dummyCamera->GetFrustum() );
 
 	}
 }
@@ -70,15 +70,27 @@ bool ComponentParticles::PreUpdate()
 
 void ComponentParticles::UpdateParticle(unsigned elapsed,  ComponentCamera & camera)
 {
-	if (elapsed > particles_frame) 
+	uint numpart = CeilInt(((float) elapsed / (float)particles_frame));
+	for (int i = 0; i < numpart; ++i)
 	{
-		alive.push_back(dead.front());
-		dead.erase(dead.begin());
+		aiVector2D pos = GetNewRandPosition();
+		particles[dead.front()].position.x = pos.x;
+		particles[dead.front()].position.y = pos.y;
+		alive.push_back( dead.front());
+		dead.pop_front();
 	}
 	particleList::iterator it;
-	for (it = alive.begin(); it != alive.end(); ++it) 
+	it = alive.begin();
+	while ( it != alive.end()) 
 	{
-		
+		particles[*it].lifeTime -= elapsed;
+		if (particles[*it].lifeTime < 0.0f )
+		{
+			alive.erase(it);
+		}
+		else {
+			++it;
+		}
 	}
 }
 
@@ -102,4 +114,11 @@ void ComponentParticles::OnEditor(GameObject * obj)
 }
 
 
+aiVector2D ComponentParticles::GetNewRandPosition()
+{
+	aiVector2D pos = aiVector2D();
+	pos.x = App->rng->GetRandomNumberRangeFloat(emit_area.x,emit_area.x+particle_size.x);
+	pos.y = App->rng->GetRandomNumberRangeFloat(emit_area.y, emit_area.y + particle_size.y);
+	return pos;
+}
 

@@ -8,6 +8,7 @@
 #include "assimp\assimp\scene.h"
 #include "assimp\assimp\Importer.hpp"
 #include "ModuleFX.h"
+#include <list>
 
 class ComponentParticles :
 	public Component
@@ -44,10 +45,12 @@ public:
 
 	void OnEditor(GameObject* obj);
 
+	aiVector2D GetNewRandPosition();
+
 public:
 	typedef std::vector<ModuleFX::billboard> BillboardList;
 	typedef std::vector<particle> particlePool;
-	typedef std::vector<unsigned> particleList;
+	typedef std::list<unsigned> particleList;
 
 	particlePool particles;
 	particleList alive;

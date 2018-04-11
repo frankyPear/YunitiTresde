@@ -45,3 +45,13 @@ bool ModuleRNG::CleanUp()
 {
 	return true;
 }
+
+float ModuleRNG::GetRandomNumberFloat()
+{
+	return lcg.Float();
+}
+
+float ModuleRNG::GetRandomNumberRangeFloat(float min, float max)
+{
+	return lcg.Float(min,max);
+}
