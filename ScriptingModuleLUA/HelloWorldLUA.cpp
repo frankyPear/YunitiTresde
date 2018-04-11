@@ -1,9 +1,11 @@
 #include <lua.hpp>
 
+#pragma comment(lib, "../YunitiTresde/LuaJIT-2.0.5/src/lua51.lib")
+
 int main(int argc, char* argv[])
 {
 	// create new Lua state
-	/*
+	
 	lua_State *lua_state;
 	lua_state = luaL_newstate();
 	
@@ -23,8 +25,8 @@ int main(int argc, char* argv[])
 	
 	// run the Lua script
 	luaL_dofile(lua_state, "helloworld.lua");
-
+	
 	// close the Lua state
 	lua_close(lua_state);
-	*/
+	
 }
