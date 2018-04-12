@@ -431,7 +431,7 @@ void ModuleScene::ImGuiMainMenu()
 
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("YunitiTresde IDE - Editor"))
+		if (ImGui::BeginMenu("YunitiTresde IDE"))
 		{
 			if(!showIDEWindow)showIDEWindow = true;
 			else showIDEWindow = false;

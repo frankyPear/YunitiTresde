@@ -57,5 +57,13 @@ typedef unsigned long long uid;
 #define IMAGE2	"../Resources/sonic.jpg"
 #define IMAGE3	"../Resources/residentevil.jpg"
 #define IMAGE4	"../Resources/mario.bmp"
+#define VERTEXSHFILE "../Resources/vertexShader.vs"
+#define FRAGMENTSHFILE "../Resources/fragmentshader.fs"
+#define LUAFILE "../Resources/luascript.lua"
+#define UBERSHFILE "../Resources/uberscript.us"
+
+
+
+
 
 #endif //__GLOBALS_H__

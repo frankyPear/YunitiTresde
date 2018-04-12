@@ -16,6 +16,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleScene.h"
+#include "ModuleShader.h"
 #include "Brofiler/include/Brofiler.h"
 #pragma comment( lib, "Brofiler/libx86/ProfilerCore32.lib")
 using namespace std;
@@ -232,29 +233,52 @@ void ModuleImGui::ShowIDEWindow(bool* pOpen)
 	static std::string lastLog = "";
 	static bool showExtendedSaveMenu = false;
 	static bool showExtendedLoadMenu = false;
+	static const char* selected_item_ = NULL;
 
 	ImGui::SetNextWindowPos(ImVec2(0, ImGui::GetWindowHeight()));
 	ImGui::SetNextWindowSize(ImVec2(450, 570));
-	ImGui::Begin("YunitiTresDe IDE - Editor 2018 - vr0.2", pOpen, ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin("YunitiTresDe IDE - 2018 - vr0.2", pOpen, ImGuiWindowFlags_NoCollapse);
 	std::string line;
 	std::string line2;
-	ifstream myfile("..\\Resources\\example.txt");
-	if (myfile.is_open())
+	const char* File[] = { VERTEXSHFILE, FRAGMENTSHFILE, LUAFILE, UBERSHFILE };
+//	selected_item_ = VERTEXSHFILE;
+	ImGui::LabelText("", "Select Texture: ");
 	{
-		while (getline(myfile, line))
-		{
-			line2 = line2 + line + "\n";
-		}
-		strcpy_s(text, line2.c_str());
-		myfile.close();
-	}
-	ImGui::InputTextMultiline("", text, IM_ARRAYSIZE(text), ImVec2(430.f, ImGui::GetTextLineHeight() * 32), ImGuiInputTextFlags_AllowTabInput);
 
-	ImGui::InputText("File Name", fileName, IM_ARRAYSIZE(fileName));
+		if (ImGui::BeginCombo("", selected_item_))
+		{
+			for (int n = 0; n < IM_ARRAYSIZE(File); n++)
+			{
+				bool is_selected = (selected_item_ == File[n]);
+				if (ImGui::Selectable(File[n], is_selected)) {
+					selected_item_ = File[n];
+					ImGui::SetItemDefaultFocus();
+					App->renderer->SetIdImage(n);
+				}
+			}
+			ImGui::EndCombo();
+		}
+	}
+	//ifstream myfile("..\\Resources\\example.txt");
+	if (selected_item_ != NULL) {
+		ifstream myfile(selected_item_);
+		if (myfile.is_open())
+		{
+			while (getline(myfile, line))
+			{
+				line2 = line2 + line + "\n";
+			}
+			strcpy_s(text, line2.c_str());
+			myfile.close();
+		}
+		ImGui::InputTextMultiline("", text, IM_ARRAYSIZE(text), ImVec2(430.f, ImGui::GetTextLineHeight() * 32), ImGuiInputTextFlags_AllowTabInput);
+	}
+	//ImGui::InputText("File Name", fileName, IM_ARRAYSIZE(fileName));
 	if (ImGui::Button("Compile", ImVec2(125.0f, 25.0f)))
 	{
 		showExtendedSaveMenu = true;
 		showExtendedLoadMenu = false;
+		App->shader->CompileVertexShader();
 	}
 
 	ImGui::SameLine(0.0f, 42.0f);
