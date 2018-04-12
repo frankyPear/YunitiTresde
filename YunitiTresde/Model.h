@@ -51,7 +51,7 @@ public:
 	void Clear();
 	void Draw(uint id, aiMesh * mesh);
 	uint loadTextureDirect(const char* filepath);
-	void loadBones( aiMesh *mesh);
+	void loadMeshData( aiMesh *mesh);
 	void loadVaos(aiMesh* mesh);
 
 public:

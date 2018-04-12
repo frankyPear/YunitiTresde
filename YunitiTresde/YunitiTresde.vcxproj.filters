@@ -567,17 +567,39 @@
     <ClInclude Include="ModuleShader.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_arm.h" />
-    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_mips.h" />
-    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_ppc.h" />
-    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_proto.h" />
-    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_x86.h" />
-    <ClInclude Include="LuaJIT-2.0.5\src\lauxlib.h" />
-    <ClInclude Include="LuaJIT-2.0.5\src\lua.h" />
-    <ClInclude Include="LuaJIT-2.0.5\src\lua.hpp" />
-    <ClInclude Include="LuaJIT-2.0.5\src\luaconf.h" />
-    <ClInclude Include="LuaJIT-2.0.5\src\luajit.h" />
-    <ClInclude Include="LuaJIT-2.0.5\src\lualib.h" />
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_arm.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_mips.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_ppc.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_proto.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\dynasm\dasm_x86.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\src\lauxlib.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\src\lua.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\src\lua.hpp">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\src\luaconf.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\src\luajit.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaJIT-2.0.5\src\lualib.h">
+      <Filter>Tools\LUA</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core Modules">
@@ -631,6 +653,9 @@
     <Filter Include="Tools\bass\lib">
       <UniqueIdentifier>{4335f054-b0ac-4524-b2d0-471bc1b6c45b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\LUA">
+      <UniqueIdentifier>{1d213bc9-31d2-4ed2-966b-e5fd59e5ee52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mathgeolib\include\Math\TriangleMesh_IntersectRay_SSE.inl">
@@ -657,20 +682,48 @@
     <None Include="Game\bassenc_ogg.dll">
       <Filter>Tools\bass\lib</Filter>
     </None>
-    <None Include="LuaJIT-2.0.5\doc\changes.html" />
-    <None Include="LuaJIT-2.0.5\doc\contact.html" />
-    <None Include="LuaJIT-2.0.5\doc\ext_c_api.html" />
-    <None Include="LuaJIT-2.0.5\doc\ext_ffi.html" />
-    <None Include="LuaJIT-2.0.5\doc\ext_ffi_api.html" />
-    <None Include="LuaJIT-2.0.5\doc\ext_ffi_semantics.html" />
-    <None Include="LuaJIT-2.0.5\doc\ext_ffi_tutorial.html" />
-    <None Include="LuaJIT-2.0.5\doc\ext_jit.html" />
-    <None Include="LuaJIT-2.0.5\doc\extensions.html" />
-    <None Include="LuaJIT-2.0.5\doc\faq.html" />
-    <None Include="LuaJIT-2.0.5\doc\install.html" />
-    <None Include="LuaJIT-2.0.5\doc\luajit.html" />
-    <None Include="LuaJIT-2.0.5\doc\running.html" />
-    <None Include="LuaJIT-2.0.5\doc\status.html" />
+    <None Include="LuaJIT-2.0.5\doc\changes.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\contact.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\ext_c_api.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\ext_ffi.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\ext_ffi_api.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\ext_ffi_semantics.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\ext_ffi_tutorial.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\ext_jit.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\extensions.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\faq.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\install.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\luajit.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\running.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
+    <None Include="LuaJIT-2.0.5\doc\status.html">
+      <Filter>Tools\LUA</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="DevIL\lib\x86\Release\DevIL.lib">
@@ -694,6 +747,8 @@
     <Library Include="Bass\lib\bassenc_ogg.lib">
       <Filter>Tools\bass\lib</Filter>
     </Library>
-    <Library Include="LuaJIT-2.0.5\src\lua51.lib" />
+    <Library Include="LuaJIT-2.0.5\src\lua51.lib">
+      <Filter>Tools\LUA</Filter>
+    </Library>
   </ItemGroup>
 </Project>

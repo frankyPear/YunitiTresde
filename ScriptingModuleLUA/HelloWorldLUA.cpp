@@ -12,8 +12,7 @@ int main(int argc, char* argv[])
 	// load Lua libraries
 	static const luaL_Reg lualibs[] =
 	{
-		{ "base", luaopen_base },
-	{ NULL, NULL }
+		{ "base", luaopen_base },{ NULL, NULL }
 	};
 
 	const luaL_Reg *lib = lualibs;

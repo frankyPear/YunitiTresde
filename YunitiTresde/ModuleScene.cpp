@@ -51,14 +51,14 @@ bool ModuleScene::Init()
 
 	//LoadScene("../Resources/street/Street.obj");
 
-	/*LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
+	LoadScene("../Resources/ArmyPilot/ArmyPilot.dae");
 	Model *m = new Model();
 	int id = App->rng->GetRandomNumber();
 	m->Load("../Resources/ArmyPilot/ArmyPilot.dae");
 	models[id] = m;
 	modelObjRoot = RecursiveSceneGeneration(nullptr,nullptr,scene->mRootNode->mTransformation, id);	
 	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
-	*/
+	
 
 	/*GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
@@ -553,9 +553,7 @@ GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* p
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
 			aiMesh *sceneMesh = scene->mMeshes[i];
-			if (scene->mMeshes[i]->HasBones()) {
-				models[modelID]->loadBones(sceneMesh); 
-			}
+			models[modelID]->loadMeshData(sceneMesh);			
 			models[modelID]->loadVaos(sceneMesh);
 			meshes.push_back(sceneMesh);
 		}
@@ -576,12 +574,7 @@ GameObject*  ModuleScene::RecursiveSceneGeneration(aiNode*toVisit, GameObject* p
 		for (int m = 0; m < toVisit->mNumMeshes; ++m) {
 			ComponentMesh *cm = new ComponentMesh(RESOURCE);
 			cm->SetMeshIndex(toVisit->mMeshes[m]);
-
 			cm->SetModelId(modelID);
-			// Falta a�adir las bounding box
-
-			// Falta a�adir las bounding box
-
 			sceneObject->AddComponent(cm);
 
 		}

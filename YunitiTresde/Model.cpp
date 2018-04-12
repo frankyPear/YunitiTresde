@@ -110,25 +110,53 @@ void Model::LoadTexture(const char* filepath)
 
 }
 
-void Model::loadBones( aiMesh *mesh)
-{
-	for (int i = 0; i < mesh->mNumBones; ++i)
+void Model::loadMeshData( aiMesh *mesh)
+{	
+	for (int x = 0; x < mesh->mNumVertices; ++x)
 	{
-		Bone *bone = new Bone();
-		aiBone *aibone = mesh->mBones[i];
-		bone->name = aibone->mName.C_Str();
-		bone->bind = aibone->mOffsetMatrix;
-		bone->num_weights = aibone->mNumWeights;
-		Weight* newweights = new Weight[aibone->mNumWeights];
-		for (int j = 0; j < aibone->mNumWeights; ++j)
+		aiVector3D vert = mesh->mVertices[x];
+		for (int y = 0; y < 3; ++y) 
 		{
-			newweights[j].vertex = aibone->mWeights[j].mVertexId;
-			newweights[j].weight = aibone->mWeights[j].mWeight;
+			meshvertices.push_back(vert[y]);
+			if (mesh->HasNormals()) meshnormals.push_back(mesh->mNormals[x][y]);			
 		}
-		bone->weights = newweights;
-		bones.push_back(bone);
+		if (mesh->HasTextureCoords(x)) 
+		{
+			for (int z = 0; z < 8; ++z) {
+				for (int w = 0; w < 3; ++w) meshtexcoords.push_back(mesh->mTextureCoords[x][z][w]);
+			}
+		}
 	}
-	
+	if (mesh->HasFaces()) {
+		for (int l = 0; l < mesh->mNumFaces; ++l)
+		{
+			aiFace face = mesh->mFaces[l];
+			for (int m = 0; m < face.mNumIndices; ++m) meshindices.push_back(face.mIndices[m]);
+		}
+	}
+	if (mesh->mMaterialIndex > -1) 
+	{
+
+	}
+	if (mesh->HasBones())
+	{
+		for (int i = 0; i < mesh->mNumBones; ++i)
+		{
+			Bone *bone = new Bone();
+			aiBone *aibone = mesh->mBones[i];
+			bone->name = aibone->mName.C_Str();
+			bone->bind = aibone->mOffsetMatrix;
+			bone->num_weights = aibone->mNumWeights;
+			Weight* newweights = new Weight[aibone->mNumWeights];
+			for (int j = 0; j < aibone->mNumWeights; ++j)
+			{
+				newweights[j].vertex = aibone->mWeights[j].mVertexId;
+				newweights[j].weight = aibone->mWeights[j].mWeight;
+			}
+			bone->weights = newweights;
+			bones.push_back(bone);
+		}
+	}
 }
 
 void Model::loadVaos(aiMesh * mesh)
@@ -179,7 +207,6 @@ void Model::Draw(uint id, aiMesh* mesh) // vector de textures + vector de meshes
 			for (unsigned j = 0; j < mesh->mFaces[i].mNumIndices; ++j)
 			{
 				int index = mesh->mFaces[i].mIndices[j];
-
 				if (mesh->HasTextureCoords(0))
 				{
 					glTexCoord2f(mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y);
