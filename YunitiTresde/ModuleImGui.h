@@ -22,6 +22,9 @@ public:
 	bool CleanUp();
 	void RenderImGui();
 	uint GetImGuiWindowFlags();
+	void ShowIDEWindow(bool * pOpen);
+	bool SaveScript(const std::string & path, const std::string & content);
+	bool LoadScript(const std::string & path, std::string & outputString);
 	void AboutImgui();
 
 public:
@@ -30,7 +33,7 @@ public:
 	float frontx, fronty, frontz, frontw;
 	float upx, upy, upz, upw;
 	int format_, width_, heigth_, mag_, min_, wraps_, wrapt_ = 0;
-	
+	bool showTextEditorWindow = false;
 	
 
 private:
