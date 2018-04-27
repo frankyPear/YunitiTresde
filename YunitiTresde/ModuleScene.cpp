@@ -60,16 +60,18 @@ bool ModuleScene::Init()
 	App->anim->Load(aiString("FirstAnim"), "../Resources/Animations/ArmyPilot/ArmyPilot_Idle.fbx");
 	
 
-	/*GameObject *object1 = new GameObject();
+	GameObject *object1 = new GameObject();
 	ComponentMesh *cm1 = new ComponentMesh(SPHERE);
 	ComponentTransform *ct1 = new ComponentTransform(float3(0.0f, 0.0f, 0.0f), float3(1.0f, 1.0f, 1.0f), Quat::identity);
 	ComponentAudioListener *al = new ComponentAudioListener();
+	
 	object1->AddComponent(cm1);
 	object1->AddComponent(ct1);
+	
 	object1->SetStatic(true);
 	root->AddChild(object1);
 	sceneObjects_.push_back(object1);
-
+	/*
 	float offset = -2.0f;
 	float xoff[16] = { 20,20,0, -20,  0,-20,-20,20, 0 ,10,-10,0 };
 	float zoff[16] = { 20,0, 20,-20,-20,0,20,-20, 10, 0, 0,-10 };
