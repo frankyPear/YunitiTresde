@@ -15,6 +15,14 @@ static int lua_sleep(lua_State *L)
 }
 */
 
+void print_error(lua_State* state) {
+	// The error message is on top of the stack.
+	// Fetch it, print it and then pop it off the stack.
+	const char* message = lua_tostring(state, -1);
+	puts(message);
+	lua_pop(state, 1);
+}
+
 int main(int argc, char* argv[])
 {
 	// create new Lua state
@@ -34,10 +42,11 @@ int main(int argc, char* argv[])
 		lib->func(lua_state);
 		lua_settop(lua_state, 0);
 	}
-	
+		
 	// run the Lua script
-	luaL_dofile(lua_state, "helloworld.lua");
-	
+	luaL_dofile(lua_state, "../ScriptingModuleLUA/helloworld.lua");
+
+	print_error(lua_state);
 	// close the Lua state
 	lua_close(lua_state);
 	
