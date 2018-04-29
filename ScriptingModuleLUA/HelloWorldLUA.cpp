@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	}
 		
 	// run the Lua script
-	luaL_dofile(lua_state, "../ScriptingModuleLUA/helloworld.lua");
+	luaL_dofile(lua_state, "helloworld.lua");
 
 	print_error(lua_state);
 	// close the Lua state
