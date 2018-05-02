@@ -22,6 +22,9 @@ public:
 	bool CleanUp();
 	void RenderImGui();
 	uint GetImGuiWindowFlags();
+	void ShowIDEWindow(bool * pOpen);
+	bool SaveScript(const std::string & path, const std::string & content);
+	bool LoadScript(const std::string & path, std::string & outputString);
 	void AboutImgui();
 
 public:

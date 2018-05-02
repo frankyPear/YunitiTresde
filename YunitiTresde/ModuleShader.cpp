@@ -20,8 +20,8 @@ ModuleShader::ModuleShader()
 		"	gl_Position = projection * view * model_matrix * vec4(position, 1.0f);\n"
 		"	ourColor = color;\n"
 		"	TexCoord = texCoord;\n"
-		"}\n";	
-	
+		"}\n";
+
 	fragmentShader_2 = "#version 330 core\n"
 		"in vec3 ourColor;\n"
 		"in vec2 TexCoord;\n"
@@ -33,30 +33,30 @@ ModuleShader::ModuleShader()
 		"}\n";
 
 	/*Shaders add*/
-		 vertexShaderSource_ = 
-	"layout (location = 0) in vec3 position; \n"
-	"layout (location = 1) in vec3  color; \n"
-	//"layout (location = 2) in vec2 texCoord; \n"
-	"out vec3 ourColor;"
-	//"out vec2 TexCoord;"
-	"uniform mat4 gl_ModelViewMatrix;\n"
-	"uniform mat4 gl_ProjectionMatrix;\n"
-	"void main()\n"
-	"{ gl_Position =gl_ProjectionMatrix*gl_ModelViewMatrix* vec4 (position.x, position.y, position.z, 1.0);\n"
-	"ourColor = color;"
-	//"TexCoord = vec2(texCoord.x, 1.0 - texCoord.y);\n"
-	"}";
+	vertexShaderSource_ =
+		"layout (location = 0) in vec3 position; \n"
+		"layout (location = 1) in vec3  color; \n"
+		//"layout (location = 2) in vec2 texCoord; \n"
+		"out vec3 ourColor;"
+		//"out vec2 TexCoord;"
+		"uniform mat4 gl_ModelViewMatrix;\n"
+		"uniform mat4 gl_ProjectionMatrix;\n"
+		"void main()\n"
+		"{ gl_Position =gl_ProjectionMatrix*gl_ModelViewMatrix* vec4 (position.x, position.y, position.z, 1.0);\n"
+		"ourColor = color;"
+		//"TexCoord = vec2(texCoord.x, 1.0 - texCoord.y);\n"
+		"}";
 
-	 fragmentShaderSource_ =
-	"in vec3 ourColor; \n"
-	//"in vec2 TexCoord; \n"
-	//"uniform sampler2D tex0; "
-	"void main() \n"
-	"{ \n"
+	fragmentShaderSource_ =
+		"in vec3 ourColor; \n"
+		//"in vec2 TexCoord; \n"
+		//"uniform sampler2D tex0; "
+		"void main() \n"
+		"{ \n"
 		// "vec4 color = texture2D(tex0.x, tex0.y, TexCoord.x,TexCoord.y); \n"
-		 // "gl_FragColor = color; \n"
-	"gl_FragColor = vec4(ourColor.x,ourColor.y,ourColor.z, 1.0f); \n"
-		"}";	
+		// "gl_FragColor = color; \n"
+		"gl_FragColor = vec4(ourColor.x,ourColor.y,ourColor.z, 1.0f); \n"
+		"}";
 
 
 }
@@ -69,18 +69,27 @@ ModuleShader::~ModuleShader()
 
 bool ModuleShader::Init()
 {
-	bool ret = true;
-	return ret;
+	CompileShader();
+	return true;
 }
 
 bool ModuleShader::Start()
 {
-	bool ret = true;
-	return ret;
+	VertexShaderLoad();
+	FragmentShaderLoad();
+	CreateShaderProgram();
+	ActivateShaderProgram();
+	return true;
 }
 
-update_status ModuleShader::Update()
+update_status ModuleShader::Preupdate(float dt)
 {
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleShader::Update(float dt)
+{
+
 	return UPDATE_CONTINUE;
 }
 
@@ -240,6 +249,14 @@ bool ModuleShader::ActivateShaderProgram()
 	//TODO: Add LOG
 	bool ret = true;
 	glUseProgram(shaderProgram);
+
+	return ret;
+}
+bool ModuleShader::DeactivateShaderProgram()
+{
+	//TODO: Add LOG
+	bool ret = true;
+	glDeleteProgram(shaderProgram);
 
 	return ret;
 }

@@ -111,7 +111,7 @@ bool ModuleScene::Start()
 	quadtree->Intersect(objectToDraw_, *(actualCamera->GetFrustum()));
 	App->fx->CreateGrid("..\\Resources\\billboardgrass.png", float3(-5.0f, 1.0f, 0.0f), 2.0f, 2.0f, 10,10);
 
-
+	showIDEWindow = false;
 	//App->anim->Play("Idle");
 	return true;
 }
@@ -213,7 +213,7 @@ update_status ModuleScene::Update(float dt)
 		root->Update();
 	//IMGUI
 	Hierarchy();
-
+	if (showIDEWindow)App->imgui->ShowIDEWindow(&showIDEWindow);
 
 	return UPDATE_CONTINUE;
 }
@@ -430,6 +430,13 @@ void ModuleScene::ImGuiMainMenu()
 				imguiFlag = SDL_SCANCODE_ESCAPE;
 			}
 
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("YunitiTresde IDE"))
+		{
+			if (!showIDEWindow)showIDEWindow = true;
+			else showIDEWindow = false;
+			//App->imgui->ShowTextEditorWindow(ImGui::GetWindowHeight(), &showTextEditorWindow);
 			ImGui::EndMenu();
 		}
 		if (ImGui::MenuItem("Options"))

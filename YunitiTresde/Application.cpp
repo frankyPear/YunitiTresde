@@ -50,7 +50,7 @@ Application::Application()
 	modules.push_back(rng);
 	modules.push_back(fx);
 	modules.push_back(scene);
-
+	modules.push_back(shader);
 }
 
 

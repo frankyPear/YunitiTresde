@@ -1,18 +1,25 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <shellapi.h>
+#include <string>
+#include <fstream>
+#include <iostream>
+
 
 #include "imgui-1.53\imgui.h"
 #include "imgui-1.53\imgui_impl_sdl_gl3.h"
+
+#include <fstream>
 
 #include "Application.h"
 #include "ModuleImGui.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer.h"
 #include "ModuleScene.h"
+#include "ModuleShader.h"
 #include "Brofiler/include/Brofiler.h"
 #pragma comment( lib, "Brofiler/libx86/ProfilerCore32.lib")
-
+using namespace std;
 ModuleImGui::ModuleImGui()
 {
 	//TODO string liscense
@@ -215,4 +222,142 @@ void ModuleImGui::AboutImgui()
 uint ModuleImGui::GetImGuiWindowFlags()
 {
 	return imgui_window_flags_;
+}
+
+void ModuleImGui::ShowIDEWindow(bool* pOpen)
+{
+	static char text[1024 * 16] = "";
+	static char text2[1024 * 16] = "";
+	static char fileName[256] = "Vertex Shadder";
+	static std::string lastLog = "";
+	static bool showExtendedSaveMenu = false;
+	static bool showExtendedLoadMenu = false;
+	static const char* selected_item_ = NULL;
+
+	ImGui::SetNextWindowPos(ImVec2(0, ImGui::GetWindowHeight()));
+	ImGui::SetNextWindowSize(ImVec2(450, 570));
+	ImGui::Begin("YunitiTresDe IDE - 2018 - vr0.2", pOpen, ImGuiWindowFlags_NoCollapse);
+	std::string line;
+	std::string line2;
+	const char* File[] = { VERTEXSHFILE, FRAGMENTSHFILE, LUAFILE, UBERSHFILE };
+	//	selected_item_ = VERTEXSHFILE;
+	ImGui::LabelText("", "Select Texture: ");
+	{
+
+		if (ImGui::BeginCombo("", selected_item_))
+		{
+			for (int n = 0; n < IM_ARRAYSIZE(File); n++)
+			{
+				bool is_selected = (selected_item_ == File[n]);
+				if (ImGui::Selectable(File[n], is_selected)) {
+					selected_item_ = File[n];
+					ImGui::SetItemDefaultFocus();
+					App->renderer->SetIdImage(n);
+				}
+			}
+			ImGui::EndCombo();
+		}
+	}
+	//ifstream myfile("..\\Resources\\example.txt");
+	if (selected_item_ != NULL) {
+		ifstream myfile(selected_item_);
+		if (myfile.is_open())
+		{
+			while (getline(myfile, line))
+			{
+				line2 = line2 + line + "\n";
+			}
+			strcpy_s(text, line2.c_str());
+			myfile.close();
+		}
+		ImGui::InputTextMultiline("", text, IM_ARRAYSIZE(text), ImVec2(430.f, ImGui::GetTextLineHeight() * 32), ImGuiInputTextFlags_AllowTabInput);
+	}
+	//ImGui::InputText("File Name", fileName, IM_ARRAYSIZE(fileName));
+	if (ImGui::Button("Compile", ImVec2(125.0f, 25.0f)))
+	{
+		showExtendedSaveMenu = true;
+		showExtendedLoadMenu = false;
+		App->shader->CompileVertexShader();
+	}
+
+	ImGui::SameLine(0.0f, 42.0f);
+
+	if (ImGui::Button("Load", ImVec2(125.0f, 25.0f)))
+	{
+		showExtendedLoadMenu = true;
+		showExtendedSaveMenu = false;
+	}
+
+	if (showExtendedSaveMenu)
+	{
+		ImGui::Text("Are you sure you want to save?");
+		if (ImGui::Button("Save & Compile", ImVec2(125.0f, 25.0f)))
+		{
+			showExtendedSaveMenu = false;
+			if (SaveScript(fileName, text))
+				lastLog = "File Compiled.";
+			else
+				lastLog = "File could NOT be saved.";
+		}
+
+		ImGui::SameLine(0.0f, 42.0f);
+
+		if (ImGui::Button("Cancel Save & Compile", ImVec2(125.0f, 25.0f)))
+			showExtendedSaveMenu = false;
+	}
+
+	if (showExtendedLoadMenu)
+	{
+		ImGui::Text("Are you sure you want to load?");
+		if (ImGui::Button("Confirm Load", ImVec2(125.0f, 25.0f)))
+		{
+			showExtendedLoadMenu = false;
+			std::string fileContent;
+			if (LoadScript(fileName, fileContent))
+			{
+				lastLog = "File loaded.";
+				strcpy_s(text, 1024 * 16, fileContent.c_str());
+			}
+			else
+				lastLog = "File could NOT be loaded.";
+		}
+
+		ImGui::SameLine(0.0f, 42.0f);
+
+		if (ImGui::Button("Cancel Load", ImVec2(125.0f, 25.0f)))
+			showExtendedLoadMenu = false;
+	}
+	ImGui::SameLine();
+
+
+	ImGui::End();
+}
+
+bool ModuleImGui::SaveScript(const std::string& path, const std::string& content)
+{
+	std::ofstream outFile(path);
+	if (outFile.good())
+	{
+		outFile << content;
+		return true;
+	}
+	return false;
+}
+
+bool ModuleImGui::LoadScript(const std::string& path, std::string& outputString)
+{
+	outputString = "";
+	std::string line;
+	std::ifstream inFile(path);
+	if (inFile.good())
+	{
+		while (getline(inFile, line))
+		{
+			outputString += line + '\n';
+		}
+		inFile.close();
+		return true;
+	}
+
+	return false;
 }

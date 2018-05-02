@@ -81,7 +81,7 @@ public:
 	std::vector<GLuint> vaos;
 	std::map<int,Model*> models;
 	GameObject *modelObjRoot;
-
+	bool showIDEWindow = false;
 private:
 	GameObject* root;
 	GameObject* selected = nullptr;
