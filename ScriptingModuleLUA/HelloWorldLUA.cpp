@@ -1,5 +1,6 @@
 #include <lua.hpp>
 #include <windows.h>
+#include "../YunitiTresde/Globals.h"
 #pragma comment(lib, "../YunitiTresde/LuaJIT-2.0.5/src/lua51.lib")
 
 /*
@@ -43,7 +44,7 @@ int main(int argc, char* argv[])
 	}
 		
 	// run the Lua script
-	luaL_dofile(lua_state, "../../ScriptingModuleLUA/helloworld.lua");
+	luaL_dofile(lua_state, LUAFILE);// "../../ScriptingModuleLUA/helloworld.lua");
 
 	// close the Lua state
 	lua_close(lua_state);

@@ -239,8 +239,9 @@ void ModuleImGui::ShowIDEWindow(bool* pOpen)
 	ImGui::Begin("YunitiTresDe IDE - 2018 - vr0.2", pOpen, ImGuiWindowFlags_NoCollapse);
 	std::string line;
 	std::string line2;
-	const char* File[] = { VERTEXSHFILE, FRAGMENTSHFILE, LUAFILE, UBERSHFILE };
+	const char* File[] = { VERTEXSHFILE, FRAGMENTSHFILE, LUAFILE };//Comented for next update with uberfiles, UBERSHFILE };
 	//	selected_item_ = VERTEXSHFILE;
+	bool is_selected = false;
 	ImGui::LabelText("", "Select Texture: ");
 	{
 
@@ -248,7 +249,7 @@ void ModuleImGui::ShowIDEWindow(bool* pOpen)
 		{
 			for (int n = 0; n < IM_ARRAYSIZE(File); n++)
 			{
-				bool is_selected = (selected_item_ == File[n]);
+				is_selected = (selected_item_ == File[n]);
 				if (ImGui::Selectable(File[n], is_selected)) {
 					selected_item_ = File[n];
 					ImGui::SetItemDefaultFocus();
@@ -258,7 +259,6 @@ void ModuleImGui::ShowIDEWindow(bool* pOpen)
 			ImGui::EndCombo();
 		}
 	}
-	//ifstream myfile("..\\Resources\\example.txt");
 	if (selected_item_ != NULL) {
 		ifstream myfile(selected_item_);
 		if (myfile.is_open())
