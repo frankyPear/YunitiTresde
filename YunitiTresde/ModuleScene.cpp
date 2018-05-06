@@ -97,6 +97,8 @@ bool ModuleScene::Init()
 		//m.LoadTexture("../Resources/Baker_house.png");
 
 */
+
+	actualCamera = App->cam->dummyCamera;
 	return true;
 }
 

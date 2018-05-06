@@ -8,7 +8,7 @@ class GameObject;
 
 
 enum Type {TRANSFORMATION,MATERIAL,MESH,CAMERA,ANIMATION,AUDIOLISTENER,AUDIOSOURCE};
-
+enum CElement2D { LABEL, BUTTON, INPUTTEXT };
 
 class Component
 {

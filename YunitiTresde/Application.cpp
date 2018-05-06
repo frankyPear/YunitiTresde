@@ -10,7 +10,7 @@
 #include "ModuleFX.h"
 #include "ModuleAnimation.h"
 #include "ModuleRNG.h"
-
+#include "ModuleUI.h"
 #include "ModuleAudio.h"
 #include "ModuleShader.h"
 
@@ -35,7 +35,7 @@ Application::Application()
 	scene = new ModuleScene();
 	fx = new ModuleFX();
 	rng = new ModuleRNG();
-
+	ui = new ModuleUI();
 	audio = new ModuleAudio();
 	shader = new ModuleShader();
 
@@ -51,6 +51,7 @@ Application::Application()
 	modules.push_back(fx);
 	modules.push_back(scene);
 	modules.push_back(shader);
+	modules.push_back(ui);
 }
 
 

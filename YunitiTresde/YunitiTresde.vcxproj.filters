@@ -226,6 +226,24 @@
     <ClCompile Include="ModuleShader.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Component2DTransform.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Component2D.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentButton.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentInput2D.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentLabel.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleUI.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -599,6 +617,24 @@
     </ClInclude>
     <ClInclude Include="LuaJIT-2.0.5\src\lualib.h">
       <Filter>Tools\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="Component2DTransform.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Component2D.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentButton.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentInput2D.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentLabel.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleUI.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

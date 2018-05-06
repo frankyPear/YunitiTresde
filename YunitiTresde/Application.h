@@ -19,6 +19,7 @@ class ModuleFX;
 class ModuleAnimation;
 class ModuleRNG;
 class ModuleShader;
+class ModuleUI;
 
 class ModuleAudio;
 
@@ -51,7 +52,7 @@ public:
 
 	ModuleAudio *audio;
 	ModuleShader *shader;
-
+	ModuleUI * ui;
 	bool switchmap = false;
 private:
 	Timer ms_timer_;
