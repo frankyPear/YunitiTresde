@@ -5,6 +5,10 @@ Component::Component()
 {
 }
 
+//Component::Component(GameObject * container, Types type)
+//{
+//}
+
 Component::Component(Type componentType) : type(componentType),  enabled(true), to_be_destroyed(false), component_id(App->rng->GetRandomNumber())
 {
 }

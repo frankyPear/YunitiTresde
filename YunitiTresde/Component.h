@@ -7,13 +7,27 @@
 class GameObject;
 
 
-enum Type {TRANSFORMATION,MATERIAL,MESH,CAMERA,ANIMATION,AUDIOLISTENER,AUDIOSOURCE};
+enum Type {TRANSFORMATION,MATERIAL,MESH,CAMERA,ANIMATION,AUDIOLISTENER,AUDIOSOURCE, RIGIDBODY};
 enum CElement2D { LABEL, BUTTON, INPUTTEXT };
-
+//enum Types
+//{
+//	Geometry,
+//	Material,
+//	AudioListener,
+//	AudioSource,
+//	Camera,
+//	Bone,
+//	RigidBody,
+//	Animation,
+//	Steering,
+//	Path,
+//	Unknown
+//};
 class Component
 {
 public:
 	Component();
+	//Component(GameObject* container, Type type);
 	Component(Type componentType);
 	Component(GameObject * gameObject, Type componentType);
 	~Component();
