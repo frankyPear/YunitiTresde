@@ -218,4 +218,12 @@ void Model::Draw(uint id, aiMesh* mesh) // vector de textures + vector de meshes
 
 		}
 	}
+
+
+	//	for each vertex in vertex vector:
+	//		for each bone associated:
+	//			get bone_weight
+	//			get bone_matrix_in_bind (inverse but the pilot model already gives it inverted)
+	//			get the gameobject's transform from transform component
+
 }

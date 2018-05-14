@@ -120,6 +120,9 @@
   <ItemGroup>
     <ClCompile Include="HelloWorldLUA.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="LUAScripts\helloworld.lua" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
