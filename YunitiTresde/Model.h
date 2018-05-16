@@ -9,6 +9,7 @@
 #include "assimp\assimp\Importer.hpp"
 #include "assimp\assimp\postprocess.h"
 #include "Globals.h"
+#include "Mathgeolib\include\MathGeoLib.h"
 
 class Model
 {
@@ -26,9 +27,9 @@ public:
 	struct Bone
 	{
 		const char* name;
-		Weight* weights = nullptr;
+		std::vector<Weight*> weights;
 		uint num_weights = 0;
-		aiMatrix4x4 bind;
+		float4x4 bind;
 	};
 	struct Texture
 	{
