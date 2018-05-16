@@ -23,7 +23,10 @@ bool ModuleAudio::Start()
 bool ModuleAudio::Init()
 {
 	bool success = BASS_Init(-1, 44100, BASS_DEVICE_3D, 0, nullptr);
-	if (!success) LOG("Couldn't initialize bass")
+	ImportAudioSource("..\\Resources\\AccelerationLow.wav");
+	if (!success) {
+		LOG("Couldn't initialize bass");
+	}
 //		ComponentAudioSource* cas;
 //	bool successLoadAudio = cas->SetResource()
 	return success;
@@ -65,17 +68,17 @@ bool ModuleAudio::ImportAudioSource(const char*path)
 		const char* dot = strrchr(path,'.');
 		if (dot) {
 			dot = dot + 1;
-			if (dot == "ogg")
-			{
-				HSTREAM stream = BASS_StreamCreateFile(FALSE, path, 0, 0, 0);
-				if (stream == 0) LOG("Failed creating stream.")		
-				else {
-					BASS_StreamFree(stream);
-					ret = true;
-				}
-			}
-			else if (dot == "wav")
-			{
+			//if (dot == "ogg")
+			//{
+			//	HSTREAM stream = BASS_StreamCreateFile(FALSE, path, 0, 0, 0);
+			//	if (stream == 0) LOG("Failed creating stream.")		
+			//	else {
+			//		BASS_StreamFree(stream);
+			//		ret = true;
+			//	}
+			//}
+			//else if (dot == "wav")
+			//{
 				char *buffer= nullptr;
 				int size = 0;
 				LPDWORD numberOfBytesRead = 0;
@@ -92,7 +95,7 @@ bool ModuleAudio::ImportAudioSource(const char*path)
 					RELEASE(buffer);
 				}
 				else LOG("Failed to read the file.")
-			}
+			//}
 		}		
 	}
 	if (ret)
