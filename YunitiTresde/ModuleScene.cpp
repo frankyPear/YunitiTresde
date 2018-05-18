@@ -201,7 +201,7 @@ update_status ModuleScene::Update(float dt)
 					else
 					{
 						uint resID = cm->GetResourceMeshIndex();
-						if (resID != -1) model->Draw(id[meshes[resID]->mMaterialIndex], meshes[resID]);
+						if (resID != -1) model->Draw(id[meshes[resID]->mMaterialIndex], meshes[resID], ct->GetGlobalTransform());
 					}
 				}
 

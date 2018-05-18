@@ -11,6 +11,7 @@
 #include "Globals.h"
 #include "Mathgeolib\include\MathGeoLib.h"
 
+
 class Model
 {
 public:
@@ -50,7 +51,7 @@ public:
 	GLuint DevilImage(const char * theFileName);
 	void LoadTexture(const char * filepath);
 	void Clear();
-	void Draw(uint id, aiMesh * mesh);
+	void Draw(uint id, aiMesh * mesh, float4x4 obj_transform);
 	uint loadTextureDirect(const char* filepath);
 	void loadMeshData( aiMesh *mesh);
 	void loadVaos(aiMesh* mesh);
@@ -59,8 +60,8 @@ public:
 
 	const aiScene *scene;
 	Assimp::Importer importer;
-	std::vector<GLfloat> meshvertices;
-	std::vector<GLfloat> meshnormals;
+	std::vector<float3> meshvertices;
+	std::vector<float3> meshnormals;
 	std::vector<GLfloat> meshtexcoords;
 	std::vector<GLubyte> meshindices;
 	std::vector<GLubyte> meshmaterialsindices;

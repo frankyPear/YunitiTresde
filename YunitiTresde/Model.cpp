@@ -118,11 +118,9 @@ void Model::loadMeshData( aiMesh *mesh)
 	for (int x = 0; x < mesh->mNumVertices; ++x)
 	{
 		aiVector3D vert = mesh->mVertices[x];
-		for (int y = 0; y < 3; ++y) 
-		{
-			meshvertices.push_back(vert[y]);
-			if (mesh->HasNormals()) meshnormals.push_back(mesh->mNormals[x][y]);			
-		}
+
+		meshvertices.push_back(float3(vert.x,vert.y,vert.z));
+		if (mesh->HasNormals()) meshnormals.push_back(float3(mesh->mNormals[x].x, mesh->mNormals[x].y, mesh->mNormals[x].z));
 		if (mesh->HasTextureCoords(x)) 
 		{
 			for (int z = 0; z < 8; ++z) {
@@ -207,11 +205,13 @@ void Model::Clear()
 //			get bone_matrix_in_bind (inverse but the pilot model already gives it inverted)
 //			get the gameobject's transform from transform component
 
-void Model::Draw(uint id, aiMesh* mesh) // vector de textures + vector de meshes
+void Model::Draw(uint id, aiMesh* mesh, float4x4 obj_transform) // vector de textures + vector de meshes
 {
 	if (mesh != nullptr)
 	{
-		vector<float3>newvertices(meshvertices.size()/3, float3(0.0f,0.0f,0.0f));
+		vector<float3>newvertices(meshvertices.size(), float3(0.0f,0.0f,0.0f));
+		vector<float3>newnormals(meshnormals.size(), float3(0.0f, 0.0f, 0.0f));
+
 		for (int x = 0; x < bones.size(); ++x)
 		{
 			for (int y = 0; y < bones[x]->weights.size(); ++y)
@@ -219,28 +219,31 @@ void Model::Draw(uint id, aiMesh* mesh) // vector de textures + vector de meshes
 				Weight w = *bones[x]->weights[y];
 				float4x4 transform_bind = bones[x]->bind;
 				// add gameobject as a parameter to get the transform matrix and invert it.
+				float4 calculatedPos = w.weight *(obj_transform * transform_bind*float4(meshvertices[w.vertex].x, meshvertices[w.vertex].y, meshvertices[w.vertex].z, 1.0f));
+				newvertices[w.vertex] +=  float3(calculatedPos.x,calculatedPos.y, calculatedPos.z);
 
-
-
-				for (unsigned i = 0; i < mesh->mNumFaces; ++i)
-				{
-					glBindTexture(GL_TEXTURE_2D, id);
-
-					glBegin(GL_TRIANGLES);
-					for (unsigned j = 0; j < mesh->mFaces[i].mNumIndices; ++j)
-					{
-						int index = mesh->mFaces[i].mIndices[j];
-						if (mesh->HasTextureCoords(0))
-						{
-							glTexCoord2f(mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y);
-						}
-						glVertex3fv(&mesh->mVertices[index].x);
-					}
-					glEnd();
-					glBindTexture(GL_TEXTURE_2D, 0);
-
-				}
+				float4x4 normalTrans = float4x4(obj_transform.Col(0), obj_transform.Col(1), obj_transform.Col(2), float4(0.0f, 0.0f, 0.0f, 1.0f));
+				float4x4 normalBind = float4x4(transform_bind.Col(0), transform_bind.Col(1), transform_bind.Col(2), float4(0.0f, 0.0f, 0.0f, 1.0f));
+				float4 finalNorm = w.weight*(normalTrans*normalBind*float4(meshnormals[x].x, meshnormals[x].y, meshnormals[x].z, 1.0f));
+				newnormals[w.vertex] += float3(finalNorm.x, finalNorm.y, finalNorm.z);
 			}
+		}
+		for (unsigned i = 0; i < mesh->mNumFaces; ++i)
+		{
+			glBindTexture(GL_TEXTURE_2D, id);
+
+			glBegin(GL_TRIANGLES);
+			for (unsigned j = 0; j < mesh->mFaces[i].mNumIndices; ++j)
+			{
+				int index = mesh->mFaces[i].mIndices[j];
+				if (mesh->HasTextureCoords(0))
+				{
+					glTexCoord2f(mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y);
+				}
+				glVertex3fv(&mesh->mVertices[index].x);
+			}
+			glEnd();
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
 }
